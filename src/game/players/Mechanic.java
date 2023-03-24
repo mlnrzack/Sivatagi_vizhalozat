@@ -14,15 +14,14 @@ public class Mechanic extends Player
     
     public Mechanic() 
     {
-        //name = DateTime.Now.ToString();
-        GameController.mechanics.Add(this);
+        GameController.AddMechanic(this);
     }
    
     public boolean BuildPumpIntoPipe()
     {
         if (pumpInInventory != null)
         {
-            if (currentPosition.TryBuildPumpInto(pumpInInventory))
+            if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory))
             {
                 pumpInInventory = null;
 
@@ -39,7 +38,7 @@ public class Mechanic extends Player
     {
         if (pipeInInventory != null)
         {
-            if (currentPosition.TryConnectPipe(pipeInInventory))
+            if (GetCurrentPosition().TryConnectPipe(pipeInInventory))
             {
                 pipeInInventory = null;
 
@@ -55,7 +54,7 @@ public class Mechanic extends Player
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
         if (pipeInInventory == null)
-            pipeInInventory = currentPosition.DisconnectNeighbourPipe(neighbourIdx);
+            pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
 
         if (pipeInInventory != null)
         {
@@ -70,7 +69,7 @@ public class Mechanic extends Player
     {
         if (pipeInInventory == null)
         {
-            var pickedUpPipe = currentPosition.PickUpFreePipeEnd();
+            var pickedUpPipe = GetCurrentPosition().PickUpFreePipeEnd();
 
             if (pickedUpPipe != null)
             {
@@ -89,7 +88,7 @@ public class Mechanic extends Player
     {
         if (pipeInInventory == null)
         {
-            var pickedUpPump = currentPosition.PickUpPump();
+            IPump pickedUpPump = GetCurrentPosition().PickUpPump();
 
             if (pickedUpPump != null)
             {
@@ -106,7 +105,7 @@ public class Mechanic extends Player
     
     public boolean Repair()
     {
-        if (currentPosition.TryRepair())
+        if (GetCurrentPosition().TryRepair())
         {
             GameController.ActionExecuted();
             return true;

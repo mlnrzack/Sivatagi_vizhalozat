@@ -34,10 +34,10 @@ public abstract class Player
     {
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
         {
-            IElement toNeighbour = currentPosition.GetNeighbours().ElementAt(neighbourIdx);
+            IElement toNeighbour = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-                currentPosition = currentPosition.GetNeighbours().ElementAt(neighbourIdx);
+                currentPosition = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
                 currentPosition.RemovePlayer(this);
 
                 GameController.ActionExecuted();

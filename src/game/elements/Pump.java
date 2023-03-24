@@ -1,6 +1,6 @@
 package game.elements;
 
-import java.util.Random;
+import java.util.*;
 
 import game.*;
 import game.elements.*;
@@ -38,11 +38,11 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
-        if (getNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
-            && neighbourIdxTo < getNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
+        if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
+            && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
         {
-            IPipe from = getNeighbours()[neighbourIdxFrom];
-            IPipe to = getNeighbours()[neighbourIdxTo];
+            IPipe from = GetNeighbours()[neighbourIdxFrom];
+            IPipe to = GetNeighbours()[neighbourIdxTo];
             input = from;
             output = to;
 
@@ -115,7 +115,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
         if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
 
-        RemovePipe(neighbourtoDisconnect);
+        ActiveElement.RemovePipe(neighbourtoDisconnect);
         neighbourtoDisconnect.WaterToDesert();
         neighbourtoDisconnect.RemoveNeighbour(this);
 

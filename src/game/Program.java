@@ -63,8 +63,8 @@ public class Program
         cistern.setNeighbour(pipe2);
         cistern.setNeighbour(pipe5);
 
-        mechanic1.currentPosition = pipe1;
-        saboteur1.currentPosition = pipe2;
+        mechanic1.SetCurrentPosition(pipe1);
+        saboteur1.SetCurrentPosition(pipe2);
 
         //ArrayList<IElement> map = new ArrayList<IElement>() {pipe1, pipe2, pipe3, pipe4, pipe5, cistern, source, pump1, pump2, pump3};
     }

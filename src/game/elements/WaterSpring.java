@@ -9,7 +9,7 @@ public class WaterSpring extends ActiveElement
 {
     public WaterSpring() 
     {
-        GameController.waterSrpings.Add(this);
+        GameController.AddWaterSpring(this);
     }
 
     public void FillNeighourPipes()

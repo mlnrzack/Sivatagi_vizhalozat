@@ -13,17 +13,157 @@ public class GameController
 	private static int mechanicsPoints = 0;
 	private static int saboteursPoints = 0;/*=> Desert.WaterFromPipelineNetwork;*/
     private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
-    private static ArrayList<WaterSpring> watersrpings = new ArrayList<WaterSpring>();
-    private static ArrayList<Saboteur> sabouteurs = new ArrayList<Saboteur>();
+    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
+    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
     /*public static Player CurrentPlayer { get; set; }*/
     private static int playerActionCountInCurrentRound = 0;
+    
+    public int GetRound()
+    {
+    	return round;
+    }
+    
+    public void SetRound(int round)
+    {
+    	this.round = round;
+    }
+    
+    public int GetMechanincsPoints()
+    {
+    	return mechanicsPoints;
+    }
+    
+    public void SetMechanicsPoints(int points)
+    {
+    	mechanicsPoints = points;
+    }
     
     public static void IncreaseMechanicsPoints()
     {
     	mechanicsPoints++;
     }
+    
+    public static void DecreaseMechanicsPoints()
+    {
+    	mechanicsPoints--;
+    }
+    
+    public int GetSaboteurPoints()
+    {
+    	return saboteursPoints;
+    }
+    
+    public void SetSaboteursPoints(int points)
+    {
+    	saboteursPoints = points;
+    }
+    
+    public static void IncreaseSaboteursPoints()
+    {
+    	saboteursPoints++;
+    }
+    
+    public static void DecreaseSaboteursPoints()
+    {
+    	saboteursPoints--;
+    }
 
+    public ArrayList<Mechanic> GetMechanic()
+    {
+    	return mechanics;
+    }
+    
+    public void SetMechanic(ArrayList<Mechanic> mechanics)
+    {
+    	this.mechanics = mechanics;
+    }
+    
+    public static boolean AddMechanic(Mechanic mechanic)
+    {
+    	return mechanics.add(mechanic);
+    }
+    
+    public boolean RemoveMechanic(Mechanic mechanic)
+    {
+    	return mechanics.remove(mechanic);
+    }
+    
+    public ArrayList<Saboteur> GetSaboteurs()
+    {
+    	return saboteurs;
+    }
+    
+    public void SetSaboteurs(ArrayList<Saboteur> saboteurs)
+    {
+    	this.saboteurs = saboteurs;
+    }
+
+    public static boolean AddSaboteur(Saboteur saboteur)
+    {
+    	return saboteurs.add(saboteur);
+    }
+    
+    public boolean RemoveSaboteur(Saboteur saboteur)
+    {
+    	return saboteurs.remove(saboteur);
+    }
+    
+    public ArrayList<ISteppable> GetSteppables()
+    {
+    	return steppables;
+    }
+    
+    public void SetSteppables(ArrayList<ISteppable> steppables)
+    {
+    	this.steppables = steppables;
+    }
+
+    public static boolean AddSteppble(ISteppable steppable)
+    {
+    	return steppables.add(steppable);
+    }
+    
+    public boolean RemoveSteppable(ISteppable steppable)
+    {
+    	return steppables.remove(steppable);
+    }
+    
+    public ArrayList<WaterSpring> GetWaterSprings()
+    {
+    	return waterSprings;
+    }
+    
+    public void SetWaterSprings(ArrayList<WaterSpring> waterSprings)
+    {
+    	this.waterSprings = waterSprings;
+    }
+    
+    public static boolean AddWaterSpring(WaterSpring waterspring)
+    {
+    	return waterSprings.add(waterspring);
+    }
+    
+    public boolean RemoveWaterSpring(WaterSpring waterspring)
+    {
+    	return waterSprings.remove(waterspring);
+    }
+    
+    public int GetPlayerAction()
+    {
+    	return playerActionCountInCurrentRound;
+    }
+    
+    public void SetPlayerAction(int count)
+    {
+    	playerActionCountInCurrentRound = count;
+    }
+    
+    public void IncreasePlayerAction()
+    {
+    	playerActionCountInCurrentRound++;
+    }
+    
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
     public static void ActionExecuted()
     {

@@ -1,5 +1,7 @@
 package game.elements;
 
+import java.util.*;
+
 import game.*;
 import game.elements.*;
 import game.interfaces.*;
@@ -34,9 +36,11 @@ public class Cistern extends ActiveElement implements ISteppable
     
     public boolean Step()
     {
-        var actionDone = false;
+        boolean actionDone = false;
 
-        //for(IElement neighbourPipe; neighbourPipe < GetNeighbours().size(); neighbourPipe++)
+        Iterator<IElement> neighbourPipe;
+        //init
+        while(neighbourPipe.hasNext())
         {
         	if(neighbourPipe.GetWaterInside() > 0)
         		PumpWaterToCisternFromNeighbour(neighbourPipe);

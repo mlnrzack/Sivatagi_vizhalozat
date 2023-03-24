@@ -9,7 +9,7 @@ import game.players.*;
 public abstract class Element implements IElement
 {
     private int waterInside;
-    private ArrayList<Player> players = new ArrayList<Player>();
+    private static ArrayList<Player> players = new ArrayList<Player>();
     
     public int GetWaterInside()
     {
@@ -41,7 +41,7 @@ public abstract class Element implements IElement
     	this.players = players;
     }
     
-    public boolean AddPlayer(Player player)
+    public static boolean AddPlayer(Player player)
     {
     	if(players.add(player))
     		return true;

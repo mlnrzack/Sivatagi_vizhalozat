@@ -2,10 +2,7 @@ package game.interfaces;
 
 import java.util.*;
 
-import game.*;
 import game.elements.*;
-import game.interfaces.*;
-import game.players.*;
 
 public interface IPipe extends IElement
 {

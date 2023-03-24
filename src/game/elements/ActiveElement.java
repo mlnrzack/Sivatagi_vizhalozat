@@ -9,7 +9,7 @@ import game.players.*;
 
 public abstract class ActiveElement extends Element
 {
-    private ArrayList<IPipe> neighbours = new ArrayList<IPipe>();
+    private static ArrayList<IPipe> neighbours = new ArrayList<IPipe>();
     
     public void setNeighbours(ArrayList<IPipe> neighbours)
     {
@@ -21,21 +21,21 @@ public abstract class ActiveElement extends Element
     	neighbours.add(neighbour);
     }
     
-    public boolean AddPipe(Pipe p)
+    public boolean AddPipe(IPipe p)
     {
     	if(neighbours.add(p))
     		return true;
     	return false;
     }
     
-    public boolean RemovePipe(Pipe p)
+    public static boolean RemovePipe(IPipe p)
     {
     	if(neighbours.remove(p))
     		return true;
     	return false;
     }
     
-    public boolean AcceptPlayer(Player player)
+    public static boolean AcceptPlayer(Player player)
     {
         return AddPlayer(player);
     }
