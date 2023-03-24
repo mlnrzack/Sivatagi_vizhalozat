@@ -1,8 +1,7 @@
 package game.interfaces;
 
-import game.*;
-import game.elements.*;
-import game.interfaces.*;
+import java.util.*;
+
 import game.players.*;
 
 public interface IElement

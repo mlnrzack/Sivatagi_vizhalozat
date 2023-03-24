@@ -1,54 +1,47 @@
 package game.players;
 
+import java.util.Date;
+
 import game.*;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
 public class Mechanic extends Player
-{
+{	
+    public IPipe pipeInInventory = null;
+    public IPump pumpInInventory = null;
+    
     public Mechanic() 
     {
-        Name = DateTime.Now.ToString();
+        //name = DateTime.Now.ToString();
         GameController.mechanics.Add(this);
     }
-
-    public IPipe PipeInInventory /*{ get; set; }*/ = null;
-    public IPump PumpInInventory /*{ get; set; }*/ = null;
-
-    // Pumpa és cső megjavítása is.
-    public bool Repair()
+   
+    public boolean BuildPumpIntoPipe()
     {
-        if (CurrentPosition.TryRepair())
+        if (pumpInInventory != null)
         {
-            GameController.ActionExecuted();
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool DisconnectNeighbourPipe(int neighbourIdx)
-    {
-        if (PipeInInventory == null)
-            PipeInInventory = CurrentPosition.DisconnectNeighbourPipe(neighbourIdx);
-
-        if (PipeInInventory != null)
-        {
-            GameController.ActionExecuted();
-            return true;
-        }
-
-        return false;
-    }
-
-    public bool ConnectPipe()
-    {
-        if (PipeInInventory != null)
-        {
-            if (CurrentPosition.TryConnectPipe(PipeInInventory))
+            if (currentPosition.TryBuildPumpInto(pumpInInventory))
             {
-                PipeInInventory = null;
+                pumpInInventory = null;
+
+                GameController.ActionExecuted();
+                return true;
+            }
+        }
+
+        System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
+        return false;
+    }
+    
+    public boolean ConnectPipe()
+    {
+        if (pipeInInventory != null)
+        {
+            if (currentPosition.TryConnectPipe(pipeInInventory))
+            {
+                pipeInInventory = null;
 
                 GameController.ActionExecuted();
                 return true;
@@ -59,32 +52,29 @@ public class Mechanic extends Player
         return false;
     }
 
-    public bool BuildPumpIntoPipe()
+    public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
-        if (PumpInInventory != null)
-        {
-            if (CurrentPosition.TryBuildPumpInto(PumpInInventory))
-            {
-                PumpInInventory = null;
+        if (pipeInInventory == null)
+            pipeInInventory = currentPosition.DisconnectNeighbourPipe(neighbourIdx);
 
-                GameController.ActionExecuted();
-                return true;
-            }
+        if (pipeInInventory != null)
+        {
+            GameController.ActionExecuted();
+            return true;
         }
 
-        System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
         return false;
     }
 
-    public bool PickUpFreePipeEnd()
+    public boolean PickUpFreePipeEnd()
     {
-        if (PipeInInventory == null)
+        if (pipeInInventory == null)
         {
-            var pickedUpPipe = CurrentPosition.PickUpFreePipeEnd();
+            var pickedUpPipe = currentPosition.PickUpFreePipeEnd();
 
             if (pickedUpPipe != null)
             {
-                PipeInInventory = pickedUpPipe;
+                pipeInInventory = pickedUpPipe;
 
                 GameController.ActionExecuted();
                 return true;
@@ -95,15 +85,15 @@ public class Mechanic extends Player
         return false;
     }
 
-    public bool PickUpPump()
+    public boolean PickUpPump()
     {
-        if (PipeInInventory == null)
+        if (pipeInInventory == null)
         {
-            var pickedUpPump = CurrentPosition.PickUpPump();
+            var pickedUpPump = currentPosition.PickUpPump();
 
             if (pickedUpPump != null)
             {
-                PumpInInventory = pickedUpPump;
+                pumpInInventory = pickedUpPump;
 
                 GameController.ActionExecuted();
                 return true;
@@ -111,6 +101,17 @@ public class Mechanic extends Player
         }
 
         System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
+        return false;
+    }
+    
+    public boolean Repair()
+    {
+        if (currentPosition.TryRepair())
+        {
+            GameController.ActionExecuted();
+            return true;
+        }
+
         return false;
     }
 }

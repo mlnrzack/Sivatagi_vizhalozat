@@ -1,5 +1,7 @@
 package game;
 
+import java.util.*;
+
 import game.*;
 import game.elements.*;
 import game.interfaces.*;
@@ -7,15 +9,20 @@ import game.players.*;
 
 public class GameController
 {
-	private static int round /*{ get; set; }*/ = 0;
-	private static int mechanicsPoints /*{ get; set; }*/ = 0;
+	private static int round = 0;
+	private static int mechanicsPoints = 0;
 	private static int saboteursPoints = 0;/*=> Desert.WaterFromPipelineNetwork;*/
-    private static ArrayList<ISteppable> steppables /*{ get; set; }*/ = new ArrayList<ISteppable>();
-    private static ArrayList<WaterSpring> waterSrpings /*{ get; set; }*/ = new ArrayList<WaterSpring>();
-    private static ArrayList<Saboteur> sabouteurs /*{ get; set; }*/ = new ArrayList<Saboteur>();
-    private static ArrayList<Mechanic> mechanics /*{ get; set; }*/ = new ArrayList<Mechanic>();
+    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
+    private static ArrayList<WaterSpring> watersrpings = new ArrayList<WaterSpring>();
+    private static ArrayList<Saboteur> sabouteurs = new ArrayList<Saboteur>();
+    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
     /*public static Player CurrentPlayer { get; set; }*/
-    private static int playerActionCountInCurrentRound /*{ get; set; }*/;
+    private static int playerActionCountInCurrentRound = 0;
+    
+    public static void IncreaseMechanicsPoints()
+    {
+    	mechanicsPoints++;
+    }
 
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
     public static void ActionExecuted()
@@ -25,9 +32,21 @@ public class GameController
         StepSteppables();
     }
 
+    public static void AddSteppable(ISteppable steppable)
+    {
+    	steppables.add(steppable);
+        
+    }
+    
+    public static void FireSourceActions()
+    {
+     	//watersrpings.ForEach(watersrpings => watersrpings.FillNeighourPipes());
+    }
+    
     public static void MechanicActions()
     {
-       foreach (var player in GameController.mechanics)
+    	for(Mechanic mechanic; ;)
+       //foreach (var player in GameController.mechanics)
        {
     	   playerActionCountInCurrentRound = 0;
 
@@ -44,37 +63,37 @@ public class GameController
                System.out.println("\t6 - Csővég csatlakoztatása");
                System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
                System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               String userinput = Console.ReadLine();
+               String userinput = System.in.toString();//Console.ReadLine();
                
-               switch (userinput.ToCharArray()[0])
+               switch (userinput.toCharArray()[0])
                {
                		case '1':
-               			String neighbourIdx = int.Parse(userinput.Split(';')[1]);
-                        player.Move(neighbourIdx);
+               			int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
+               			mechanic.Move(neighbourIdx);
                         break;
                     case '2':
-                    	player.Repair();
+                    	mechanic.Repair();
                         break;
                     case '3':
-                        player.PickUpFreePipeEnd();
+                    	mechanic.PickUpFreePipeEnd();
                         break;
                     case '4':
-                        player.PickUpPump();
+                    	mechanic.PickUpPump();
                         break;
                     case '5':
-                        player.BuildPumpIntoPipe();
+                    	mechanic.BuildPumpIntoPipe();
                         break;
                     case '6':
-                        player.ConnectPipe();
+                    	mechanic.ConnectPipe();
                         break;
                     case '7':
-                        neighbourIdx = int.Parse(userinput.Split(';')[1]);
-                        player.DisconnectNeighbourPipe(neighbourIdx);
+                        //neighbourIdx = int.Parse(userinput.Split(';')[1]);
+                        mechanic.DisconnectNeighbourPipe(neighbourIdx);
                         break;
                     case '8':
-                        var neighbourIdxFrom = int.Parse(userinput.Split(';')[1]);
-                        var neighbourIdxTo = int.Parse(userinput.Split(';')[2]);
-                        player.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                        int neighbourIdxFrom;// = int.Parse(userinput.Split(';')[1]);
+                        int neighbourIdxTo;// = int.Parse(userinput.Split(';')[2]);
+                        mechanic.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                         break;
                     default:
                         break;
@@ -85,7 +104,8 @@ public class GameController
 
     public static void SaboteurActions()
     {
-    	foreach (var player in GameController.sabouteurs)
+    	for(Saboteur saboteur;;)
+    	//foreach (var player in GameController.sabouteurs)
     	{
     		playerActionCountInCurrentRound = 0;
 
@@ -102,23 +122,23 @@ public class GameController
                 switch (userinput.toCharArray()[0])
                 {
                 	case '1':
-                    String neighbourIdx = int.Parse(userinput.Split(';')[1]);
-                    	if (neighbourIdx < player.CurrentPosition.GetNeighbours().Count() && neighbourIdx >= 0)
-                        {
-                    		player.Move(neighbourIdx);
-                            ActionExecuted();
-                        }
-                        break;
+                		int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
+                		if (neighbourIdx < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
+                		{
+                			saboteur.Move(neighbourIdx);
+                			ActionExecuted();
+                		}
+                		break;
                     case '2':
-                    	if (player.Damage() == true)
+                    	if (saboteur.Damage() == true)
                     		ActionExecuted();
                         break;
                     case '7':
-                    	String neighbourIdxFrom = int.Parse(userinput.Split(';')[1]);
-                    	String neighbourIdxTo = int.Parse(userinput.Split(';')[2]);
-                    	if (neighbourIdxFrom < player.CurrentPosition.GetNeighbours().Count() && neighbourIdxFrom >= 0
-                    		&& neighbourIdxTo < player.CurrentPosition.GetNeighbours().Count() && neighbourIdxTo >= 0
-                    		&& player.TrySetPump(neighbourIdxFrom, neighbourIdxTo))
+                    	int neighbourIdxFrom;// = int.Parse(userinput.Split(';')[1]);
+                    	int neighbourIdxTo;// = int.Parse(userinput.Split(';')[2]);
+                    	if (neighbourIdxFrom < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdxFrom >= 0
+                    		&& neighbourIdxTo < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdxTo >= 0
+                    		&& saboteur.TrySetPump(neighbourIdxFrom, neighbourIdxTo))
                     	{
                     		ActionExecuted();
                     	}
@@ -139,23 +159,21 @@ public class GameController
             GameController.round++;
         }
     }
-
-    public static void AddSteppable(ISteppable steppable) => steppables.Add(steppable);
-        
+    
     public static void StepSteppables()
     {
     	var actionDone = false;
         do
         {
         	actionDone = false;
-            foreach (var steppable in steppables)
+        	for(;;)
+            //foreach (var steppable in steppables)
             {
-            	actionDone = steppable.Step() || actionDone;
+            	actionDone = steppables.Step() || actionDone;
             }
         }
             while (actionDone);
-        }
-            
-        public static void FireSourceActions() => waterSrpings.ForEach(source => source.FillNeighourPipes());
     }
-}
+            
+   
+ }

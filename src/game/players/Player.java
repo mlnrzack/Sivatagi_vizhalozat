@@ -7,20 +7,38 @@ import game.players.*;
 
 public abstract class Player
 {
-    // Ez nem kell sztem, tesztekhez esetleg.
-    public String Name;// { get; set; }
+    private String name;
+    private IElement currentPosition;
 
-    public IElement CurrentPosition;// { get; set; }
-
+    public String GetName()
+    {
+    	return name;
+    }
+    
+    public void SetName(String name)
+    {
+    	this.name = name;
+    }
+    
+    public IElement GetCurrentPosition()
+    {
+    	return currentPosition;
+    }
+    
+    public void SetCurrentPosition(IElement newPos)
+    {
+    	currentPosition = newPos;
+    }
+    
     public boolean Move(int neighbourIdx)
     {
-        if (CurrentPosition.GetNeighbours().Count() > neighbourIdx && neighbourIdx >= 0)
+        if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
         {
-            IElementx toNeighbour = CurrentPosition.GetNeighbours().ElementAt(neighbourIdx);
+            IElement toNeighbour = currentPosition.GetNeighbours().ElementAt(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-                CurrentPosition = CurrentPosition.GetNeighbours().ElementAt(neighbourIdx);
-                CurrentPosition.RemovePlayer(this);
+                currentPosition = currentPosition.GetNeighbours().ElementAt(neighbourIdx);
+                currentPosition.RemovePlayer(this);
 
                 GameController.ActionExecuted();
                 return true;
@@ -32,7 +50,7 @@ public abstract class Player
 
     public boolean TrySetPump(int neighbourIdxFrom, int neighbourIdxTo)
     {
-        if (CurrentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo))
+        if (currentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo))
         {
             GameController.ActionExecuted();
             return true;

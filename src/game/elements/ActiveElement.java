@@ -9,46 +9,73 @@ import game.players.*;
 
 public abstract class ActiveElement extends Element
 {
-    private ArrayList<IPipe> Neighbours /*{ get; set; }*/ = new ArrayList<IPipe>();
+    private ArrayList<IPipe> neighbours = new ArrayList<IPipe>();
+    
+    public void setNeighbours(ArrayList<IPipe> neighbours)
+    {
+    	this.neighbours = neighbours;
+    }
 
-    public override bool TryBuildPumpInto(IPump pump)
+    public void setNeighbour(IPipe neighbour)
+    {
+    	neighbours.add(neighbour);
+    }
+    
+    public boolean AddPipe(Pipe p)
+    {
+    	if(neighbours.add(p))
+    		return true;
+    	return false;
+    }
+    
+    public boolean RemovePipe(Pipe p)
+    {
+    	if(neighbours.remove(p))
+    		return true;
+    	return false;
+    }
+    
+    public boolean AcceptPlayer(Player player)
+    {
+        return AddPlayer(player);
+    }
+    
+    public IPipe DisconnectNeighbourPipe(int neighbourIdx)
+    {
+        // override-olni leszármazottakban, ott megvalósítani ha beállítható.
+        System.out.println("Nem csinálunk semmit, az elem nem lecsatlakoztatható.");
+        return null;
+    }
+    
+    public ArrayList<IElement> GetNeighbours()
+    {
+    	return neighbours;
+    }
+    
+    public IPipe PickUpFreePipeEnd()
+    {
+        // override-olni leszármazottakban, ott megvalósítani ha felvehető az adott típuson szabad csővég.
+        System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
+        return null;
+    }
+    
+    public IPump PickUpPump()
+    {
+        // override-olni leszármazottakban, ott megvalósítani ha felvehető az adott típuson pumpa.
+        System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
+        return null;
+    }
+    
+    public boolean TryBuildPumpInto(IPump pump)
     {
         // override-olni leszármazottakban, ott megvalósítani ha be lehet építeni pumpát.
         System.out.println("Nem csinálunk semmit, a pumpa nem beépíthető.");
         return false;
     }
 
-    public override bool TryDamage()
+    public boolean TryConnectPipe(IPipe pipeInInventory)
     {
-        // override-olni leszármazottakban, ott megvalósítani ha tönkretehető.
-        System.out.println("Nem csinálunk semmit, a pályaelem nem tönkretehető.");
-        return false;
-    }
-
-    public override bool TryRepair()
-    {
-        // override-olni leszármazottakban, ott megvalósítani ha javatható.
-        System.out.println("Nem csinálunk semmit, a pályaelem nem javítható.");
-        return false;
-    }
-
-    public override bool TrySetInputOutput(int inputIdx, int outputIdx)
-    {
-        // override-olni leszármazottakban, ott megvalósítani ha beállítható.
-        System.out.println("Nem csinálunk semmit, a pályaelem nem állítható.");
-        return false;
-    }
-
-    public override IPipe DisconnectNeighbourPipe(int neighbourIdx)
-    {
-        // override-olni leszármazottakban, ott megvalósítani ha beállítható.
-        System.out.println("Nem csinálunk semmit, az elem nem lecsatlakoztatható.");
-        return null;
-    }
-
-    public override bool TryConnectPipe(IPipe pipeInInventory)
-    {
-        if (Neighbours.Count() < Constants.MaxNeighboursOfActiveElements)
+        if (neighbours.size() < Constants.MaxNeighboursOfActiveElements)
         {
             pipeInInventory.AddNeighbour(this);
 
@@ -57,27 +84,25 @@ public abstract class ActiveElement extends Element
 
         return false;
     }
-
-    public override IPipe PickUpFreePipeEnd()
+    
+    public boolean TryDamage()
     {
-        // override-olni leszármazottakban, ott megvalósítani ha felvehető az adott típuson szabad csővég.
-        System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
-        return null;
+        // override-olni leszármazottakban, ott megvalósítani ha tönkretehető.
+        System.out.println("Nem csinálunk semmit, a pályaelem nem tönkretehető.");
+        return false;
     }
 
-    public override IPump PickUpPump()
+    public boolean TryRepair()
     {
-        // override-olni leszármazottakban, ott megvalósítani ha felvehető az adott típuson pumpa.
-        System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
-        return null;
+        // override-olni leszármazottakban, ott megvalósítani ha javatható.
+        System.out.println("Nem csinálunk semmit, a pályaelem nem javítható.");
+        return false;
     }
 
-    public override IEnumerable<IElement> GetNeighbours() => Neighbours;
-
-    public override bool AcceptPlayer(Player player)
+    public boolean TrySetInputOutput(int inputIdx, int outputIdx)
     {
-        Players.ToList().Add(player);
-
-        return true;
+        // override-olni leszármazottakban, ott megvalósítani ha beállítható.
+        System.out.println("Nem csinálunk semmit, a pályaelem nem állítható.");
+        return false;
     }
 }

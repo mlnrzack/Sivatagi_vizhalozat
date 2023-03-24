@@ -9,17 +9,16 @@ public class Saboteur extends Player
 {
     public Saboteur()
     {
-        GameController.Sabouteurs.Add(this);
+        GameController.sabouteurs.Add(this);
     }
 
     public boolean Damage()
     {
-        if (CurrentPosition.TryDamage())
+        if (currentPosition.TryDamage())
         {
             GameController.ActionExecuted();
             return true;
         }
-
         return false;
     }
 }

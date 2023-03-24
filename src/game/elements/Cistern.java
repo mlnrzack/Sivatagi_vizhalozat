@@ -12,11 +12,31 @@ public class Cistern extends ActiveElement implements ISteppable
         GameController.AddSteppable(this);
     }
     
+    public IPipe PickUpFreePipeEnd()
+    {
+        return new Pipe();
+    }
+    
+    public IPump PickUpPump()
+    {
+        var newPump = new Pump();
+        GameController.AddSteppable(newPump);
+
+        return newPump;
+    }
+    
+    private void PumpWaterToCisternFromNeighbour(IElement neighbourPipe)
+    {
+        neighbourPipe.DecreaseWater();
+        GameController.IncreaseMechanicsPoints();
+        IncreaseWater();
+    }
+    
     public boolean Step()
     {
         var actionDone = false;
 
-        for(IElement neighbourPipe; neighbourPipe < GetNeighbours().Length(); neighbourPipe++)
+        //for(IElement neighbourPipe; neighbourPipe < GetNeighbours().size(); neighbourPipe++)
         {
         	if(neighbourPipe.GetWaterInside() > 0)
         		PumpWaterToCisternFromNeighbour(neighbourPipe);
@@ -25,25 +45,5 @@ public class Cistern extends ActiveElement implements ISteppable
         }
 
         return actionDone;
-    }
-
-    private void PumpWaterToCisternFromNeighbour(IElement neighbourPipe)
-    {
-        neighbourPipe.DecreaseWater();
-        GameController.mechanicsPoints++;
-        WaterInside ++;
-    }
-
-    public override IPipe PickUpFreePipeEnd()
-    {
-        return new Pipe();
-    }
-
-    public override IPump PickUpPump()
-    {
-        var newPump = new Pump();
-        GameController.AddSteppable(newPump);
-
-        return newPump;
     }
 }

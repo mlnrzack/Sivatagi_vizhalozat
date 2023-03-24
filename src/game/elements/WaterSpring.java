@@ -5,7 +5,7 @@ import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
-public class WaterSpring implements ActiveElement
+public class WaterSpring extends ActiveElement
 {
     public WaterSpring() 
     {
@@ -14,7 +14,8 @@ public class WaterSpring implements ActiveElement
 
     public void FillNeighourPipes()
     {
-        foreach (var neighbourPipe in GetNeighbours())
+    	for(IElement neighbourPipe;;)
+        //foreach (var neighbourPipe in GetNeighbours())
         {
             neighbourPipe.FillWaterTo();
         }
