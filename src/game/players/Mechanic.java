@@ -21,15 +21,10 @@ public class Mechanic extends Player
     public boolean BuildPumpIntoPipe()
     {
     	System.out.println("public boolean BuildPumpIntoPipe()");
-        if (pumpInInventory != null)
+        if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory))
         {
-            if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory))
-            {
-                pumpInInventory = null;
-
-                GameManager.ActionExecuted();
-                return true;
-            }
+            GameManager.ActionExecuted();
+            return true;
         }
 
         System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
@@ -39,15 +34,10 @@ public class Mechanic extends Player
     public boolean ConnectPipe()
     {
     	System.out.println("public boolean ConnectPipe()");
-        if (pipeInInventory != null)
+        if (GetCurrentPosition().TryConnectPipe(pipeInInventory))
         {
-            if (GetCurrentPosition().TryConnectPipe(pipeInInventory))
-            {
-                pipeInInventory = null;
-
-                GameManager.ActionExecuted();
-                return true;
-            }
+        	GameManager.ActionExecuted();
+            return true;
         }
 
         System.out.println("Nem sikerül az akció. Próbálkozz úgy, aktív elemen állsz és van nálad csővég.");
@@ -57,8 +47,7 @@ public class Mechanic extends Player
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public boolean DisconnectNeighbourPipe(int neighbourIdx)");
-        if (pipeInInventory == null)
-            pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
+        pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
 
         if (pipeInInventory != null)
         {
@@ -78,8 +67,6 @@ public class Mechanic extends Player
 
             if (pickedUpPipe != null)
             {
-                pipeInInventory = pickedUpPipe;
-
                 GameManager.ActionExecuted();
                 return true;
             }
@@ -92,17 +79,12 @@ public class Mechanic extends Player
     public boolean PickUpPump()
     {
     	System.out.println("public boolean PickUpPump()");
-        if (pipeInInventory == null)
+        Pump pickedUpPump = GetCurrentPosition().PickUpPump();
+
+        if (pickedUpPump != null)
         {
-            Pump pickedUpPump = GetCurrentPosition().PickUpPump();
-
-            if (pickedUpPump != null)
-            {
-                pumpInInventory = pickedUpPump;
-
-                GameManager.ActionExecuted();
-                return true;
-            }
+            GameManager.ActionExecuted();
+            return true;
         }
 
         System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");

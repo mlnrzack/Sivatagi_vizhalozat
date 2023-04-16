@@ -2,7 +2,6 @@ package game;
 
 import java.util.*;
 
-import game.*;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
@@ -226,11 +225,8 @@ public class GameManager
     public static void StartGame()
     {
     	System.out.println("public static void StartGame()");
-    	while (GameManager.round < Constants.RoundNumber)
-        {
-            GameManager.MechanicActions();
-            GameManager.SaboteurActions();
-        }
+    	GameManager.MechanicActions();
+        GameManager.SaboteurActions();
     }
     
     public static void StepSteppables()

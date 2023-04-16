@@ -2,9 +2,6 @@ package game.elements;
 
 import java.util.ArrayList;
 
-import game.*;
-import game.elements.*;
-import game.interfaces.*;
 import game.players.*;
 
 public abstract class ActiveElement extends Element
@@ -14,28 +11,26 @@ public abstract class ActiveElement extends Element
     public void setNeighbours(ArrayList<Pipe> neighbours)
     {
     	System.out.println("public void setNeighbours(ArrayList<Pipe> neighbours)");
-    	this.neighbours = neighbours;
     }
 
     public void setNeighbour(Pipe neighbour)
     {
     	System.out.println("public void setNeighbour(Pipe neighbour)");
-    	neighbours.add(neighbour);
     }
     
     public boolean AddPipe(Pipe p)
     {
     	System.out.println("public boolean AddPipe(Pipe p)");
-    	if(neighbours.add(p))
-    		return true;
+    	if(neighbours.add(p));
+    	
     	return false;
     }
     
     public static boolean RemovePipe(Pipe p)
     {
     	System.out.println("public static boolean RemovePipe(Pipe p)");
-    	if(neighbours.remove(p))
-    		return true;
+    	if(neighbours.remove(p));
+    	
     	return false;
     }
     
@@ -86,12 +81,7 @@ public abstract class ActiveElement extends Element
     public boolean TryConnectPipe(Pipe pipeInInventory)
     {
     	System.out.println("public boolean TryConnectPipe(IPipe pipeInInventory)");
-        if (neighbours.size() < Constants.MaxNeighboursOfActiveElements)
-        {
-            pipeInInventory.AddNeighbour(this);
-
-            return true;
-        }
+    	pipeInInventory.AddNeighbour(this);
 
         return false;
     }

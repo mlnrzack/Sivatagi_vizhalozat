@@ -13,25 +13,23 @@ public abstract class Player
     public String GetName()
     {
     	System.out.println("public String GetName()");
-    	return name;
+    	return null;
     }
     
     public void SetName(String name)
     {
     	System.out.println("public void SetName(String name)");
-    	this.name = name;
     }
     
     public Element GetCurrentPosition()
     {
     	System.out.println("public Element GetCurrentPosition()");
-    	return currentPosition;
+    	return null;
     }
     
     public void SetCurrentPosition(Element newPos)
     {
     	System.out.println("public void SetCurrentPosition(Element newPos)");
-    	currentPosition = newPos;
     }
     
     public boolean Move(int neighbourIdx)

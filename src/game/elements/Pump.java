@@ -3,9 +3,7 @@ package game.elements;
 import java.util.*;
 
 import game.*;
-import game.elements.*;
 import game.interfaces.*;
-import game.players.*;
 
 public class Pump extends ActiveElement implements ISteppable
 {
@@ -24,19 +22,16 @@ public class Pump extends ActiveElement implements ISteppable
     	System.out.println("public boolean Step()");
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
-
-        // Feltételeket akár be is lehet vinni a meghívott függvényekbe és akkor azok mehetnek a return-be, de most nekem így szimpibb.
+        
         if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
-        if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
+        if (GetWaterInside() < 0) pumpWaterFromInputDone = PumpWaterFromInput();
 
-        return GettingOlder() || pumpWaterToOutputDone || pumpWaterFromInputDone;
+        return false;
     }
 
     public void SetPump(Pipe input, Pipe output)
     {
     	System.out.println("public void SetPump(Pipe input, Pipe output)");
-        this.input = input;
-        this.output = output;
     }
 
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
@@ -47,8 +42,6 @@ public class Pump extends ActiveElement implements ISteppable
         {
             Pipe from = (Pipe) GetNeighbours().get(neighbourIdxFrom);
             Pipe to = (Pipe) GetNeighbours().get(neighbourIdxTo);
-            input = from;
-            output = to;
 
             return true;
         }
@@ -94,7 +87,7 @@ public class Pump extends ActiveElement implements ISteppable
     private boolean GettingOlder()
     {
     	System.out.println("private boolean GettingOlder()");
-        if (new Random().nextDouble() < Constants.PumpErrorProbability)
+        if (new Random().nextDouble() < 0)
         {
             GoWrong();
 
@@ -109,8 +102,6 @@ public class Pump extends ActiveElement implements ISteppable
     	System.out.println("public boolean TryRepair()");
         if (isWrong == true)
         {
-            isWrong = false;
-
             return true;
         }
 
@@ -121,28 +112,24 @@ public class Pump extends ActiveElement implements ISteppable
     {
     	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        Pipe neighbourtoDisconnect = (Pipe)GetNeighbours().get(neighbourIdx);			//ezt valaki pls nézze meg, hogy hogyan lehetne cast nélkül
-
-        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) 
-        	return null;
+        Pipe neighbourtoDisconnect = (Pipe)GetNeighbours().get(neighbourIdx);			
 
         ActiveElement.RemovePipe(neighbourtoDisconnect);
         neighbourtoDisconnect.WaterToDesert();
         neighbourtoDisconnect.RemoveNeighbour(this);
 
-        return neighbourtoDisconnect;
+        return null;
     }
 
     public boolean GetBuildedInto(Pipe pipe)
     {
     	System.out.println("public boolean GetBuildedInto(Pipe pipe)");
-        Pipe newPipe = new Pipe();
         pipe.AddNeighbour(this);
         pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().get(0));
         
-        AddPipe(newPipe);
+        AddPipe(new Pipe());
         AddPipe(pipe);
 
-        return true;
+        return false;
     }
 }

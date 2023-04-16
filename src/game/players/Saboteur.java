@@ -19,7 +19,7 @@ public class Saboteur extends Player
         if (GetCurrentPosition().TryDamage())
         {
             GameManager.ActionExecuted();
-            return true;
+            return false;
         }
         return false;
     }

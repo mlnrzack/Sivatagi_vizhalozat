@@ -2,8 +2,6 @@ package game.elements;
 
 import java.util.*;
 
-import game.*;
-import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
@@ -27,8 +25,6 @@ public class Pipe extends Element implements ISteppable
     	System.out.println("public boolean TryRepair()");
         if (isWrong)
         {
-            isWrong = false;
-
             return true;
         }
 
@@ -41,8 +37,6 @@ public class Pipe extends Element implements ISteppable
     	System.out.println("public boolean TryDamage()");
         if (!isWrong)
         {
-            isWrong = true;
-
             return true;
         }
 
@@ -99,11 +93,7 @@ public class Pipe extends Element implements ISteppable
     public boolean AcceptPlayer(Player player)
     {
     	System.out.println("public boolean AcceptPlayer(Player player)");
-        if (GetPlayers().size() < Constants.AcceptedPlayersInPipe)
-        {
-            AddPlayer(player);
-            return true;
-        }
+        AddPlayer(player);
 
         System.out.println("Cső nem tud fogadni, mert tele van. Válassz más műveletet.");
         return false;
@@ -132,6 +122,6 @@ public class Pipe extends Element implements ISteppable
     public ArrayList<ActiveElement> GetNeighboursOfPipe()
     {
     	System.out.println("public ArrayList<ActiveElement> GetNeighboursOfPipe()");
-    	return neighbours;
+    	return null;
     }
 }
