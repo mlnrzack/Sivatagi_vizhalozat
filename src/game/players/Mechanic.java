@@ -3,6 +3,9 @@ package game.players;
 import game.*;
 import game.elements.*;
 
+/**
+ * A szerelő játékos role-ját testesíti meg.
+ */
 public class Mechanic extends Player
 {	
     public Pipe pipeInInventory = null;
@@ -13,7 +16,11 @@ public class Mechanic extends Player
     	System.out.println("public Mechanic() ");
         GameManager.AddMechanic(this);
     }
-   
+
+    /**
+     * Ha a szerelőnél van egy pumpa, akkor egy adott csövön végrehajtható ez a függvény, aminek hatására a cső elválasztódik és a két fél közé kerül egy új pumpa.
+     * @return
+     */
     public boolean BuildPumpIntoPipe()
     {
     	System.out.println("public boolean BuildPumpIntoPipe()");
@@ -26,7 +33,11 @@ public class Mechanic extends Player
         System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
         return false;
     }
-    
+
+    /**
+     * A szerelőnél lévő csövet hozzákötjük egy pumpához
+     * @return
+     */
     public boolean ConnectPipe()
     {
     	System.out.println("public boolean ConnectPipe()");
@@ -40,6 +51,11 @@ public class Mechanic extends Player
         return false;
     }
 
+    /**
+     * Az aktív elemtől elválasztja a hozzá kapcsolódó csövet.
+     * @param neighbourIdx
+     * @return
+     */
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public boolean DisconnectNeighbourPipe(int neighbourIdx)");
@@ -54,6 +70,10 @@ public class Mechanic extends Player
         return false;
     }
 
+    /**
+     *  Egy szabad végű cső felvétele.
+     * @return
+     */
     public boolean PickUpFreePipeEnd()
     {
     	System.out.println("public boolean PickUpFreePipeEnd()");
@@ -72,6 +92,10 @@ public class Mechanic extends Player
         return false;
     }
 
+    /**
+     *  Egy új pumpa objektum felvétele a ciszternából.
+     * @return
+     */
     public boolean PickUpPump()
     {
     	System.out.println("public boolean PickUpPump()");
@@ -86,7 +110,11 @@ public class Mechanic extends Player
         System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
         return false;
     }
-    
+
+    /**
+     * Egy elromlott pumpa megjavítása.
+     * @return
+     */
     public boolean Repair()
     {
     	System.out.println("public boolean Repair()");

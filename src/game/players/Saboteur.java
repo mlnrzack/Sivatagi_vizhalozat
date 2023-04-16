@@ -2,6 +2,9 @@ package game.players;
 
 import game.*;
 
+/**
+ * Ez a szabotőr játékosok ostálya
+ */
 public class Saboteur extends Player
 {
     public Saboteur()
@@ -10,6 +13,10 @@ public class Saboteur extends Player
         GameManager.AddSaboteur(this);
     }
 
+    /**
+     * Egy pumpa elrontása, amin éppen áll a szabotőr
+     * @return
+     */
     public boolean Damage()
     {
     	System.out.println("public boolean Damage()");

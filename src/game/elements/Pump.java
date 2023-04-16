@@ -17,6 +17,10 @@ public class Pump extends ActiveElement implements ISteppable
         GameManager.AddSteppable(this);
     }
 
+    /**
+     * Megvalósítja a Steppable interfész függvényét. Lépteti a vizet a csőrendszerben.
+     * @return
+     */
     public boolean Step()
     {
     	System.out.println("public boolean Step()");
@@ -29,11 +33,22 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**
+     * Beállítja a pumpa be-és kimenetét.
+     * @param input
+     * @param output
+     */
     public void SetPump(Pipe input, Pipe output)
     {
     	System.out.println("public void SetPump(Pipe input, Pipe output)");
     }
 
+    /**
+     * Egy játékos kísérletét vizsgálja, hogy egy pumpán változtasson a be-és kimeneteken.
+     * @param neighbourIdxFrom
+     * @param neighbourIdxTo
+     * @return
+     */
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
     	System.out.println("public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)");
@@ -50,6 +65,9 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**
+     * A pumpa elromlik, és a benne tárolt víz bekerül a sivatagba, növelve a kifolyt víz mennyiségét.
+     */
     private void GoWrong()
     {
     	System.out.println("private void GoWrong()");
@@ -57,7 +75,11 @@ public class Pump extends ActiveElement implements ISteppable
         SetWaterInside(0);
     }
 
-    // Akkor hívjuk meg ha van szabad kapacitása a tartálynak
+    /**
+     * Megvalósítja a víz folyását a bemenetből.
+     * Akkor hívjuk meg ha van szabad kapacitása a tartálynak
+     * @return
+     */
     public boolean PumpWaterFromInput()
     {
     	System.out.println("public boolean PumpWaterFromInput()");
@@ -72,6 +94,10 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**
+     * Megvalósítja a víz folyását a kimenetbe.
+     * @return
+     */
     public boolean PumpWaterToOutput()
     {
     	System.out.println("public boolean PumpWaterToOutput()");
@@ -84,6 +110,10 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**
+     * Egy valószínűségi változó hatására a pumpa tönkremehet.
+     * @return
+     */
     private boolean GettingOlder()
     {
     	System.out.println("private boolean GettingOlder()");
@@ -97,6 +127,10 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**
+     * Az adott pumpán álló szerelő javítási kísérletét vizsgáló függvény.
+     * @return
+     */
     public boolean TryRepair()
     {
     	System.out.println("public boolean TryRepair()");
@@ -108,6 +142,11 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**
+     *  Az aktív elemtől elválasztja a hozzá kapcsolódó csövet.
+     * @param neighbourIdx
+     * @return
+     */
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
@@ -121,6 +160,11 @@ public class Pump extends ActiveElement implements ISteppable
         return null;
     }
 
+    /**
+     * Egy pumpát beépít egy csőbe, amit előtte ketté választ,hogy közéjük lehessen illeszteni.
+     * @param pipe
+     * @return
+     */
     public boolean GetBuildedInto(Pipe pipe)
     {
     	System.out.println("public boolean GetBuildedInto(Pipe pipe)");

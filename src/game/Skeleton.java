@@ -151,7 +151,7 @@ public class Skeleton
 		int userinput = input.nextInt();
 		while (userinput < firstValid || userinput > lastValid)
 		{
-			System.out.println("Adj meg " + firstValid + " és " + lastValid + " közötti értéket HE!");
+			System.out.println("Adj meg " + firstValid + " és " + lastValid + " közötti értéket!");
 			userinput = input.nextInt();
 		}
 
@@ -166,7 +166,7 @@ public class Skeleton
 		String userinput = input.next();
 		while (!userinput.equalsIgnoreCase("y") && !userinput.equalsIgnoreCase("n"))
 		{
-			System.out.println("Adj meg n/N vagy y/Y karaktert HE!");
+			System.out.println("Adj meg n/N vagy y/Y karaktert!");
 			userinput = input.next();
 		}
 

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import game.*;
 
+/**
+ * A víz innen ered a csőrendszerbe
+ */
 public class WaterSpring extends ActiveElement
 {
     public WaterSpring() 
@@ -12,6 +15,9 @@ public class WaterSpring extends ActiveElement
         GameManager.AddWaterSpring(this);
     }
 
+    /**
+     * Megtölti a belekapcsolódó csőelemeket vízzel.
+     */
     public void FillNeighourPipes()
     {
     	System.out.println("public void FillNeighourPipes()");
