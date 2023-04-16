@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Skeleton 
 {
-	public static void main(String args[])
+	public static void Main(String args[])
 	{
 		System.out.println("static void Main(String[] args)");
 		Scanner input = new Scanner(System.in);
@@ -69,14 +69,14 @@ public class Skeleton
                     break;
                 // Szabad csővég felvétele
                 case 5:
-            		System.out.println("1: A csővéget felveszi a szerelő");
-        			userinput = GetUserInput(1, 1);
+                	System.out.println("1: A csővéget felveszi a szerelő");
+                	userinput = GetUserInput(1, 1);
 
         			// TODO: Call method
 
-        			AfterPrintingMethodCallsDialog();
-        			break;
-        			// Pumpa felvétele ciszternából
+                	AfterPrintingMethodCallsDialog();
+                	break;
+            	// Pumpa felvétele ciszternából
             	case 6:
             		System.out.println("1: A szerelő magához vesz egy pumpát");
             		System.out.println("2: A szerelő már birtokol egy pumpát, így nem vehet fel még egyet");
