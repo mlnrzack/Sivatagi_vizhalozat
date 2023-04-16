@@ -6,7 +6,7 @@ import game.players.*;
 
 public abstract class ActiveElement extends Element
 {
-    private static ArrayList<Pipe> neighbours = null;
+    protected static ArrayList<Pipe> neighbours = null;
     
     public void setNeighbours(ArrayList<Pipe> neighbours)
     {
