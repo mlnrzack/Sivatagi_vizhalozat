@@ -21,73 +21,65 @@ public class GameManager
     public int GetRound()
     {
     	System.out.println("public int GetRound()");
-    	return round;
+    	return 0;
     }
     
     public void SetRound(int round)
     {
     	System.out.println("public void SetRound(int round)");
-    	this.round = round;
     }
     
     public int GetMechanincsPoints()
     {
     	System.out.println("public int GetMechanincsPoints()");
-    	return mechanicsPoints;
+    	return 0;
     }
     
     public void SetMechanicsPoints(int points)
     {
     	System.out.println("public void SetMechanicsPoints(int points)");
-    	mechanicsPoints = points;
     }
     
     public static void IncreaseMechanicsPoints()
     {
     	System.out.println("public static void IncreaseMechanicsPoints()");
-    	mechanicsPoints++;
     }
     
     public static void DecreaseMechanicsPoints()
     {
     	System.out.println("public static void DecreaseMechanicsPoints()");
-    	mechanicsPoints--;
     }
     
     public int GetSaboteurPoints()
     {
     	System.out.println("public int GetSaboteurPoints()");
-    	return saboteursPoints;
+    	return 0;
     }
     
     public void SetSaboteursPoints(int points)
     {
     	System.out.println("public void SetSaboteursPoints(int points)");
-    	saboteursPoints = points;
     }
     
     public static void IncreaseSaboteursPoints()
     {
     	System.out.println("public static void IncreaseSaboteursPoints()");
-    	saboteursPoints++;
     }
     
     public static void DecreaseSaboteursPoints()
     {
     	System.out.println("public static void DecreaseSaboteursPoints()");
-    	saboteursPoints--;
     }
 
     public ArrayList<Mechanic> GetMechanic()
     {
     	System.out.println("public ArrayList<Mechanic> GetMechanic()");
-    	return mechanics;
+    	return null;
     }
     
     public void SetMechanic(ArrayList<Mechanic> mechanics)
     {
     	System.out.println("public void SetMechanic(ArrayList<Mechanic> mechanics)");
-    	this.mechanics = mechanics;
     }
     
     public static boolean AddMechanic(Mechanic mechanic)
@@ -111,7 +103,6 @@ public class GameManager
     public void SetSaboteurs(ArrayList<Saboteur> saboteurs)
     {
     	System.out.println("public void SetSaboteurs(ArrayList<Saboteur> saboteurs)");
-    	this.saboteurs = saboteurs;
     }
 
     public static boolean AddSaboteur(Saboteur saboteur)
@@ -135,7 +126,6 @@ public class GameManager
     public void SetSteppables(ArrayList<ISteppable> steppables)
     {
     	System.out.println("public void SetSteppables(ArrayList<ISteppable> steppables)");
-    	this.steppables = steppables;
     }
 
     public static boolean AddSteppble(ISteppable steppable)
@@ -159,7 +149,6 @@ public class GameManager
     public void SetWaterSprings(ArrayList<WaterSpring> waterSprings)
     {
     	System.out.println("public void SetWaterSprings(ArrayList<WaterSpring> waterSprings)");
-    	this.waterSprings = waterSprings;
     }
     
     public static boolean AddWaterSpring(WaterSpring waterspring)
@@ -183,13 +172,11 @@ public class GameManager
     public void SetPlayerAction(int count)
     {
     	System.out.println("public void SetPlayerAction(int count)");
-    	playerActionCountInCurrentRound = count;
     }
     
     public void IncreasePlayerAction()
     {
     	System.out.println("public void IncreasePlayerAction()");
-    	playerActionCountInCurrentRound++;
     }
     
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
@@ -233,7 +220,6 @@ public class GameManager
     {
     	System.out.println("public static void StepSteppables()");
     	boolean actionDone = false;
-    	// vagy a do-while helyett csak a belső for-ban ez: steppables.get(i).Step()
     	do
         {
             actionDone = false;

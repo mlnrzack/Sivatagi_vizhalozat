@@ -1,11 +1,7 @@
 package game.players;
 
-import java.util.Date;
-
 import game.*;
 import game.elements.*;
-import game.interfaces.*;
-import game.players.*;
 
 public class Mechanic extends Player
 {	

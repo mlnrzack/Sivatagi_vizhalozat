@@ -3,9 +3,6 @@ package game.elements;
 import java.util.ArrayList;
 
 import game.*;
-import game.elements.*;
-import game.interfaces.*;
-import game.players.*;
 
 public class WaterSpring extends ActiveElement
 {

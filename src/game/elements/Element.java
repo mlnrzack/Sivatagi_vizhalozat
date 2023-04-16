@@ -2,8 +2,6 @@ package game.elements;
 
 import java.util.*;
 
-import game.*;
-import game.interfaces.*;
 import game.players.*;
 
 public abstract class Element
