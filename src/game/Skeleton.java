@@ -2,11 +2,16 @@ package game;
 
 import java.util.Scanner;
 
+import game.*;
+import game.elements.*;
+import game.interfaces.*;
+import game.players.*;
+
 public class Skeleton 
 {
-	public static void Main(String args[])
+	public static void main(String args[])
 	{
-		System.out.println("static void Main(String[] args)");
+		System.out.println("static void main(String[] args)");
 		Scanner input = new Scanner(System.in);
 
 		while (true)
