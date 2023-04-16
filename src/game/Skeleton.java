@@ -4,8 +4,9 @@ import java.util.Scanner;
 
 public class Skeleton 
 {
-	public static void main(String args[])
+	public static void Main(String args[])
 	{
+		System.out.println("static void Main(String[] args)");
 		Scanner input = new Scanner(System.in);
 
 		while (true)

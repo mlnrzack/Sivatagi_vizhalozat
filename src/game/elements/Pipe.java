@@ -66,7 +66,7 @@ public class Pipe extends Element implements ISteppable
     public ArrayList<Element> GetNeighbours()
     {
     	System.out.println("public ArrayList<Element> GetNeighbours()");
-    	return neighbours;
+    	return null;
     }
 
     public boolean TryConnectPipe(Pipe pipeInInventory)

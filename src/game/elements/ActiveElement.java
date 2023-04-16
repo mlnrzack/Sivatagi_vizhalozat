@@ -56,7 +56,7 @@ public abstract class ActiveElement extends Element
     public ArrayList<Element> GetNeighbours()
     {
     	System.out.println("public ArrayList<Element> GetNeighbours()");
-    	return neighbours;
+    	return null;
     }
     
     public Pipe PickUpFreePipeEnd()

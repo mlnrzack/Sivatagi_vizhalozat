@@ -39,10 +39,10 @@ public abstract class Player
     	System.out.println("public boolean Move(int neighbourIdx)");
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
         {
-            Element toNeighbour = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
+            Element toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-                currentPosition = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
+                currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
                 currentPosition.RemovePlayer(this);
 
                 GameManager.ActionExecuted();

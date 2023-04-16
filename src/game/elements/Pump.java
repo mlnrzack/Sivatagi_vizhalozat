@@ -45,8 +45,8 @@ public class Pump extends ActiveElement implements ISteppable
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
             && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
         {
-            Pipe from = GetNeighbours()[neighbourIdxFrom];
-            Pipe to = GetNeighbours()[neighbourIdxTo];
+            Pipe from = (Pipe) GetNeighbours().get(neighbourIdxFrom);
+            Pipe to = (Pipe) GetNeighbours().get(neighbourIdxTo);
             input = from;
             output = to;
 
@@ -121,9 +121,10 @@ public class Pump extends ActiveElement implements ISteppable
     {
     	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        Pipe neighbourtoDisconnect = GetNeighbours()[neighbourIdx];
+        Pipe neighbourtoDisconnect = (Pipe)GetNeighbours().get(neighbourIdx);			//ezt valaki pls nézze meg, hogy hogyan lehetne cast nélkül
 
-        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
+        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) 
+        	return null;
 
         ActiveElement.RemovePipe(neighbourtoDisconnect);
         neighbourtoDisconnect.WaterToDesert();
@@ -135,14 +136,12 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean GetBuildedInto(Pipe pipe)
     {
     	System.out.println("public boolean GetBuildedInto(Pipe pipe)");
-        // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
         Pipe newPipe = new Pipe();
-        // { waterInside = 0, Neighbours = new List<ActiveElement>() { this, pipe.GetNeighboursOfPipe().ToList().First() } };
         pipe.AddNeighbour(this);
-        pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().ToList().First());//??
+        pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().get(0));
+        
         AddPipe(newPipe);
         AddPipe(pipe);
-        neighbours.Add(pipe);
 
         return true;
     }
