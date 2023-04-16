@@ -197,7 +197,6 @@ public class GameManager
     public static void ActionExecuted()
     {
     	System.out.println("public static void ActionExecuted()");
-        playerActionCountInCurrentRound++;
         FireSourceActions();
         StepSteppables();
     }
@@ -212,115 +211,16 @@ public class GameManager
     public static void FireSourceActions()
     {
     	System.out.println("public static void FireSourceActions()");
-     	//watersrpings.ForEach(watersrpings => watersrpings.FillNeighourPipes());
     }
     
     public static void MechanicActions()
     {
     	System.out.println("public static void MechanicActions()");
-        foreach (var player in GameController.mechanics)
-        {
-    	   playerActionCountInCurrentRound = 0;
-
-    	   while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
-           {
-    		   System.out.println("{GameController.round + 1}. Kör");
-               System.out.println("Szerelő {player.Name} köre, {playerActionCountInCurrentRound + 1}. akció");
-               System.out.println("Lehetőségek:");
-               System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-               System.out.println("\t2 - Javítás");
-               System.out.println("\t3 - Szabad csővég felvétele");
-               System.out.println("\t4 - Pumpa felvétele");
-               System.out.println("\t5 - Pumpa beépítése a csőbe");
-               System.out.println("\t6 - Csővég csatlakoztatása");
-               System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
-               System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               String userinput = System.in.toString();//Console.ReadLine();
-               
-               switch (userinput.toCharArray()[0])
-               {
-               		case '1':
-               			int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
-               			mechanic.Move(neighbourIdx);
-                        break;
-                    case '2':
-                    	mechanic.Repair();
-                        break;
-                    case '3':
-                    	mechanic.PickUpFreePipeEnd();
-                        break;
-                    case '4':
-                    	mechanic.PickUpPump();
-                        break;
-                    case '5':
-                    	mechanic.BuildPumpIntoPipe();
-                        break;
-                    case '6':
-                    	mechanic.ConnectPipe();
-                        break;
-                    case '7':
-                        //neighbourIdx = int.Parse(userinput.Split(';')[1]);
-                        mechanic.DisconnectNeighbourPipe(neighbourIdx);
-                        break;
-                    case '8':
-                        int neighbourIdxFrom;// = int.Parse(userinput.Split(';')[1]);
-                        int neighbourIdxTo;// = int.Parse(userinput.Split(';')[2]);
-                        mechanic.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-                        break;
-                    default:
-                        break;
-                }
-            }
-       }
     }
 
     public static void SaboteurActions()
     {
     	System.out.println("public static void SaboteurActions()");
-    	for(Saboteur saboteur;;)
-    	//foreach (var player in GameController.sabouteurs)
-    	{
-    		playerActionCountInCurrentRound = 0;
-
-            while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
-            {
-            	System.out.println("{GameController.round + 1}. Kör");
-                System.out.println("Szabotőr {player.Name} köre, {playerActionCountInCurrentRound + 1}. akció");
-                System.out.println("Lehetőségek:");
-                System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-                System.out.println("\t2 - Lyukasztás");
-                System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                String userinput = System.in.toString();//.ReadLine();
-
-                switch (userinput.toCharArray()[0])
-                {
-                	case '1':
-                		int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
-                		if (neighbourIdx < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
-                		{
-                			saboteur.Move(neighbourIdx);
-                			ActionExecuted();
-                		}
-                		break;
-                    case '2':
-                    	if (saboteur.Damage() == true)
-                    		ActionExecuted();
-                        break;
-                    case '7':
-                    	int neighbourIdxFrom;// = int.Parse(userinput.Split(';')[1]);
-                    	int neighbourIdxTo;// = int.Parse(userinput.Split(';')[2]);
-                    	if (neighbourIdxFrom < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdxFrom >= 0
-                    		&& neighbourIdxTo < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdxTo >= 0
-                    		&& saboteur.TrySetPump(neighbourIdxFrom, neighbourIdxTo))
-                    	{
-                    		ActionExecuted();
-                    	}
-                        break;
-                    default:
-                    	break;
-                }
-            }
-        }
     }
 
     public static void StartGame()
@@ -330,22 +230,16 @@ public class GameManager
         {
             GameManager.MechanicActions();
             GameManager.SaboteurActions();
-            GameManager.round++;
         }
     }
     
     public static void StepSteppables()
     {
     	System.out.println("public static void StepSteppables()");
-    	var actionDone = false;
-        do
-        {
-        	actionDone = false;
-            foreach (var steppable in steppables)
-            {
-            	actionDone = steppables.Step() || actionDone;
-            }
-        }
-            while (actionDone);
+    	boolean actionDone = false;
+    	for(int i = 0; i < steppables.size(); i++)
+    	{
+    		steppables.get(i).Step();
+    	}        
     }  
  }
