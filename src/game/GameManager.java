@@ -236,13 +236,14 @@ public class GameManager
     public static void StepSteppables()
     {
     	System.out.println("public static void StepSteppables()");
-    	boolean actionDone = false;    	
+    	boolean actionDone = false;
+    	// vagy a do-while helyett csak a belső for-ban ez: steppables.get(i).Step()
     	do
         {
             actionDone = false;
             for(int i = 0; i < steppables.size(); i++)
         	{
-            	actionDone = steppables.get(i).Step()|| actionDone;;
+            	actionDone = steppables.get(i).Step()|| actionDone; 
         	}
         }
         while (actionDone);
