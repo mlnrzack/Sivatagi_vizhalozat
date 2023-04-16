@@ -9,12 +9,14 @@ public class WaterSpring extends ActiveElement
 {
     public WaterSpring() 
     {
-        GameController.AddWaterSpring(this);
+    	System.out.println("");
+        GameManager.AddWaterSpring(this);
     }
 
     public void FillNeighourPipes()
     {
-    	for(IElement neighbourPipe;;)
+    	System.out.println("public void FillNeighourPipes()");
+    	for(Element neighbourPipe;;)
         //foreach (var neighbourPipe in GetNeighbours())
         {
             neighbourPipe.FillWaterTo();

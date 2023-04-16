@@ -6,43 +6,50 @@ import game.*;
 import game.interfaces.*;
 import game.players.*;
 
-public abstract class Element implements IElement
+public abstract class Element
 {
-    private int waterInside;
-    private static ArrayList<Player> players = new ArrayList<Player>();
+    private int waterInside = 0;
+    private static ArrayList<Player> players = null;
     
     public int GetWaterInside()
     {
+    	System.out.println("public int GetWaterInside()");
     	return waterInside;
     }
 
     public void SetWaterInside(int waterInside)
     {
+    	System.out.println("public void SetWaterInside(int waterInside)");
     	this.waterInside = waterInside;
     }
 
     public void DecreaseWater()
     {
+    	System.out.println("public void DecreaseWater()");
     	waterInside--;
     }
     
     public void IncreaseWater()
     {
+    	System.out.println("public void IncreaseWater()");
     	waterInside++;
     }
     
     public ArrayList<Player> GetPlayers()
     {
+    	System.out.println("public ArrayList<Player> GetPlayers()");
     	return players;
     }
     
     public void SetPLayers(ArrayList<Player> players)
     {
+    	System.out.println("public void SetPLayers(ArrayList<Player> players)");
     	this.players = players;
     }
     
     public static boolean AddPlayer(Player player)
     {
+    	System.out.println("public static boolean AddPlayer(Player player)");
     	if(players.add(player))
     		return true;
     	return false;
@@ -51,6 +58,7 @@ public abstract class Element implements IElement
     // true ha sikerül vizet fogadnia
     public boolean FillWaterTo()
     {
+    	System.out.println("public boolean FillWaterTo()");
         if (waterInside < Constants.PipeCapacity)
         {
             waterInside++;
@@ -63,12 +71,14 @@ public abstract class Element implements IElement
 
     public void WaterToDesert()
     {
+    	System.out.println("public void WaterToDesert()");
         Desert.IncreaseWaterFromPipelineNetwork(waterInside);
         waterInside = 0;
     }
 
     public boolean RemovePlayer(Player player)
     {
+    	System.out.println("public boolean RemovePlayer(Player player)");
     	if(players.remove(player))
     		return true;
     	
@@ -76,13 +86,13 @@ public abstract class Element implements IElement
     }
     
     public abstract boolean AcceptPlayer(Player player);
-    public abstract ArrayList<IElement> GetNeighbours();	//IEnumerable
+    public abstract ArrayList<Element> GetNeighbours();
     public abstract boolean TryRepair();
     public abstract boolean TryDamage();
-    public abstract boolean TryBuildPumpInto(IPump pump);
-    public abstract IPipe DisconnectNeighbourPipe(int neighbourIdx);
-    public abstract boolean TryConnectPipe(IPipe pipeInInventory);
-    public abstract IPipe PickUpFreePipeEnd();
-    public abstract IPump PickUpPump();
+    public abstract boolean TryBuildPumpInto(Pump pump);
+    public abstract Pipe DisconnectNeighbourPipe(int neighbourIdx);
+    public abstract boolean TryConnectPipe(Pipe pipeInInventory);
+    public abstract Pipe PickUpFreePipeEnd();
+    public abstract Pump PickUpPump();
     public abstract boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx);
 }

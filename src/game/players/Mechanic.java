@@ -9,23 +9,25 @@ import game.players.*;
 
 public class Mechanic extends Player
 {	
-    public IPipe pipeInInventory = null;
-    public IPump pumpInInventory = null;
+    public Pipe pipeInInventory = null;
+    public Pump pumpInInventory = null;
     
     public Mechanic() 
     {
-        GameController.AddMechanic(this);
+    	System.out.println("public Mechanic() ");
+        GameManager.AddMechanic(this);
     }
    
     public boolean BuildPumpIntoPipe()
     {
+    	System.out.println("public boolean BuildPumpIntoPipe()");
         if (pumpInInventory != null)
         {
             if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory))
             {
                 pumpInInventory = null;
 
-                GameController.ActionExecuted();
+                GameManager.ActionExecuted();
                 return true;
             }
         }
@@ -36,13 +38,14 @@ public class Mechanic extends Player
     
     public boolean ConnectPipe()
     {
+    	System.out.println("public boolean ConnectPipe()");
         if (pipeInInventory != null)
         {
             if (GetCurrentPosition().TryConnectPipe(pipeInInventory))
             {
                 pipeInInventory = null;
 
-                GameController.ActionExecuted();
+                GameManager.ActionExecuted();
                 return true;
             }
         }
@@ -53,12 +56,13 @@ public class Mechanic extends Player
 
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
+    	System.out.println("public boolean DisconnectNeighbourPipe(int neighbourIdx)");
         if (pipeInInventory == null)
             pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
 
         if (pipeInInventory != null)
         {
-            GameController.ActionExecuted();
+            GameManager.ActionExecuted();
             return true;
         }
 
@@ -67,6 +71,7 @@ public class Mechanic extends Player
 
     public boolean PickUpFreePipeEnd()
     {
+    	System.out.println("public boolean PickUpFreePipeEnd()");
         if (pipeInInventory == null)
         {
             var pickedUpPipe = GetCurrentPosition().PickUpFreePipeEnd();
@@ -75,7 +80,7 @@ public class Mechanic extends Player
             {
                 pipeInInventory = pickedUpPipe;
 
-                GameController.ActionExecuted();
+                GameManager.ActionExecuted();
                 return true;
             }
         }
@@ -86,15 +91,16 @@ public class Mechanic extends Player
 
     public boolean PickUpPump()
     {
+    	System.out.println("public boolean PickUpPump()");
         if (pipeInInventory == null)
         {
-            IPump pickedUpPump = GetCurrentPosition().PickUpPump();
+            Pump pickedUpPump = GetCurrentPosition().PickUpPump();
 
             if (pickedUpPump != null)
             {
                 pumpInInventory = pickedUpPump;
 
-                GameController.ActionExecuted();
+                GameManager.ActionExecuted();
                 return true;
             }
         }
@@ -105,9 +111,10 @@ public class Mechanic extends Player
     
     public boolean Repair()
     {
+    	System.out.println("public boolean Repair()");
         if (GetCurrentPosition().TryRepair())
         {
-            GameController.ActionExecuted();
+            GameManager.ActionExecuted();
             return true;
         }
 

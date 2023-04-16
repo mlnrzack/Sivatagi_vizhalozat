@@ -7,40 +7,45 @@ import game.players.*;
 
 public abstract class Player
 {
-    private String name;
-    private IElement currentPosition;
+    private String name = "";
+    private Element currentPosition = null;
 
     public String GetName()
     {
+    	System.out.println("public String GetName()");
     	return name;
     }
     
     public void SetName(String name)
     {
+    	System.out.println("public void SetName(String name)");
     	this.name = name;
     }
     
-    public IElement GetCurrentPosition()
+    public Element GetCurrentPosition()
     {
+    	System.out.println("public Element GetCurrentPosition()");
     	return currentPosition;
     }
     
-    public void SetCurrentPosition(IElement newPos)
+    public void SetCurrentPosition(Element newPos)
     {
+    	System.out.println("public void SetCurrentPosition(Element newPos)");
     	currentPosition = newPos;
     }
     
     public boolean Move(int neighbourIdx)
     {
+    	System.out.println("public boolean Move(int neighbourIdx)");
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
         {
-            IElement toNeighbour = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
+            Element toNeighbour = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
                 currentPosition = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
                 currentPosition.RemovePlayer(this);
 
-                GameController.ActionExecuted();
+                GameManager.ActionExecuted();
                 return true;
             }
         }
@@ -50,9 +55,10 @@ public abstract class Player
 
     public boolean TrySetPump(int neighbourIdxFrom, int neighbourIdxTo)
     {
+    	System.out.println("public boolean TrySetPump(int neighbourIdxFrom, int neighbourIdxTo)");
         if (currentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo))
         {
-            GameController.ActionExecuted();
+            GameManager.ActionExecuted();
             return true;
         }
 

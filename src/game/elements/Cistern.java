@@ -11,43 +11,41 @@ public class Cistern extends ActiveElement implements ISteppable
 {
     public Cistern() 
     {
-        GameController.AddSteppable(this);
+    	System.out.println("public Cistern()");
+        GameManager.AddSteppable(this);
     }
     
-    public IPipe PickUpFreePipeEnd()
+    public Pipe PickUpFreePipeEnd()
     {
+    	System.out.println("public Pipe PickUpFreePipeEnd()");
         return new Pipe();
     }
     
-    public IPump PickUpPump()
+    public Pump PickUpPump()
     {
+    	System.out.println("public Pump PickUpPump()");
         var newPump = new Pump();
-        GameController.AddSteppable(newPump);
+        GameManager.AddSteppable(newPump);
 
         return newPump;
     }
     
-    private void PumpWaterToCisternFromNeighbour(IElement neighbourPipe)
+    private void PumpWaterToCisternFromNeighbour(Element neighbourPipe)
     {
+    	System.out.println("private void PumpWaterToCisternFromNeighbour(Element neighbourPipe)");
         neighbourPipe.DecreaseWater();
-        GameController.IncreaseMechanicsPoints();
+        GameManager.IncreaseMechanicsPoints();
         IncreaseWater();
     }
     
     public boolean Step()
     {
+    	System.out.println("public boolean Step()");
         boolean actionDone = false;
-
-        Iterator<IElement> neighbourPipe;
-        //init
-        while(neighbourPipe.hasNext())
-        {
-        	if(neighbourPipe.GetWaterInside() > 0)
-        		PumpWaterToCisternFromNeighbour(neighbourPipe);
+        if(neighbourPipe.GetWaterInside() > 0)
+        	PumpWaterToCisternFromNeighbour(neighbourPipe);
         	
-        	actionDone = true;
-        }
-
+        actionDone = true;
         return actionDone;
     }
 }

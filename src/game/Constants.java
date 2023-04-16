@@ -1,7 +1,7 @@
 package game;
 
 public class Constants
-{
+{	
     public static final double PumpErrorProbability = 0.2;
     public static final int PipeCapacity = 1;
     public static final int PumpWaterCapacity = 1;

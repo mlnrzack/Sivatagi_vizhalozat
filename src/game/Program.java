@@ -11,12 +11,15 @@ public class Program
 {
     static void Main(String[] args)
     {
+    	System.out.println("static void Main(String[] args)");
         CreateTestMap();
-        GameController.StartGame();
+        GameManager.StartGame();
     }
 
     private static void CreateTestMap()
     {
+    	System.out.println("private static void CreateTestMap()");
+    	
         Pipe pipe1 = new Pipe();
         Pipe pipe2 = new Pipe();
         Pipe pipe3 = new Pipe();

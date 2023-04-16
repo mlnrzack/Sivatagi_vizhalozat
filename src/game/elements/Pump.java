@@ -7,19 +7,21 @@ import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
-public class Pump extends ActiveElement implements ISteppable, IPump
+public class Pump extends ActiveElement implements ISteppable
 {
-    private IPipe input;
-    private IPipe output;
+    private Pipe input = null;
+    private Pipe output = null;
     private boolean isWrong;
     
     public Pump()
     {
-        GameController.AddSteppable(this);
+    	System.out.println("public Pump()");
+        GameManager.AddSteppable(this);
     }
 
     public boolean Step()
     {
+    	System.out.println("public boolean Step()");
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
 
@@ -32,17 +34,19 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
     public void SetPump(Pipe input, Pipe output)
     {
+    	System.out.println("public void SetPump(Pipe input, Pipe output)");
         this.input = input;
         this.output = output;
     }
 
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
+    	System.out.println("public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)");
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
             && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
         {
-            IPipe from = GetNeighbours()[neighbourIdxFrom];
-            IPipe to = GetNeighbours()[neighbourIdxTo];
+            Pipe from = GetNeighbours()[neighbourIdxFrom];
+            Pipe to = GetNeighbours()[neighbourIdxTo];
             input = from;
             output = to;
 
@@ -55,6 +59,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
     private void GoWrong()
     {
+    	System.out.println("private void GoWrong()");
         Desert.IncreaseWaterFromPipelineNetwork(GetWaterInside());
         SetWaterInside(0);
     }
@@ -62,6 +67,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
     // Akkor hívjuk meg ha van szabad kapacitása a tartálynak
     public boolean PumpWaterFromInput()
     {
+    	System.out.println("public boolean PumpWaterFromInput()");
         if (input != null && input.GetWaterInside() > 0)
         {
             input.DecreaseWater();
@@ -75,6 +81,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
     public boolean PumpWaterToOutput()
     {
+    	System.out.println("public boolean PumpWaterToOutput()");
         if (output.FillWaterTo())
         {
         	DecreaseWater();
@@ -86,6 +93,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
     private boolean GettingOlder()
     {
+    	System.out.println("private boolean GettingOlder()");
         if (new Random().nextDouble() < Constants.PumpErrorProbability)
         {
             GoWrong();
@@ -98,6 +106,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
 
     public boolean TryRepair()
     {
+    	System.out.println("public boolean TryRepair()");
         if (isWrong == true)
         {
             isWrong = false;
@@ -108,10 +117,11 @@ public class Pump extends ActiveElement implements ISteppable, IPump
         return false;
     }
 
-    public IPipe DisconnectNeighbourPipe(int neighbourIdx)
+    public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
+    	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        IPipe neighbourtoDisconnect = GetNeighbours()[neighbourIdx];
+        Pipe neighbourtoDisconnect = GetNeighbours()[neighbourIdx];
 
         if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
 
@@ -122,8 +132,9 @@ public class Pump extends ActiveElement implements ISteppable, IPump
         return neighbourtoDisconnect;
     }
 
-    public boolean GetBuildedInto(IPipe pipe)
+    public boolean GetBuildedInto(Pipe pipe)
     {
+    	System.out.println("public boolean GetBuildedInto(Pipe pipe)");
         // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
         Pipe newPipe = new Pipe();
         // { waterInside = 0, Neighbours = new List<ActiveElement>() { this, pipe.GetNeighboursOfPipe().ToList().First() } };
