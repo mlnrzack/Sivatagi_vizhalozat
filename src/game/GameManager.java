@@ -236,10 +236,15 @@ public class GameManager
     public static void StepSteppables()
     {
     	System.out.println("public static void StepSteppables()");
-    	boolean actionDone = false;
-    	for(int i = 0; i < steppables.size(); i++)
-    	{
-    		steppables.get(i).Step();
-    	}        
+    	boolean actionDone = false;    	
+    	do
+        {
+            actionDone = false;
+            for(int i = 0; i < steppables.size(); i++)
+        	{
+            	actionDone = steppables.get(i).Step()|| actionDone;;
+        	}
+        }
+        while (actionDone);
     }  
  }
