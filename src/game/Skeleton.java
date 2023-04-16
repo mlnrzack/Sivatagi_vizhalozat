@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Skeleton 
 {
-	public static void Main(String args[])
+	public static void main(String args[])
 	{
 		System.out.println("static void Main(String[] args)");
 		Scanner input = new Scanner(System.in);
@@ -68,74 +68,74 @@ public class Skeleton
                 	AfterPrintingMethodCallsDialog();
                     break;
                 // Szabad csővég felvétele
-				case 5:
-					System.out.println("1: A csővéget felveszi a szerelő");
-                	userinput = GetUserInput(1, 1);
+                case 5:
+            		System.out.println("1: A csővéget felveszi a szerelő");
+        			userinput = GetUserInput(1, 1);
+
+        			// TODO: Call method
+
+        			AfterPrintingMethodCallsDialog();
+        			break;
+        			// Pumpa felvétele ciszternából
+            	case 6:
+            		System.out.println("1: A szerelő magához vesz egy pumpát");
+            		System.out.println("2: A szerelő már birtokol egy pumpát, így nem vehet fel még egyet");
+            		userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
 
-                	AfterPrintingMethodCallsDialog();
-                    break;
-                // Pumpa felvétele ciszternából
-				case 6:
-					System.out.println("1: A szerelő magához vesz egy pumpát");
-                	System.out.println("2: A szerelő már birtokol egy pumpát, így nem vehet fel még egyet");
-                	userinput = GetUserInput(1, 2);
+            		AfterPrintingMethodCallsDialog();
+            		break;
+            		// Cső kilyukasztása
+            	case 7:
+            		System.out.println("1: A cső kilyukad");
+            		System.out.println("2: A cső már lyukas volt, ezért nem lehet újra kilyukasztani");
+            		userinput = GetUserInput(1, 2);
 
-                	// TODO: Call method
+            		// TODO: Call method
 
-					AfterPrintingMethodCallsDialog();
-				    break;
-			    // Cső kilyukasztása
-				case 7:
-					System.out.println("1: A cső kilyukad");
-                	System.out.println("2: A cső már lyukas volt, ezért nem lehet újra kilyukasztani");
-                	userinput = GetUserInput(1, 2);
+            		AfterPrintingMethodCallsDialog();
+            		break;
+        		// Cső megjavítása
+            	case 8:
+            		System.out.println("1: A csövet megjavítja a szerelő");
+            		System.out.println("2: A cső már meg volt javítva, ezért nem lehet újra megjavítani");
+            		userinput = GetUserInput(1, 2);
 
-                	// TODO: Call method
+            		// TODO: Call method
 
-					AfterPrintingMethodCallsDialog();
-				    break;
-			    // Cső megjavítása
-				case 8:
-					System.out.println("1: A csövet megjavítja a szerelő");
-                	System.out.println("2: A cső már meg volt javítva, ezért nem lehet újra megjavítani");
-                	userinput = GetUserInput(1, 2);
+            		AfterPrintingMethodCallsDialog();
+            		break;
+        		// Csővég lehelyezése
+            	case 9:
+            		System.out.println("1: A csővéget elhelyezték a pumpa egy csatlakozására");
+            		System.out.println("2: A pumpa már telítve van csövekkel, ezért nem rakhatja le");
+            		userinput = GetUserInput(1, 2);
 
-                	// TODO: Call method
+            		// TODO: Call method
 
-					AfterPrintingMethodCallsDialog();
-				    break;
-			    // Csővég lehelyezése
-				case 9:
-					System.out.println("1: A csővéget elhelyezték a pumpa egy csatlakozására");
-                	System.out.println("2: A pumpa már telítve van csövekkel, ezért nem rakhatja le");
-                	userinput = GetUserInput(1, 2);
+            		AfterPrintingMethodCallsDialog();
+            		break;
+        		// Pumpa beágyazása csőre
+            	case 10:
+            		System.out.println("1: A cső elválasztás után a pumpa behelyezésre kerül");
+            		userinput = GetUserInput(1, 1);
 
-                	// TODO: Call method
+            		// TODO: Call method
 
-					AfterPrintingMethodCallsDialog();
-				    break;
-			    // Pumpa beágyazása csőre
-				case 10:
-					System.out.println("1: A cső elválasztás után a pumpa behelyezésre kerül");
-                	userinput = GetUserInput(1, 1);
+            		AfterPrintingMethodCallsDialog();
+            		break;
+        		// Pumpa be-/kimenet állítása
+            	case 11:
+            		System.out.println("1: Beállítja a be-és kimenetet");
+            		userinput = GetUserInput(1, 1);
 
-                	// TODO: Call method
+            		// TODO: Call method
 
-					AfterPrintingMethodCallsDialog();
-				    break;
-			    // Pumpa be-/kimenet állítása
-				case 11:
-					System.out.println("1: Beállítja a be-és kimenetet");
-                	userinput = GetUserInput(1, 1);
-
-                	// TODO: Call method
-
-					AfterPrintingMethodCallsDialog();
-				    break;
-                default:
-                    break;
+            		AfterPrintingMethodCallsDialog();
+            		break;
+            	default:
+            		break;
             }
         }
 	}
