@@ -39,25 +39,37 @@ public abstract class Element
     	System.out.println("public void DecreaseWater()");
     }
 
-
+    /**
+     * Növeli a waterInside értékét.
+     */
     public void IncreaseWater()
     {
     	System.out.println("public void IncreaseWater()");
     }
 
-
+    /**
+     * Visszatér az elemen álló Játékosok listájával
+     */
     public ArrayList<Player> GetPlayers()
     {
     	System.out.println("public ArrayList<Player> GetPlayers()");
     	return null;
     }
 
-
+    /**
+     * Átad egy Player lista referenciát
+     * @param players
+     */
     public void SetPLayers(ArrayList<Player> players)
     {
     	System.out.println("public void SetPLayers(ArrayList<Player> players)");
     }
-    
+
+    /**
+     * Hozzáad egy Játékost a játékosok lisájához
+     * @param player
+     * @return
+     */
     public static boolean AddPlayer(Player player)
     {
     	System.out.println("public static boolean AddPlayer(Player player)");
