@@ -57,12 +57,16 @@ public abstract class Player
     public boolean Move(int neighbourIdx)
     {
     	System.out.println("public boolean Move(int neighbourIdx)");
-    	currentPosition.GetNeighbours();
-        Element toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-        toNeighbour.AcceptPlayer(this);            	
-        currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-        currentPosition.RemovePlayer(this);
-        GameManager.ActionExecuted();
+    	if(neighbourIdx == 1)
+    	{
+    		new Pump().GetNeighbours();
+    		new Pipe().AcceptPlayer(null);
+    		new Pump().RemovePlayer(null);
+    	}
+    	else if(neighbourIdx == 2)
+    	{
+    		return false;
+    	}
         return false;
     }
 
@@ -75,12 +79,8 @@ public abstract class Player
     public boolean TrySetPump(int neighbourIdxFrom, int neighbourIdxTo)
     {
     	System.out.println("public boolean TrySetPump(int neighbourIdxFrom, int neighbourIdxTo)");
-        if (currentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo))
-        {
-            GameManager.ActionExecuted();
-            return true;
-        }
-
+        currentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo);
+        GameManager.ActionExecuted();
         return false;
     }
 }

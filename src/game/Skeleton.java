@@ -16,11 +16,11 @@ public class Skeleton
 		
 		System.out.println("Init");
 		Mechanic mechanic = new Mechanic();
-    	Saboteur saboteur = new Saboteur();
-    	Cistern cistern = new Cistern();
-    	Pipe pipe = new Pipe();
-    	Pump pump = new Pump();
-    	WaterSpring wspring = new WaterSpring();
+		Saboteur saboteur = new Saboteur();
+		Cistern cistern = new Cistern();
+		Pipe pipe = new Pipe();
+		Pump pump = new Pump();
+		WaterSpring wspring = new WaterSpring();
 
 		while (true)
         {
@@ -47,7 +47,8 @@ public class Skeleton
                 	userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
-                	mechanic.Move(1);
+                	mechanic.Move(userinput);
+                	saboteur.Move(userinput);
                 	
 
                 	AfterPrintingMethodCallsDialog();
@@ -59,7 +60,8 @@ public class Skeleton
                 	userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
-
+                	mechanic.PickUpPump();
+                	
                 	AfterPrintingMethodCallsDialog();
                     break;
                 // Pumpa javítása

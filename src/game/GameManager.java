@@ -11,15 +11,15 @@ import game.players.*;
  */
 public class GameManager
 {
-	private static int round = 0;
-	private static int mechanicsPoints = 0;
-	private static int saboteursPoints = 0;
-    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
-    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
-    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
-    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
-    public static Player CurrentPlayer = null;
-    private static int playerActionCountInCurrentRound = 0;
+	private int round = 0;
+	private int mechanicsPoints = 0;
+	private int saboteursPoints = 0;
+    private ArrayList<ISteppable> steppables = null;
+    private ArrayList<WaterSpring> waterSprings = null;
+    private ArrayList<Saboteur> saboteurs = null;
+    private ArrayList<Mechanic> mechanics = null;
+    public Player CurrentPlayer = null;
+    private int playerActionCountInCurrentRound = 0;
 
     /**
      * Visszatér a jelenlegi kör értékével
@@ -62,17 +62,17 @@ public class GameManager
      * Inkrementálja a Szerelők pontjait
      * @return
      */
-    public static void IncreaseMechanicsPoints()
+    public void IncreaseMechanicsPoints()
     {
-    	System.out.println("public static void IncreaseMechanicsPoints()");
+    	System.out.println("public void IncreaseMechanicsPoints()");
     }
     /**
      * Dekrementlálja a Szerelők pontjait
      * @return
      */
-    public static void DecreaseMechanicsPoints()
+    public void DecreaseMechanicsPoints()
     {
-    	System.out.println("public static void DecreaseMechanicsPoints()");
+    	System.out.println("public void DecreaseMechanicsPoints()");
     }
     /**
      * Visszatér a Szabotőrök pontjaival
@@ -95,17 +95,17 @@ public class GameManager
      * Inkrementálja a Szabotőrök pontjait
      * @return
      */
-    public static void IncreaseSaboteursPoints()
+    public void IncreaseSaboteursPoints()
     {
-    	System.out.println("public static void IncreaseSaboteursPoints()");
+    	System.out.println("public void IncreaseSaboteursPoints()");
     }
     /**
      * Dekrementlálja a Szabotőrök pontjait
      * @return
      */
-    public static void DecreaseSaboteursPoints()
+    public void DecreaseSaboteursPoints()
     {
-    	System.out.println("public static void DecreaseSaboteursPoints()");
+    	System.out.println("public void DecreaseSaboteursPoints()");
     }
 
     /**
@@ -132,10 +132,10 @@ public class GameManager
      * @param mechanic
      * @return
      */
-    public static boolean AddMechanic(Mechanic mechanic)
+    public boolean AddMechanic(Mechanic mechanic)
     {
-    	System.out.println("public static boolean AddMechanic(Mechanic mechanic)");
-    	return mechanics.add(mechanic);
+    	System.out.println("public boolean AddMechanic(Mechanic mechanic)");
+    	return false;
     }
     /**
      * Elvesz egy Szerelőt a Szerelők listájából
@@ -145,7 +145,7 @@ public class GameManager
     public boolean RemoveMechanic(Mechanic mechanic)
     {
     	System.out.println("public boolean RemoveMechanic(Mechanic mechanic)");
-    	return mechanics.remove(mechanic);
+    	return false;
     }
     /**
      * Visszatér a Szabotőrök listájával
@@ -154,7 +154,7 @@ public class GameManager
     public ArrayList<Saboteur> GetSaboteurs()
     {
     	System.out.println("public ArrayList<Saboteur> GetSaboteurs()");
-    	return saboteurs;
+    	return null;
     }
     /**
      * Megad egy Szabotőr lista referenciát
@@ -169,10 +169,10 @@ public class GameManager
      * @param saboteur
      * @return
      */
-    public static boolean AddSaboteur(Saboteur saboteur)
+    public boolean AddSaboteur(Saboteur saboteur)
     {
-    	System.out.println("public static boolean AddSaboteur(Saboteur saboteur)");
-    	return saboteurs.add(saboteur);
+    	System.out.println("public boolean AddSaboteur(Saboteur saboteur)");
+    	return false;
     }
     /**
      * Elvesz egy Szabotőrt a Szabotőrök listájából
@@ -182,7 +182,7 @@ public class GameManager
     public boolean RemoveSaboteur(Saboteur saboteur)
     {
     	System.out.println("public boolean RemoveSaboteur(Saboteur saboteur)");
-    	return saboteurs.remove(saboteur);
+    	return false;
     }
 
     /**
@@ -192,7 +192,7 @@ public class GameManager
     public ArrayList<ISteppable> GetSteppables()
     {
     	System.out.println("public ArrayList<ISteppable> GetSteppables()");
-    	return steppables;
+    	return null;
     }
 
     /**
@@ -209,10 +209,10 @@ public class GameManager
      * @param steppable
      * @return
      */
-    public static boolean AddSteppble(ISteppable steppable)
+    public boolean AddSteppble(ISteppable steppable)
     {
-    	System.out.println("public static boolean AddSteppble(ISteppable steppable)");
-    	return steppables.add(steppable);
+    	System.out.println("public boolean AddSteppble(ISteppable steppable)");
+    	return false;
     }
     /**
      * Elvesz egy ISteppable elemet a steppables listájából
@@ -222,7 +222,7 @@ public class GameManager
     public boolean RemoveSteppable(ISteppable steppable)
     {
     	System.out.println("public boolean RemoveSteppable(ISteppable steppable)");
-    	return steppables.remove(steppable);
+    	return false;
     }
 
     /**
@@ -232,7 +232,7 @@ public class GameManager
     public ArrayList<WaterSpring> GetWaterSprings()
     {
     	System.out.println("public ArrayList<WaterSpring> GetWaterSprings()");
-    	return waterSprings;
+    	return null;
     }
 
     /**
@@ -249,10 +249,10 @@ public class GameManager
      * @param waterspring
      * @return
      */
-    public static boolean AddWaterSpring(WaterSpring waterspring)
+    public boolean AddWaterSpring(WaterSpring waterspring)
     {
-    	System.out.println("public static boolean AddWaterSpring(WaterSpring waterspring)");
-    	return waterSprings.add(waterspring);
+    	System.out.println("public boolean AddWaterSpring(WaterSpring waterspring)");
+    	return false;
     }
 
     /**
@@ -263,7 +263,7 @@ public class GameManager
     public boolean RemoveWaterSpring(WaterSpring waterspring)
     {
     	System.out.println("public boolean RemoveWaterSpring(WaterSpring waterspring)");
-    	return waterSprings.remove(waterspring);
+    	return false;
     }
 
     /**
@@ -273,7 +273,7 @@ public class GameManager
     public int GetPlayerAction()
     {
     	System.out.println("public int GetPlayerAction()");
-    	return playerActionCountInCurrentRound;
+    	return 0;
     }
     /**
      * Beállítja egy játékos hátralévő lépésszámát
@@ -300,9 +300,9 @@ public class GameManager
      * Steppable interfészt megvalósító objektumokban.
      * @return void
      */
-    public static void ActionExecuted()
+    public void ActionExecuted()
     {
-    	System.out.println("public static void ActionExecuted()");
+    	System.out.println("public void ActionExecuted()");
         FireSourceActions();
         StepSteppables();
     }
@@ -311,53 +311,51 @@ public class GameManager
      * A steppables listához ad egy új elemet.
      * @param steppable
      */
-    public static void AddSteppable(ISteppable steppable)
+    public void AddSteppable(ISteppable steppable)
     {
-    	System.out.println("public static void AddSteppable(ISteppable steppable)");
-    	steppables.add(steppable);
-        
+    	System.out.println("public void AddSteppable(ISteppable steppable)");        
     }
 
     /**
      * A forrásokból vizet küld a hozzájuk csatlakozó szomszédos elemekbe
      */
-    public static void FireSourceActions()
+    public void FireSourceActions()
     {
-    	System.out.println("public static void FireSourceActions()");
+    	System.out.println("public void FireSourceActions()");
     }
 
     /**
      * A szerelő lépéseit kezelő függvény
      */
-    public static void MechanicActions()
+    public void MechanicActions()
     {
-    	System.out.println("public static void MechanicActions()");
+    	System.out.println("public void MechanicActions()");
     }
 
     /**
      * A szabotőr lépéseit kezelő függvény
      */
-    public static void SaboteurActions()
+    public void SaboteurActions()
     {
-    	System.out.println("public static void SaboteurActions()");
+    	System.out.println("public void SaboteurActions()");
     }
 
     /**
      * A játék futásáért és indításáért felel, ellenőrzi, hogy a játék nem haladt-e túl a megszabott kör limiten.
      */
-    public static void StartGame()
+    public void StartGame()
     {
-    	System.out.println("public static void StartGame()");
-    	GameManager.MechanicActions();
-        GameManager.SaboteurActions();
+    	System.out.println("public void StartGame()");
+    	MechanicActions();
+        SaboteurActions();
     }
 
     /**
      *  végig iterál a steppables listáján, majd mindegyik ilyen objektumnak meghívja a Step() függvényét.
      */
-    public static void StepSteppables()
+    public void StepSteppables()
     {
-    	System.out.println("public static void StepSteppables()");
+    	System.out.println("public void StepSteppables()");
     	boolean actionDone = false;
     	do
         {
