@@ -22,9 +22,7 @@ public class Pipe extends Element implements ISteppable
     public boolean TryBuildPumpInto(Pump pump)
     {
     	System.out.println("public boolean TryBuildPumpInto(Pump pump)");
-    	if(pump.GetBuildedInto(this))
-    		return true;
-    	
+    	pump.GetBuildedInto(this);
     	return false;
     }
 
@@ -55,13 +53,8 @@ public class Pipe extends Element implements ISteppable
     public boolean Step()
     {
     	System.out.println("public boolean Step()");
-        if (isWrong && GetWaterInside() > 0)
-        {
-            WaterToDesert();
-
-            return true;
-        }
-        
+        GetWaterInside();
+        WaterToDesert();
         return false;
     }
 
@@ -83,7 +76,6 @@ public class Pipe extends Element implements ISteppable
     public boolean TryConnectPipe(Pipe pipeInInventory)
     {
     	System.out.println("public boolean TryConnectPipe(Pipe pipeInInventory)");
-        System.out.println("Bocs tesa ez nem fog menni. Jelenleg nem lehet csövet csőhöz csatlakoztatni.");
         return false;
     }
 
@@ -104,7 +96,6 @@ public class Pipe extends Element implements ISteppable
     public Pipe PickUpFreePipeEnd()
     {
     	System.out.println("public Pipe PickUpFreePipeEnd()");
-        System.out.println("Bocs tesa ez nem fog menni. Jelenleg nem lehet szabad csővég a csövön.");
         return null;
     }
 
@@ -115,7 +106,6 @@ public class Pipe extends Element implements ISteppable
     public Pump PickUpPump()
     {
     	System.out.println("public Pump PickUpPump()");
-        System.out.println("Bocs tesa ez nem fog menni. Jelenleg nincs felvehető pumpa csövön.");
         return null;
     }
 
@@ -128,8 +118,6 @@ public class Pipe extends Element implements ISteppable
     {
     	System.out.println("public boolean AcceptPlayer(Player player)");
         AddPlayer(player);
-
-        System.out.println("Cső nem tud fogadni, mert tele van. Válassz más műveletet.");
         return false;
     }
 
@@ -142,7 +130,6 @@ public class Pipe extends Element implements ISteppable
     public boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx)
     {
     	System.out.println("public boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx)");
-        System.out.println("Nem csinálunk semmit, a cső input/output nem állítható.");
         return false;
     }
 
@@ -154,7 +141,6 @@ public class Pipe extends Element implements ISteppable
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
-        System.out.println("Nem csinálunk semmit, cső szomszédja nem lecsatlakoztatható.");
         return null;
     }
 

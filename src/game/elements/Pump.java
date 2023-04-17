@@ -24,12 +24,8 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean Step()
     {
     	System.out.println("public boolean Step()");
-        var pumpWaterToOutputDone = false;
-        var pumpWaterFromInputDone = false;
-        
-        if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
-        if (GetWaterInside() < 0) pumpWaterFromInputDone = PumpWaterFromInput();
-
+        PumpWaterToOutput();
+        PumpWaterFromInput();
         return false;
     }
 
@@ -52,7 +48,6 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
     	System.out.println("Pump.public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)");
-        
         return false;
     }
 
@@ -73,14 +68,8 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean PumpWaterFromInput()
     {
     	System.out.println("public boolean PumpWaterFromInput()");
-        if (input != null && input.GetWaterInside() > 0)
-        {
-            input.DecreaseWater();
-            DecreaseWater();
-
-            return true;
-        }
-
+        input.DecreaseWater();
+        DecreaseWater();
         return false;
     }
 
@@ -91,12 +80,8 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean PumpWaterToOutput()
     {
     	System.out.println("public boolean PumpWaterToOutput()");
-        if (output.FillWaterTo())
-        {
-        	DecreaseWater();
-            return true;
-        }
-
+        output.FillWaterTo();
+        DecreaseWater();
         return false;
     }
 
@@ -150,12 +135,9 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean GetBuildedInto(Pipe pipe)
     {
     	System.out.println("public boolean GetBuildedInto(Pipe pipe)");
-        pipe.AddNeighbour(this);
-        pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().get(0));
-        
+        pipe.AddNeighbour(this);        
         AddPipe(new Pipe());
         AddPipe(pipe);
-
         return false;
     }
 }

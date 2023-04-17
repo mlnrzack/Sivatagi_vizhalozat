@@ -303,8 +303,8 @@ public class GameManager
     public static void ActionExecuted()
     {
     	System.out.println("public void ActionExecuted()");
-        //FireSourceActions();
-        //StepSteppables();
+        FireSourceActions();
+        StepSteppables();
     }
 
     /**
@@ -319,9 +319,9 @@ public class GameManager
     /**
      * A forrásokból vizet küld a hozzájuk csatlakozó szomszédos elemekbe
      */
-    public void FireSourceActions()
+    public static void FireSourceActions()
     {
-    	System.out.println("public void FireSourceActions()");
+    	System.out.println("public static void FireSourceActions()");
     }
 
     /**
@@ -353,18 +353,8 @@ public class GameManager
     /**
      *  végig iterál a steppables listáján, majd mindegyik ilyen objektumnak meghívja a Step() függvényét.
      */
-    public void StepSteppables()
+    public static void StepSteppables()
     {
     	System.out.println("public void StepSteppables()");
-    	boolean actionDone = false;
-    	do
-        {
-            actionDone = false;
-            for(int i = 0; i < steppables.size(); i++)
-        	{
-            	actionDone = steppables.get(i).Step()|| actionDone; 
-        	}
-        }
-        while (actionDone);
     }  
  }

@@ -51,9 +51,7 @@ public abstract class ActiveElement extends Element
      */
     public static boolean RemovePipe(Pipe p)
     {
-    	System.out.println("public static boolean RemovePipe(Pipe p)");
-    	if(neighbours.remove(p));
-    	
+    	System.out.println("public static boolean RemovePipe(Pipe p)");  	
     	return false;
     }
 
@@ -76,8 +74,6 @@ public abstract class ActiveElement extends Element
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
-        // override-olni leszármazottakban, ott megvalósítani ha beállítható.
-        System.out.println("Nem csinálunk semmit, az elem nem lecsatlakoztatható.");
         return null;
     }
 
@@ -97,8 +93,6 @@ public abstract class ActiveElement extends Element
     public Pipe PickUpFreePipeEnd()
     {
     	System.out.println("public IPipe PickUpFreePipeEnd()");
-        // override-olni leszármazottakban, ott megvalósítani ha felvehető az adott típuson szabad csővég.
-        System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
         return null;
     }
     /**
@@ -108,8 +102,6 @@ public abstract class ActiveElement extends Element
     public Pump PickUpPump()
     {
     	System.out.println("public IPump PickUpPump()");
-        // override-olni leszármazottakban, ott megvalósítani ha felvehető az adott típuson pumpa.
-        System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
         return null;
     }
     /**
@@ -120,8 +112,6 @@ public abstract class ActiveElement extends Element
     public boolean TryBuildPumpInto(Pump pump)
     {
     	System.out.println("public boolean TryBuildPumpInto(IPump pump)");
-        // override-olni leszármazottakban, ott megvalósítani ha be lehet építeni pumpát.
-        System.out.println("Nem csinálunk semmit, a pumpa nem beépíthető.");
         return false;
     }
 
@@ -145,8 +135,6 @@ public abstract class ActiveElement extends Element
     public boolean TryDamage()
     {
     	System.out.println("public boolean TryDamage()");
-        // override-olni leszármazottakban, ott megvalósítani ha tönkretehető.
-        System.out.println("Nem csinálunk semmit, a pályaelem nem tönkretehető.");
         return false;
     }
 
@@ -157,8 +145,6 @@ public abstract class ActiveElement extends Element
     public boolean TryRepair()
     {
     	System.out.println("public boolean TryRepair()");
-        // override-olni leszármazottakban, ott megvalósítani ha javatható.
-        System.out.println("Nem csinálunk semmit, a pályaelem nem javítható.");
         return false;
     }
 
@@ -171,8 +157,6 @@ public abstract class ActiveElement extends Element
     public boolean TrySetInputOutput(int inputIdx, int outputIdx)
     {
     	System.out.println("public boolean TrySetInputOutput(int inputIdx, int outputIdx)");
-        // override-olni leszármazottakban, ott megvalósítani ha beállítható.
-        System.out.println("Nem csinálunk semmit, a pályaelem nem állítható.");
         return false;
     }
 }

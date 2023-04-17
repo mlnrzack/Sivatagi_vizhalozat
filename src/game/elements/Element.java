@@ -73,8 +73,6 @@ public abstract class Element
     public static boolean AddPlayer(Player player)
     {
     	System.out.println("public static boolean AddPlayer(Player player)");
-    	if(players.add(player));
-    	
     	return false;
     }
 
@@ -103,8 +101,6 @@ public abstract class Element
     public boolean RemovePlayer(Player player)
     {
     	System.out.println("public boolean RemovePlayer(Player player)");
-    	if(players.remove(player));
-    	
     	return false;
     }
 
