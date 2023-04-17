@@ -38,13 +38,7 @@ public class Mechanic extends Player
     public boolean ConnectPipe()
     {
     	System.out.println("public boolean ConnectPipe()");
-        if (GetCurrentPosition().TryConnectPipe(pipeInInventory))
-        {
-        	GameManager.ActionExecuted();
-            return true;
-        }
-
-        System.out.println("Nem sikerül az akció. Próbálkozz úgy, aktív elemen állsz és van nálad csővég.");
+        GetCurrentPosition().TryConnectPipe(pipeInInventory);
         return false;
     }
 
