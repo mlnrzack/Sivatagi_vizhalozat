@@ -57,19 +57,12 @@ public abstract class Player
     public boolean Move(int neighbourIdx)
     {
     	System.out.println("public boolean Move(int neighbourIdx)");
-        if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
-        {
-            Element toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-            if (toNeighbour.AcceptPlayer(this))
-            {
-                currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-                currentPosition.RemovePlayer(this);
-
-                GameManager.ActionExecuted();
-                return true;
-            }
-        }
-
+    	currentPosition.GetNeighbours();
+        Element toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
+        toNeighbour.AcceptPlayer(this);            	
+        currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
+        currentPosition.RemovePlayer(this);
+        GameManager.ActionExecuted();
         return false;
     }
 

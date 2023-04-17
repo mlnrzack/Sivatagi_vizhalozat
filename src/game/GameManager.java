@@ -14,10 +14,10 @@ public class GameManager
 	private static int round = 0;
 	private static int mechanicsPoints = 0;
 	private static int saboteursPoints = 0;
-    private static ArrayList<ISteppable> steppables = null;
-    private static ArrayList<WaterSpring> waterSprings = null;
-    private static ArrayList<Saboteur> saboteurs = null;
-    private static ArrayList<Mechanic> mechanics = null;
+    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
+    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
+    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
+    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
     public static Player CurrentPlayer = null;
     private static int playerActionCountInCurrentRound = 0;
 

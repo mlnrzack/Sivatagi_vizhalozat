@@ -13,10 +13,18 @@ public class Skeleton
 	{
 		System.out.println("static void main(String[] args)");
 		Scanner input = new Scanner(System.in);
+		
+		System.out.println("Init");
+		Mechanic mechanic = new Mechanic();
+    	Saboteur saboteur = new Saboteur();
+    	Cistern cistern = new Cistern();
+    	Pipe pipe = new Pipe();
+    	Pump pump = new Pump();
+    	WaterSpring wspring = new WaterSpring();
 
 		while (true)
         {
-			System.out.println("1: Lépés egy másik elemre");
+			System.out.println("\n1: Lépés egy másik elemre");
 			System.out.println("2: Felvesz egy pumpát");
 			System.out.println("3: Pumpa javítása");
 			System.out.println("4: Csővég felétele");
@@ -39,6 +47,8 @@ public class Skeleton
                 	userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
+                	mechanic.Move(1);
+                	
 
                 	AfterPrintingMethodCallsDialog();
             		break;
