@@ -51,17 +51,8 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
-    	System.out.println("public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)");
-        if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
-            && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
-        {
-            Pipe from = (Pipe) GetNeighbours().get(neighbourIdxFrom);
-            Pipe to = (Pipe) GetNeighbours().get(neighbourIdxTo);
-
-            return true;
-        }
-
-        System.out.println("Pumpa átállítása sikertelen.");
+    	System.out.println("Pump.public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)");
+        
         return false;
     }
 
@@ -70,7 +61,7 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public void GoWrong()
     {
-    	System.out.println("private void GoWrong()");
+    	System.out.println("public void GoWrong()");
         SetWaterInside(0);
     }
 
@@ -115,14 +106,8 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public boolean GettingOlder()
     {
-    	System.out.println("private boolean GettingOlder()");
-        if (new Random().nextDouble() < 0)
-        {
-            GoWrong();
-
-            return true;
-        }
-
+    	System.out.println("public boolean GettingOlder()");
+        GoWrong();
         return false;
     }
 

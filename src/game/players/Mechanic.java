@@ -25,8 +25,8 @@ public class Mechanic extends Player
     public boolean BuildPumpIntoPipe()
     {
     	System.out.println("public boolean BuildPumpIntoPipe()");
-    	//Pump.AddPipe(new Pipe());
-    	//Pump.AddPipe(new Pipe());
+    	Pump.AddPipe(new Pipe());
+    	Pump.AddPipe(new Pipe());
         System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
         return false;
     }

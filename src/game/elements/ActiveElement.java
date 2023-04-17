@@ -28,18 +28,18 @@ public abstract class ActiveElement extends Element
      * A szomszédsági lista settere
      * @param neighbour
      */
-    public void setNeighbour(Pipe neighbour)
+    public static void setNeighbour(Pipe neighbour)
     {
-    	System.out.println("public void setNeighbour(Pipe neighbour)");
+    	System.out.println("public static void setNeighbour(Pipe neighbour)");
     }
     /**
      * A kiválasztott csővet hozzáadja a szomszédok listájából
      * @param p
      * @return
      */
-    public boolean AddPipe(Pipe p)
+    public static boolean AddPipe(Pipe p)
     {
-    	System.out.println("public boolean AddPipe(Pipe p)");
+    	System.out.println("public static boolean AddPipe(Pipe p)");
     	setNeighbour(p);
     	return false;
     }

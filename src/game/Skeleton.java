@@ -167,7 +167,8 @@ public class Skeleton
             		userinput = GetUserInput(1, 1);
 
             		// TODO: Call method
-
+            		mechanic.BuildPumpIntoPipe();
+            		
             		AfterPrintingMethodCallsDialog();
             		break;
         		// Pumpa be-/kimenet állítása
@@ -176,7 +177,9 @@ public class Skeleton
             		userinput = GetUserInput(1, 1);
 
             		// TODO: Call method
-
+            		mechanic.TrySetPump(0, 0);
+            		saboteur.TrySetPump(0, 0);
+            		
             		AfterPrintingMethodCallsDialog();
             		break;
             	default:
