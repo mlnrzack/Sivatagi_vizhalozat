@@ -1,5 +1,7 @@
 package game.players;
 
+import java.io.IOException;
+
 import game.*;
 import game.elements.*;
 
@@ -14,7 +16,6 @@ public class Mechanic extends Player
     public Mechanic() 
     {
     	System.out.println("public Mechanic() ");
-        GameManager.AddMechanic(this);
     }
 
     /**
@@ -24,12 +25,8 @@ public class Mechanic extends Player
     public boolean BuildPumpIntoPipe()
     {
     	System.out.println("public boolean BuildPumpIntoPipe()");
-        if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory))
-        {
-            GameManager.ActionExecuted();
-            return true;
-        }
-
+    	//Pump.AddPipe(new Pipe());
+    	//Pump.AddPipe(new Pipe());
         System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
         return false;
     }
@@ -59,14 +56,7 @@ public class Mechanic extends Player
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public boolean DisconnectNeighbourPipe(int neighbourIdx)");
-        pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
-
-        if (pipeInInventory != null)
-        {
-            GameManager.ActionExecuted();
-            return true;
-        }
-
+        GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
         return false;
     }
 
@@ -74,22 +64,12 @@ public class Mechanic extends Player
      *  Egy szabad végű cső felvétele.
      * @return
      */
-    public boolean PickUpFreePipeEnd()
+    public Pipe PickUpFreePipeEnd()
     {
     	System.out.println("public boolean PickUpFreePipeEnd()");
-        if (pipeInInventory == null)
-        {
-            var pickedUpPipe = GetCurrentPosition().PickUpFreePipeEnd();
-
-            if (pickedUpPipe != null)
-            {
-                GameManager.ActionExecuted();
-                return true;
-            }
-        }
-
-        System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
-        return false;
+        GetCurrentPosition().PickUpFreePipeEnd();
+        GameManager.ActionExecuted();
+        return null;
     }
 
     /**
@@ -99,15 +79,8 @@ public class Mechanic extends Player
     public boolean PickUpPump()
     {
     	System.out.println("public boolean PickUpPump()");
-        Pump pickedUpPump = GetCurrentPosition().PickUpPump();
-
-        if (pickedUpPump != null)
-        {
-            GameManager.ActionExecuted();
-            return true;
-        }
-
-        System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
+    	
+        GetCurrentPosition().PickUpPump();
         return false;
     }
 
@@ -119,11 +92,7 @@ public class Mechanic extends Player
     {
     	System.out.println("public boolean Repair()");
         if (GetCurrentPosition().TryRepair())
-        {
-            GameManager.ActionExecuted();
-            return true;
-        }
-
+        GameManager.ActionExecuted();
         return false;
     }
 }

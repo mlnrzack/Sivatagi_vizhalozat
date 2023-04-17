@@ -10,7 +10,6 @@ public class Saboteur extends Player
     public Saboteur()
     {
     	System.out.println("public Saboteur()");
-        GameManager.AddSaboteur(this);
     }
 
     /**
@@ -20,11 +19,8 @@ public class Saboteur extends Player
     public boolean Damage()
     {
     	System.out.println("public boolean Damage()");
-        if (GetCurrentPosition().TryDamage())
-        {
-            GameManager.ActionExecuted();
-            return false;
-        }
+        GetCurrentPosition().TryDamage();        
+        GameManager.ActionExecuted();
         return false;
     }
 }

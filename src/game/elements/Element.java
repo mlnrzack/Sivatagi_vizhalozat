@@ -95,7 +95,6 @@ public abstract class Element
     public void WaterToDesert()
     {
     	System.out.println("public void WaterToDesert()");
-        Desert.IncreaseWaterFromPipelineNetwork(waterInside);
     }
     /**
      * Az elemen álló játékos másik elemre lépését követő függvény, amely a volt helyéről törli a játékost.

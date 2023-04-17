@@ -11,7 +11,7 @@ public class Desert
      * inkrementálja a waterFromPipelineNetwork változót, ezzel számolva, hogy mennyi víz jutott ki a sivatagba
      * @param water
      */
-    public static void IncreaseWaterFromPipelineNetwork(int water)
+    public void IncreaseWaterFromPipelineNetwork(int water)
     {
     	System.out.println("public static void IncreaseWaterFromPipelineNetwork(int water)");
     }

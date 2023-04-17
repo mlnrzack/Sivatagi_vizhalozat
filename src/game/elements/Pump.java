@@ -14,7 +14,7 @@ public class Pump extends ActiveElement implements ISteppable
     public Pump()
     {
     	System.out.println("public Pump()");
-        GameManager.AddSteppable(this);
+    	GameManager.AddSteppable(this);
     }
 
     /**
@@ -68,10 +68,9 @@ public class Pump extends ActiveElement implements ISteppable
     /**
      * A pumpa elromlik, és a benne tárolt víz bekerül a sivatagba, növelve a kifolyt víz mennyiségét.
      */
-    private void GoWrong()
+    public void GoWrong()
     {
     	System.out.println("private void GoWrong()");
-        Desert.IncreaseWaterFromPipelineNetwork(GetWaterInside());
         SetWaterInside(0);
     }
 
@@ -114,7 +113,7 @@ public class Pump extends ActiveElement implements ISteppable
      * Egy valószínűségi változó hatására a pumpa tönkremehet.
      * @return
      */
-    private boolean GettingOlder()
+    public boolean GettingOlder()
     {
     	System.out.println("private boolean GettingOlder()");
         if (new Random().nextDouble() < 0)
@@ -134,11 +133,6 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean TryRepair()
     {
     	System.out.println("public boolean TryRepair()");
-        if (isWrong == true)
-        {
-            return true;
-        }
-
         return false;
     }
 
@@ -150,14 +144,17 @@ public class Pump extends ActiveElement implements ISteppable
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
     	System.out.println("public Pipe DisconnectNeighbourPipe(int neighbourIdx)");
-        if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        Pipe neighbourtoDisconnect = (Pipe)GetNeighbours().get(neighbourIdx);			
-
-        ActiveElement.RemovePipe(neighbourtoDisconnect);
-        neighbourtoDisconnect.WaterToDesert();
-        neighbourtoDisconnect.RemoveNeighbour(this);
-
-        return null;
+    	if(neighbourIdx == 1)
+    	{
+    		Pipe neighbourtoDisconnect = (Pipe)GetNeighbours().get(neighbourIdx);			
+            RemovePipe(neighbourtoDisconnect);
+            neighbourtoDisconnect.WaterToDesert();
+            neighbourtoDisconnect.RemoveNeighbour(this);
+            return neighbourtoDisconnect;
+    	}
+    	else if(neighbourIdx == 2)
+    		return null;
+    	return null;
     }
 
     /**

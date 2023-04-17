@@ -13,7 +13,6 @@ public class Cistern extends ActiveElement implements ISteppable
     public Cistern() 
     {
     	System.out.println("public Cistern()");
-        GameManager.AddSteppable(this);
     }
 
     /**
@@ -47,7 +46,6 @@ public class Cistern extends ActiveElement implements ISteppable
     {
     	System.out.println("private void PumpWaterToCisternFromNeighbour(Element neighbourPipe)");
         neighbourPipe.DecreaseWater();
-        GameManager.IncreaseMechanicsPoints();
         IncreaseWater();
     }
 

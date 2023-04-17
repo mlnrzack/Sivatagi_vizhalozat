@@ -300,20 +300,20 @@ public class GameManager
      * Steppable interfészt megvalósító objektumokban.
      * @return void
      */
-    public void ActionExecuted()
+    public static void ActionExecuted()
     {
     	System.out.println("public void ActionExecuted()");
-        FireSourceActions();
-        StepSteppables();
+        //FireSourceActions();
+        //StepSteppables();
     }
 
     /**
      * A steppables listához ad egy új elemet.
      * @param steppable
      */
-    public void AddSteppable(ISteppable steppable)
+    public static void AddSteppable(ISteppable steppable)
     {
-    	System.out.println("public void AddSteppable(ISteppable steppable)");        
+    	System.out.println("public static void AddSteppable(ISteppable steppable)");        
     }
 
     /**

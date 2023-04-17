@@ -35,12 +35,6 @@ public class Pipe extends Element implements ISteppable
     public boolean TryRepair()
     {
     	System.out.println("public boolean TryRepair()");
-        if (isWrong)
-        {
-            return true;
-        }
-
-        System.out.println("Cső javítása nem sikerül. Nincs elromolva ez az elem.");
         return false;
     }
 
@@ -51,12 +45,6 @@ public class Pipe extends Element implements ISteppable
     public boolean TryDamage()
     {
     	System.out.println("public boolean TryDamage()");
-        if (!isWrong)
-        {
-            return true;
-        }
-
-        System.out.println("Cső rongálása nem sikerül. Már el van rontva ez az elem.");
         return false;
     }
 

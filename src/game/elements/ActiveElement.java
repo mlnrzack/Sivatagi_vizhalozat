@@ -40,8 +40,7 @@ public abstract class ActiveElement extends Element
     public boolean AddPipe(Pipe p)
     {
     	System.out.println("public boolean AddPipe(Pipe p)");
-    	if(neighbours.add(p));
-    	
+    	setNeighbour(p);
     	return false;
     }
 

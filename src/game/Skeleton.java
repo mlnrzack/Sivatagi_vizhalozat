@@ -60,7 +60,10 @@ public class Skeleton
                 	userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
-                	mechanic.PickUpPump();
+                	if(userinput == 1)
+                		mechanic.PickUpPump();
+                	else if(userinput == 2)
+                		System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
                 	
                 	AfterPrintingMethodCallsDialog();
                     break;
@@ -71,16 +74,21 @@ public class Skeleton
                 	userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
+                	if(userinput == 1)
+                		pump.TryRepair();
+                	else if(userinput == 2)
+                		System.out.println("Nem szroult a pumpa javításra.");
 
                 	AfterPrintingMethodCallsDialog();
                     break;
-                // Csővég felétele
+                // Csővég felvétele
                 case 4:
                 	System.out.println("1: A csövet felvette a szerelő");
                 	System.out.println("2: A cső nem választható el az elemtől");
                 	userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
+                	mechanic.DisconnectNeighbourPipe(userinput);
 
                 	AfterPrintingMethodCallsDialog();
                     break;
@@ -90,6 +98,10 @@ public class Skeleton
                 	userinput = GetUserInput(1, 1);
 
         			// TODO: Call method
+                	if(userinput == 1)
+                		mechanic.PickUpFreePipeEnd();
+                	else if(userinput == 2)
+                		System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
 
                 	AfterPrintingMethodCallsDialog();
                 	break;
@@ -100,16 +112,24 @@ public class Skeleton
             		userinput = GetUserInput(1, 2);
 
                 	// TODO: Call method
-
+            		if(userinput == 1)
+            			mechanic.PickUpPump();
+                	else if(userinput == 2)
+                		System.out.println("Nem sikerül a felvétel, a szerelőnél már van pumpa.");
+            		
             		AfterPrintingMethodCallsDialog();
             		break;
-            		// Cső kilyukasztása
+            	// Cső kilyukasztása
             	case 7:
             		System.out.println("1: A cső kilyukad");
             		System.out.println("2: A cső már lyukas volt, ezért nem lehet újra kilyukasztani");
             		userinput = GetUserInput(1, 2);
 
             		// TODO: Call method
+            		if(userinput == 1)
+            			saboteur.Damage();
+                	else if(userinput == 2)
+                		System.out.println("Nem sikerül a lyukasztás, a cső már lyukas volt.");
 
             		AfterPrintingMethodCallsDialog();
             		break;
@@ -120,7 +140,11 @@ public class Skeleton
             		userinput = GetUserInput(1, 2);
 
             		// TODO: Call method
-
+            		if(userinput == 1)
+            			mechanic.Repair();
+                	else if(userinput == 2)
+                		System.out.println("Nem sikerül a javítás, a cső már rendben volt.");
+            		
             		AfterPrintingMethodCallsDialog();
             		break;
         		// Csővég lehelyezése
@@ -130,7 +154,11 @@ public class Skeleton
             		userinput = GetUserInput(1, 2);
 
             		// TODO: Call method
-
+            		if(userinput == 1)
+            			mechanic.ConnectPipe();
+            		else if(userinput == 2)
+            			System.out.println("Nem sikerül az akció. Próbálkozz úgy, aktív elemen állsz és van nálad csővég.");
+            		
             		AfterPrintingMethodCallsDialog();
             		break;
         		// Pumpa beágyazása csőre
@@ -166,7 +194,7 @@ public class Skeleton
 			System.out.println("Adj meg " + firstValid + " és " + lastValid + " közötti értéket!");
 			userinput = input.nextInt();
 		}
-
+		
 		return userinput;
 	}
 

@@ -12,7 +12,6 @@ public class WaterSpring extends ActiveElement
     public WaterSpring() 
     {
     	System.out.println("public WaterSpring()");
-        GameManager.AddWaterSpring(this);
     }
 
     /**
