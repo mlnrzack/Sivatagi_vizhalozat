@@ -35,6 +35,7 @@ public class Skeleton
 			System.out.println("9: Csővég lehelyezése");
 			System.out.println("10: Pumpa beágyazása csőre");
 			System.out.println("11: Pumpa be-/kimenet állítása");
+			System.out.println("12: Az összes szekvencia egyben opciómentes futtatása");
 
             int userinput = GetUserInput(1, 11);
 
@@ -182,7 +183,7 @@ public class Skeleton
             		
             		AfterPrintingMethodCallsDialog();
             		break;
-            	default:
+            	case 12:
             		mechanic.Move(0);
             		saboteur.Move(0);
             		mechanic.TrySetPump(0, 0);
@@ -197,6 +198,7 @@ public class Skeleton
             		new Pipe().Step();
             		mechanic.PickUpPump();
             		new WaterSpring().FillNeighourPipes();
+            	default:            		
             		break;
             }
         }
