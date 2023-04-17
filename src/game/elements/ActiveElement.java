@@ -106,7 +106,6 @@ public abstract class ActiveElement extends Element
      *A szerelő a ciszternán állva felvesz egy pumpát
      * @return Pump
      */
-    /
     public Pump PickUpPump()
     {
     	System.out.println("public IPump PickUpPump()");
