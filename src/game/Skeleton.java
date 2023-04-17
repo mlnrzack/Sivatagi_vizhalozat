@@ -183,6 +183,20 @@ public class Skeleton
             		AfterPrintingMethodCallsDialog();
             		break;
             	default:
+            		mechanic.Move(0);
+            		saboteur.Move(0);
+            		mechanic.TrySetPump(0, 0);
+            		saboteur.TrySetPump(0, 0);
+            		saboteur.Damage();
+            		mechanic.Repair();
+            		mechanic.DisconnectNeighbourPipe(0);
+            		mechanic.PickUpFreePipeEnd();
+            		mechanic.ConnectPipe();
+            		mechanic.BuildPumpIntoPipe();
+            		new Pump().Step();
+            		new Pipe().Step();
+            		mechanic.PickUpPump();
+            		new WaterSpring().FillNeighourPipes();
             		break;
             }
         }
