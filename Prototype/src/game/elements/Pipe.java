@@ -139,9 +139,19 @@ public class Pipe extends Element implements ISteppable, IPipe
     	}
     }
     
+    public boolean GetSlippery()
+    {
+    	return slippery;
+    }
+    
     public void SetSlippery()
     {
     	slippery ^= true;			//XOR-ral beállítódik az érték híváskor
+    }
+    
+    public boolean GetSticky()
+    {
+    	return sticky;
     }
     
     public void SetSticky()

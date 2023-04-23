@@ -75,7 +75,11 @@ public abstract class Player
     	//Pipe-e a currentPosition?
     	//ha igen...
     	//és ha a sticky nem igaz
-    	//Pipe.SetSticky();
+    	//if(Pipe.GetSticky() == false)
+    	//{
+    		//Pipe.SetSticky();
+    		//return true;
+    	//}
     	return false;
     }
 }
