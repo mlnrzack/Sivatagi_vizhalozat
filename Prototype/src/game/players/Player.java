@@ -34,10 +34,10 @@ public abstract class Player
     {
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
         {
-            IElement toNeighbour = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
+            IElement toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-                currentPosition = GetCurrentPosition().GetNeighbours().ElementAt(neighbourIdx);
+                currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
                 currentPosition.RemovePlayer(this);
 
                 GameManager.ActionExecuted();
@@ -57,5 +57,25 @@ public abstract class Player
         }
 
         return false;
+    }
+    
+    public boolean Damage()
+    {
+        if (GetCurrentPosition().TryDamage())
+        {
+            GameManager.ActionExecuted();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean SetStickyPipe()
+    {
+    	//TODO
+    	//Pipe-e a currentPosition?
+    	//ha igen...
+    	//és ha a sticky nem igaz
+    	//Pipe.SetSticky();
+    	return false;
     }
 }

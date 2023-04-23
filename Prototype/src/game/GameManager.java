@@ -11,7 +11,7 @@ public class GameManager
 {
 	private static int round = 0;
 	private static int mechanicsPoints = 0;
-	private static int saboteursPoints = 0;/*=> Desert.WaterFromPipelineNetwork;*/
+	private static int saboteursPoints = Desert.WaterFromPipelineNetwork;
     private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
@@ -186,27 +186,27 @@ public class GameManager
     public static void MechanicActions()
     {
     	for(Mechanic mechanic; ;)
-       //foreach (var player in GameController.mechanics)
-       {
-    	   playerActionCountInCurrentRound = 0;
-
-    	   while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
-           {
-    		   System.out.println("{GameController.round + 1}. Kör");
-               System.out.println("Szerelő {player.Name} köre, {playerActionCountInCurrentRound + 1}. akció");
-               System.out.println("Lehetőségek:");
-               System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-               System.out.println("\t2 - Javítás");
-               System.out.println("\t3 - Szabad csővég felvétele");
-               System.out.println("\t4 - Pumpa felvétele");
-               System.out.println("\t5 - Pumpa beépítése a csőbe");
-               System.out.println("\t6 - Csővég csatlakoztatása");
-               System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
-               System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               String userinput = System.in.toString();//Console.ReadLine();
+    	//foreach (var player in GameController.mechanics)
+    	{
+    		playerActionCountInCurrentRound = 0;
+    		
+    		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
+    		{
+    			System.out.println("{GameController.round + 1}. Kör");
+    			System.out.println("Szerelő {player.Name} köre, {playerActionCountInCurrentRound + 1}. akció");
+    			System.out.println("Lehetőségek:");
+    			System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
+    			System.out.println("\t2 - Javítás");
+    			System.out.println("\t3 - Szabad csővég felvétele");
+               	System.out.println("\t4 - Pumpa felvétele");
+               	System.out.println("\t5 - Pumpa beépítése a csőbe");
+               	System.out.println("\t6 - Csővég csatlakoztatása");
+               	System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
+               	System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
+               	String userinput = System.in.toString();//Console.ReadLine();
                
-               switch (userinput.toCharArray()[0])
-               {
+               	switch (userinput.toCharArray()[0])
+               	{
                		case '1':
                			int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
                			mechanic.Move(neighbourIdx);
@@ -237,9 +237,9 @@ public class GameManager
                         break;
                     default:
                         break;
-                }
-            }
-       }
+               	}
+    		}
+    	}
     }
 
     public static void SaboteurActions()

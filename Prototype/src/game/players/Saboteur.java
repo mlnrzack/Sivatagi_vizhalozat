@@ -11,14 +11,13 @@ public class Saboteur extends Player
     {
         GameManager.AddSaboteur(this);
     }
-
-    public boolean Damage()
+    
+    public boolean SetSlipperyPipe()
     {
-        if (GetCurrentPosition().TryDamage())
-        {
-            GameManager.ActionExecuted();
-            return true;
-        }
-        return false;
+    	//TODO
+    	//Pipe-e a currentPosition?
+    	//ha igen...
+    	//Pipe.SetSlippery();
+    	return false ;
     }
 }

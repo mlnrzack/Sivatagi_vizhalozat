@@ -9,9 +9,12 @@ import game.players.*;
 
 public class Pipe extends Element implements ISteppable, IPipe
 {
-    private boolean isWrong; // { get; set; }
-
-    private ArrayList<ActiveElement> neighbours /*{ get; set; }*/ = new ArrayList<ActiveElement>();
+    private boolean leaking; // { get; set; }
+    private boolean leakable = true; 					//lyukasztaható-e
+    private Random noLeakageTimer = new Random(0);		//lyukasztás tiltási ideje, mi lépteti?
+    private boolean slippery = false;					//csúszós-e
+    private boolean sticky = false;						//ragadós-e
+    private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
     public boolean TryBuildPumpInto(IPump pump)
     {
@@ -23,10 +26,12 @@ public class Pipe extends Element implements ISteppable, IPipe
 
     public boolean TryRepair()
     {
-        if (isWrong)
+        if (leaking)
         {
-            isWrong = false;
-
+        	leaking = false;
+        	noLeakageTimer = new Random(20); //itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
+        	leakable = false;
+        	
             return true;
         }
 
@@ -36,10 +41,10 @@ public class Pipe extends Element implements ISteppable, IPipe
 
     public boolean TryDamage()
     {
-        if (!isWrong)
+        if (!leaking)
         {
-            isWrong = true;
-
+        	leaking = true;
+        	
             return true;
         }
 
@@ -49,7 +54,7 @@ public class Pipe extends Element implements ISteppable, IPipe
 
     public boolean Step()
     {
-        if (isWrong && GetWaterInside() > 0)
+        if (leaking && GetWaterInside() > 0)
         {
             WaterToDesert();
 
@@ -119,5 +124,39 @@ public class Pipe extends Element implements ISteppable, IPipe
     public ArrayList<ActiveElement> GetNeighboursOfPipe()//IEnumerable
     {
     	return neighbours;
+    }
+    
+    public void SetLeakable()
+    {
+    	if(noLeakageTimer.toString() == "0")		//ha elfogy a timer
+    	{
+    		leakable = true;						//visszaállítja a leakable értékét true-ra
+    	}
+    }
+    
+    public void SetSlippery()
+    {
+    	slippery ^= true;			//XOR-ral beállítódik az érték híváskor
+    }
+    
+    public void SetSticky()
+    {
+    	sticky ^= true;				//XOR-ral beállítódik az érték híváskor
+    }
+    
+    public boolean SlipperyPipe()
+    {
+    	//TODO
+    	//GetNeighbours()
+    	//player.move(valamelyik szomszéd)
+    	return false;
+    }
+    
+    public boolean StickyPipe()
+    {
+    	//TODO
+    	//player-re körkimaradás, vagyis, bármennyi lépése is volt a körből nem lép többet.
+    	SetSticky();
+    	return false;
     }
 }
