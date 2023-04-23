@@ -16,6 +16,11 @@ public class Pipe extends Element implements ISteppable, IPipe
     private boolean sticky = false;						//ragadós-e
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
+    public Pipe()
+    {
+    	
+    }
+    
     public boolean TryBuildPumpInto(IPump pump)
     {
     	if(pump.GetBuildedInto(this))

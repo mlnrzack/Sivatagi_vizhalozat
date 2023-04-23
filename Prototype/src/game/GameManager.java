@@ -9,15 +9,15 @@ import game.players.*;
 
 public class GameManager
 {
-	private static int round = 0;
-	private static int mechanicsPoints = 0;
-	private static int saboteursPoints = Desert.WaterFromPipelineNetwork;
-    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
-    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
-    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
-    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
-    /*public static Player CurrentPlayer { get; set; }*/
-    private static int playerActionCountInCurrentRound = 0;
+	private int round = 0;
+	private int mechanicsPoints = 0;
+	private int saboteursPoints = Desert.WaterFromPipelineNetwork;
+    private ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
+    private ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
+    private ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
+    private ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
+    public Player currentPlayer;
+    private int playerActionCountInCurrentRound = 0;
     
     public int GetRound()
     {
@@ -27,6 +27,16 @@ public class GameManager
     public void SetRound(int round)
     {
     	this.round = round;
+    }
+    
+    public Player GetCurrentPlayer()
+    {
+    	return currentPlayer;
+    }
+    
+    public void SetCurrentPlayer(Player player)
+    {
+    	currentPlayer = player;
     }
     
     public int GetMechanincsPoints()
@@ -39,12 +49,12 @@ public class GameManager
     	mechanicsPoints = points;
     }
     
-    public static void IncreaseMechanicsPoints()
+    public void IncreaseMechanicsPoints()
     {
     	mechanicsPoints++;
     }
     
-    public static void DecreaseMechanicsPoints()
+    public void DecreaseMechanicsPoints()
     {
     	mechanicsPoints--;
     }
@@ -59,12 +69,12 @@ public class GameManager
     	saboteursPoints = points;
     }
     
-    public static void IncreaseSaboteursPoints()
+    public void IncreaseSaboteursPoints()
     {
     	saboteursPoints++;
     }
     
-    public static void DecreaseSaboteursPoints()
+    public void DecreaseSaboteursPoints()
     {
     	saboteursPoints--;
     }
@@ -79,7 +89,7 @@ public class GameManager
     	this.mechanics = mechanics;
     }
     
-    public static boolean AddMechanic(Mechanic mechanic)
+    public boolean AddMechanic(Mechanic mechanic)
     {
     	return mechanics.add(mechanic);
     }
@@ -99,7 +109,7 @@ public class GameManager
     	this.saboteurs = saboteurs;
     }
 
-    public static boolean AddSaboteur(Saboteur saboteur)
+    public boolean AddSaboteur(Saboteur saboteur)
     {
     	return saboteurs.add(saboteur);
     }
@@ -119,7 +129,7 @@ public class GameManager
     	this.steppables = steppables;
     }
 
-    public static boolean AddSteppble(ISteppable steppable)
+    public boolean AddSteppble(ISteppable steppable)
     {
     	return steppables.add(steppable);
     }
@@ -139,7 +149,7 @@ public class GameManager
     	this.waterSprings = waterSprings;
     }
     
-    public static boolean AddWaterSpring(WaterSpring waterspring)
+    public boolean AddWaterSpring(WaterSpring waterspring)
     {
     	return waterSprings.add(waterspring);
     }
@@ -165,28 +175,27 @@ public class GameManager
     }
     
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
-    public static void ActionExecuted()
+    public void ActionExecuted()
     {
         playerActionCountInCurrentRound++;
         FireSourceActions();
         StepSteppables();
     }
 
-    public static void AddSteppable(ISteppable steppable)
+    public void AddSteppable(ISteppable steppable)
     {
     	steppables.add(steppable);
         
     }
     
-    public static void FireSourceActions()
+    public void FireSourceActions()
     {
      	//watersrpings.ForEach(watersrpings => watersrpings.FillNeighourPipes());
     }
     
-    public static void MechanicActions()
+    public void MechanicActions()
     {
-    	for(Mechanic mechanic; ;)
-    	//foreach (var player in GameController.mechanics)
+    	for(int i = 0; i < mechanics.size(); i++)
     	{
     		playerActionCountInCurrentRound = 0;
     		
@@ -203,37 +212,37 @@ public class GameManager
                	System.out.println("\t6 - Csővég csatlakoztatása");
                	System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
                	System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	String userinput = System.in.toString();//Console.ReadLine();
+               	String userinput = System.in.toString();
                
                	switch (userinput.toCharArray()[0])
                	{
                		case '1':
-               			int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
-               			mechanic.Move(neighbourIdx);
+               			int neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
+               			mechanics.get(i).Move(neighbourIdx);
                         break;
                     case '2':
-                    	mechanic.Repair();
+                    	mechanics.get(i).Repair();
                         break;
                     case '3':
-                    	mechanic.PickUpFreePipeEnd();
+                    	mechanics.get(i).PickUpFreePipeEnd();
                         break;
                     case '4':
-                    	mechanic.PickUpPump();
+                    	mechanics.get(i).PickUpPump();
                         break;
                     case '5':
-                    	mechanic.BuildPumpIntoPipe();
+                    	mechanics.get(i).BuildPumpIntoPipe();
                         break;
                     case '6':
-                    	mechanic.ConnectPipe();
+                    	mechanics.get(i).ConnectPipe();
                         break;
                     case '7':
-                        //neighbourIdx = int.Parse(userinput.Split(';')[1]);
-                        mechanic.DisconnectNeighbourPipe(neighbourIdx);
+                        neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
+                        mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
                         break;
                     case '8':
-                        int neighbourIdxFrom;// = int.Parse(userinput.Split(';')[1]);
-                        int neighbourIdxTo;// = int.Parse(userinput.Split(';')[2]);
-                        mechanic.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                        int neighbourIdxFrom = Integer.parseInt(userinput.split(";")[1]);
+                        int neighbourIdxTo = Integer.parseInt(userinput.split(";")[2]);
+                        mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                         break;
                     default:
                         break;
@@ -242,10 +251,9 @@ public class GameManager
     	}
     }
 
-    public static void SaboteurActions()
+    public void SaboteurActions()
     {
-    	for(Saboteur saboteur;;)
-    	//foreach (var player in GameController.sabouteurs)
+    	for(int i =0; i < saboteurs.size(); i++)
     	{
     		playerActionCountInCurrentRound = 0;
 
@@ -262,23 +270,23 @@ public class GameManager
                 switch (userinput.toCharArray()[0])
                 {
                 	case '1':
-                		int neighbourIdx;// = int.Parse(userinput.Split(';')[1]);
-                		if (neighbourIdx < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
+                		int neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
+                		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
                 		{
-                			saboteur.Move(neighbourIdx);
+                			saboteurs.get(i).Move(neighbourIdx);
                 			ActionExecuted();
                 		}
                 		break;
                     case '2':
-                    	if (saboteur.Damage() == true)
+                    	if (saboteurs.get(i).Damage() == true)
                     		ActionExecuted();
                         break;
                     case '7':
-                    	int neighbourIdxFrom;// = int.Parse(userinput.Split(';')[1]);
-                    	int neighbourIdxTo;// = int.Parse(userinput.Split(';')[2]);
-                    	if (neighbourIdxFrom < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdxFrom >= 0
-                    		&& neighbourIdxTo < saboteur.GetCurrentPosition().GetNeighbours().size() && neighbourIdxTo >= 0
-                    		&& saboteur.TrySetPump(neighbourIdxFrom, neighbourIdxTo))
+                    	int neighbourIdxFrom = Integer.parseInt(userinput.split(";")[1]);
+                    	int neighbourIdxTo = Integer.parseInt(userinput.split(";")[2]);
+                    	if (neighbourIdxFrom < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdxFrom >= 0
+                    		&& neighbourIdxTo < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdxTo >= 0
+                    		&& saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo))
                     	{
                     		ActionExecuted();
                     	}
@@ -290,17 +298,17 @@ public class GameManager
         }
     }
 
-    public static void StartGame()
+    public void StartGame()
     {
-    	while (GameManager.round < Constants.RoundNumber)
+    	while (round < Constants.RoundNumber)
         {
-            GameManager.MechanicActions();
-            GameManager.SaboteurActions();
-            GameManager.round++;
+            MechanicActions();
+            SaboteurActions();
+            round++;
         }
     }
     
-    public static void StepSteppables()
+    public void StepSteppables()
     {
     	var actionDone = false;
         do

@@ -1,5 +1,7 @@
 package game.elements;
 
+import java.util.ArrayList;
+
 import game.*;
 import game.elements.*;
 import game.interfaces.*;
@@ -14,10 +16,12 @@ public class WaterSpring extends ActiveElement
 
     public void FillNeighourPipes()
     {
-    	for(IElement neighbourPipe;;)
-        //foreach (var neighbourPipe in GetNeighbours())
+    	System.out.println("public void FillNeighourPipes()");
+    	ArrayList<IElement> neighbourPipe = GetNeighbours();
+    	
+    	for(int i = 0; i < GetNeighbours().size(); i++)
         {
-            neighbourPipe.FillWaterTo();
+            neighbourPipe.get(i).FillWaterTo();
         }
     }
 }

@@ -41,8 +41,8 @@ public class Pump extends ActiveElement implements ISteppable, IPump
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
             && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
         {
-            IPipe from = GetNeighbours()[neighbourIdxFrom];
-            IPipe to = GetNeighbours()[neighbourIdxTo];
+            IPipe from = GetNeighbours().get(neighbourIdxFrom);
+            IPipe to = GetNeighbours().get(neighbourIdxTo);
             input = from;
             output = to;
 
@@ -111,7 +111,7 @@ public class Pump extends ActiveElement implements ISteppable, IPump
     public IPipe DisconnectNeighbourPipe(int neighbourIdx)
     {
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        IPipe neighbourtoDisconnect = GetNeighbours()[neighbourIdx];
+        IPipe neighbourtoDisconnect = GetNeighbours().get(neighbourIdx);
 
         if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
 
@@ -128,10 +128,9 @@ public class Pump extends ActiveElement implements ISteppable, IPump
         Pipe newPipe = new Pipe();
         // { waterInside = 0, Neighbours = new List<ActiveElement>() { this, pipe.GetNeighboursOfPipe().ToList().First() } };
         pipe.AddNeighbour(this);
-        pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().ToList().First());//??
+        pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().get(0));//.ToList().First());		??ez így vajon jó?
         AddPipe(newPipe);
         AddPipe(pipe);
-        neighbours.Add(pipe);
 
         return true;
     }
