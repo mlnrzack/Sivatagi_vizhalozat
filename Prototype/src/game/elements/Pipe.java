@@ -34,7 +34,7 @@ public class Pipe extends Element implements ISteppable, IPipe
         if (leaking)
         {
         	leaking = false;
-        	noLeakageTimer = new Random(20); //itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
+        	noLeakageTimer = new Random(1); //itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
         	leakable = false;
         	
             return true;

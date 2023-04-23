@@ -9,6 +9,7 @@ import game.players.*;
 public abstract class Element implements IElement
 {
     private int waterInside;
+    private String id = "";
     private static ArrayList<Player> players = new ArrayList<Player>();
     
     public int GetWaterInside()
@@ -29,6 +30,16 @@ public abstract class Element implements IElement
     public void IncreaseWater()
     {
     	waterInside++;
+    }
+    
+    public String GetId()
+    {
+    	return id;
+    }
+    
+    public void SetId(String newid)
+    {
+    	id = newid;
     }
     
     public ArrayList<Player> GetPlayers()
