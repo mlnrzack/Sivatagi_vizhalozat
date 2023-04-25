@@ -128,7 +128,7 @@ public class Pump extends ActiveElement implements ISteppable
         Pipe newPipe = new Pipe();
         // { waterInside = 0, Neighbours = new List<ActiveElement>() { this, pipe.GetNeighboursOfPipe().ToList().First() } };
         pipe.AddNeighbour(this);
-        pipe.RemoveNeighbour(pipe.GetNeighboursOfPipe().get(0));//.ToList().First());		??ez így vajon jó?
+        pipe.RemoveNeighbour(pipe.GetNeighbours().get(0));//.ToList().First());		??ez így vajon jó?
         AddPipe(newPipe);
         AddPipe(pipe);
 

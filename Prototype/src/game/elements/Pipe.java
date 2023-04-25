@@ -69,7 +69,7 @@ public class Pipe extends Element implements ISteppable
         return false;
     }
 
-    public ArrayList<? extends IElement> GetNeighbours()
+    public ArrayList<ActiveElement> GetNeighbours()
     {
     	return neighbours;
     }
@@ -124,11 +124,6 @@ public class Pipe extends Element implements ISteppable
     public void RemoveNeighbour(ActiveElement neighbour)
     {
     	neighbours.remove(neighbour);
-    }
-
-    public ArrayList<ActiveElement> GetNeighboursOfPipe()//IEnumerable
-    {
-    	return neighbours;
     }
     
     public void SetLeakable()
