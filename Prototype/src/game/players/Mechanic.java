@@ -9,8 +9,8 @@ import game.players.*;
 
 public class Mechanic extends Player
 {	
-    public IPipe pipeInInventory = null;
-    public IPump pumpInInventory = null;
+    public Pipe pipeInInventory = null;
+    public Pump pumpInInventory = null;
     
     public Mechanic() 
     {
@@ -88,7 +88,7 @@ public class Mechanic extends Player
     {
         if (pipeInInventory == null)
         {
-            IPump pickedUpPump = GetCurrentPosition().PickUpPump();
+            Pump pickedUpPump = GetCurrentPosition().PickUpPump();
 
             if (pickedUpPump != null)
             {

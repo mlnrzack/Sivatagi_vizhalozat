@@ -7,10 +7,10 @@ import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
-public class Pump extends ActiveElement implements ISteppable, IPump
+public class Pump extends ActiveElement implements ISteppable
 {
-    private IPipe input;
-    private IPipe output;
+    private Pipe input;
+    private Pipe output;
     private boolean isWrong;
     
     public Pump()
@@ -41,8 +41,8 @@ public class Pump extends ActiveElement implements ISteppable, IPump
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
             && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
         {
-            IPipe from = GetNeighbours().get(neighbourIdxFrom);
-            IPipe to = GetNeighbours().get(neighbourIdxTo);
+            Pipe from = this.neighbours.get(neighbourIdxFrom);
+            Pipe to = this.neighbours.get(neighbourIdxTo);
             input = from;
             output = to;
 
@@ -108,21 +108,21 @@ public class Pump extends ActiveElement implements ISteppable, IPump
         return false;
     }
 
-    public IPipe DisconnectNeighbourPipe(int neighbourIdx)
+    public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        IPipe neighbourtoDisconnect = GetNeighbours().get(neighbourIdx);
+        Pipe neighbourtoDisconnect = this.neighbours.get(neighbourIdx);
 
         if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
 
-        ActiveElement.RemovePipe(neighbourtoDisconnect);
+        RemovePipe(neighbourtoDisconnect);
         neighbourtoDisconnect.WaterToDesert();
         neighbourtoDisconnect.RemoveNeighbour(this);
 
         return neighbourtoDisconnect;
     }
 
-    public boolean GetBuildedInto(IPipe pipe)
+    public boolean GetBuildedInto(Pipe pipe)
     {
         // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
         Pipe newPipe = new Pipe();

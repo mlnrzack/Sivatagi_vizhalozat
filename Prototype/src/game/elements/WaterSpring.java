@@ -17,11 +17,10 @@ public class WaterSpring extends ActiveElement
     public void FillNeighourPipes()
     {
     	System.out.println("public void FillNeighourPipes()");
-    	ArrayList<IElement> neighbourPipe = GetNeighbours();
     	
-    	for(int i = 0; i < GetNeighbours().size(); i++)
+    	for(int i = 0; i < this.neighbours.size(); i++)
         {
-            neighbourPipe.get(i).FillWaterTo();
+    		this.neighbours.get(i).FillWaterTo();
         }
     }
 }

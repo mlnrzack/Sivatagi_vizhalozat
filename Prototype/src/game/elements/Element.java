@@ -87,13 +87,13 @@ public abstract class Element implements IElement
     }
     
     public abstract boolean AcceptPlayer(Player player);
-    public abstract ArrayList<IElement> GetNeighbours();	//IEnumerable
+    public abstract ArrayList<? extends IElement> GetNeighbours();	//IEnumerable
     public abstract boolean TryRepair();
     public abstract boolean TryDamage();
-    public abstract boolean TryBuildPumpInto(IPump pump);
-    public abstract IPipe DisconnectNeighbourPipe(int neighbourIdx);
-    public abstract boolean TryConnectPipe(IPipe pipeInInventory);
-    public abstract IPipe PickUpFreePipeEnd();
-    public abstract IPump PickUpPump();
+    public abstract boolean TryBuildPumpInto(Pump pump);
+    public abstract Pipe DisconnectNeighbourPipe(int neighbourIdx);
+    public abstract boolean TryConnectPipe(Pipe pipeInInventory);
+    public abstract Pipe PickUpFreePipeEnd();
+    public abstract Pump PickUpPump();
     public abstract boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx);
 }

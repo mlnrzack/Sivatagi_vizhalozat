@@ -7,7 +7,7 @@ import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
-public class Pipe extends Element implements ISteppable, IPipe
+public class Pipe extends Element implements ISteppable
 {
     private boolean leaking; // { get; set; }
     private boolean leakable = true; 					//lyukasztaható-e
@@ -21,7 +21,7 @@ public class Pipe extends Element implements ISteppable, IPipe
     	
     }
     
-    public boolean TryBuildPumpInto(IPump pump)
+    public boolean TryBuildPumpInto(Pump pump)
     {
     	if(pump.GetBuildedInto(this))
     		return true;
@@ -69,12 +69,12 @@ public class Pipe extends Element implements ISteppable, IPipe
         return false;
     }
 
-    public ArrayList<IElement> GetNeighbours()
+    public ArrayList<? extends IElement> GetNeighbours()
     {
     	return neighbours;
     }
 
-    public boolean TryConnectPipe(IPipe pipeInInventory)
+    public boolean TryConnectPipe(Pipe pipeInInventory)
     {
         System.out.println("Bocs tesa ez nem fog menni. Jelenleg nem lehet csövet csőhöz csatlakoztatni.");
         return false;
@@ -85,13 +85,13 @@ public class Pipe extends Element implements ISteppable, IPipe
         neighbours.add(newNeighbour);
     }
 
-    public IPipe PickUpFreePipeEnd()
+    public Pipe PickUpFreePipeEnd()
     {
         System.out.println("Bocs tesa ez nem fog menni. Jelenleg nem lehet szabad csővég a csövön.");
         return null;
     }
 
-    public IPump PickUpPump()
+    public Pump PickUpPump()
     {
         System.out.println("Bocs tesa ez nem fog menni. Jelenleg nincs felvehető pumpa csövön.");
         return null;
@@ -115,7 +115,7 @@ public class Pipe extends Element implements ISteppable, IPipe
         return false;
     }
 
-    public IPipe DisconnectNeighbourPipe(int neighbourIdx)
+    public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
         System.out.println("Nem csinálunk semmit, cső szomszédja nem lecsatlakoztatható.");
         return null;
