@@ -9,9 +9,10 @@ import game.players.*;
 public class Pipe extends Element implements ISteppable
 {
     private boolean leaking = false;							//lyukas-e
-    private int noLeakageTimer = new Random().nextInt(0);		//lyukasztás tiltási ideje; ha 0, akkor lyukasztható
-    private boolean slippery = false;							//csúszós-e
-    private boolean sticky = false;								//ragadós-e
+    private int noLeakageTimer = 0;								//lyukasztás tiltási ideje; ha 0, akkor lyukasztható
+    private int slipperyTimer = 0;								//csúszós-e timere
+    private int stickyTimer = 0;								//ragadós-e timere
+    
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
     public Pipe()
@@ -19,12 +20,12 @@ public class Pipe extends Element implements ISteppable
     	
     }
     
-    public Pipe(boolean leaks, int timer, boolean slippery, boolean sticky, ArrayList<ActiveElement> neighbours)
+    public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
     {
     	leaking = leaks;
     	noLeakageTimer = timer;
-    	this.slippery = slippery;
-    	this.sticky = sticky;
+    	slipperyTimer = slippery;
+    	stickyTimer = sticky;
     	this.neighbours = neighbours;
     }
     
@@ -42,7 +43,7 @@ public class Pipe extends Element implements ISteppable
         {
         	leaking = false;
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
-        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound); 		
+        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
         	        	        	
             return true;
         }
@@ -68,7 +69,13 @@ public class Pipe extends Element implements ISteppable
     {
     	if(noLeakageTimer > 0)
          	noLeakageTimer--;
-    	 
+    	
+    	if(slipperyTimer > 0)
+    		slipperyTimer--;
+    	
+    	if(stickyTimer > 0)
+    		stickyTimer--;
+    	
         if ((leaking || neighbours.size() < 2) && GetWaterInside() > 0)
         {
             WaterToDesert();
@@ -111,10 +118,13 @@ public class Pipe extends Element implements ISteppable
     {
         if (GetPlayers().size() < Constants.AcceptedPlayersInPipe)
         {
-        	SlipperyPipe(player);
+        	if(SlipperyPipe(player))
+        	{
+        		return true;
+        	}
         	StickyPipe(player);
         	
-        	if(!slippery && !sticky)       	
+        	if(slipperyTimer == 0)       	
         		AddPlayer(player);
                 
         	return true;        
@@ -151,40 +161,29 @@ public class Pipe extends Element implements ISteppable
     	return noLeakageTimer;
     }
     
-    public boolean GetSlippery()
+    public int GetSlippery()
     {
-    	return slippery;
+    	return slipperyTimer;
     }    
     
     public void SetSlippery()
     {
-    	slippery = !slippery;
+    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
-    
-    public void SetSlippery(boolean slippery)
+
+    public int GetSticky()
     {
-    	this.slippery = slippery;
-    }
-    
-    
-    public boolean GetSticky()
-    {
-    	return sticky;
+    	return stickyTimer;
     }
     
     public void SetSticky()
     {
-    	sticky = !sticky;
-    }
-    
-    public void SetSticky(boolean sticky)
-    {
-    	this.sticky = sticky;
+    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
     
     public boolean TrySetSlippery()
     {
-    	if(!slippery)
+    	if(slipperyTimer == 0)
     	{
     		SetSlippery();
     		return true;
@@ -195,7 +194,7 @@ public class Pipe extends Element implements ISteppable
     
     public boolean TrySetSticky()
     {
-    	if(!sticky)
+    	if(stickyTimer == 0)
     	{
     		SetSticky();
     		return true;
@@ -207,18 +206,22 @@ public class Pipe extends Element implements ISteppable
     
     public boolean SlipperyPipe(Player player)
     {
-    	int playerCount = GetPlayers().size();
-    	if(playerCount > 0)
+    	if(slipperyTimer > 0)
     		GetNeighbours().get(new Random().nextInt(neighbours.size())).AcceptPlayer(player);
     	
-    	return playerCount > 0;
+    	return slipperyTimer > 0;
     }
     
     public boolean StickyPipe(Player player)
     {
     	//TODO
-    	
-    	SetSticky();
+    	if(stickyTimer > 0)
+    	{
+    		//player. todo metódus, ami leragasztja a csőre
+        	stickyTimer = 0;
+        	return true;
+    	}
+
     	return false;
     }
 }

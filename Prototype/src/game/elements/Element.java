@@ -81,6 +81,4 @@ public abstract class Element implements IElement
     public abstract Pipe PickUpFreePipeEnd();
     public abstract Pump PickUpPump();
     public abstract boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx);
-    //boolean TrySetSlippery();
-    //boolean TrySetSticky();
 }

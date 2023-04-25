@@ -2,7 +2,6 @@ package game;
 
 import java.util.*;
 
-import game.*;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
@@ -175,8 +174,11 @@ public class GameManager
                	System.out.println("\t6 - Csővég csatlakoztatása");
                	System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
                	System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	String userinput = System.in.toString();
-               
+               	System.out.println("\t9; cső lyukasztás");
+               	System.out.println("\t10; sticky");
+               	Scanner input = new Scanner(System.in);
+               	String userinput = input.next();
+               	
                	switch (userinput.toCharArray()[0])
                	{
                		case '1':
@@ -228,7 +230,11 @@ public class GameManager
                 System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Lyukasztás");
                 System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                String userinput = System.in.toString(); //TODO
+                System.out.println("\t9; sticky");
+                System.out.println("\t10; slippery");
+                
+                Scanner input = new Scanner(System.in);
+               	String userinput = input.next();
 
                 switch (userinput.toCharArray()[0])
                 {

@@ -3,9 +3,7 @@ package game.elements;
 import java.util.*;
 
 import game.*;
-import game.elements.*;
 import game.interfaces.*;
-import game.players.*;
 
 public class Pump extends ActiveElement implements ISteppable
 {

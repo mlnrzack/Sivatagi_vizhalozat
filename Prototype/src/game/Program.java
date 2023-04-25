@@ -5,7 +5,7 @@ import game.players.*;
 
 public class Program
 {
-    static void Main(String[] args)
+    public static void main(String[] args)
     {
         CreateTestMap();
         GameManager.StartGame();
