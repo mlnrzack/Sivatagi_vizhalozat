@@ -8,9 +8,9 @@ import game.players.*;
 
 public abstract class Element implements IElement
 {
-    private int waterInside;
+    private int waterInside = 0;
     private String id = "";
-    private static ArrayList<Player> players = new ArrayList<Player>();
+    private ArrayList<Player> players = new ArrayList<Player>();
     
     public int GetWaterInside()
     {
@@ -22,16 +22,6 @@ public abstract class Element implements IElement
     	this.waterInside = waterInside;
     }
 
-    public void DecreaseWater()
-    {
-    	waterInside--;
-    }
-    
-    public void IncreaseWater()
-    {
-    	waterInside++;
-    }
-    
     public String GetId()
     {
     	return id;
@@ -47,12 +37,7 @@ public abstract class Element implements IElement
     	return players;
     }
     
-    public void SetPLayers(ArrayList<Player> players)
-    {
-    	this.players = players;
-    }
-    
-    public static boolean AddPlayer(Player player)
+    public boolean AddPlayer(Player player)
     {
     	if(players.add(player))
     		return true;
@@ -87,13 +72,15 @@ public abstract class Element implements IElement
     }
     
     public abstract boolean AcceptPlayer(Player player);
-    public abstract ArrayList<IElement> GetNeighbours();	//IEnumerable
+    public abstract ArrayList<? extends IElement> GetNeighbours();
     public abstract boolean TryRepair();
     public abstract boolean TryDamage();
-    public abstract boolean TryBuildPumpInto(IPump pump);
-    public abstract IPipe DisconnectNeighbourPipe(int neighbourIdx);
-    public abstract boolean TryConnectPipe(IPipe pipeInInventory);
-    public abstract IPipe PickUpFreePipeEnd();
-    public abstract IPump PickUpPump();
+    public abstract boolean TryBuildPumpInto(Pump pump);
+    public abstract Pipe DisconnectNeighbourPipe(int neighbourIdx);
+    public abstract boolean TryConnectPipe(Pipe pipeInInventory);
+    public abstract Pipe PickUpFreePipeEnd();
+    public abstract Pump PickUpPump();
     public abstract boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx);
+    //boolean TrySetSlippery();
+    //boolean TrySetSticky();
 }

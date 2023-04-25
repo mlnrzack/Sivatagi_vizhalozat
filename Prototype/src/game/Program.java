@@ -1,10 +1,6 @@
 package game;
 
-import java.util.*;
-
-import game.*;
 import game.elements.*;
-import game.interfaces.*;
 import game.players.*;
 
 public class Program

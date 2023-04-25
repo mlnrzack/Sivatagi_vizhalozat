@@ -9,191 +9,154 @@ import game.players.*;
 
 public class GameManager
 {
-	private int round = 0;
-	private int mechanicsPoints = 0;
-	private int saboteursPoints = Desert.WaterFromPipelineNetwork;
-    private ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
-    private ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
-    private ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
-    private ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
-    public Player currentPlayer;
-    private int playerActionCountInCurrentRound = 0;
+	private static int round = 0;
+	private static int mechanicsPoints = 0;
+	private static int saboteursPoints = 0;
+    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
+    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
+    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
+    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
+    public static Player currentPlayer;
+    private static int playerActionCountInCurrentRound = 0;
     
-    public int GetRound()
+    public static int GetRound()
     {
     	return round;
     }
     
-    public void SetRound(int round)
+    public static void SetRound(int round)
     {
-    	this.round = round;
+    	GameManager.round = round;
     }
     
-    public Player GetCurrentPlayer()
+    public static Player GetCurrentPlayer()
     {
     	return currentPlayer;
     }
     
-    public void SetCurrentPlayer(Player player)
+    public static void SetCurrentPlayer(Player player)
     {
     	currentPlayer = player;
     }
     
-    public int GetMechanincsPoints()
+    public static int GetMechanincsPoints()
     {
     	return mechanicsPoints;
     }
     
-    public void SetMechanicsPoints(int points)
+    public static void SetMechanicsPoints(int points)
     {
     	mechanicsPoints = points;
     }
     
-    public void IncreaseMechanicsPoints()
-    {
-    	mechanicsPoints++;
-    }
-    
-    public void DecreaseMechanicsPoints()
-    {
-    	mechanicsPoints--;
-    }
-    
-    public int GetSaboteurPoints()
+    public static int GetSaboteurPoints()
     {
     	return saboteursPoints;
     }
     
-    public void SetSaboteursPoints(int points)
+    public static void SetSaboteursPoints(int points)
     {
     	saboteursPoints = points;
     }
     
-    public void IncreaseSaboteursPoints()
-    {
-    	saboteursPoints++;
-    }
-    
-    public void DecreaseSaboteursPoints()
-    {
-    	saboteursPoints--;
-    }
-
-    public ArrayList<Mechanic> GetMechanic()
+    public static ArrayList<Mechanic> GetMechanics()
     {
     	return mechanics;
     }
-    
-    public void SetMechanic(ArrayList<Mechanic> mechanics)
-    {
-    	this.mechanics = mechanics;
-    }
-    
-    public boolean AddMechanic(Mechanic mechanic)
+        
+    public static boolean AddMechanic(Mechanic mechanic)
     {
     	return mechanics.add(mechanic);
     }
-    
-    public boolean RemoveMechanic(Mechanic mechanic)
-    {
-    	return mechanics.remove(mechanic);
-    }
-    
-    public ArrayList<Saboteur> GetSaboteurs()
+
+    public static ArrayList<Saboteur> GetSaboteurs()
     {
     	return saboteurs;
     }
-    
-    public void SetSaboteurs(ArrayList<Saboteur> saboteurs)
-    {
-    	this.saboteurs = saboteurs;
-    }
 
-    public boolean AddSaboteur(Saboteur saboteur)
+    public static boolean AddSaboteur(Saboteur saboteur)
     {
     	return saboteurs.add(saboteur);
     }
     
-    public boolean RemoveSaboteur(Saboteur saboteur)
-    {
-    	return saboteurs.remove(saboteur);
-    }
-    
-    public ArrayList<ISteppable> GetSteppables()
+    public static ArrayList<ISteppable> GetSteppables()
     {
     	return steppables;
     }
     
-    public void SetSteppables(ArrayList<ISteppable> steppables)
+    public static void SetSteppables(ArrayList<ISteppable> steppables)
     {
-    	this.steppables = steppables;
+    	GameManager.steppables = steppables;
     }
 
-    public boolean AddSteppble(ISteppable steppable)
+    public static boolean AddSteppble(ISteppable steppable)
     {
     	return steppables.add(steppable);
     }
     
-    public boolean RemoveSteppable(ISteppable steppable)
+    public static boolean RemoveSteppable(ISteppable steppable)
     {
     	return steppables.remove(steppable);
     }
     
-    public ArrayList<WaterSpring> GetWaterSprings()
+    public static ArrayList<WaterSpring> GetWaterSprings()
     {
     	return waterSprings;
     }
     
-    public void SetWaterSprings(ArrayList<WaterSpring> waterSprings)
+    public static void SetWaterSprings(ArrayList<WaterSpring> waterSprings)
     {
-    	this.waterSprings = waterSprings;
+    	GameManager.waterSprings = waterSprings;
     }
     
-    public boolean AddWaterSpring(WaterSpring waterspring)
+    public static boolean AddWaterSpring(WaterSpring waterspring)
     {
     	return waterSprings.add(waterspring);
     }
     
-    public boolean RemoveWaterSpring(WaterSpring waterspring)
+    public static boolean RemoveWaterSpring(WaterSpring waterspring)
     {
     	return waterSprings.remove(waterspring);
     }
     
-    public int GetPlayerAction()
+    public static int GetPlayerAction()
     {
     	return playerActionCountInCurrentRound;
     }
     
-    public void SetPlayerAction(int count)
+    public static void SetPlayerAction(int count)
     {
     	playerActionCountInCurrentRound = count;
     }
     
-    public void IncreasePlayerAction()
+    public static void IncreasePlayerAction()
     {
     	playerActionCountInCurrentRound++;
     }
     
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
-    public void ActionExecuted()
+    public static void ActionExecuted()
     {
         playerActionCountInCurrentRound++;
         FireSourceActions();
         StepSteppables();
     }
 
-    public void AddSteppable(ISteppable steppable)
+    public static void AddSteppable(ISteppable steppable)
     {
     	steppables.add(steppable);
         
     }
     
-    public void FireSourceActions()
+    public static void FireSourceActions()
     {
-     	//watersrpings.ForEach(watersrpings => watersrpings.FillNeighourPipes());
+    	for(int i = 0; i < waterSprings.size(); i++)
+    	{
+    		waterSprings.get(i).FillNeighourPipes();
+    	}
     }
     
-    public void MechanicActions()
+    public static void MechanicActions()
     {
     	for(int i = 0; i < mechanics.size(); i++)
     	{
@@ -201,8 +164,8 @@ public class GameManager
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
-    			System.out.println("{GameController.round + 1}. Kör");
-    			System.out.println("Szerelő {player.Name} köre, {playerActionCountInCurrentRound + 1}. akció");
+    			System.out.println((round + 1) + ". Kör");
+    			System.out.println("Szerelő " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Lehetőségek:");
     			System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\t2 - Javítás");
@@ -251,7 +214,7 @@ public class GameManager
     	}
     }
 
-    public void SaboteurActions()
+    public static void SaboteurActions()
     {
     	for(int i =0; i < saboteurs.size(); i++)
     	{
@@ -259,13 +222,13 @@ public class GameManager
 
             while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
             {
-            	System.out.println("{GameController.round + 1}. Kör");
-                System.out.println("Szabotőr {player.Name} köre, {playerActionCountInCurrentRound + 1}. akció");
+            	System.out.println((round + 1) + ". Kör");
+                System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, {playerActionCountInCurrentRound + 1}. akció"); //TODO
                 System.out.println("Lehetőségek:");
                 System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Lyukasztás");
                 System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                String userinput = System.in.toString();//.ReadLine();
+                String userinput = System.in.toString(); //TODO
 
                 switch (userinput.toCharArray()[0])
                 {
@@ -298,7 +261,7 @@ public class GameManager
         }
     }
 
-    public void StartGame()
+    public static void StartGame()
     {
     	while (round < Constants.RoundNumber)
         {
@@ -308,7 +271,7 @@ public class GameManager
         }
     }
     
-    public void StepSteppables()
+    public static void StepSteppables()
     {
     	var actionDone = false;
         do
@@ -316,9 +279,9 @@ public class GameManager
             actionDone = false;
             for(int i = 0; i < steppables.size(); i++)
         	{
-            	actionDone = steppables.get(i).Step()|| actionDone; 
+            	actionDone = steppables.get(i).Step() || actionDone; 
         	}
         }
         while (actionDone);
-    }   
+    }
  }

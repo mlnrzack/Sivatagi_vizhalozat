@@ -1,11 +1,11 @@
 package game.elements;
 
+import game.GameManager;
+
 public class Desert
 {
-    public static int WaterFromPipelineNetwork = 0;
-
     public static void IncreaseWaterFromPipelineNetwork(int water)
     {
-    	WaterFromPipelineNetwork += water;
+    	GameManager.SetSaboteursPoints(GameManager.GetSaboteurPoints() + water);
     }
 }

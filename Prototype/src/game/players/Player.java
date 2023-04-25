@@ -71,15 +71,6 @@ public abstract class Player
     
     public boolean SetStickyPipe()
     {
-    	//TODO
-    	//Pipe-e a currentPosition?
-    	//ha igen...
-    	//és ha a sticky nem igaz
-    	//if(Pipe.GetSticky() == false)
-    	//{
-    		//Pipe.SetSticky();
-    		//return true;
-    	//}
-    	return false;
+    	return currentPosition.TrySetSticky();
     }
 }

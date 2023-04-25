@@ -14,14 +14,6 @@ public class Saboteur extends Player
     
     public boolean SetSlipperyPipe()
     {
-    	//TODO
-    	//Pipe-e a currentPosition?
-    	//ha igen...
-    	//if(Pipe.GetSlippery() == false)
-    	//{
-    		//Pipe.SetSlippery();
-    		//return true;
-    	//}
-    	return false ;
+    	return GetCurrentPosition().TrySetSlippery();
     }
 }

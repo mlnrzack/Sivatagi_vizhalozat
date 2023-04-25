@@ -9,4 +9,5 @@ public class Constants
     public static final int RoundNumber = 20;
     public static final int ActionInRoundPerUser = 2;
     public static final int AcceptedPlayersInPipe = 1;
+    public static final int LeakageTimerBound = 1;
 }
