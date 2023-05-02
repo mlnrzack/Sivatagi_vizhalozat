@@ -133,6 +133,11 @@ public class GameManager
     	playerActionCountInCurrentRound++;
     }
     
+    public static void AddSteppable(ISteppable steppable)
+    {
+    	steppables.add(steppable);
+    }
+    
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
     public static void ActionExecuted()
     {
@@ -140,133 +145,7 @@ public class GameManager
         FireSourceActions();
         StepSteppables();
     }
-
-    public static void AddSteppable(ISteppable steppable)
-    {
-    	steppables.add(steppable);
-        
-    }
     
-    public static void FireSourceActions()
-    {
-    	for(int i = 0; i < waterSprings.size(); i++)
-    	{
-    		waterSprings.get(i).FillNeighourPipes();
-    	}
-    }
-    
-    public static void MechanicActions()
-    {
-    	for(int i = 0; i < mechanics.size(); i++)
-    	{
-    		playerActionCountInCurrentRound = 0;
-    		
-    		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
-    		{
-    			System.out.println((round + 1) + ". Kör");
-    			System.out.println("Szerelő " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-    			System.out.println("Lehetőségek:");
-    			System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-    			System.out.println("\t2 - Javítás");
-    			System.out.println("\t3 - Szabad csővég felvétele");
-               	System.out.println("\t4 - Pumpa felvétele");
-               	System.out.println("\t5 - Pumpa beépítése a csőbe");
-               	System.out.println("\t6 - Csővég csatlakoztatása");
-               	System.out.println("\t7;X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
-               	System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	System.out.println("\t9; cső lyukasztás");
-               	System.out.println("\t10; sticky");
-               	Scanner input = new Scanner(System.in);
-               	String userinput = input.next();
-               	
-               	switch (userinput.toCharArray()[0])
-               	{
-               		case '1':
-               			int neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
-               			mechanics.get(i).Move(neighbourIdx);
-                        break;
-                    case '2':
-                    	mechanics.get(i).Repair();
-                        break;
-                    case '3':
-                    	mechanics.get(i).PickUpFreePipeEnd();
-                        break;
-                    case '4':
-                    	mechanics.get(i).PickUpPump();
-                        break;
-                    case '5':
-                    	mechanics.get(i).BuildPumpIntoPipe();
-                        break;
-                    case '6':
-                    	mechanics.get(i).ConnectPipe();
-                        break;
-                    case '7':
-                        neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
-                        mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
-                        break;
-                    case '8':
-                        int neighbourIdxFrom = Integer.parseInt(userinput.split(";")[1]);
-                        int neighbourIdxTo = Integer.parseInt(userinput.split(";")[2]);
-                        mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-                        break;
-                    default:
-                        break;
-               	}
-    		}
-    	}
-    }
-
-    public static void SaboteurActions()
-    {
-    	for(int i =0; i < saboteurs.size(); i++)
-    	{
-    		playerActionCountInCurrentRound = 0;
-
-            while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
-            {
-            	System.out.println((round + 1) + ". Kör");
-                System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, {playerActionCountInCurrentRound + 1}. akció"); //TODO
-                System.out.println("Lehetőségek:");
-                System.out.println("\t1;X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-                System.out.println("\t2 - Lyukasztás");
-                System.out.println("\t8;X;Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                System.out.println("\t9; sticky");
-                System.out.println("\t10; slippery");
-                
-                Scanner input = new Scanner(System.in);
-               	String userinput = input.next();
-
-                switch (userinput.toCharArray()[0])
-                {
-                	case '1':
-                		int neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
-                		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
-                		{
-                			saboteurs.get(i).Move(neighbourIdx);
-                			ActionExecuted();
-                		}
-                		break;
-                    case '2':
-                    	if (saboteurs.get(i).Damage() == true)
-                    		ActionExecuted();
-                        break;
-                    case '7':
-                    	int neighbourIdxFrom = Integer.parseInt(userinput.split(";")[1]);
-                    	int neighbourIdxTo = Integer.parseInt(userinput.split(";")[2]);
-                    	if (neighbourIdxFrom < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdxFrom >= 0
-                    		&& neighbourIdxTo < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdxTo >= 0
-                    		&& saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo))
-                    	{
-                    		ActionExecuted();
-                    	}
-                        break;
-                    default:
-                    	break;
-                }
-            }
-        }
-    }
-
     public static void StartGame()
     {
     	while (round < Constants.RoundNumber)
@@ -275,6 +154,14 @@ public class GameManager
             SaboteurActions();
             round++;
         }
+    }
+    
+    public static void FireSourceActions()
+    {
+    	for(int i = 0; i < waterSprings.size(); i++)
+    	{
+    		waterSprings.get(i).FillNeighourPipes();
+    	}
     }
     
     public static void StepSteppables()
@@ -290,4 +177,123 @@ public class GameManager
         }
         while (actionDone);
     }
- }
+    
+    public static void MechanicActions()
+    {
+    	for(int i = 0; i < mechanics.size(); i++)
+    	{
+    		playerActionCountInCurrentRound = 0;
+    		
+    		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
+    		{
+    			System.out.println((round + 1) + ". Kör");
+    			System.out.println("Szerelő " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+    			System.out.println("Lehetőségek:");
+    			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
+    			System.out.println("\t2 - Javítás");
+    			System.out.println("\t3 - Szabad csővég felvétele");
+               	System.out.println("\t4 - Pumpa felvétele");
+               	System.out.println("\t5 - Pumpa beépítése a csőbe");
+               	System.out.println("\t6 - Csővég csatlakoztatása");
+               	System.out.println("\t7 X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
+               	System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
+               	System.out.println("\t9 - cső lyukasztás");
+               	System.out.println("\t10 - sticky");
+               	Scanner input = new Scanner(System.in);
+               	String userinput = input.next();
+               	
+               	switch (userinput.split(" ")[0])
+               	{
+               		case "1":
+               			int neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
+               			mechanics.get(i).Move(neighbourIdx);
+                        break;
+                    case "2":
+                    	mechanics.get(i).Repair();
+                        break;
+                    case "3":
+                    	mechanics.get(i).PickUpFreePipeEnd();
+                        break;
+                    case "4":
+                    	mechanics.get(i).PickUpPump();
+                        break;
+                    case "5":
+                    	mechanics.get(i).BuildPumpIntoPipe();
+                        break;
+                    case "6":
+                    	mechanics.get(i).ConnectPipe();
+                        break;
+                    case "7":
+                        neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
+                        mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
+                        break;
+                    case "8":
+                        int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+                        int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+                        mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                        break;
+                    case "9":
+                    	mechanics.get(i).Damage();
+                    	break;
+                    case "10":
+                    	mechanics.get(i).SetStickyPipe();
+                    	break;
+                    default:
+                        break;
+               	}
+    		}
+    	}
+    }
+
+    public static void SaboteurActions()
+    {
+    	for(int i = 0; i < saboteurs.size(); i++)
+    	{
+    		playerActionCountInCurrentRound = 0;
+
+            while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
+            {
+            	System.out.println((round + 1) + ". Kör");
+                System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + " akció");
+                System.out.println("Lehetőségek:");
+                System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
+                System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
+                System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
+                System.out.println("\t9 - A cső ragacsossá tétele maga alatt");
+                System.out.println("\t10 - A cső csúszóssáa tétele");
+                
+                Scanner input = new Scanner(System.in);
+               	String userinput = input.next();
+
+                switch (userinput.split(" ")[0])
+                {
+                	case "1":
+                		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
+                		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
+                		{
+                			saboteurs.get(i).Move(neighbourIdx);
+                			ActionExecuted();
+                		}
+                		break;
+                    case "2":
+                    	if (saboteurs.get(i).Damage() == true)
+                    		ActionExecuted();
+                        break;
+                    case "8":
+                    	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+                    	int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+                    	saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                        break;
+                    case "9":
+                    	saboteurs.get(i).SetStickyPipe();
+                    	break;
+                    case "10":
+                    	saboteurs.get(i).SetSlipperyPipe();
+                    	break;
+                    default:
+                    	break;
+                }
+            }
+        }
+    }
+}

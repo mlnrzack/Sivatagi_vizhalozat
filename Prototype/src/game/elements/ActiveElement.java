@@ -9,6 +9,11 @@ public abstract class ActiveElement extends Element
 {
 	protected ArrayList<Pipe> neighbours = new ArrayList<Pipe>();
 
+	public ArrayList<Pipe> GetNeighbours()
+	{
+		return neighbours;
+	}
+	
 	public void setNeighbours(ArrayList<Pipe> neighbours)
 	{
 		this.neighbours = neighbours;
@@ -18,7 +23,7 @@ public abstract class ActiveElement extends Element
 	{
 		neighbours.add(neighbour);
 	}
-
+	
 	public boolean AddPipe(Pipe p)
 	{
 		if (neighbours.add(p))
@@ -43,6 +48,7 @@ public abstract class ActiveElement extends Element
     	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
     	
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
+        
         Pipe neighbourtoDisconnect = this.neighbours.get(neighbourIdx);
 
         RemovePipe(neighbourtoDisconnect);
@@ -51,11 +57,6 @@ public abstract class ActiveElement extends Element
 
         return neighbourtoDisconnect;
     }
-
-	public ArrayList<Pipe> GetNeighbours()
-	{
-		return neighbours;
-	}
 
 	public Pipe PickUpFreePipeEnd()
 	{

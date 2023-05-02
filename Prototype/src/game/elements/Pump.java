@@ -28,12 +28,6 @@ public class Pump extends ActiveElement implements ISteppable
         return GettingOlder() || pumpWaterToOutputDone || pumpWaterFromInputDone;
     }
 
-    public void SetPump(Pipe input, Pipe output)
-    {
-        this.input = input;
-        this.output = output;
-    }
-
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
@@ -62,8 +56,8 @@ public class Pump extends ActiveElement implements ISteppable
     {
         if (input != null && input.GetWaterInside() > 0)
         {
-            input.SetWaterInside(GetWaterInside() - 1);
-            SetWaterInside(GetWaterInside() - 1);
+            input.SetWaterInside(input.GetWaterInside() - 1);
+            SetWaterInside(GetWaterInside() + 1);
 
             return true;
         }
@@ -76,6 +70,7 @@ public class Pump extends ActiveElement implements ISteppable
         if (output.FillWaterTo())
         {
         	SetWaterInside(GetWaterInside() - 1);
+        	output.SetWaterInside(output.GetWaterInside() + 1);
             return true;
         }
 
@@ -84,7 +79,7 @@ public class Pump extends ActiveElement implements ISteppable
 
     private boolean GettingOlder()
     {
-        if (new Random().nextDouble() < Constants.PumpErrorProbability)
+        if (new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
         {
             GoWrong();
 
@@ -111,6 +106,7 @@ public class Pump extends ActiveElement implements ISteppable
     	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
     	
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
+        
         Pipe neighbourtoDisconnect = this.neighbours.get(neighbourIdx);
 
         if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;

@@ -44,6 +44,14 @@ public abstract class Element implements IElement
     	return false;
     }
     
+    public boolean RemovePlayer(Player player)
+    {
+    	if(players.remove(player))
+    		return true;
+    	
+    	return false;
+    }
+    
     // true ha sikerül vizet fogadnia
     public boolean FillWaterTo()
     {
@@ -63,14 +71,6 @@ public abstract class Element implements IElement
         waterInside = 0;
     }
 
-    public boolean RemovePlayer(Player player)
-    {
-    	if(players.remove(player))
-    		return true;
-    	
-    	return false;
-    }
-    
     public abstract boolean AcceptPlayer(Player player);
     public abstract ArrayList<? extends IElement> GetNeighbours();
     public abstract boolean TryRepair();

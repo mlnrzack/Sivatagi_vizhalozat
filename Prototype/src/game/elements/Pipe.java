@@ -17,7 +17,7 @@ public class Pipe extends Element implements ISteppable
 
     public Pipe()
     {
-    	
+    	//
     }
     
     public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
@@ -27,6 +27,41 @@ public class Pipe extends Element implements ISteppable
     	slipperyTimer = slippery;
     	stickyTimer = sticky;
     	this.neighbours = neighbours;
+    }
+
+    public ArrayList<ActiveElement> GetNeighbours()
+    {
+    	return neighbours;
+    }
+    
+    public boolean GetLeaking()
+    {
+    	return leaking;
+    }
+    
+    public int GetTimer()
+    {
+    	return noLeakageTimer;
+    }
+    
+    public int GetSlippery()
+    {
+    	return slipperyTimer;
+    }    
+    
+    public void SetSlippery()
+    {
+    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+    }
+
+    public int GetSticky()
+    {
+    	return stickyTimer;
+    }
+    
+    public void SetSticky()
+    {
+    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
     
     public boolean TryBuildPumpInto(Pump pump)
@@ -44,7 +79,7 @@ public class Pipe extends Element implements ISteppable
         	leaking = false;
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
         	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
-        	        	        	
+        	
             return true;
         }
 
@@ -86,14 +121,9 @@ public class Pipe extends Element implements ISteppable
         return false;
     }
 
-    public ArrayList<ActiveElement> GetNeighbours()
-    {
-    	return neighbours;
-    }
-
     public boolean TryConnectPipe(Pipe pipeInInventory)
     {
-        System.out.println("Bocs tesa ez nem fog menni. Jelenleg nem lehet csövet csőhöz csatlakoztatni.");
+        System.out.println("Jelenleg nem lehet csövet csőhöz csatlakoztatni.");
         return false;
     }
 
@@ -104,13 +134,13 @@ public class Pipe extends Element implements ISteppable
 
     public Pipe PickUpFreePipeEnd()
     {
-        System.out.println("Bocs tesa ez nem fog menni. Jelenleg nem lehet szabad csővég a csövön.");
+        System.out.println("Jelenleg nem lehet szabad csővég a csövön.");
         return null;
     }
 
     public Pump PickUpPump()
     {
-        System.out.println("Bocs tesa ez nem fog menni. Jelenleg nincs felvehető pumpa csövön.");
+        System.out.println("Jelenleg nincs felvehető pumpa csövön.");
         return null;
     }
 
@@ -151,36 +181,6 @@ public class Pipe extends Element implements ISteppable
     	neighbours.remove(neighbour);
     }
     
-    public boolean GetLeaking()
-    {
-    	return leaking;
-    }
-    
-    public int GetTimer()
-    {
-    	return noLeakageTimer;
-    }
-    
-    public int GetSlippery()
-    {
-    	return slipperyTimer;
-    }    
-    
-    public void SetSlippery()
-    {
-    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
-    }
-
-    public int GetSticky()
-    {
-    	return stickyTimer;
-    }
-    
-    public void SetSticky()
-    {
-    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
-    }
-    
     public boolean TrySetSlippery()
     {
     	if(slipperyTimer == 0)
@@ -217,7 +217,8 @@ public class Pipe extends Element implements ISteppable
     	//TODO
     	if(stickyTimer > 0)
     	{
-    		//player. todo metódus, ami leragasztja a csőre
+    		AddPlayer(player); //todo metódus, ami leragasztja a csőre
+    		//leragasztani a játékost...
         	stickyTimer = 0;
         	return true;
     	}
