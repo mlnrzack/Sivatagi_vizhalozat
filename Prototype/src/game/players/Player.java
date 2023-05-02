@@ -71,4 +71,10 @@ public abstract class Player
     {
     	return currentPosition.TrySetSticky();
     }
+    
+    public void Stuck()
+    {
+    	//todo leragad a játékos
+    	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
+    }
 }

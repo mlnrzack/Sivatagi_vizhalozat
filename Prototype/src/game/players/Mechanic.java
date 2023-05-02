@@ -49,9 +49,10 @@ public class Mechanic extends Player
 
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
+    	/*
         if (pipeInInventory == null)
-            pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
-
+            pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);		//Miért veszi fel az inventory-jába???
+        
         if (pipeInInventory != null)
         {
             GameManager.ActionExecuted();
@@ -59,6 +60,16 @@ public class Mechanic extends Player
         }
 
         return false;
+        */
+    	Pipe pipe = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
+    	
+    	if(pipe != null)
+    	{
+    		GameManager.ActionExecuted();
+            return true;
+    	}
+    	
+    	return false;
     }
 
     public boolean PickUpFreePipeEnd()

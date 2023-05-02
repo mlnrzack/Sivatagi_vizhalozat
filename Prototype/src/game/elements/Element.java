@@ -47,8 +47,7 @@ public abstract class Element implements IElement
     public boolean RemovePlayer(Player player)
     {
     	if(players.remove(player))
-    		return true;
-    	
+    		return true;    	
     	return false;
     }
     
@@ -72,13 +71,13 @@ public abstract class Element implements IElement
     }
 
     public abstract boolean AcceptPlayer(Player player);
-    public abstract ArrayList<? extends IElement> GetNeighbours();
-    public abstract boolean TryRepair();
-    public abstract boolean TryDamage();
-    public abstract boolean TryBuildPumpInto(Pump pump);
     public abstract Pipe DisconnectNeighbourPipe(int neighbourIdx);
-    public abstract boolean TryConnectPipe(Pipe pipeInInventory);
+    public abstract ArrayList<? extends IElement> GetNeighbours();
     public abstract Pipe PickUpFreePipeEnd();
     public abstract Pump PickUpPump();
+    public abstract boolean TryBuildPumpInto(Pump pump);
+    public abstract boolean TryConnectPipe(Pipe pipeInInventory);
+    public abstract boolean TryDamage();
+    public abstract boolean TryRepair();
     public abstract boolean TrySetInputOutput(int neighbourFromIdx, int neighbourToIdx);
 }

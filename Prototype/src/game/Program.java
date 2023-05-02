@@ -7,11 +7,11 @@ public class Program
 {
     public static void main(String[] args)
     {
-        CreateTestMap();
+        CreateMap();
         GameManager.StartGame();
     }
 
-    private static void CreateTestMap()
+    private static void CreateMap()
     {
         Pipe pipe1 = new Pipe();
         Pipe pipe2 = new Pipe();

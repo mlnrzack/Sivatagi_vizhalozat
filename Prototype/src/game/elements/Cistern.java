@@ -17,18 +17,14 @@ public class Cistern extends ActiveElement implements ISteppable
     
     public Pump PickUpPump()
     {
-        var newPump = new Pump();
-        return newPump;
+        return new Pump();
     }
     
     private void PumpWaterToCisternFromNeighbour(Pipe neighbourPipe)
     {
-    	if(neighbourPipe.GetWaterInside() >= 1)
-    	{
-    		neighbourPipe.SetWaterInside(neighbourPipe.GetWaterInside() - 1);
-    		GameManager.SetMechanicsPoints(GameManager.GetMechanincsPoints() + 1);
-            SetWaterInside(GetWaterInside() + 1);
-    	}        
+    	neighbourPipe.SetWaterInside(neighbourPipe.GetWaterInside() - 1);
+    	GameManager.SetMechanicsPoints(GameManager.GetMechanincsPoints() + 1);
+        SetWaterInside(GetWaterInside() + 1);        
     }
     
     public boolean Step()

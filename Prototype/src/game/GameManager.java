@@ -18,7 +18,7 @@ public class GameManager
     public static Player currentPlayer;
     private static int playerActionCountInCurrentRound = 0;
     
-    public static int GetRound()
+    public int GetRound()
     {
     	return round;
     }
@@ -28,12 +28,12 @@ public class GameManager
     	GameManager.round = round;
     }
     
-    public static Player GetCurrentPlayer()
+    public Player GetCurrentPlayer()
     {
     	return currentPlayer;
     }
     
-    public static void SetCurrentPlayer(Player player)
+    public void SetCurrentPlayer(Player player)
     {
     	currentPlayer = player;
     }

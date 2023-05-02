@@ -22,12 +22,12 @@ public class Pipe extends Element implements ISteppable
     
     public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
     {
-    	super();
     	leaking = leaks;
     	noLeakageTimer = timer;
     	slipperyTimer = slippery;
     	stickyTimer = sticky;
-    	this.neighbours = neighbours;
+    	if(neighbours != null)
+    		this.neighbours = neighbours;
     }
 
     public ArrayList<ActiveElement> GetNeighbours()
@@ -67,10 +67,7 @@ public class Pipe extends Element implements ISteppable
     
     public boolean TryBuildPumpInto(Pump pump)
     {
-    	if(pump.GetBuildedInto(this))
-    		return true;
-    	
-    	return false;
+    	return pump.GetBuildedInto(this);
     }
 
     public boolean TryRepair()
@@ -130,7 +127,7 @@ public class Pipe extends Element implements ISteppable
 
     public void AddNeighbour(ActiveElement newNeighbour)
     {
-        neighbours.add(newNeighbour);
+    	neighbours.add(newNeighbour);
     }
 
     public Pipe PickUpFreePipeEnd()
@@ -155,8 +152,7 @@ public class Pipe extends Element implements ISteppable
         	}
         	StickyPipe(player);
         	
-        	if(slipperyTimer == 0)       	
-        		AddPlayer(player);
+        	AddPlayer(player);
                 
         	return true;        
         }
@@ -218,8 +214,8 @@ public class Pipe extends Element implements ISteppable
     	//TODO
     	if(stickyTimer > 0)
     	{
-    		AddPlayer(player); //todo metódus, ami leragasztja a csőre
-    		//leragasztani a játékost...
+    		//todo leragasztani a játékost...
+    		player.Stuck();
         	stickyTimer = 0;
         	return true;
     	}
