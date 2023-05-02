@@ -18,11 +18,6 @@ public abstract class ActiveElement extends Element
 	{
 		this.neighbours = neighbours;
 	}
-
-	public void setNeighbour(Pipe neighbour)
-	{
-		neighbours.add(neighbour);
-	}
 	
 	public boolean AddPipe(Pipe p)
 	{

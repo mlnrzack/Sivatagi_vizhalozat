@@ -46,7 +46,7 @@ public class Program
         var saboteur1 = new Saboteur();
 
         spring1.SetId("spring1");
-        spring1.setNeighbour(pipe1);
+        spring1.AddPipe(pipe1);
         
         spring2.SetId("spring2");
 
@@ -95,17 +95,17 @@ public class Program
         pipe16.SetId("pipe16");
         
         pump1.SetId("pipe1");
-        pump1.setNeighbour(pipe1);
-        pump1.setNeighbour(pipe2);
-        pump1.setNeighbour(pipe3);
+        pump1.AddPipe(pipe1);
+        pump1.AddPipe(pipe2);
+        pump1.AddPipe(pipe3);
 
         pump2.SetId("pump2");
-        pump2.setNeighbour(pipe3);
-        pump2.setNeighbour(pipe4);
+        pump2.AddPipe(pipe3);
+        pump2.AddPipe(pipe4);
 
         pump3.SetId("pump3");
-        pump3.setNeighbour(pipe4);
-        pump3.setNeighbour(pipe5);
+        pump3.AddPipe(pipe4);
+        pump3.AddPipe(pipe5);
 
         pump4.SetId("pump4");
         
@@ -116,8 +116,8 @@ public class Program
         pump7.SetId("pump7");
         
         cistern1.SetId("cistern1");
-        cistern1.setNeighbour(pipe2);
-        cistern1.setNeighbour(pipe5);
+        cistern1.AddPipe(pipe2);
+        cistern1.AddPipe(pipe5);
 
         cistern2.SetId("cistern2");
         
