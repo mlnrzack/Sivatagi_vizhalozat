@@ -22,6 +22,7 @@ public class Pipe extends Element implements ISteppable
     
     public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
     {
+    	super();
     	leaking = leaks;
     	noLeakageTimer = timer;
     	slipperyTimer = slippery;

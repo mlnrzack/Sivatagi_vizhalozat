@@ -117,12 +117,14 @@ public abstract class ActiveElement extends Element
 	
 	public boolean TrySetSlippery()
     {
+		// override-olni leszármazottakban, ott megvalósítani ha beállítható.
     	System.out.println("Nem sikerült csúszóssá tenni a csövet.");
     	return false;
     }
     
     public boolean TrySetSticky()
     {
+    	// override-olni leszármazottakban, ott megvalósítani ha beállítható.
     	System.out.println("Nem sikerült ragadóssá tenni a csövet.");
     	return false;
     }

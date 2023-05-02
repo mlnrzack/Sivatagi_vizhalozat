@@ -11,7 +11,7 @@ public abstract class Element implements IElement
     private int waterInside = 0;
     private String id = "";
     private ArrayList<Player> players = new ArrayList<Player>();
-    
+
     public int GetWaterInside()
     {
     	return waterInside;
