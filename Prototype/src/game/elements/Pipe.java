@@ -211,10 +211,8 @@ public class Pipe extends Element implements ISteppable
     
     public boolean StickyPipe(Player player)
     {
-    	//TODO
     	if(stickyTimer > 0)
     	{
-    		//todo leragasztani a játékost...
     		player.Stuck();
         	stickyTimer = 0;
         	return true;

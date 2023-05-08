@@ -39,16 +39,12 @@ public abstract class Element implements IElement
     
     public boolean AddPlayer(Player player)
     {
-    	if(players.add(player))
-    		return true;
-    	return false;
+    	return players.add(player);
     }
     
     public boolean RemovePlayer(Player player)
-    {
-    	if(players.remove(player))
-    		return true;    	
-    	return false;
+    { 	
+    	return players.remove(player);
     }
     
     // true ha sikerül vizet fogadnia

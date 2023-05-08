@@ -37,7 +37,7 @@ public abstract class Player
             {
             	currentPosition.RemovePlayer(this);
                 currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-                //?
+                //?? currentPosition.AcceptPlayer(this);
                 GameManager.ActionExecuted();
                 return true;
             }
@@ -75,6 +75,7 @@ public abstract class Player
     public void Stuck()
     {
     	//todo leragad a játékos
+    	//Itt csak az adott köréből zárja ki a játékost, ha kell még további körökből is kizárni, akkor azt valahogy le kellene tárolni kb
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
 }

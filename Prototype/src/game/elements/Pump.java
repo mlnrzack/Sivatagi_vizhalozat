@@ -7,9 +7,9 @@ import game.interfaces.*;
 
 public class Pump extends ActiveElement implements ISteppable
 {
-    private Pipe input;
-    private Pipe output;
-    private boolean broken;
+    private Pipe input = null;
+    private Pipe output = null;
+    private boolean broken = false;
     
     public Pump()
     {
@@ -21,7 +21,6 @@ public class Pump extends ActiveElement implements ISteppable
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
 
-        // Feltételeket akár be is lehet vinni a meghívott függvényekbe és akkor azok mehetnek a return-be, de most nekem így szimpibb.
         if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
         if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
 
@@ -33,10 +32,8 @@ public class Pump extends ActiveElement implements ISteppable
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
             && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
         {
-            Pipe from = this.neighbours.get(neighbourIdxFrom);
-            Pipe to = this.neighbours.get(neighbourIdxTo);
-            input = from;
-            output = to;
+            input = this.neighbours.get(neighbourIdxFrom);
+            output = this.neighbours.get(neighbourIdxTo);
 
             return true;
         }

@@ -15,7 +15,7 @@ public class GameManager
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
-    public static Player currentPlayer;
+    private static Player currentPlayer;
     private static int playerActionCountInCurrentRound = 0;
     
     public int GetRound()
@@ -88,7 +88,7 @@ public class GameManager
     	GameManager.steppables = steppables;
     }
 
-    public static boolean AddSteppble(ISteppable steppable)
+    public static boolean AddSteppable(ISteppable steppable)
     {
     	return steppables.add(steppable);
     }
@@ -132,12 +132,6 @@ public class GameManager
     {
     	playerActionCountInCurrentRound++;
     }
-    
-    public static void AddSteppable(ISteppable steppable)
-    {
-    	steppables.add(steppable);
-    }
-    
     // Ha sikeresen végrehajtott a játékos egy elemi akciót, utána hívjuk.
     public static void ActionExecuted()
     {

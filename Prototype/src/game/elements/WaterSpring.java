@@ -10,9 +10,7 @@ public class WaterSpring extends ActiveElement
     }
 
     public void FillNeighourPipes()
-    {
-    	System.out.println("public void FillNeighourPipes()");
-    	
+    {    	
     	for(int i = 0; i < this.neighbours.size(); i++)
         {
     		this.neighbours.get(i).FillWaterTo();

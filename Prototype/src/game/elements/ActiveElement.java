@@ -21,16 +21,12 @@ public abstract class ActiveElement extends Element
 	
 	public boolean AddPipe(Pipe p)
 	{
-		if (neighbours.add(p))
-			return true;
-		return false;
+		return neighbours.add(p);
 	}
 
 	public boolean RemovePipe(Pipe p)
 	{
-		if (neighbours.remove(p))
-			return true;
-		return false;
+		return neighbours.remove(p);
 	}
 
 	public boolean AcceptPlayer(Player player)
@@ -43,7 +39,7 @@ public abstract class ActiveElement extends Element
     	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
     	
         if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        
+        	
         Pipe neighbourtoDisconnect = this.neighbours.get(neighbourIdx);
 
         RemovePipe(neighbourtoDisconnect);
@@ -77,11 +73,11 @@ public abstract class ActiveElement extends Element
 		return false;
 	}
 
-	public boolean TryConnectPipe(Pipe pipeInInventory)
+	public boolean TryConnectPipe(Pipe pipe)
 	{
 		if (neighbours.size() < Constants.MaxNeighboursOfActiveElements)
 		{
-			pipeInInventory.AddNeighbour(this);
+			pipe.AddNeighbour(this);
 
 			return true;
 		}

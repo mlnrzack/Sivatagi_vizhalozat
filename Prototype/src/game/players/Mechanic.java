@@ -5,8 +5,8 @@ import game.elements.*;
 
 public class Mechanic extends Player
 {	
-    public Pipe pipeInInventory = null;
-    public Pump pumpInInventory = null;
+    private Pipe pipeInInventory = null;
+    private Pump pumpInInventory = null;
     
     public Mechanic() 
     {
