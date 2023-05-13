@@ -274,7 +274,7 @@ public class GameManager
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");    			
     			System.out.println((round + 1) + ". Kör");
     			System.out.println("__________________________________________________________________________");
-    			System.out.println("Szerelő játékos: " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+    			System.out.println("\n\t(Szerelő csapat)" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId() + "\n");
     			System.out.println("Lehetőségek:");
     			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");

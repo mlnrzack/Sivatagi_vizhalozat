@@ -251,7 +251,7 @@ public class Program
         spring2.SetId("spring2");
         spring2.AddPipe(pipe2);
         map.add(spring2);
-        
+
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
@@ -271,9 +271,11 @@ public class Program
            		Scanner inName = new Scanner(System.in); 
            		String name = inName.nextLine();
            		mechanic.SetName(name == null ? "mechanic" + i : name);
-           		int pos = new Random().nextInt(map.size());
+           		int pos = new Random().nextInt(map.size() - 1);
+           		while(map.get(pos).AcceptPlayer(mechanic) == false)
+           			pos = new Random().nextInt(map.size() - 1);
            		mechanic.SetCurrentPosition(map.get(pos));
-           		map.get(pos).AcceptPlayer(mechanic);
+           		
            	}
            	
            	System.out.println("Hány játékos alkotja a szabotőrök csapatát?");          	
@@ -291,9 +293,10 @@ public class Program
            		Scanner inName = new Scanner(System.in); 
            		String name = inName.nextLine();
            		saboteur.SetName(name == null ? "saboteur" + i : name);
-           		int pos = new Random().nextInt(map.size());
+           		int pos = new Random().nextInt(map.size() - 1);
+           		while(map.get(pos).AcceptPlayer(saboteur) == false)
+           			pos = new Random().nextInt(map.size() - 1);
            		saboteur.SetCurrentPosition(map.get(pos));
-           		map.get(pos).AcceptPlayer(saboteur);
            	}
     	}   	
     	catch(Exception e)
