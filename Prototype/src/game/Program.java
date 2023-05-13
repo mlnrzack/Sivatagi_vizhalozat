@@ -9,6 +9,7 @@ public class Program
     {
         CreateMap();
         GameManager.StartGame();
+        
     }
 
     private static void CreateMap()

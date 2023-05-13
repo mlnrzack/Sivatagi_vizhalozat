@@ -41,8 +41,10 @@ public abstract class Player
                 GameManager.ActionExecuted();
                 return true;
             }
+            return false;
         }
-
+        
+        System.out.println("Nem sikerült ez a lépés");
         return false;
     }
 
