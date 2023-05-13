@@ -52,7 +52,7 @@ public class Pipe extends Element implements ISteppable
     
     public void SetSlippery()
     {
-    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound+1);
+    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
 
     public int GetSticky()
@@ -62,7 +62,7 @@ public class Pipe extends Element implements ISteppable
     
     public void SetSticky()
     {
-    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound+1);
+    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
     
     public boolean TryBuildPumpInto(Pump pump)
@@ -76,7 +76,7 @@ public class Pipe extends Element implements ISteppable
         {
         	leaking = false;
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
-        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound+1);
+        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
         	
             return true;
         }
@@ -109,7 +109,7 @@ public class Pipe extends Element implements ISteppable
     	if(stickyTimer > 0)
     		stickyTimer--;
     	
-        if ((leaking || neighbours.size() < 2))// && GetWaterInside() > 0)
+        if ((leaking || neighbours.size() < 2) && GetWaterInside() > 0)
         {
             WaterToDesert();
 
@@ -180,7 +180,7 @@ public class Pipe extends Element implements ISteppable
     
     public boolean TrySetSlippery()
     {
-    	if(slipperyTimer == 0 && stickyTimer == 0)
+    	if(slipperyTimer == 0)
     	{
     		SetSlippery();
     		return true;
@@ -191,7 +191,7 @@ public class Pipe extends Element implements ISteppable
     
     public boolean TrySetSticky()
     {
-    	if(stickyTimer == 0 && slipperyTimer == 0)
+    	if(stickyTimer == 0)
     	{
     		SetSticky();
     		return true;

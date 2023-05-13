@@ -9,9 +9,10 @@ public class Program
     {
         CreateMap();
         GameManager.StartGame();
-        
     }
-
+    
+    /**Egy statikus térképet létrehozó függvény.
+     */
     private static void CreateMap()
     {
         Cistern cistern1 = new Cistern();
@@ -53,11 +54,6 @@ public class Program
         WaterSpring spring1 = new WaterSpring();
         WaterSpring spring2 = new WaterSpring();
         
-        var mechanic1 = new Mechanic();
-        var mechanic2 = new Mechanic();
-        var saboteur1 = new Saboteur();
-        var saboteur2 = new Saboteur();
-
         cistern1.SetId("cistern1");
         cistern1.AddPipe(pipe19);
 
@@ -70,12 +66,10 @@ public class Program
         pipe1.SetId("pipe1");
         pipe1.AddNeighbour(spring1);
         pipe1.AddNeighbour(pump1);
-        pipe1.AcceptPlayer(mechanic1);
 
         pipe2.SetId("pipe2");
         pipe2.AddNeighbour(spring2);
         pipe2.AddNeighbour(pump2);
-        pipe2.AcceptPlayer(saboteur1);
 
         pipe3.SetId("pipe3");
         pipe3.AddNeighbour(spring1);
@@ -168,47 +162,48 @@ public class Program
         pump4.AddPipe(pipe6);
         pump4.AddPipe(pipe7);
         pump4.AddPipe(pipe8);
-        pump3.TrySetInputOutput(0, 1);
+        pump4.TrySetInputOutput(0, 1);
         
         pump5.SetId("pump5");
         pump5.AddPipe(pipe7);
         pump5.AddPipe(pipe11);
-        pump3.TrySetInputOutput(0, 1);
+        pump5.TrySetInputOutput(0, 1);
         
         pump6.SetId("pump6");
         pump6.AddPipe(pipe8);
         pump6.AddPipe(pipe9);
         pump6.AddPipe(pipe12);
         pump6.AddPipe(pipe13);
-        pump3.TrySetInputOutput(1, 3);
+        pump6.TrySetInputOutput(1, 3);
         
         pump7.SetId("pump7");
         pump7.AddPipe(pipe10);
         pump7.AddPipe(pipe14);
-        pump3.TrySetInputOutput(0, 1);
+        pump7.TrySetInputOutput(0, 1);
+        
         
         pump8.SetId("pump8");
         pump8.AddPipe(pipe11);
         pump8.AddPipe(pipe12);
         pump8.AddPipe(pipe15);
-        pump3.TrySetInputOutput(0, 2);
+        pump8.TrySetInputOutput(0, 2);
         
         pump9.SetId("pump9");
         pump9.AddPipe(pipe13);
         pump9.AddPipe(pipe14);
         pump9.AddPipe(pipe16);
         pump9.AddPipe(pipe17);
-        pump3.TrySetInputOutput(1, 3);
+        pump9.TrySetInputOutput(1, 3);
         
         pump10.SetId("pump10");
         pump10.AddPipe(pipe16);
         pump10.AddPipe(pipe18);
-        pump3.TrySetInputOutput(0, 1);
+        pump10.TrySetInputOutput(0, 1);
         
         pump11.SetId("pum11");
         pump11.AddPipe(pipe17);
         pump11.AddPipe(pipe19);
-        pump3.TrySetInputOutput(0, 1);
+        pump11.TrySetInputOutput(0, 1);
         
         spring1.SetId("spring1");
         spring1.AddPipe(pipe1);
@@ -216,11 +211,5 @@ public class Program
         
         spring2.SetId("spring2");
         spring2.AddPipe(pipe2);
-        
-        mechanic1.SetCurrentPosition(pipe1);
-        mechanic2.SetCurrentPosition(pump7);
-        
-        saboteur1.SetCurrentPosition(pipe2);
-        saboteur2.SetCurrentPosition(pump7);
     }
 }

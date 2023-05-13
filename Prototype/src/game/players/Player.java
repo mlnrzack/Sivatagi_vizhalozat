@@ -37,14 +37,12 @@ public abstract class Player
             {
             	currentPosition.RemovePlayer(this);
                 currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-                //?? currentPosition.AcceptPlayer(this);
+                currentPosition.AcceptPlayer(this);
                 GameManager.ActionExecuted();
                 return true;
             }
-            return false;
         }
-        
-        System.out.println("Nem sikerült ez a lépés");
+
         return false;
     }
 

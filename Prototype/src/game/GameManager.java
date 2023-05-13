@@ -1,6 +1,7 @@
 package game;
 
 import java.util.*;
+import java.io.*;
 
 import game.elements.*;
 import game.interfaces.*;
@@ -8,9 +9,9 @@ import game.players.*;
 
 public class GameManager
 {
-    /**
-     * 
-     */
+	/**
+	 * 
+	 */
 	private static int round = 0;
 	private static int mechanicsPoints = 0;
 	private static int saboteursPoints = 0;
@@ -21,78 +22,89 @@ public class GameManager
     private static Player currentPlayer;
     private static int playerActionCountInCurrentRound = 0;
     
-    /**
+    /**Az aktuális körszám visszaadása.
+     * @return az aktuális körszám.
      */
-    public int GetRound()
+    public static int GetRound()
     {
     	return round;
     }
     
-    /**
+    /**Az aktuális körszám beállítása adott értékre.
+     * @param az adott érték.
      */
     public static void SetRound(int round)
     {
     	GameManager.round = round;
     }
     
-    /**
+    /**Az aktuális játékos visszaadása.
+     * @return az aktuális játékos.
      */
     public Player GetCurrentPlayer()
     {
     	return currentPlayer;
     }
     
-    /**
+    /**Az akutális játékos beállítása paraméterben kapott értékre.
+     * @param a kapott játékos.
      */
     public void SetCurrentPlayer(Player player)
     {
     	currentPlayer = player;
     }
     
-    /**
+    /**A szerelők ponjainak visszaadása.
+     * @return a szerelők pontjai.
      */
     public static int GetMechanincsPoints()
     {
     	return mechanicsPoints;
     }
     
-    /**
+    /**A szerelők ponjainak beállítása adott értékre.
+     * @param az adott érték.
      */
     public static void SetMechanicsPoints(int points)
     {
     	mechanicsPoints = points;
     }
     
-    /**
+    /**A szabotőrök ponjainak visszaadása.
+     * @return a szabotőrök pontjai.
      */
     public static int GetSaboteurPoints()
     {
     	return saboteursPoints;
     }
     
-    /**
+    /**A szabotőrök pontjainak beállítása adott értékre.
+     * @param az adott érték.
      */
     public static void SetSaboteursPoints(int points)
     {
     	saboteursPoints = points;
     }
     
-    /**
+    /**A szerelők listájának visszaadása.
+     * @return a szerelők listája.
      */
     public static ArrayList<Mechanic> GetMechanics()
     {
     	return mechanics;
     }
         
-    /**
+    /**Adott szerelő karakter hozzáfűzése a szerelők listához.
+     * @param mechanic a hozzáfűzendő szerelő.
+     * @return a hozzáfűzés sikeressége.
      */
     public static boolean AddMechanic(Mechanic mechanic)
     {
     	return mechanics.add(mechanic);
     }
 
-    /**
-     * @return
+    /**A szabotőrök listájának visszaadása.
+     * @return a szabotőrök listája.
      */
     public static ArrayList<Saboteur> GetSaboteurs()
     {
@@ -214,11 +226,57 @@ public class GameManager
      */
     public static void StartGame()
     {
+    	try 
+    	{
+    		System.out.println("Hány játékos alkotja a szerelők csapatát?");
+    		Scanner in = new Scanner(System.in);
+    		int mechanicsCount = in.nextInt();
+    		
+    		while(mechanicsCount < 2)
+    		{
+    			System.out.println("Hány játékos alkotja a szerelők csapatát?\nMin 2...");
+    			mechanicsCount = in.nextInt();
+    		}
+    		
+           	for(int i = 0; i < mechanicsCount; i++)
+           	{
+           		var mechanic = new Mechanic();
+           		System.out.println("Add meg a karakter nevét!");
+           		Scanner inName = new Scanner(System.in); 
+           		String name = inName.nextLine();
+           		mechanic.SetName(name == null ? "mechanic" + i : name);
+           		mechanic.SetCurrentPosition(waterSprings.get(i % 2));
+           		waterSprings.get(i % 2).AcceptPlayer(mechanic);
+           	}
+           	
+           	System.out.println("Hány játékos alkotja a szabotőrök csapatát?");          	
+           	int saboteursCount = in.nextInt();
+           	while(saboteursCount < 2)
+    		{
+    			System.out.println("Hány játékos alkotja a szabotőrök csapatát?\nMin 2...");
+    			saboteursCount = in.nextInt();
+    		}
+           	
+           	for(int i = 0; i < saboteursCount; i++)
+           	{
+           		var saboteur = new Saboteur();
+           		System.out.println("Add meg a karakter nevét!");
+           		Scanner inName = new Scanner(System.in); 
+           		String name = inName.nextLine();
+           		saboteur.SetName(name == null ? "saboteur" + i : name);
+           		saboteur.SetCurrentPosition(waterSprings.get(i % 2));
+           		waterSprings.get(i % 2).AcceptPlayer(saboteur);
+           	}
+    	}   	
+    	catch(Exception e)
+    	{
+    		System.out.println("Hibas bemenet!\n" + e);
+    	}
     	while (round < Constants.RoundNumber)
         {
             MechanicActions();
             SaboteurActions();
-            round++;
+            SetRound(GetRound() + 1);
         }
     }
     
@@ -259,12 +317,14 @@ public class GameManager
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
-    			System.out.println((round + 1) + ". Kör");
-    			System.out.println("Szerelő " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-    			System.out.println("A menü használata: "
+    			System.out.println("\n A menü használata: "
     					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
-    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.");
+    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");    			
+    			System.out.println((round + 1) + ". Kör");
+    			System.out.println("__________________________________________________________________________");
+    			System.out.println("Szerelő játékos: " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+    			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition() + "\n");
     			System.out.println("Lehetőségek:");
     			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\t2 - Javítás");
@@ -276,53 +336,65 @@ public class GameManager
                	System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
                	System.out.println("\t9 - cső lyukasztás");
                	System.out.println("\t10 - sticky");
-               	Scanner input = new Scanner(System.in);
-               	String userinput = input.next();
                	
-               	switch (userinput.split(" ")[0])
+               	try
                	{
-               		case "1":
-               			int neighbourIdx = Integer.parseInt(userinput.split(";")[1]);
-               			mechanics.get(i).Move(neighbourIdx);
-                        break;
-                    case "2":
-                    	mechanics.get(i).Repair();
-                        break;
-                    case "3":
-                    	mechanics.get(i).PickUpFreePipeEnd();
-                        break;
-                    case "4":
-                    	mechanics.get(i).PickUpPump();
-                        break;
-                    case "5":
-                    	mechanics.get(i).BuildPumpIntoPipe();
-                        break;
-                    case "6":
-                    	mechanics.get(i).ConnectPipe();
-                        break;
-                    case "7":
-                        neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
-                        mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
-                        break;
-                    case "8":
-                        int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
-                        int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-                        mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-                        break;
-                    case "9":
-                    	mechanics.get(i).Damage();
-                    	break;
-                    case "10":
-                    	mechanics.get(i).SetStickyPipe();
-                    	break;
-                    default:
-                        break;
+               		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                   	String userinput = reader.readLine();
+                   	
+                   	switch (userinput.split(" ")[0])
+                   	{
+                   		case "1":
+                   			int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
+                   			mechanics.get(i).Move(neighbourIdx);
+                            break;
+                        case "2":
+                        	mechanics.get(i).Repair();
+                            break;
+                        case "3":
+                        	mechanics.get(i).PickUpFreePipeEnd();
+                            break;
+                        case "4":
+                        	mechanics.get(i).PickUpPump();
+                            break;
+                        case "5":
+                        	mechanics.get(i).BuildPumpIntoPipe();
+                            break;
+                        case "6":
+                        	mechanics.get(i).ConnectPipe();
+                            break;
+                        case "7":
+                            neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
+                            mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
+                            break;
+                        case "8":
+                            int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+                            int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+                            mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                            break;
+                        case "9":
+                        	mechanics.get(i).Damage();
+                        	break;
+                        case "10":
+                        	mechanics.get(i).SetStickyPipe();
+                        	break;
+                        default:
+                            break;
+                   	}
+               	}
+               	catch(IOException e)
+               	{
+               		System.out.println("Hibás menü bemenet!");
+               	}
+               	catch(Exception e)
+               	{
+               		System.out.println("Hibás menü bemenet!");
                	}
     		}
     	}
     }
 
-    /**A szabotőr játékos karakter lépéseinek menüje.
+    /**A szabőtr játékos karakter lépéseinek menüje.
      */
     public static void SaboteurActions()
     {
@@ -332,12 +404,14 @@ public class GameManager
 
             while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
             {
-            	System.out.println((round + 1) + ". Kör");
-                System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + " akció");
-    			System.out.println("A menü használata: "
+            	System.out.println("\n A menü használata: "
     					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
-    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.");
+    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
+            	System.out.println((round + 1) + ". Kör");
+            	System.out.println("__________________________________________________________________________");
+                System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+                System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition() + "\n");
                 System.out.println("Lehetőségek:");
                 System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
@@ -345,36 +419,47 @@ public class GameManager
                 System.out.println("\t9 - A cső ragacsossá tétele maga alatt");
                 System.out.println("\t10 - A cső csúszóssá tétele");
                 
-                Scanner input = new Scanner(System.in);
-               	String userinput = input.next();
-
-                switch (userinput.split(" ")[0])
+                try
+               	{
+               		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                   	String userinput = reader.readLine();
+                   	
+                   	switch (userinput.split(" ")[0])
+                    {
+                    	case "1":
+                    		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
+                    		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
+                    		{
+                    			saboteurs.get(i).Move(neighbourIdx);
+                    			ActionExecuted();
+                    		}
+                    		break;
+                        case "2":
+                        	if (saboteurs.get(i).Damage() == true)
+                        		ActionExecuted();
+                            break;
+                        case "8":
+                        	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+                        	int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+                        	saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                            break;
+                        case "9":
+                        	saboteurs.get(i).SetStickyPipe();
+                        	break;
+                        case "10":
+                        	saboteurs.get(i).SetSlipperyPipe();
+                        	break;
+                        default:
+                        	break;
+                    }
+               	}
+                catch(IOException e)
                 {
-                	case "1":
-                		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
-                		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
-                		{
-                			saboteurs.get(i).Move(neighbourIdx);
-                			ActionExecuted();
-                		}
-                		break;
-                    case "2":
-                    	if (saboteurs.get(i).Damage() == true)
-                    		ActionExecuted();
-                        break;
-                    case "8":
-                    	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
-                    	int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-                    	saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-                        break;
-                    case "9":
-                    	saboteurs.get(i).SetStickyPipe();
-                    	break;
-                    case "10":
-                    	saboteurs.get(i).SetSlipperyPipe();
-                    	break;
-                    default:
-                    	break;
+                	System.out.println("Hibás menü bemenet!");
+                }
+                catch(Exception e)
+                {
+                	System.out.println("Hibás menü bemenet!");
                 }
             }
         }

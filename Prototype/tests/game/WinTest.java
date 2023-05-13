@@ -6,14 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import game.elements.Desert;
-import game.interfaces.ISteppable;
 
 import org.junit.BeforeClass;
 
-public class WinTest extends TestBase {
+public class WinTest extends TestBase
+{
 
 	@Before
-	public void initTest() {
+	public void initTest()
+	{
 		GameManager.SetMechanicsPoints(0);
 		GameManager.SetSaboteursPoints(0);
 		spring.SetWaterInside(0);
@@ -27,38 +28,60 @@ public class WinTest extends TestBase {
 	}
 	
 	@Test
-	public void test_mechanicWin() {
+	public void test_mechanicWin()
+	{
 		saboteur.Move(1);
 		assertSame(pipe2, saboteur.GetCurrentPosition());
-		for(int i = 0; i < Constants.RoundNumber-2; i++) {
-			GameManager.FireSourceActions();
-			GameManager.StepSteppables();
-		}
-		saboteur.Damage();
-		for(int i = 0; i < 2; i++) {
-			GameManager.FireSourceActions();
-			GameManager.StepSteppables();
-		}
-		assertTrue("Nyert a szerelő csapat", GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints());
-	}
-	
-	@Test
-	public void test_saboteurWin() {
-		saboteur.Move(1);
-		assertSame(pipe2, saboteur.GetCurrentPosition());
-		for(int i = 0; i < 3; i++) {
-			GameManager.FireSourceActions();
-			GameManager.StepSteppables();
-		}
-		saboteur.Damage();
-		for(int i = 3; i < 20; i++) {
-			GameManager.FireSourceActions();
+		
+		for(int i = 0; i < Constants.RoundNumber-2; i++)
+		{
+			spring.FillNeighourPipes();
 			pipe1.Step();
 			pump.Step();
 			pipe2.Step();
 			cistern.Step();
-			//GameManager.StepSteppables();
 		}
+		
+		saboteur.Damage();
+		
+		for(int i = 0; i < 2; i++)
+		{
+			spring.FillNeighourPipes();
+			pipe1.Step();
+			pump.Step();
+			pipe2.Step();
+			cistern.Step();
+		}
+		
+		assertTrue("Nyert a szerelő csapat", GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints());
+	}
+	
+	@Test
+	public void test_saboteurWin()
+	{
+		saboteur.Move(1);
+		assertSame(pipe2, saboteur.GetCurrentPosition());
+		
+		for(int i = 0; i < Constants.RoundNumber / 2; i++)
+		{
+			spring.FillNeighourPipes();
+			pipe1.Step();
+			pump.Step();
+			pipe2.Step();
+			cistern.Step();
+		}
+		
+		saboteur.Damage();
+		
+		for(int i = Constants.RoundNumber / 2; i < Constants.RoundNumber; i++)
+		{
+			spring.FillNeighourPipes();
+			pipe1.Step();
+			pump.Step();
+			pipe2.Step();
+			cistern.Step();
+		}
+		
 		assertTrue("Nyert a szabotőr csapat", GameManager.GetSaboteurPoints() > GameManager.GetMechanincsPoints());
 	}
 
