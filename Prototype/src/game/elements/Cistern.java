@@ -5,11 +5,11 @@ import game.interfaces.*;
 
 public class Cistern extends ActiveElement implements ISteppable
 {
-    public Cistern() 
+    public Cistern()
     {
     	GameManager.AddSteppable(this);
     }
-    
+
     public Pipe PickUpFreePipeEnd()
     {
         return new Pipe();

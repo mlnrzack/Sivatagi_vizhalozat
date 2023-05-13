@@ -9,9 +9,6 @@ import game.players.*;
 
 public class GameManager
 {
-	/**
-	 * 
-	 */
 	private static int round = 0;
 	private static int mechanicsPoints = 0;
 	private static int saboteursPoints = 0;
@@ -226,52 +223,6 @@ public class GameManager
      */
     public static void StartGame()
     {
-    	try 
-    	{
-    		System.out.println("Hány játékos alkotja a szerelők csapatát?");
-    		Scanner in = new Scanner(System.in);
-    		int mechanicsCount = in.nextInt();
-    		
-    		while(mechanicsCount < 2)
-    		{
-    			System.out.println("Hány játékos alkotja a szerelők csapatát?\nMin 2...");
-    			mechanicsCount = in.nextInt();
-    		}
-    		
-           	for(int i = 0; i < mechanicsCount; i++)
-           	{
-           		var mechanic = new Mechanic();
-           		System.out.println("Add meg a karakter nevét!");
-           		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine();
-           		mechanic.SetName(name == null ? "mechanic" + i : name);
-           		mechanic.SetCurrentPosition(waterSprings.get(i % 2));
-           		waterSprings.get(i % 2).AcceptPlayer(mechanic);
-           	}
-           	
-           	System.out.println("Hány játékos alkotja a szabotőrök csapatát?");          	
-           	int saboteursCount = in.nextInt();
-           	while(saboteursCount < 2)
-    		{
-    			System.out.println("Hány játékos alkotja a szabotőrök csapatát?\nMin 2...");
-    			saboteursCount = in.nextInt();
-    		}
-           	
-           	for(int i = 0; i < saboteursCount; i++)
-           	{
-           		var saboteur = new Saboteur();
-           		System.out.println("Add meg a karakter nevét!");
-           		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine();
-           		saboteur.SetName(name == null ? "saboteur" + i : name);
-           		saboteur.SetCurrentPosition(waterSprings.get(i % 2));
-           		waterSprings.get(i % 2).AcceptPlayer(saboteur);
-           	}
-    	}   	
-    	catch(Exception e)
-    	{
-    		System.out.println("Hibas bemenet!\n" + e);
-    	}
     	while (round < Constants.RoundNumber)
         {
             MechanicActions();
@@ -324,7 +275,7 @@ public class GameManager
     			System.out.println((round + 1) + ". Kör");
     			System.out.println("__________________________________________________________________________");
     			System.out.println("Szerelő játékos: " + mechanics.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-    			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition() + "\n");
+    			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId() + "\n");
     			System.out.println("Lehetőségek:");
     			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\t2 - Javítás");
@@ -411,7 +362,7 @@ public class GameManager
             	System.out.println((round + 1) + ". Kör");
             	System.out.println("__________________________________________________________________________");
                 System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-                System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition() + "\n");
+                System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
                 System.out.println("Lehetőségek:");
                 System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");

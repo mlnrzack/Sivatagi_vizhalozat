@@ -10,6 +10,7 @@ public interface IElement
 	boolean AcceptPlayer(Player player);
 	Pipe DisconnectNeighbourPipe(int neighbourIdx);
 	boolean FillWaterTo();
+	String GetId();
 	ArrayList<? extends IElement> GetNeighbours();
 	int GetWaterInside();
 	Pipe PickUpFreePipeEnd();

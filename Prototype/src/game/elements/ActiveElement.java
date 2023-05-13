@@ -8,7 +8,7 @@ import game.players.*;
 public abstract class ActiveElement extends Element
 {
 	protected ArrayList<Pipe> neighbours = new ArrayList<Pipe>();
-
+	
 	public ArrayList<Pipe> GetNeighbours()
 	{
 		return neighbours;
