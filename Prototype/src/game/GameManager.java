@@ -322,7 +322,7 @@ public class GameManager
     	}
     }
 
-    /**A szabőtr játékos karakter lépéseinek menüje.
+    /**A szabotőr játékos karakter lépéseinek menüje.
      */
     public static void SaboteurActions()
     {

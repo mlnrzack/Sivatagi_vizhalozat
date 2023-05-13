@@ -109,7 +109,7 @@ public class Pipe extends Element implements ISteppable
     	if(stickyTimer > 0)
     		stickyTimer--;
     	
-        if ((leaking || neighbours.size() < 2) && GetWaterInside() > 0)
+        if ((leaking || neighbours.size() < 2))// && GetWaterInside() > 0)
         {
             WaterToDesert();
 
