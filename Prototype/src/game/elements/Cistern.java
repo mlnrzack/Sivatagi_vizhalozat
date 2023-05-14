@@ -2,6 +2,7 @@ package game.elements;
 
 import game.*;
 import game.interfaces.*;
+import game.players.*;
 
 public class Cistern extends ActiveElement implements ISteppable
 {

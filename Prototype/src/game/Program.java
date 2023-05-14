@@ -270,7 +270,7 @@ public class Program
            		System.out.println("Add meg a karakter nevét!");
            		Scanner inName = new Scanner(System.in); 
            		String name = inName.nextLine().toUpperCase();
-           		mechanic.SetName(name == "" ? "mechanic" + (i + 1) : name);
+           		mechanic.SetName(name == "" ? "MECHANIC" + (i + 1) : name);
            		int pos = new Random().nextInt(map.size() - 1);
            		while(map.get(pos).AcceptPlayer(mechanic) == false)
            			pos = new Random().nextInt(map.size() - 1);
@@ -292,7 +292,7 @@ public class Program
            		System.out.println("Add meg a karakter nevét!");
            		Scanner inName = new Scanner(System.in); 
            		String name = inName.nextLine().toUpperCase();
-           		saboteur.SetName(name == "" ? "saboteur" + (i + 1) : name);
+           		saboteur.SetName(name == "" ? "SABOTEUR" + (i + 1) : name);
            		int pos = new Random().nextInt(map.size() - 1);
            		while(map.get(pos).AcceptPlayer(saboteur) == false)
            			pos = new Random().nextInt(map.size() - 1);

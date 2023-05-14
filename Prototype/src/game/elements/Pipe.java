@@ -204,7 +204,7 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean AcceptPlayer(Player player)
     {
-        if (GetPlayers().size() < Constants.AcceptedPlayersInPipe)
+        if (GetPlayers().size() <= Constants.AcceptedPlayersInPipe)
         {
         	if(SlipperyPipe(player))
         	{

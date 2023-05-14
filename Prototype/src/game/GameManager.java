@@ -225,7 +225,7 @@ public class GameManager
     {
     	while (round < Constants.RoundNumber)
         {
-    		System.out.println("A csapatok:");
+    		System.out.println("\nA csapatok:");
         	System.out.println("Szerelők:");
         	for(int i = 0; i < mechanics.size(); i++)
         	{
@@ -237,10 +237,13 @@ public class GameManager
         		System.out.println("  " + saboteurs.get(i).GetName() + " " + saboteurs.get(i).GetCurrentPosition().GetId());
         	}
         	
-        	System.out.println((round + 1) + ". Kör");
+        	System.out.println("\n" + (round + 1) + ". Kör");
 			System.out.println("___________________________________________________________________");
 			
+			System.out.println("\t\t\t(Szerelő csapat)");
             MechanicActions();
+            
+            System.out.println("\t\t\t(Szabotőr csapat)");
             SaboteurActions();
             SetRound(GetRound() + 1);
         }
@@ -283,7 +286,7 @@ public class GameManager
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
-    			System.out.println("\t\t\t(Szerelő csapat)\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+    			System.out.println(mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
     			System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
                 for(int j = 0; j < mechanics.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
@@ -298,29 +301,29 @@ public class GameManager
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");   
     			System.out.println("\nLehetőségek:");
-    			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-    			System.out.println("\t2 - Javítás");
+    			System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
+    			System.out.println("\trepair - Javítás");
     			System.out.println("\t3 - Szabad csővég felvétele");
                	System.out.println("\t4 - Pumpa felvétele");
                	System.out.println("\t5 - Pumpa beépítése a csőbe");
                	System.out.println("\t6 - Csővég csatlakoztatása");
                	System.out.println("\t7 X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
                	System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	System.out.println("\t9 - cső lyukasztás");
-               	System.out.println("\t10 - sticky");
+               	System.out.println("\t9 - Cső lyukasztás");
+               	System.out.println("\tsticky - Cső ragacsossá tétele");
                	
                	try
                	{
-               		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                   	String userinput = reader.readLine();
+               		Scanner reader = new Scanner(System.in);
+                   	String userinput = reader.nextLine();
                    	
                    	switch (userinput.split(" ")[0])
                    	{
-                   		case "1":
+                   		case "move":
                    			int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
                    			mechanics.get(i).Move(neighbourIdx);
                             break;
-                        case "2":
+                        case "repair":
                         	mechanics.get(i).Repair();
                             break;
                         case "3":
@@ -347,20 +350,16 @@ public class GameManager
                         case "9":
                         	mechanics.get(i).Damage();
                         	break;
-                        case "10":
+                        case "sticky":
                         	mechanics.get(i).SetStickyPipe();
                         	break;
                         default:
                             break;
                    	}
                	}
-               	catch(IOException e)
-               	{
-               		System.out.println("Hibás menü bemenet!");
-               	}
                	catch(Exception e)
                	{
-               		System.out.println("Hibás menü bemenet!");
+               		System.out.println("Hibás menü bemenet!\n");
                	}
     		}
     	}
@@ -376,7 +375,7 @@ public class GameManager
 
             while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
             {
-            	System.out.println("\t\t\t(Szabotőr csapat)\n" + saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+            	System.out.println(saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
                 System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
                 System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
                 for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
@@ -391,20 +390,20 @@ public class GameManager
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
                 System.out.println("\nLehetőségek:");
-                System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
+                System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
                 System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                System.out.println("\t9 - A cső ragacsossá tétele maga alatt");
-                System.out.println("\t10 - A cső csúszóssá tétele");
+                System.out.println("\tsticky - A cső ragacsossá tétele maga alatt");
+                System.out.println("\tslippery - A cső csúszóssá tétele");
                 
                 try
                	{
-               		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                   	String userinput = reader.readLine();
+                	Scanner reader = new Scanner(System.in);
+                   	String userinput = reader.nextLine();
                    	
                    	switch (userinput.split(" ")[0])
                     {
-                    	case "1":
+                    	case "move":
                     		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
                     		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
                     		{
@@ -421,23 +420,19 @@ public class GameManager
                         	int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
                         	saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
-                        case "9":
+                        case "sticky":
                         	saboteurs.get(i).SetStickyPipe();
                         	break;
-                        case "10":
+                        case "slippery":
                         	saboteurs.get(i).SetSlipperyPipe();
                         	break;
                         default:
                         	break;
                     }
                	}
-                catch(IOException e)
-                {
-                	System.out.println("Hibás menü bemenet!" + e);
-                }
                 catch(Exception e)
                 {
-                	System.out.println("Hibás menü bemenet!" + e);
+                	System.out.println("Hibás menü bemenet!\n" + e);
                 }
             }
         }

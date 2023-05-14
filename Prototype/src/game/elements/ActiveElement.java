@@ -33,7 +33,7 @@ public abstract class ActiveElement extends Element
 	{
 		return AddPlayer(player);
 	}
-
+	
 	public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
     	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
