@@ -35,14 +35,17 @@ public abstract class Player
             IElement toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-            	currentPosition.RemovePlayer(this);
-                currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-                currentPosition.AcceptPlayer(this);
-                GameManager.ActionExecuted();
-                return true;
+            	IElement newPos = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
+                if(newPos.AcceptPlayer(this))
+                {
+                	currentPosition.RemovePlayer(this);
+                	currentPosition = newPos;
+                	GameManager.ActionExecuted();
+                    return true;
+                }
             }
         }
-
+        System.out.println("Hibas bemenet! Nem jó indexet adtál meg a szomszédhoz...");
         return false;
     }
 

@@ -17,7 +17,7 @@ public class Pipe extends Element implements ISteppable
 
     public Pipe()
     {
-    	//
+    	GameManager.AddSteppable(this);
     }
     
     public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)

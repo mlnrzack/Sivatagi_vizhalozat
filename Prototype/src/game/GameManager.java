@@ -273,10 +273,13 @@ public class GameManager
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");    			
     			System.out.println((round + 1) + ". Kör");
-    			System.out.println("__________________________________________________________________________");
-    			System.out.println("\n\t(Szerelő csapat)" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-    			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId() + "\n");
-    			System.out.println("Lehetőségek:");
+    			System.out.println("_____________________________________________________________________");
+    			System.out.println("\t\t\t(Szerelő csapat)\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+    			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
+    			System.out.println("Szomszédok: ");
+                for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
+                	System.out.print(saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + "\t");
+    			System.out.println("\nLehetőségek:");
     			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\t2 - Javítás");
     			System.out.println("\t3 - Szabad csővég felvétele");
@@ -360,10 +363,13 @@ public class GameManager
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
             	System.out.println((round + 1) + ". Kör");
-            	System.out.println("__________________________________________________________________________");
-                System.out.println("Szabotőr " + saboteurs.get(i).GetName() + " köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+            	System.out.println("______________________________________________________________________________");
+            	System.out.println("\t\t\t(Szabotőr csapat)\n" + saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
                 System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
-                System.out.println("Lehetőségek:");
+                System.out.println("Szomszédok: ");
+                for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
+                	System.out.println(saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + "\t");
+                System.out.println("\nLehetőségek:");
                 System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
                 System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
@@ -406,11 +412,11 @@ public class GameManager
                	}
                 catch(IOException e)
                 {
-                	System.out.println("Hibás menü bemenet!");
+                	System.out.println("Hibás menü bemenet!" + e);
                 }
                 catch(Exception e)
                 {
-                	System.out.println("Hibás menü bemenet!");
+                	System.out.println("Hibás menü bemenet!" + e);
                 }
             }
         }

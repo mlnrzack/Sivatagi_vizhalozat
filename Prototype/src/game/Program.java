@@ -166,7 +166,7 @@ public class Program
         pipe19.AddNeighbour(cistern1);
         map.add(pipe19);
         
-        pump1.SetId("pipe1");
+        pump1.SetId("pump1");
         pump1.AddPipe(pipe1);
         pump1.AddPipe(pipe4);
         pump1.AddPipe(pipe6);
@@ -237,7 +237,7 @@ public class Program
         pump10.TrySetInputOutput(0, 1);
         map.add(pump10);
         
-        pump11.SetId("pum11");
+        pump11.SetId("pump11");
         pump11.AddPipe(pipe17);
         pump11.AddPipe(pipe19);
         pump11.TrySetInputOutput(0, 1);
@@ -251,7 +251,7 @@ public class Program
         spring2.SetId("spring2");
         spring2.AddPipe(pipe2);
         map.add(spring2);
-
+        
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
@@ -269,8 +269,8 @@ public class Program
            		var mechanic = new Mechanic();
            		System.out.println("Add meg a karakter nevét!");
            		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine();
-           		mechanic.SetName(name == null ? "mechanic" + i : name);
+           		String name = inName.nextLine().toUpperCase();
+           		mechanic.SetName(name == "" ? "mechanic" + (i + 1) : name);
            		int pos = new Random().nextInt(map.size() - 1);
            		while(map.get(pos).AcceptPlayer(mechanic) == false)
            			pos = new Random().nextInt(map.size() - 1);
@@ -291,8 +291,8 @@ public class Program
            		var saboteur = new Saboteur();
            		System.out.println("Add meg a karakter nevét!");
            		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine();
-           		saboteur.SetName(name == null ? "saboteur" + i : name);
+           		String name = inName.nextLine().toUpperCase();
+           		saboteur.SetName(name == "" ? "saboteur" + (i + 1) : name);
            		int pos = new Random().nextInt(map.size() - 1);
            		while(map.get(pos).AcceptPlayer(saboteur) == false)
            			pos = new Random().nextInt(map.size() - 1);
