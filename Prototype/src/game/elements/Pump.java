@@ -7,15 +7,22 @@ import game.interfaces.*;
 
 public class Pump extends ActiveElement implements ISteppable
 {
-    private Pipe input = null;
-    private Pipe output = null;
-    private boolean broken = false;
+    private Pipe input = null;			//a pumpa bemeneti csöve
+    private Pipe output = null;			//a pumpa kimeneti csöve
+    private boolean broken = false;		//elromlott pumpa tulajdonság
     
+    /**Pump osztály konstruktora,
+     * amely meghívja a GameManager osztály AddSteppables függvényét, ezzel hozzáadva magát a léptethető elemekhez.
+     */
     public Pump()
     {
         GameManager.AddSteppable(this);
     }
 
+    /**Víz pumpálása adott irányba.
+     * Ha a pumpában van elegendő víz, akkor kifele vagy befele pumpálja a vizet.
+     * @return elromlott pumpa vagy sikeres pumpálás
+     */
     public boolean Step()
     {
         var pumpWaterToOutputDone = false;
@@ -27,6 +34,10 @@ public class Pump extends ActiveElement implements ISteppable
         return GettingOlder() || pumpWaterToOutputDone || pumpWaterFromInputDone;
     }
 
+    /**Ha megfelelő indexeket kap a függvény,
+     * akkor beállítja az indexeknek megfelelően a be-, és kimeneti értékeket.
+     * @return beállítás sikeressége 
+     */
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
@@ -42,13 +53,19 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**A vizet a sivatagba engedi és a víztartályt lenullázza.
+     */
     private void GoWrong()
     {
         Desert.IncreaseWaterFromPipelineNetwork(GetWaterInside());
         SetWaterInside(0);
     }
 
-    // Akkor hívjuk meg ha van szabad kapacitása a tartálynak
+    /**Ha van szabad kapacitása a tartálynak.
+     * Ha a bejövő mennyiség nem nulla, akkor a bejövőn a vízmennyiséget csökkentjük annyival,
+     * amennyivel amennyivel a puffertartály tartalmát növeltük. 
+     * @return művelet sikeressége
+     */
     public boolean PumpWaterFromInput()
     {
         if (input != null && input.GetWaterInside() > 0)
@@ -62,6 +79,9 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**A bemeneti csőből a kimeneti csőbe juttatja a vizet.
+     * @return művelet sikeressége
+     */
     public boolean PumpWaterToOutput()
     {
         if (output.FillWaterTo())
@@ -74,6 +94,10 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**A pumpa elromlásának a valószínűségét egy randommal dönti el.
+     * Ha a random által elromlik a pumpa, akkor a vizet a sivatagba engedi.
+     * @return pumpa állapota (hibás vagy sem)
+     */
     private boolean GettingOlder()
     {
         if (new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
@@ -86,6 +110,10 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**A meghibásodott pumpa megjavítása.
+     * @return true sikeres javítás esetén
+     * @return false ha nem volt meghibásodva
+     */
     public boolean TryRepair()
     {
         if (broken == true)
@@ -98,6 +126,11 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
+    /**Az eltávolítandó elemre vonatkozó vizsgálatok után a szomszéd eltávolítása, 
+     * valamint a szomszéd szomszédsági listájából a pumpa eltávolítása. 
+     * @param neighbourIdx a szomszéd azonosítója
+     * @return szomszéd cső azonosítója
+     */
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
     	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
@@ -115,6 +148,10 @@ public class Pump extends ActiveElement implements ISteppable
         return neighbourtoDisconnect;
     }
 
+    /**Új cső létrehozása.
+     * @param pipe a létrehozandó cső
+     * @return a létrehozás sikeressége
+     */
     public boolean GetBuildedInto(Pipe pipe)
     {
         // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
