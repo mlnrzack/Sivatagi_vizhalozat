@@ -52,8 +52,7 @@ public abstract class Player
             if (toNeighbour.AcceptPlayer(this))
             {
             	currentPosition.RemovePlayer(this);
-            	currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-            	currentPosition.AcceptPlayer(this);
+            	currentPosition = toNeighbour;
             	GameManager.ActionExecuted();
             	return true;
             }
