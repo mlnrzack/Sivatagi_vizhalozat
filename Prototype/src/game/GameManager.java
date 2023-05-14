@@ -28,7 +28,7 @@ public class GameManager
     }
     
     /**Az aktuális körszám beállítása adott értékre.
-     * @param az adott érték.
+     * @param round az adott érték.
      */
     public static void SetRound(int round)
     {
@@ -44,7 +44,7 @@ public class GameManager
     }
     
     /**Az akutális játékos beállítása paraméterben kapott értékre.
-     * @param a kapott játékos.
+     * @param player a kapott játékos.
      */
     public void SetCurrentPlayer(Player player)
     {
@@ -60,7 +60,7 @@ public class GameManager
     }
     
     /**A szerelők ponjainak beállítása adott értékre.
-     * @param az adott érték.
+     * @param points az adott érték.
      */
     public static void SetMechanicsPoints(int points)
     {
@@ -76,7 +76,7 @@ public class GameManager
     }
     
     /**A szabotőrök pontjainak beállítása adott értékre.
-     * @param az adott érték.
+     * @param points az adott érték.
      */
     public static void SetSaboteursPoints(int points)
     {
@@ -216,7 +216,8 @@ public class GameManager
         FireSourceActions();
         StepSteppables();
     }
-    
+
+
     /**A játékot menetéért felelős függvény.
      * A modell adott lejátszott körszámig játszatja a játékot.
      * Ha minden karakter meglépte adott körre vonatkozó lépéseit, akkor növelődik.

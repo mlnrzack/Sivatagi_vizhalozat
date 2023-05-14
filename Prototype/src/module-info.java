@@ -7,5 +7,6 @@
  */
 module Sivatagi_vizhalozat
 {
-	requires junit;
+	requires junit4;
+	exports game;
 }

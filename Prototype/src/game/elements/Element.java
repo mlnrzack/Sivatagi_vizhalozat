@@ -9,7 +9,8 @@ import game.players.*;
 public abstract class Element implements IElement
 {
     private int waterInside = 0;
-    private String id = "";
+    protected String id = "";
+    protected String typeString = "Element";
     private ArrayList<Player> players = new ArrayList<Player>();
 
     public int GetWaterInside()

@@ -1,6 +1,7 @@
 package game.elements;
 
 import java.util.*;
+import java.util.Random;
 
 import game.*;
 import game.interfaces.*;
@@ -12,16 +13,31 @@ public class Pipe extends Element implements ISteppable
     private int noLeakageTimer = 0;								//lyukasztás tiltási ideje; ha 0, akkor lyukasztható
     private int slipperyTimer = 0;								//csúszós-e timere
     private int stickyTimer = 0;								//ragadós-e timere
-    
+
+    private  int _id = 0;
+    private static ArrayList<Integer> PipeIDs = new ArrayList<>();
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
-    public Pipe()
+    public Pipe(){
+        int max = PipeIDs.get(0);
+        for (var item: PipeIDs) {
+            if (item > max) max = item;
+        }
+        _id = max+1;
+        PipeIDs.add(_id);
+        typeString = "Pipe";
+    }
+    public Pipe(int id)
     {
-    	//
+        _id = id;
+        PipeIDs.add(id);
+        typeString = "Pipe";
+
     }
     
     public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
     {
+       ;
     	leaking = leaks;
     	noLeakageTimer = timer;
     	slipperyTimer = slippery;
@@ -52,7 +68,8 @@ public class Pipe extends Element implements ISteppable
     
     public void SetSlippery()
     {
-    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+    	//TODO
+        slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound);
     }
 
     public int GetSticky()
@@ -62,7 +79,8 @@ public class Pipe extends Element implements ISteppable
     
     public void SetSticky()
     {
-    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+        //TODO
+    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound);
     }
     
     public boolean TryBuildPumpInto(Pump pump)
@@ -76,7 +94,8 @@ public class Pipe extends Element implements ISteppable
         {
         	leaking = false;
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
-        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+        	//TODO
+            noLeakageTimer = new Random().nextInt( Constants.LeakageTimerBound);
         	
             return true;
         }

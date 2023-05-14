@@ -3,11 +3,32 @@ package game.elements;
 import game.*;
 import game.interfaces.*;
 
+import java.util.ArrayList;
+
 public class Cistern extends ActiveElement implements ISteppable
 {
+
+    private int _id = 0;
+    private static ArrayList<Integer> CisternIds = new ArrayList<>();
+
     public Cistern()
     {
-    	GameManager.AddSteppable(this);
+        int max = CisternIds.get(0);
+        for (var item: CisternIds) {
+            if (item > max) max = item;
+        }
+        _id = max+1;
+        CisternIds.add(_id);
+        typeString = "Cistern";
+
+        GameManager.AddSteppable(this);
+    }
+
+    public Cistern(int id){
+        _id = id;
+        CisternIds.add(_id);
+        typeString = "Cistern";
+
     }
 
     public Pipe PickUpFreePipeEnd()

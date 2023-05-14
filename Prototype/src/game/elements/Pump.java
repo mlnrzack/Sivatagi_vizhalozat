@@ -1,6 +1,7 @@
 package game.elements;
 
 import java.util.*;
+import java.util.Random;
 
 import game.*;
 import game.interfaces.*;
@@ -10,10 +11,27 @@ public class Pump extends ActiveElement implements ISteppable
     private Pipe input = null;
     private Pipe output = null;
     private boolean broken = false;
-    
+
+    private int _id = 0;
+    private static ArrayList<Integer> PumpIDs = new ArrayList<>();
+
     public Pump()
     {
+        int max = PumpIDs.get(0);
+        for (var item: PumpIDs) {
+            if (item > max) max = item;
+        }
+        _id = max+1;
+        PumpIDs.add(_id);
+        typeString = "Pump";
+
         GameManager.AddSteppable(this);
+    }
+    public Pump(int id){
+        _id = id;
+        PumpIDs.add(id);
+        typeString = "Pump";
+
     }
 
     public boolean Step()
@@ -76,7 +94,8 @@ public class Pump extends ActiveElement implements ISteppable
 
     private boolean GettingOlder()
     {
-        if (new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
+        //TODO
+        if (new Random().nextDouble() < Constants.PumpErrorProbability)
         {
             GoWrong();
 
@@ -130,5 +149,8 @@ public class Pump extends ActiveElement implements ISteppable
         AddPipe(pipe);
 
         return true;
+    }
+    public int GetID(){
+        return _id;
     }
 }
