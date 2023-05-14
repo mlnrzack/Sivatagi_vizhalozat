@@ -51,22 +51,11 @@ public abstract class Player
             IElement toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-            	///*
-            	IElement newPos = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
-                if(newPos.AcceptPlayer(this))
-                {
-                	currentPosition.RemovePlayer(this);
-                	currentPosition = newPos;
-                	GameManager.ActionExecuted();
-                    return true;
-                }
-                /*
             	currentPosition.RemovePlayer(this);
             	currentPosition = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
             	currentPosition.AcceptPlayer(this);
             	GameManager.ActionExecuted();
             	return true;
-            	*/
             }
         }
         System.out.println("Hibás bemenet! Nem jó indexet adtál meg a szomszédhoz, vagy a szomszéd csövön már állnak...");
