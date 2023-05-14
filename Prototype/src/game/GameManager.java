@@ -28,7 +28,7 @@ public class GameManager
     }
     
     /**Az aktuális körszám beállítása adott értékre.
-     * @param az adott érték.
+     * @param round az adott érték.
      */
     public static void SetRound(int round)
     {
@@ -44,7 +44,7 @@ public class GameManager
     }
     
     /**Az akutális játékos beállítása paraméterben kapott értékre.
-     * @param a kapott játékos.
+     * @param player a kapott játékos.
      */
     public void SetCurrentPlayer(Player player)
     {
@@ -60,7 +60,7 @@ public class GameManager
     }
     
     /**A szerelők ponjainak beállítása adott értékre.
-     * @param az adott érték.
+     * @param points az adott érték.
      */
     public static void SetMechanicsPoints(int points)
     {
@@ -76,7 +76,7 @@ public class GameManager
     }
     
     /**A szabotőrök pontjainak beállítása adott értékre.
-     * @param az adott érték.
+     * @param points az adott érték.
      */
     public static void SetSaboteursPoints(int points)
     {
@@ -273,14 +273,14 @@ public class GameManager
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");    			
     			System.out.println((round + 1) + ". Kör");
-    			System.out.println("_____________________________________________________________________");
+    			System.out.println("___________________________________________________________________");
     			System.out.println("\t\t\t(Szerelő csapat)\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
-    			System.out.println("Szomszédok: ");
+    			System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
                 for(int j = 0; j < mechanics.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
                 {
                 	int onTop = mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
-                	System.out.print(mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
+                	System.out.print("    - " + j + " " + mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
                 	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
                 }
     			System.out.println("\nLehetőségek:");
@@ -367,12 +367,16 @@ public class GameManager
     					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
     					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
             	System.out.println((round + 1) + ". Kör");
-            	System.out.println("______________________________________________________________________________");
+            	System.out.println("___________________________________________________________________");
             	System.out.println("\t\t\t(Szabotőr csapat)\n" + saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
                 System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
-                System.out.println("Szomszédok: ");
+                System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
                 for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
-                	System.out.println(saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + "\t");
+                {
+                	int onTop = saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
+                	System.out.print("    - " + j + " " + saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
+                	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
+                }
                 System.out.println("\nLehetőségek:");
                 System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");

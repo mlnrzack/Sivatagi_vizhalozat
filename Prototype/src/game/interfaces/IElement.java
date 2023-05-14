@@ -7,6 +7,7 @@ import game.elements.*;
 
 public interface IElement
 {
+	//Az interfész által átadott metódusok fejlécei a megvalósító osztályoknak.
 	boolean AcceptPlayer(Player player);
 	Pipe DisconnectNeighbourPipe(int neighbourIdx);
 	boolean FillWaterTo();

@@ -4,11 +4,17 @@ import game.*;
 
 public class Saboteur extends Player
 {
+	/**A szabotőr osztály konstruktora.
+	 * Hozzáadja a létrehozott szabotőrt, a GameManager osztály szabotőrök listájához.
+	 */
     public Saboteur()
     {
         GameManager.AddSaboteur(this);
     }
     
+    /**A szabotőr megpróbálja csúszóssá tenni az alatta lévő csövet
+     * @return a csúszóssátétel sikeressége.
+     */
     public boolean SetSlipperyPipe()
     {
     	return GetCurrentPosition().TrySetSlippery();

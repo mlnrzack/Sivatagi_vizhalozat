@@ -5,29 +5,45 @@ import game.interfaces.*;
 
 public abstract class Player
 {
-    private String name;
-    private IElement currentPosition;
+    private String name;							//A játékos neve.
+    private IElement currentPosition;				//A játékos pozíciója.
 
+    /**A játékos nevének átadása külső osztályoknak.
+     * @return a játékos neve.
+     */
     public String GetName()
     {
     	return name;
     }
     
+    /**A játékos nevének beállítása.
+     * @param name, amire a játékos neve beállításra kerül.
+     */
     public void SetName(String name)
     {
     	this.name = name;
     }
     
+    /**A játékos pozíciójának átadása külső osztályoknak.
+     * @return a játékos pozíciója.
+     */
     public IElement GetCurrentPosition()
     {
     	return currentPosition;
     }
     
+    /**A játékos pozíciójának beállítása-
+     * @param newPos a játékos új pozíciója.
+     */
     public void SetCurrentPosition(IElement newPos)
     {
     	currentPosition = newPos;
     }
     
+    /**A játékos mozgatását megoldó függvény.
+     * @param neighbourIdx a szomszédos elem indexe, ahova lépni szeretne a játékos.
+     * @return a lépés sikeressége.
+     */
     public boolean Move(int neighbourIdx)
     {
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
@@ -45,10 +61,15 @@ public abstract class Player
                 }
             }
         }
-        System.out.println("Hibas bemenet! Nem jó indexet adtál meg a szomszédhoz...");
+        System.out.println("Hibás bemenet! Nem jó indexet adtál meg a szomszédhoz...");
         return false;
     }
 
+    /**A játékos megpróbálja beállítani a pumpát.
+     * @param neighbourIdxFrom a honnan ág indexe.
+     * @param neighbourIdxTo a hova ág indexe.
+     * @return a beállítás sikeressége.
+     */
     public boolean TrySetPump(int neighbourIdxFrom, int neighbourIdxTo)
     {
         if (currentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo))
@@ -60,21 +81,36 @@ public abstract class Player
         return false;
     }
     
+    /**A játékos megpróbálja kilyukasztani az alatta lévő csövet.
+     * @return a lyukasztás sikeressége.
+     */
     public boolean Damage()
     {
-        if (GetCurrentPosition().TryDamage())
+        if (currentPosition.TryDamage())
         {
             GameManager.ActionExecuted();
             return true;
         }
+        
         return false;
     }
     
+    /**A játékos megpróbálja ragacsossá tenni a csövet.
+     * @return a ragacsossátétel sikeressége.
+     */
     public boolean SetStickyPipe()
     {
-    	return currentPosition.TrySetSticky();
+    	if(currentPosition.TrySetSticky())
+    	{
+    		GameManager.ActionExecuted();
+    		return true;
+    	}
+    	
+    	return false;
     }
     
+    /**A ragacsos csőre lépő játékos kimarad a további lépéseiből a körben.
+     */
     public void Stuck()
     {
     	//todo leragad a játékos

@@ -5,14 +5,20 @@ import game.elements.*;
 
 public class Mechanic extends Player
 {	
-    private Pipe pipeInInventory = null;
-    private Pump pumpInInventory = null;
+    private Pipe pipeInInventory = null;			//A szerelő karakternél lévő cső.
+    private Pump pumpInInventory = null;			//A szerelő játékosnál lévő pumpa.
     
+    /**A szerelő osztály konstruktora.
+     * Hozzáadja a létrehozott szerelőt, a GameManager osztály szerelők listájához.
+     */
     public Mechanic() 
     {
         GameManager.AddMechanic(this);
     }
    
+    /**Egy a szerelőnél lévő pumpa beépítése csőbe.
+     * @return a beépíétés sikeressége.
+     */
     public boolean BuildPumpIntoPipe()
     {
         if (pumpInInventory != null)
@@ -30,6 +36,9 @@ public class Mechanic extends Player
         return false;
     }
     
+    /**Felvett cső csatlakoztatása.
+     * @return a csatlakoztatás sikeressége.
+     */
     public boolean ConnectPipe()
     {
         if (pipeInInventory != null)
@@ -47,9 +56,12 @@ public class Mechanic extends Player
         return false;
     }
 
+    /**A szerelő lecsatlakoztat egy szomszédos csövet az alatt lévő elemről.
+     * @param neighbourIdx a szomszédos cső indexe.
+     * @return a lecsatlakoztatás sikeressége.
+     */
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
-    	/*
         if (pipeInInventory == null)
             pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);		//Miért veszi fel az inventory-jába???
         
@@ -60,7 +72,7 @@ public class Mechanic extends Player
         }
 
         return false;
-        */
+        /*
     	Pipe pipe = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
     	
     	if(pipe != null)
@@ -70,8 +82,12 @@ public class Mechanic extends Player
     	}
     	
     	return false;
+    	*/
     }
 
+    /**A szerelő felvesz egy szabad csővéget.
+     * @return a felvétel sikeressége.
+     */
     public boolean PickUpFreePipeEnd()
     {
         if (pipeInInventory == null)
@@ -91,6 +107,9 @@ public class Mechanic extends Player
         return false;
     }
 
+    /**A szerelő felvesz egy pumpát a ciszternából, ha azon áll.
+     * @return a felvétel sikeressége.
+     */
     public boolean PickUpPump()
     {
         if (pipeInInventory == null)
@@ -110,6 +129,9 @@ public class Mechanic extends Player
         return false;
     }
     
+    /**A szerelő megpróbálja megjavítani a maga alatt lévő elemet.
+     * @return a szerelés sikeressége.
+     */
     public boolean Repair()
     {
         if (GetCurrentPosition().TryRepair())
