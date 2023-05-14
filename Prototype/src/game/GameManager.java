@@ -224,6 +224,9 @@ public class GameManager
         		System.out.println("  " + saboteurs.get(i).GetName() + " " + saboteurs.get(i).GetCurrentPosition().GetId());
         	}
         	
+        	System.out.println("\nSzerelők pontjai: " + mechanicsPoints);
+        	System.out.println("Szabotőrök pontjai: " + saboteursPoints);
+        	
         	System.out.println("\n" + (round + 1) + ". Kör");
 			System.out.println("___________________________________________________________________");
 			
@@ -293,6 +296,7 @@ public class GameManager
     			System.out.println(mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
     			System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
+    			
                 for(int j = 0; j < mechanics.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
                 {
                 	int onTop = mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
@@ -303,13 +307,13 @@ public class GameManager
     			System.out.println("\nLehetőségek:");
     			System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\trepair - Javítás");
-    			System.out.println("\t3 - Szabad csővég felvétele");
-               	System.out.println("\t4 - Pumpa felvétele");
-               	System.out.println("\t5 - Pumpa beépítése a csőbe");
-               	System.out.println("\t6 - Csővég csatlakoztatása");
-               	System.out.println("\t7 X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
-               	System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	System.out.println("\t9 - Cső lyukasztás");
+    			System.out.println("\tfreepipe - Szabad csővég felvétele");
+               	System.out.println("\tpickpump - Pumpa felvétele");
+               	System.out.println("\tdroppump - Pumpa beépítése a csőbe");
+               	System.out.println("\tconnect - Csővég csatlakoztatása");
+               	System.out.println("\tpickpipe X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
+               	System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
+               	System.out.println("\tleak - Cső lyukasztás");
                	System.out.println("\tsticky - Cső ragacsossá tétele");
                	
                	try
@@ -326,28 +330,28 @@ public class GameManager
                         case "repair":
                         	mechanics.get(i).Repair();
                             break;
-                        case "3":
+                        case "freepipe":
                         	mechanics.get(i).PickUpFreePipeEnd();
                             break;
-                        case "4":
+                        case "pickpump":
                         	mechanics.get(i).PickUpPump();
                             break;
-                        case "5":
+                        case "droppump":
                         	mechanics.get(i).BuildPumpIntoPipe();
                             break;
-                        case "6":
+                        case "connect":
                         	mechanics.get(i).ConnectPipe();
                             break;
-                        case "7":
+                        case "pickpipe":
                             neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
                             mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
                             break;
-                        case "8":
+                        case "setpump":
                             int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
                             int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
                             mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
-                        case "9":
+                        case "leak":
                         	mechanics.get(i).Damage();
                         	break;
                         case "sticky":
@@ -378,6 +382,7 @@ public class GameManager
             	System.out.println(saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
                 System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
                 System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
+                
                 for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
                 {
                 	int onTop = saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();

@@ -87,7 +87,6 @@ public class Pump extends ActiveElement implements ISteppable
         if (output.FillWaterTo())
         {
         	SetWaterInside(GetWaterInside() - 1);
-        	output.SetWaterInside(output.GetWaterInside() + 1);
             return true;
         }
 

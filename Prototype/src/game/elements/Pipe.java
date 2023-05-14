@@ -37,6 +37,7 @@ public class Pipe extends Element implements ISteppable
     	stickyTimer = sticky;
     	if(neighbours != null)
     		this.neighbours = neighbours;
+    	GameManager.AddSteppable(this);
     }
 
     /**Visszaadja a neighbours.
