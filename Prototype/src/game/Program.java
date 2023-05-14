@@ -18,6 +18,8 @@ public class Program
      */
     private static void CreateMap()
     {
+    	ArrayList<IElement> map = new ArrayList<IElement>();
+    	
         Cistern cistern1 = new Cistern();
         Cistern cistern2 = new Cistern();
         Cistern cistern3 = new Cistern();
@@ -56,8 +58,6 @@ public class Program
         
         WaterSpring spring1 = new WaterSpring();
         WaterSpring spring2 = new WaterSpring();
-        
-        ArrayList<IElement> map = new ArrayList<IElement>();
         
         cistern1.SetId("cistern1");
         cistern1.AddPipe(pipe19);

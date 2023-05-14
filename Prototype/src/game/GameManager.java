@@ -1,7 +1,6 @@
 package game;
 
 import java.util.*;
-import java.io.*;
 
 import game.elements.*;
 import game.interfaces.*;
@@ -16,7 +15,6 @@ public class GameManager
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();				//A vízforrások listája.
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();						//A szabotőrök listája.
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();						//A szerelők listája.
-    private static Player currentPlayer;															//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
     /**Az aktuális körszám visszaadása.
@@ -33,22 +31,6 @@ public class GameManager
     public static void SetRound(int round)
     {
     	GameManager.round = round;
-    }
-    
-    /**Az aktuális játékos visszaadása.
-     * @return az aktuális játékos.
-     */
-    public Player GetCurrentPlayer()
-    {
-    	return currentPlayer;
-    }
-    
-    /**Az akutális játékos beállítása paraméterben kapott értékre.
-     * @param player a kapott játékos.
-     */
-    public void SetCurrentPlayer(Player player)
-    {
-    	currentPlayer = player;
     }
     
     /**A szerelők ponjainak visszaadása.
@@ -252,6 +234,23 @@ public class GameManager
             SaboteurActions();
             SetRound(GetRound() + 1);
         }
+    	
+    	if(round == Constants.RoundNumber)
+    	{
+    		System.out.print("Gratulálunk a");
+    		System.out.println(saboteursPoints < mechanicsPoints ? "Szerelők nyertek!" : "Szabotőrök nyertek!");
+    		System.out.println("A nyertes csapat tagjai:");
+    		if(saboteursPoints < mechanicsPoints)
+    		{
+    			for(int i = 0; i < mechanics.size(); i++)
+    				System.out.println(mechanics.get(i).GetName());
+    		}
+    		else if(saboteursPoints > mechanicsPoints)
+    		{
+    			for(int i = 0; i < saboteurs.size(); i++)
+    				System.out.println(saboteurs.get(i).GetName());
+    		}
+    	}
     }
     
     /**A forrásokból a szomszédos elemekbe folyatja a vizet.
@@ -366,7 +365,7 @@ public class GameManager
     	}
     }
 
-    /**A szabőtr játékos karakter lépéseinek menüje.
+    /**A szabotőr játékos karakter lépéseinek menüje.
      */
     public static void SaboteurActions()
     {
