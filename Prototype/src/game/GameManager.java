@@ -277,8 +277,12 @@ public class GameManager
     			System.out.println("\t\t\t(Szerelő csapat)\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
     			System.out.println("Szomszédok: ");
-                for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
-                	System.out.print(saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + "\t");
+                for(int j = 0; j < mechanics.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
+                {
+                	int onTop = mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
+                	System.out.print(mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
+                	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
+                }
     			System.out.println("\nLehetőségek:");
     			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\t2 - Javítás");

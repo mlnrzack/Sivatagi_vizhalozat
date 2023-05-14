@@ -12,6 +12,7 @@ public interface IElement
 	boolean FillWaterTo();
 	String GetId();
 	ArrayList<? extends IElement> GetNeighbours();
+	ArrayList<Player> GetPlayers();
 	int GetWaterInside();
 	Pipe PickUpFreePipeEnd();
     Pump PickUpPump();
