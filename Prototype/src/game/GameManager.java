@@ -225,6 +225,21 @@ public class GameManager
     {
     	while (round < Constants.RoundNumber)
         {
+    		System.out.println("A csapatok:");
+        	System.out.println("Szerelők:");
+        	for(int i = 0; i < mechanics.size(); i++)
+        	{
+        		System.out.println("  " + mechanics.get(i).GetName() + " " + mechanics.get(i).GetCurrentPosition().GetId());
+        	}
+        	System.out.println("Szabotőrök:");
+        	for(int i = 0; i < saboteurs.size(); i++)
+        	{
+        		System.out.println("  " + saboteurs.get(i).GetName() + " " + saboteurs.get(i).GetCurrentPosition().GetId());
+        	}
+        	
+        	System.out.println((round + 1) + ". Kör");
+			System.out.println("___________________________________________________________________");
+			
             MechanicActions();
             SaboteurActions();
             SetRound(GetRound() + 1);
@@ -268,12 +283,6 @@ public class GameManager
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
-    			System.out.println("\n A menü használata: "
-    					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
-    					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
-    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");    			
-    			System.out.println((round + 1) + ". Kör");
-    			System.out.println("___________________________________________________________________");
     			System.out.println("\t\t\t(Szerelő csapat)\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
     			System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
@@ -283,6 +292,11 @@ public class GameManager
                 	System.out.print("    - " + j + " " + mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
                 	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
                 }
+                
+                System.out.println("\n A menü használata: "
+    					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
+    					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
+    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");   
     			System.out.println("\nLehetőségek:");
     			System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\t2 - Javítás");
@@ -362,12 +376,6 @@ public class GameManager
 
             while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
             {
-            	System.out.println("\n A menü használata: "
-    					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
-    					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
-    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
-            	System.out.println((round + 1) + ". Kör");
-            	System.out.println("___________________________________________________________________");
             	System.out.println("\t\t\t(Szabotőr csapat)\n" + saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
                 System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
                 System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
@@ -377,6 +385,11 @@ public class GameManager
                 	System.out.print("    - " + j + " " + saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
                 	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
                 }
+                
+                System.out.println("\n A menü használata: "
+    					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
+    					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
+    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
                 System.out.println("\nLehetőségek:");
                 System.out.println("\t1 X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
