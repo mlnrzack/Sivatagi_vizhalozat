@@ -223,6 +223,11 @@ public class GameManager
      */
     public static void StartGame()
     {
+    	System.out.println("\n A menü használata: "
+				+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
+				+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
+				+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n"); 
+    	
     	while (round < Constants.RoundNumber)
         {
     		System.out.println("\nA csapatok:");
@@ -296,10 +301,6 @@ public class GameManager
                 	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
                 }
                 
-                System.out.println("\n A menü használata: "
-    					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
-    					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
-    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");   
     			System.out.println("\nLehetőségek:");
     			System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\trepair - Javítás");
@@ -385,10 +386,6 @@ public class GameManager
                 	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
                 }
                 
-                System.out.println("\n A menü használata: "
-    					+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
-    					+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
-    					+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n");
                 System.out.println("\nLehetőségek:");
                 System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
                 System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
@@ -405,20 +402,15 @@ public class GameManager
                     {
                     	case "move":
                     		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
-                    		if (neighbourIdx < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size() && neighbourIdx >= 0)
-                    		{
-                    			saboteurs.get(i).Move(neighbourIdx);
-                    			ActionExecuted();
-                    		}
+                   			saboteurs.get(i).Move(neighbourIdx);
                     		break;
                         case "2":
-                        	if (saboteurs.get(i).Damage() == true)
-                        		ActionExecuted();
+                        	saboteurs.get(i).Damage();
                             break;
                         case "8":
                         	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
-                        	int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-                        	saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                            int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+                            saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
                         case "sticky":
                         	saboteurs.get(i).SetStickyPipe();
