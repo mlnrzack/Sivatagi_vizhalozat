@@ -9,15 +9,15 @@ import game.players.*;
 
 public class GameManager
 {
-	private static int round = 0;
-	private static int mechanicsPoints = 0;
-	private static int saboteursPoints = 0;
-    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
-    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
-    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
-    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
-    private static Player currentPlayer;
-    private static int playerActionCountInCurrentRound = 0;
+	private static int round = 0;																	//A kör száma.
+	private static int mechanicsPoints = 0;															//A szerelők pontszáma.
+	private static int saboteursPoints = 0;															//A szabotőrök pontszáma.
+    private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();					//A léptethetők listája(ciszternák, csövek, pumpák).
+    private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();				//A vízforrások listája.
+    private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();						//A szabotőrök listája.
+    private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();						//A szerelők listája.
+    private static Player currentPlayer;															//Az aktuális játékos.
+    private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
     /**Az aktuális körszám visszaadása.
      * @return az aktuális körszám.
