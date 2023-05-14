@@ -111,7 +111,8 @@ public abstract class ActiveElement extends Element
 		if (neighbours.size() < Constants.MaxNeighboursOfActiveElements)
 		{
 			pipe.AddNeighbour(this);
-
+			this.AddPipe(pipe);
+			
 			return true;
 		}
 

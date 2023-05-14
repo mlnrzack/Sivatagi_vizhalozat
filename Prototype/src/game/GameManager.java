@@ -206,13 +206,13 @@ public class GameManager
     public static void StartGame()
     {
     	System.out.println("\n A menü használata: "
-				+ "\n A kívánt menüpont kiválasztása a hozzátartozó szám leírásával, szóköz, "
+				+ "\n A kívánt menüpont kiválasztása a hozzátartozó parancs leírásával,"
 				+ "\n ha van további feltétel(a menüleírásban X és Y jelzi),"
 				+ "\n akkor a szóköz után, elemenként szóközzel elválasztva írandó.\n"); 
     	
     	while (round < Constants.RoundNumber)
         {
-    		System.out.println("\nA csapatok:");
+    		System.out.println("\nCSAPATOK");
         	System.out.println("Szerelők:");
         	for(int i = 0; i < mechanics.size(); i++)
         	{
@@ -307,20 +307,20 @@ public class GameManager
     			System.out.println("\nLehetőségek:");
     			System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
     			System.out.println("\trepair - Javítás");
-    			System.out.println("\tfreepipe - Szabad csővég felvétele");
-               	System.out.println("\tpickpump - Pumpa felvétele");
+    			System.out.println("\tpickfreepipe - Szabad csővég felvétele");
+               	System.out.println("\tpicknewpump - Pumpa felvétele");
                	System.out.println("\tdroppump - Pumpa beépítése a csőbe");
-               	System.out.println("\tconnect - Csővég csatlakoztatása");
-               	System.out.println("\tpickpipe X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
+               	System.out.println("\tconnectpipe - Csővég csatlakoztatása");
+               	System.out.println("\tpickneighbour X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
                	System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	System.out.println("\tleak - Cső lyukasztás");
-               	System.out.println("\tsticky - Cső ragacsossá tétele");
+               	System.out.println("\tleakpipe - Cső lyukasztás");
+               	System.out.println("\tstickypipe - Cső ragacsossá tétele");
                	
                	try
                	{
                		Scanner reader = new Scanner(System.in);
                    	String userinput = reader.nextLine();
-                   	
+                   	System.out.println(userinput);
                    	switch (userinput.split(" ")[0])
                    	{
                    		case "move":
@@ -330,19 +330,19 @@ public class GameManager
                         case "repair":
                         	mechanics.get(i).Repair();
                             break;
-                        case "freepipe":
+                        case "pickfreepipe":
                         	mechanics.get(i).PickUpFreePipeEnd();
                             break;
-                        case "pickpump":
+                        case "picknewpump":
                         	mechanics.get(i).PickUpPump();
                             break;
                         case "droppump":
                         	mechanics.get(i).BuildPumpIntoPipe();
                             break;
-                        case "connect":
+                        case "connectpipe":
                         	mechanics.get(i).ConnectPipe();
                             break;
-                        case "pickpipe":
+                        case "pickneighbour":
                             neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
                             mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
                             break;
@@ -351,10 +351,10 @@ public class GameManager
                             int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
                             mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
-                        case "leak":
+                        case "leakpipe":
                         	mechanics.get(i).Damage();
                         	break;
-                        case "sticky":
+                        case "stickypipe":
                         	mechanics.get(i).SetStickyPipe();
                         	break;
                         default:
@@ -392,10 +392,10 @@ public class GameManager
                 
                 System.out.println("\nLehetőségek:");
                 System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-                System.out.println("\t2 - Maga alatt lévő cső lyukasztása");
-                System.out.println("\t8 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                System.out.println("\tsticky - A cső ragacsossá tétele maga alatt");
-                System.out.println("\tslippery - A cső csúszóssá tétele");
+                System.out.println("\tleakpipe - Maga alatt lévő cső lyukasztása");
+                System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
+                System.out.println("\tstickypipe - A cső ragacsossá tétele maga alatt");
+                System.out.println("\tslipperypipe - A cső csúszóssá tétele");
                 
                 try
                	{
@@ -408,18 +408,18 @@ public class GameManager
                     		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
                    			saboteurs.get(i).Move(neighbourIdx);
                     		break;
-                        case "2":
+                        case "leakpipe":
                         	saboteurs.get(i).Damage();
                             break;
-                        case "8":
+                        case "setpump":
                         	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
                             int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
                             saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
-                        case "sticky":
+                        case "stickypipe":
                         	saboteurs.get(i).SetStickyPipe();
                         	break;
-                        case "slippery":
+                        case "slipperypipe":
                         	saboteurs.get(i).SetSlipperyPipe();
                         	break;
                         default:
