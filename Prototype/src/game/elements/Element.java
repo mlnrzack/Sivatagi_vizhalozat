@@ -75,7 +75,7 @@ public abstract class Element implements IElement
      */
     public boolean FillWaterTo()
     {
-        if (waterInside <= Constants.PipeCapacity)
+        if (waterInside < Constants.PipeCapacity)
         {
             waterInside++;
 
@@ -94,7 +94,6 @@ public abstract class Element implements IElement
         waterInside = 0;
     }
 
-    
     public abstract boolean AcceptPlayer(Player player);
     public abstract Pipe DisconnectNeighbourPipe(int neighbourIdx);
     public abstract ArrayList<? extends IElement> GetNeighbours();

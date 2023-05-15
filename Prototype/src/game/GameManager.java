@@ -187,8 +187,7 @@ public class GameManager
     {
     	return waterSprings;
     }
-    
-    
+        
     /**A térképen lévő vízforrások listájának beállítása adott listából. 
      * @param waterSprings az adott lista.
      */
@@ -196,7 +195,6 @@ public class GameManager
     {
     	GameManager.waterSprings = waterSprings;
     }
-    
     
     /**A térképre adott vízforrás felhelyezése.
      * @param waterspring az adott vízforrás.
@@ -207,7 +205,6 @@ public class GameManager
     	return waterSprings.add(waterspring);
     }
     
-    
     /**A térképről adott vízforrás levétele.
      * @param waterspring az adott vízforrás.
      * @return levétel sikeressége.
@@ -217,7 +214,6 @@ public class GameManager
     	return waterSprings.remove(waterspring);
     }
     
-    
     /**Adott karakter körbeli lépésszámának átadása más osztályoknak.
      * @return adott karakter lépésszáma
      */
@@ -225,7 +221,6 @@ public class GameManager
     {
     	return playerActionCountInCurrentRound;
     }
-    
     
     /**Adott karakter körbeli lépésszámának beállítása paraméterként kapott értékre.
 	*/
@@ -377,6 +372,7 @@ public class GameManager
     	for(int i = 0; i < waterSprings.size(); i++)
     	{
     		waterSprings.get(i).FillNeighourPipes();
+    		System.out.println(waterSprings.get(i).GetId() + ": " + waterSprings.get(i).GetWaterInside());
     	}
     }
     
@@ -385,9 +381,10 @@ public class GameManager
      */
     public static void StepSteppables()
     {
-    	for(int i = 0; i < steppables.size(); i++)
+    	for(int i = steppables.size() - 1; i > 0; i--)
     	{
         	steppables.get(i).Step();
+        	System.out.println(steppables.get(i).GetId() + ": " + steppables.get(i).GetWaterInside());
     	}
     }
     
