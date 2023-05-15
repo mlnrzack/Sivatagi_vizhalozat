@@ -93,8 +93,7 @@ public class Pipe extends Element implements ISteppable
      */
     public void SetSticky()
     {
-    	stickyTimer = 1;
-    	//stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound + 1);
     }
     
     /**Visszaadja, hogy sikerült-e lerakni a pumpát a csőre.
@@ -208,7 +207,7 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean AcceptPlayer(Player player)
     {
-        if (GetPlayers().size() <= Constants.AcceptedPlayersInPipe)
+        if (GetPlayers().size() < Constants.AcceptedPlayersInPipe)
         {
         	if(SlipperyPipe(player))
         	{

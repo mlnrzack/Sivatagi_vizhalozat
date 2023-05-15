@@ -60,6 +60,7 @@ public class Pump extends ActiveElement implements ISteppable
      */
     private void GoWrong()
     {
+    	System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
         Desert.IncreaseWaterFromPipelineNetwork(GetWaterInside());
         SetWaterInside(0);
     }
@@ -104,20 +105,13 @@ public class Pump extends ActiveElement implements ISteppable
     {
     	if(age >= Constants.PumpErrorProbability)
     	{
+    		age = 0;
     		GoWrong();
-    		System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
             return true;
     	}
+    	
     	age += new Random().nextInt(10);
     	System.out.println(this.GetId() + " kora: " + age);
-    	/*
-        if (new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
-        {
-            GoWrong();
-            System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
-            return true;
-        }
-    	 */
         return false;
     }
 
@@ -130,6 +124,7 @@ public class Pump extends ActiveElement implements ISteppable
         if (broken == true)
         {
             broken = false;
+            age = 0;
             System.out.println("Pumpa javítása sikeres volt.\n");
             return true;
         }
