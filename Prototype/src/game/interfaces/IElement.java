@@ -14,6 +14,7 @@ public interface IElement
 	String GetId();
 	ArrayList<? extends IElement> GetNeighbours();
 	ArrayList<Player> GetPlayers();
+	String GetType();
 	int GetWaterInside();
 	Pipe PickUpFreePipeEnd();
     Pump PickUpPump();

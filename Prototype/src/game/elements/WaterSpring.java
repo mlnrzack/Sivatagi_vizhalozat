@@ -22,4 +22,9 @@ public class WaterSpring extends ActiveElement
     		this.neighbours.get(i).FillWaterTo();
         }
     }
+    
+    public String GetType()
+    {
+    	return "spring";
+    }
 }

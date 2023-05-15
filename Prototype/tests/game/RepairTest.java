@@ -22,5 +22,4 @@ public class RepairTest extends TestBase
 		mechanic.Repair();
 		assertFalse("A cső nem is volt lyukas", pipe2.GetLeaking());
 	}
-
 }

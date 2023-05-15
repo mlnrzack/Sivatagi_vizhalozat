@@ -16,7 +16,7 @@ public class Program
     
     /**Egy statikus térképet létrehozó függvény.
      */
-    private static void CreateMap()
+    public static void CreateMap()
     {
     	ArrayList<IElement> map = new ArrayList<IElement>();
     	
@@ -254,6 +254,12 @@ public class Program
 
         GameManager.SetMap(map);
         
+        var mechanic = new Mechanic();
+        mechanic.SetName("mec");
+        mechanic.SetCurrentPosition(cistern3);
+        cistern3.AcceptPlayer(mechanic);
+        
+        /*
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
@@ -304,6 +310,6 @@ public class Program
     	catch(Exception e)
     	{
     		System.out.println("Hibas bemenet!\n" + e);
-    	}
+    	}*/
     }
 }

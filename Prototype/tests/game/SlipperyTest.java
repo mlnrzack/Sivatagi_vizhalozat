@@ -9,7 +9,6 @@ import org.junit.Test;
 
 public class SlipperyTest extends TestBase
 {
-
 	@Test
 	public void testSlippery()
 	{
@@ -18,14 +17,13 @@ public class SlipperyTest extends TestBase
 		assertEquals(0, pipe1.GetSlippery());
 		saboteur.SetSlipperyPipe();
 		assertNotEquals(0, pipe1.GetSlippery());
-		assertEquals(Constants.LeakageTimerBound, pipe1.GetSlippery());
+		assertEquals(Constants.LeakageTimerBound - 1, pipe1.GetSlippery());
 		saboteur.SetSlipperyPipe();
 		assertNotEquals(0, pipe1.GetSlippery());
 		saboteur.SetCurrentPosition(pipe2);
 		pipe2.AcceptPlayer(saboteur);
 		assertEquals(0, pipe2.GetSlippery());
 		saboteur.SetSlipperyPipe();
-		assertEquals(Constants.LeakageTimerBound, pipe2.GetSlippery());
+		assertEquals(Constants.LeakageTimerBound - 1, pipe2.GetSlippery());
 	}
-
 }

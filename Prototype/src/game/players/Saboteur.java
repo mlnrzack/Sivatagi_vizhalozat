@@ -12,6 +12,11 @@ public class Saboteur extends Player
         GameManager.AddSaboteur(this);
     }
     
+    public String GetType()
+    {
+    	return "saboteur";
+    }
+    
     /**A szabotőr megpróbálja csúszóssá tenni az alatta lévő csövet
      * @return a csúszóssátétel sikeressége.
      */

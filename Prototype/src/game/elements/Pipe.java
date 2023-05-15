@@ -41,6 +41,7 @@ public class Pipe extends Element implements ISteppable
     		this.neighbours = neighbours;
     	this.SetId(id);
     	GameManager.AddSteppable(this);
+    	GameManager.AddPipe(this);
     }
 
     /**Visszaadja a neighbours.
@@ -312,5 +313,10 @@ public class Pipe extends Element implements ISteppable
     	}
 
     	return false;
+    }
+    
+    public String GetType()
+    {
+    	return "pipe";
     }
 }

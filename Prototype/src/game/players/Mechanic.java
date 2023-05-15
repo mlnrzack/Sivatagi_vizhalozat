@@ -16,6 +16,14 @@ public class Mechanic extends Player
         GameManager.AddMechanic(this);
     }
    
+    /**
+     * @return
+     */
+    public String GetType()
+    {
+    	return "mechanic";
+    }
+    
     /**Egy a szerelőnél lévő pumpa beépítése csőbe.
      * @return a beépíétés sikeressége.
      */

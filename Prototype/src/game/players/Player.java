@@ -113,4 +113,8 @@ public abstract class Player
     	System.out.println("A " + this.GetName() + " játékos rálépett egy ragacsos csőre. Kimarad a köréből.");
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
+
+    /**
+     */
+    public abstract String GetType();
 }
