@@ -117,14 +117,20 @@ public class Pump extends ActiveElement implements ISteppable
      */
     private boolean GettingOlder()
     {
-    	if((age >= Constants.PumpErrorProbability) && !broken)//new Random().nextDouble() < Constants.PumpErrorProbability && !broken)
+    	if((age >= Constants.PumpErrorProbability) && !broken)
     	{
     		GoWrong();
             return true;
     	}
     	
     	if(age < Constants.PumpErrorProbability)
-    		age += new Random().nextInt(10);
+    	{
+    		for(int i = 0; i < GameManager.GetPumps().size(); i++)
+    		{
+    			if(this.GetId().compareTo("pump" + (i + 1)) == 0)
+    				age += ((i % 5) + 1) + 4;
+    		}
+    	}
     	
         return false;
     }

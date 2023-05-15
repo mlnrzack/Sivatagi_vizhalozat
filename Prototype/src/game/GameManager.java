@@ -180,6 +180,11 @@ public class GameManager
     	return cisterns.add(cistern);
     }
     
+    public static ArrayList<Pump> GetPumps()
+    {
+    	return pumps;
+    }
+    
     /**A térképen lévő vízforrások listájának átadása más osztályok felé.
      * @return a vízforrások listája.
      */

@@ -3,7 +3,6 @@ package game;
 public class Constants
 {
 	public static final int PumpErrorProbability = 150;				//a pumpa elromlásának valószínűsége
-	//public static final double PumpErrorProbability = 0.002;				//a pumpa elromlásának valószínűsége
     public static final int PipeCapacity = 1;						//a cső térfogata
     public static final int PumpWaterCapacity = 1;					//a pumpa kapacitása, mennyi vizet képes továbbítani 
     public static final int MaxNeighboursOfActiveElements = 4;		//az aktív elemekhez csatlakoztatott csövek maximum száma 
