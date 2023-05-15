@@ -9,11 +9,12 @@ import game.elements.*;
 import game.players.*;
 
 public class TestBase {
-
+	GameManager gamem = new GameManager();
 	Cistern cistern = new Cistern();
 	Pipe pipe1 = new Pipe();
 	Pipe pipe2 = new Pipe();
 	Pump pump = new Pump();
+	Pump pump2 = new Pump();
 	Saboteur saboteur = new Saboteur();
 	WaterSpring spring = new WaterSpring();
 	Mechanic mechanic = new Mechanic();
