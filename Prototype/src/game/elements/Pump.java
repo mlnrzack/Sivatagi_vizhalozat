@@ -29,12 +29,16 @@ public class Pump extends ActiveElement implements ISteppable
     {
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
+        var isBroken = false;
+        
+        if(!broken)
+        {
+        	if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
+            if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
+            isBroken = GettingOlder();
+        }
 
-        if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
-        if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
-        //if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
-
-        return GettingOlder() || pumpWaterToOutputDone || pumpWaterFromInputDone;
+        return broken || isBroken || pumpWaterToOutputDone || pumpWaterFromInputDone;
     }
 
     /**Ha megfelelő indexeket kap a függvény,

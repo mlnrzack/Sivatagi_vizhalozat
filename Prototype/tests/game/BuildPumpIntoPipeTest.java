@@ -9,9 +9,10 @@ public class BuildPumpIntoPipeTest extends TestBase
      * Egy szerelő beépít egy pumpát egy cső közepébe.
      */
     @Test
-    public void testTrySetPump()
+    public void testTryBuildPump()
     {
         mechanic.SetCurrentPosition(pipe1);
+        pipe1.AcceptPlayer(mechanic);
         
         if (pipe1.TryBuildPumpInto(pump2))
         {

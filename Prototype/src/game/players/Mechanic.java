@@ -63,7 +63,7 @@ public class Mechanic extends Player
     public boolean DisconnectNeighbourPipe(int neighbourIdx)
     {
         if (pipeInInventory == null)
-            pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);		//Miért veszi fel az inventory-jába???
+            pipeInInventory = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
         
         if (pipeInInventory != null)
         {
@@ -132,7 +132,7 @@ public class Mechanic extends Player
         return false;
     }
     
-    /**
+    /**teszthez szükséges metódus
      * @param pipe
      */
     public void SetPipeInInventory(Pipe pipe)
@@ -140,7 +140,7 @@ public class Mechanic extends Player
     	this.pipeInInventory = pipe;
     }
     
-    /**
+    /**teszthez szükséges metódus
      * @param pump
      */
     public void SetPumpInInventory(Pump pump)
@@ -148,16 +148,14 @@ public class Mechanic extends Player
     	this.pumpInInventory = pump;
     }
     
-    /**
-     * @return
+    /**teszthez szükséges metódus
      */
     public Pump GetPumpInInventory()
     {
     	return pumpInInventory;
     }
     
-    /**
-     * @return
+    /**teszthez szükséges metódus
      */
     public Pipe GetPipeInInventory()
     {

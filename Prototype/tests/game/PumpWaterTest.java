@@ -4,15 +4,16 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PumpWaterTest extends TestBase {
-    /**
-     * 8.2.7
+public class PumpWaterTest extends TestBase
+{
+    /**8.2.7
      * A pumpák minden elemi akció után pumpálnak a beállításuk alapján.
      */
     @Test
     public void testWaterPump()
     {
         mechanic.SetCurrentPosition(pump);
+        pump.AcceptPlayer(mechanic);
         spring.FillNeighourPipes();
         pump.TrySetInputOutput(0, 1);
         pipe1.Step();

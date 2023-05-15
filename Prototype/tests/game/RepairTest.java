@@ -4,11 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class RepairTest extends TestBase{
-
+public class RepairTest extends TestBase
+{
 	@Test
-	public void testRepair() {
+	public void testRepair()
+	{
 		mechanic.SetCurrentPosition(pipe1);
+		pipe1.AcceptPlayer(mechanic);
 		assertFalse("Semmi baja a csőnek", pipe1.GetLeaking());
 		mechanic.Damage();
 		assertTrue("Sikeresen megrongálta a csövet!", pipe1.GetLeaking());
@@ -16,6 +18,7 @@ public class RepairTest extends TestBase{
 		mechanic.Repair();
 		assertFalse("Megjavította a rossz csövet", pipe1.GetLeaking());
 		mechanic.SetCurrentPosition(pipe2);
+		pipe2.AcceptPlayer(mechanic);
 		mechanic.Repair();
 		assertFalse("A cső nem is volt lyukas", pipe2.GetLeaking());
 	}

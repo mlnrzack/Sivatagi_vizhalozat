@@ -252,6 +252,8 @@ public class Program
         spring2.AddPipe(pipe2);
         map.add(spring2);
 
+        GameManager.SetMap(map);
+        
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");

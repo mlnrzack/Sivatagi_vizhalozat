@@ -109,8 +109,8 @@ public abstract class Player
      */
     public void Stuck()
     {
-    	//todo leragad a játékos
     	//Itt csak az adott köréből zárja ki a játékost, ha kell még további körökből is kizárni, akkor azt valahogy le kellene tárolni kb
+    	System.out.println("A " + this.GetName() + " játékos rálépett egy ragacsos csőre. Kimarad a köréből.");
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
 }
