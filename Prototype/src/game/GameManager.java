@@ -12,6 +12,7 @@ public class GameManager
 	private static int round = 0;
 	private static int mechanicsPoints = 0;
 	private static int saboteursPoints = 0;
+    private static ArrayList<IElement> map = new ArrayList<IElement>();
     private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
@@ -34,7 +35,15 @@ public class GameManager
     {
     	GameManager.round = round;
     }
-    
+
+    /**
+     *
+     * @return Visszatér a beolvasott pálya összes elemével
+     */
+    public static ArrayList<IElement> GetMap() {
+        return map;
+    }
+
     /**Az aktuális játékos visszaadása.
      * @return az aktuális játékos.
      */
@@ -216,7 +225,6 @@ public class GameManager
         FireSourceActions();
         StepSteppables();
     }
-
 
     /**A játékot menetéért felelős függvény.
      * A modell adott lejátszott körszámig játszatja a játékot.
@@ -415,5 +423,13 @@ public class GameManager
                 }
             }
         }
+    }
+    public static void print() {
+        String className = new Exception().getStackTrace()[1].getClassName();
+        String methodName1 = new Exception().getStackTrace()[1].getMethodName();
+        int depth1 = new Exception().getStackTrace().length;
+        String filler = "\t".repeat(depth1 - 3);
+
+        System.out.println(filler + className + " " + methodName1);
     }
 }
