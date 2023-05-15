@@ -19,11 +19,11 @@ public class Mechanic extends Player
     /**Egy a szerelőnél lévő pumpa beépítése csőbe.
      * @return a beépíétés sikeressége.
      */
-    public boolean BuildPumpIntoPipe(int piid, int puid)
+    public boolean BuildPumpIntoPipe()
     {
         if (pumpInInventory != null)
         {
-            if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory, piid, puid))
+            if (GetCurrentPosition().TryBuildPumpInto(pumpInInventory))
             {
                 pumpInInventory = null;
 

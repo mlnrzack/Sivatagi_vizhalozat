@@ -161,11 +161,11 @@ public class Pump extends ActiveElement implements ISteppable
      * @param pipe a létrehozandó cső
      * @return a létrehozás sikeressége
      */
-    public boolean GetBuildedInto(Pipe pipe, int piid, int puid)
+    public boolean GetBuildedInto(Pipe pipe)
     {
         // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
-    	String pipeId = "pipe" + piid;
-    	String pumpId = "pump" + piid;
+    	String pipeId = "pipe" + GameManager.TryPipeIdSet();
+    	String pumpId = "pump" + GameManager.TryPumpIdSet();
     	
         Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
         //egyik oladli szomszéd elem letárolási

@@ -449,7 +449,7 @@ public class GameManager
                         case "droppump":
                         	//int piid = TryPipeIdSet();
                         	//int puid = TryPumpIdSet();
-                        	mechanics.get(i).BuildPumpIntoPipe(TryPipeIdSet(), TryPumpIdSet());
+                        	mechanics.get(i).BuildPumpIntoPipe();
                             break;
                         case "connectpipe":
                         	mechanics.get(i).ConnectPipe();

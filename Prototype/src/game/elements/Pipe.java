@@ -101,9 +101,9 @@ public class Pipe extends Element implements ISteppable
      * @param lerakni kívánt pumpa
      * @return pumpa lerakásának sikeressége.
      */
-    public boolean TryBuildPumpInto(Pump pump, int piid, int puid)
+    public boolean TryBuildPumpInto(Pump pump)
     {
-    	return pump.GetBuildedInto(this, piid, puid);
+    	return pump.GetBuildedInto(this);
     }
 
     /**Lyukas cső esetén befoltozza a csövet, majd beállítja a noLeakageTimer értékét.
