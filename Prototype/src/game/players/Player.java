@@ -114,7 +114,13 @@ public abstract class Player
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
 
+    public void Pass()
+    {
+    	System.out.println(this.GetName() + " játékos passzolt.");
+    	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
+    }
+    
     /**
-     */
+     */    
     public abstract String GetType();
 }

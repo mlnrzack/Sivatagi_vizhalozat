@@ -421,6 +421,7 @@ public class GameManager
                	System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
                	System.out.println("\tleakpipe - Cső lyukasztás");
                	System.out.println("\tstickypipe - Cső ragacsossá tétele");
+               	System.out.println("\tpass - A kör kihagyása");
                	
                	try
                	{
@@ -465,6 +466,8 @@ public class GameManager
                         case "stickypipe":
                         	mechanics.get(i).SetStickyPipe();
                         	break;
+                        case "pass":
+                        	mechanics.get(i).Pass();
                         default:
                             break;
                    	}
@@ -506,6 +509,7 @@ public class GameManager
                 System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
                 System.out.println("\tstickypipe - A cső ragacsossá tétele maga alatt");
                 System.out.println("\tslipperypipe - A cső csúszóssá tétele");
+                System.out.println("\tpass - A kör kihagyása");
                 
                 try
                	{
@@ -532,6 +536,8 @@ public class GameManager
                         case "slipperypipe":
                         	saboteurs.get(i).SetSlipperyPipe();
                         	break;
+                        case "pass":
+                        	mechanics.get(i).Pass();
                         default:
                         	break;
                     }
