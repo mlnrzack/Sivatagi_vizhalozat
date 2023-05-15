@@ -2,10 +2,6 @@ package game;
 
 import org.junit.Test;
 
-import javax.sound.midi.Soundbank;
-
-import java.sql.SQLOutput;
-
 import static org.junit.Assert.*;
 public class TrySetPumpTest extends TestBase{
     /**

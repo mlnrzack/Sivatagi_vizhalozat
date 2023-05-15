@@ -10,6 +10,7 @@ public class Pump extends ActiveElement implements ISteppable
     private Pipe input = null;			//a pumpa bemeneti csöve
     private Pipe output = null;			//a pumpa kimeneti csöve
     private boolean broken = false;		//elromlott pumpa tulajdonság
+    private int age = 0;
     
     /**Pump osztály konstruktora,
      * amely meghívja a GameManager osztály AddSteppables függvényét, ezzel hozzáadva magát a léptethető elemekhez.
@@ -101,13 +102,22 @@ public class Pump extends ActiveElement implements ISteppable
      */
     private boolean GettingOlder()
     {
-        if (0.1 < Constants.PumpErrorProbability)//new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
+    	if(age >= Constants.PumpErrorProbability)
+    	{
+    		GoWrong();
+    		System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
+            return true;
+    	}
+    	age += new Random().nextInt(10);
+    	System.out.println(this.GetId() + " kora: " + age);
+    	/*
+        if (new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
         {
             GoWrong();
-
+            System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
             return true;
         }
-
+    	 */
         return false;
     }
 

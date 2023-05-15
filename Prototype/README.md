@@ -1,1 +1,1 @@
-"# Sivatagi_vizhalozat_skeleton" 
+"# Sivatagi_vizhalozat" 

@@ -189,16 +189,6 @@ public class GameManager
     	playerActionCountInCurrentRound++;
     }
     
-    /**Ha sikesen végrehajt egy játékos egy elemi akciót, akkor ez a függvény hívódik meg.
-     * Növeli az adott játékos lépésszámát, valamint lépteti a vizet a rendszerben.
-     */
-    public static void ActionExecuted()
-    {
-    	IncreasePlayerAction();
-        FireSourceActions();
-        StepSteppables();
-    }
-    
     /**A játékot menetéért felelős függvény.
      * A modell adott lejátszott körszámig játszatja a játékot.
      * Ha minden karakter meglépte adott körre vonatkozó lépéseit, akkor növelődik.
@@ -254,6 +244,17 @@ public class GameManager
     				System.out.println(saboteurs.get(i).GetName());
     		}
     	}
+    }
+    
+
+    /**Ha sikesen végrehajt egy játékos egy elemi akciót, akkor ez a függvény hívódik meg.
+     * Növeli az adott játékos lépésszámát, valamint lépteti a vizet a rendszerben.
+     */
+    public static void ActionExecuted()
+    {
+    	IncreasePlayerAction();
+        FireSourceActions();
+        StepSteppables();
     }
     
     /**A forrásokból a szomszédos elemekbe folyatja a vizet.
@@ -320,7 +321,7 @@ public class GameManager
                	{
                		Scanner reader = new Scanner(System.in);
                    	String userinput = reader.nextLine();
-                   	System.out.println(userinput);
+                   	
                    	switch (userinput.split(" ")[0])
                    	{
                    		case "move":

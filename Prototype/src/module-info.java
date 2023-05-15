@@ -5,7 +5,7 @@
  * @author molna
  *
  */
-module Sivatagi_vizhalozat
+module Sivatagi_vizhalozat 
 {
 	requires junit;
 }

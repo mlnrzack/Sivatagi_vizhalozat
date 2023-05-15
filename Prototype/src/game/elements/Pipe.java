@@ -78,8 +78,7 @@ public class Pipe extends Element implements ISteppable
      */
     public void SetSlippery()
     {
-    	slipperyTimer = 1;
-    	//slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound + 1);
     }
 
     /**Visszaadja a stickyTimer értékét.
@@ -115,8 +114,7 @@ public class Pipe extends Element implements ISteppable
         if (leaking)
         {
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
-        	//int rand = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
-        	noLeakageTimer = 1;
+        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound + 1);
         	leaking = false;
         	System.out.println("Cső javítása sikeres volt." + noLeakageTimer + " ennyi ideig nem lyukasztható újra.\n");
             return true;
