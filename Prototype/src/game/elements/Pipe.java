@@ -15,25 +15,25 @@ public class Pipe extends Element implements ISteppable
     private int stickyTimer = 0;								//ragadós-e timere
 
     private  int _id = 0;
-    private static ArrayList<Integer> PipeIDs = new ArrayList<>();
+    //public static ArrayList<Integer> PipeIDs = new ArrayList<>();
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
     public Pipe(){
-        int max = PipeIDs.get(0);
-        for (var item: PipeIDs) {
-            if (item > max) max = item;
-        }
-        _id = max+1;
-        PipeIDs.add(_id);
-        typeString = "Pipe";
+//        int max = PipeIDs.get(0);
+//        for (var item: PipeIDs) {
+//            if (item > max) max = item;
+//        }
+//        _id = max+1;
+//        PipeIDs.add(_id);
+//        typeString = "Pipe";
     }
-    public Pipe(int id)
-    {
-        _id = id;
-        PipeIDs.add(id);
-        typeString = "Pipe";
-
-    }
+//    public Pipe(int id)
+//    {
+//        _id = id;
+//        PipeIDs.add(id);
+//        typeString = "Pipe";
+//
+//    }
     
     public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
     {

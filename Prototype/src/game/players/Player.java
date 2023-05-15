@@ -6,6 +6,7 @@ import game.interfaces.*;
 public abstract class Player
 {
     private String name;
+    protected String typeString = "player";
     private IElement currentPosition;
 
     public String GetName()
@@ -27,7 +28,8 @@ public abstract class Player
     {
     	currentPosition = newPos;
     }
-    
+
+    public String GetType() {return typeString;}
     public boolean Move(int neighbourIdx)
     {
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)

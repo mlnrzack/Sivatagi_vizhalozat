@@ -2,6 +2,7 @@ package game;
 
 import java.util.*;
 
+import game.IO.command_interpreter;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
@@ -10,13 +11,15 @@ public class Program
 {
     public static void main(String[] args)
     {
-        CreateMap();
-        GameManager.StartGame();
+        //CreateMap();
+        //GameManager.StartGame();
+        command_interpreter interpreter = new command_interpreter();
+        interpreter.getInput();
     }
     
     /**Egy statikus térképet létrehozó függvény.
      */
-    private static void CreateMap()
+    public static void CreateMap()
     {
         Cistern cistern1 = new Cistern();
         Cistern cistern2 = new Cistern();

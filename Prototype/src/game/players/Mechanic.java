@@ -3,16 +3,23 @@ package game.players;
 import game.*;
 import game.elements.*;
 
+import java.lang.reflect.Type;
+
 public class Mechanic extends Player
 {	
     private Pipe pipeInInventory = null;
     private Pump pumpInInventory = null;
-    
+    private final String typeString= "mechanic";
+
     public Mechanic() 
     {
         GameManager.AddMechanic(this);
     }
-   
+
+    @Override
+    public String GetType(){
+        return typeString;
+    }
     public boolean BuildPumpIntoPipe()
     {
         if (pumpInInventory != null)

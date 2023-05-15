@@ -8,7 +8,12 @@ public class Saboteur extends Player
     {
         GameManager.AddSaboteur(this);
     }
-    
+    private final String typeString= "saboteur";
+
+    @Override
+    public String GetType(){
+        return typeString;
+    }
     public boolean SetSlipperyPipe()
     {
     	return GetCurrentPosition().TrySetSlippery();

@@ -8,26 +8,26 @@ public class WaterSpring extends ActiveElement
 {
 
     private int _id = 0;
-    private static ArrayList<Integer> WaterSpringIDs = new ArrayList<>();
+    public static ArrayList<Integer> WaterSpringIDs = new ArrayList<>();
     public WaterSpring() 
     {
-        int max = WaterSpringIDs.get(0);
-        for (var item: WaterSpringIDs) {
-            if (item > max) max = item;
-        }
-        _id = max+1;
-        WaterSpringIDs.add(_id);
-        typeString = "WaterSpring";
+//        int max = WaterSpringIDs.get(0);
+//        for (var item: WaterSpringIDs) {
+//            if (item > max) max = item;
+//        }
+//        _id = max+1;
+//        WaterSpringIDs.add(_id);
+//        typeString = "WaterSpring";
 
         GameManager.AddWaterSpring(this);
     }
 
-    public WaterSpring(int id){
-        _id = id;
-        WaterSpringIDs.add(id);
-        typeString = "WaterSpring";
-
-    }
+//    public WaterSpring(int id){
+//        _id = id;
+//        WaterSpringIDs.add(id);
+//        typeString = "WaterSpring";
+//
+//    }
 
     public void FillNeighourPipes()
     {    	
