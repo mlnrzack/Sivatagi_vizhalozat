@@ -56,15 +56,6 @@ public class Pump extends ActiveElement implements ISteppable
         return false;
     }
 
-    /**A vizet a sivatagba engedi és a víztartályt lenullázza.
-     */
-    private void GoWrong()
-    {
-    	System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
-        Desert.IncreaseWaterFromPipelineNetwork(GetWaterInside());
-        SetWaterInside(0);
-    }
-
     /**Ha van szabad kapacitása a tartálynak.
      * Ha a bejövő mennyiség nem nulla, akkor a bejövőn a vízmennyiséget csökkentjük annyival,
      * amennyivel amennyivel a puffertartály tartalmát növeltük. 
@@ -103,18 +94,28 @@ public class Pump extends ActiveElement implements ISteppable
      */
     private boolean GettingOlder()
     {
-    	if(age >= Constants.PumpErrorProbability)
+    	if((age >= Constants.PumpErrorProbability) && !broken)//new Random().nextDouble() < Constants.PumpErrorProbability && !broken)
     	{
-    		age = 0;
     		GoWrong();
             return true;
     	}
     	
-    	age += new Random().nextInt(10);
-    	System.out.println(this.GetId() + " kora: " + age);
+    	if(age < Constants.PumpErrorProbability)
+    		age += new Random().nextInt(10);
+    	
         return false;
     }
 
+    /**A vizet a sivatagba engedi és a víztartályt lenullázza.
+     */
+    private void GoWrong()
+    {
+    	System.out.println("A " + this.GetId() + " elromlott, javításra szorul!");
+    	broken = true;
+        Desert.IncreaseWaterFromPipelineNetwork(GetWaterInside());
+        SetWaterInside(0);
+    }
+    
     /**A meghibásodott pumpa megjavítása.
      * @return true sikeres javítás esetén
      * @return false ha nem volt meghibásodva

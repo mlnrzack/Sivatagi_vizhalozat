@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 public class TrySetPumpTest extends TestBase{
-    /**
-     * 8.2.8
+    /**8.2.8
      * Egy játékos pumpát állít fel
      */
     @Test

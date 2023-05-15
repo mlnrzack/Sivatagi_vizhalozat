@@ -4,8 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 public class TestDisconnectNeighbourPipe extends TestBase{
-    /**
-     * 8.2.9
+    /** 8.2.9
      * A szerelő lecsatlakoztat egy már csatlakoztatott csövet.
      */
     @Test

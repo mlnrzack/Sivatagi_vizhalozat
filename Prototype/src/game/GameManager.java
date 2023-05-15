@@ -11,11 +11,13 @@ public class GameManager
 	private static int round = 0;																	//A kör száma.
 	private static int mechanicsPoints = 0;															//A szerelők pontszáma.
 	private static int saboteursPoints = 0;															//A szabotőrök pontszáma.
+	//private static ArrayList<IElement> map = new ArrayList<IElement>();								//A térképen lévő összes elem.
     private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();					//A léptethetők listája(ciszternák, csövek, pumpák).
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();				//A vízforrások listája.
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();						//A szabotőrök listája.
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();						//A szerelők listája.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
+    
     
     /**Az aktuális körszám visszaadása.
      * @return az aktuális körszám.
@@ -65,6 +67,15 @@ public class GameManager
     	saboteursPoints = points;
     }
     
+    /**Beállítja a térképet egy a kapott paraméter szerintire.
+     * @param map a kapott térkép.
+     *
+    public static void SetMap(ArrayList<IElement> map)
+    {
+    	GameManager.map = map;
+    }
+    */
+    
     /**A szerelők listájának visszaadása.
      * @return a szerelők listája.
      */
@@ -72,7 +83,7 @@ public class GameManager
     {
     	return mechanics;
     }
-        
+    
     /**Adott szerelő karakter hozzáfűzése a szerelők listához.
      * @param mechanic a hozzáfűzendő szerelő.
      * @return a hozzáfűzés sikeressége.
@@ -214,9 +225,6 @@ public class GameManager
         		System.out.println("  " + saboteurs.get(i).GetName() + " " + saboteurs.get(i).GetCurrentPosition().GetId());
         	}
         	
-        	System.out.println("\nSzerelők pontjai: " + mechanicsPoints);
-        	System.out.println("Szabotőrök pontjai: " + saboteursPoints);
-        	
         	System.out.println("\n" + (round + 1) + ". Kör");
 			System.out.println("___________________________________________________________________");
 			
@@ -246,7 +254,6 @@ public class GameManager
     	}
     }
     
-
     /**Ha sikesen végrehajt egy játékos egy elemi akciót, akkor ez a függvény hívódik meg.
      * Növeli az adott játékos lépésszámát, valamint lépteti a vizet a rendszerben.
      */
@@ -276,6 +283,17 @@ public class GameManager
     	{
         	steppables.get(i).Step();
     	}
+    	/*
+    	var actionDone = false;
+        do
+        {
+        	for(int i = 0; i < steppables.size(); i++)
+            {
+                actionDone = steppables.get(i).Step() || actionDone;
+            }
+        }
+        while (actionDone);
+        */
     }
     
     /**A szerelő játékos karakterek lépéseinek menüje.
@@ -288,6 +306,9 @@ public class GameManager
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
+    			System.out.println("\nSzerelők pontjai: " + mechanicsPoints);
+            	System.out.println("Szabotőrök pontjai: " + saboteursPoints);
+            	
     			System.out.println(mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
     			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
     			System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
@@ -374,6 +395,9 @@ public class GameManager
 
             while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
             {
+            	System.out.println("\nSzerelők pontjai: " + mechanicsPoints);
+            	System.out.println("Szabotőrök pontjai: " + saboteursPoints);
+            	
             	System.out.println(saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
                 System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
                 System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
