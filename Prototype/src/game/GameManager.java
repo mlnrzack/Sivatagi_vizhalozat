@@ -154,7 +154,7 @@ public class GameManager
     }
     
     /**Adott cső felvétele a csövek listájába.
-     * @param steppable az adott elem.
+     * @param pipe steppable az adott elem.
      * @return a felvétel sikeressége.
      */
     public static boolean AddPipe(Pipe pipe)
@@ -163,7 +163,7 @@ public class GameManager
     }
     
     /**Adott cső felvétele a csövek listájába.
-     * @param steppable az adott elem.
+     * @param pump steppable az adott elem.
      * @return a felvétel sikeressége.
      */
     public static boolean AddPump(Pump pump)
@@ -172,7 +172,7 @@ public class GameManager
     }
     
     /**Adott cső felvétele a csövek listájába.
-     * @param steppable az adott elem.
+     * @param cistern steppable az adott elem.
      * @return a felvétel sikeressége.
      */
     public static boolean AddCistern(Cistern cistern)
@@ -359,8 +359,9 @@ public class GameManager
     public static void ActionExecuted()
     {
     	IncreasePlayerAction();
-        FireSourceActions();
         StepSteppables();
+        FireSourceActions();
+        //TODO: Logoló függvény,
     }
     
     
@@ -374,6 +375,8 @@ public class GameManager
     		waterSprings.get(i).FillNeighourPipes();
     		System.out.println(waterSprings.get(i).GetId() + ": " + waterSprings.get(i).GetWaterInside());
     	}
+        System.out.println(pipes.get(0).GetId()+" "+pipes.get(0).GetWaterInside());
+        System.out.println(pipes.get(1).GetId()+" "+pipes.get(1).GetWaterInside());
     }
     
     

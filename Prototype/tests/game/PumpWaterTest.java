@@ -16,9 +16,11 @@ public class PumpWaterTest extends TestBase
         pump.AcceptPlayer(mechanic);
         spring.FillNeighourPipes();
         pump.TrySetInputOutput(0, 1);
-        pipe1.Step();
+        //pipe1.Step();
         pump.Step();
-        pipe2.Step();
+        spring.FillNeighourPipes();
+        pump.Step();
+        //pipe2.Step();
         cistern.Step();
         System.out.println("Pipe1: "+pipe1.GetWaterInside());
         System.out.println("Pumpa: "+pump.GetWaterInside());

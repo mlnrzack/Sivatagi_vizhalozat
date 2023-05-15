@@ -37,7 +37,7 @@ public abstract class Element implements IElement
     }
     
     /**Beállítja az elem azonosítóját a paraméterként kapottra.
-     * @param newidaz új azonosító
+     * @param newid az új azonosító
      */
     public void SetId(String newid)
     {
@@ -61,7 +61,7 @@ public abstract class Element implements IElement
     }
     
     /**Töröl egy elemet a player listából.
-     * @param a törölni kívánt játékos
+     * @param player a törölni kívánt játékos
      * @return a törlés sikeressége
      */
     public boolean RemovePlayer(Player player)

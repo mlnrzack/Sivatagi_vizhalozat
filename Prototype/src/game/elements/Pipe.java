@@ -99,7 +99,7 @@ public class Pipe extends Element implements ISteppable
     }
     
     /**Visszaadja, hogy sikerült-e lerakni a pumpát a csőre.
-     * @param lerakni kívánt pumpa
+     * @param pump lerakni kívánt pumpa
      * @return pumpa lerakásának sikeressége.
      */
     public boolean TryBuildPumpInto(Pump pump)

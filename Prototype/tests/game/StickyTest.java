@@ -9,6 +9,7 @@ public class StickyTest extends TestBase{
 	@Test
 	public void testSticky() {
 		saboteur.SetCurrentPosition(pipe1);
+		pipe1.AcceptPlayer(saboteur);
 		assertEquals(0, pipe1.GetSticky());
 		saboteur.SetStickyPipe();
 		assertNotEquals(0, pipe1.GetSticky());

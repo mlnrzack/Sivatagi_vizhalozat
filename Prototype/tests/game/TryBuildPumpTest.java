@@ -44,28 +44,32 @@ public class TryBuildPumpTest extends TestBase{
         	if(map.get(i).GetType() == "pump")
         	{
         		Pump temp = (Pump)map.get(i);
-        		System.out.print(temp.GetInput().GetId() + " " + temp.GetOutput().GetId());
+        		//System.out.print(temp.GetInput().GetId() + " " + temp.GetOutput().GetId());
         	}
         	System.out.println("");
         }
-        /*
         spring.FillNeighourPipes();
+        /*
         System.out.println("\n");
         System.out.println("NewPipe 0. szom: "+pump2.GetNeighbours().get(0).GetNeighbours().get(0)+"\nNewPipe 1. szom: "+pump2.GetNeighbours().get(0).GetNeighbours().get(1));
         System.out.println("Pipe1 0. szom: "+pipe1.GetNeighbours().get(0)+"\nPipe1 1. szom: "+pipe1.GetNeighbours().get(1));
         pipe1.Step();
+        */
         pump2.GetNeighbours().get(0).Step();
         pump.Step();
         pump2.Step();
         pipe2.Step();
         cistern.Step();
-        System.out.println("Pumpa: "+pump.GetWaterInside());
+        /*
+        System.out.println("Pumpa: "+pump.GetWaterInside());*/
+
         System.out.println("Pumpa2: "+pump2.GetWaterInside());
+        System.out.println("WS: "+spring.GetWaterInside());
         System.out.println("Pipe1: "+pipe1.GetWaterInside());
         System.out.println("Pipe2: "+pipe2.GetWaterInside());
         System.out.println("Pump2 új szom: "+pump2.GetNeighbours().get(0).GetWaterInside());
         System.out.println("Cistern: "+cistern.GetWaterInside());
         System.out.println("Mechanic points: "+GameManager.GetMechanincsPoints());
-        assertEquals(1, pump2.GetWaterInside());*/
+        assertEquals(1, pump2.GetWaterInside());
     }
 }

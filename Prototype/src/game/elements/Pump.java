@@ -10,7 +10,7 @@ public class Pump extends ActiveElement implements ISteppable
     private Pipe input = null;			//a pumpa bemeneti csöve
     private Pipe output = null;			//a pumpa kimeneti csöve
     private boolean broken = false;		//elromlott pumpa tulajdonság
-    private int age = 0;				//
+    private int age = 0;
     
     /**Pump osztály konstruktora,
      * amely meghívja a GameManager osztály AddSteppables függvényét, ezzel hozzáadva magát a léptethető elemekhez.
@@ -26,13 +26,13 @@ public class Pump extends ActiveElement implements ISteppable
     {
     	return input;
     }
-    
-    
+
+
     public Pipe GetOutput()
     {
     	return output;
     }
-    
+
     /**Víz pumpálása adott irányba.
      * Ha a pumpában van elegendő víz, akkor kifele vagy befele pumpálja a vizet.
      * @return elromlott pumpa vagy sikeres pumpálás
@@ -46,7 +46,10 @@ public class Pump extends ActiveElement implements ISteppable
         if(!broken)
         {
         	//if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
-        	if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
+            if (GetWaterInside() == Constants.PumpWaterCapacity ) {
+                pumpWaterToOutputDone = PumpWaterToOutput();
+                pumpWaterFromInputDone = PumpWaterFromInput();
+            }
         	if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
             isBroken = GettingOlder();
         }
@@ -204,7 +207,7 @@ public class Pump extends ActiveElement implements ISteppable
 
         return true;
     }
-    
+
     public String GetType()
     {
     	return "pump";
