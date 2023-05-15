@@ -229,14 +229,12 @@ public class GameManager
     	playerActionCountInCurrentRound = count;
     }
     
-    
     /**Adot karakter körbeli lépésszámának növelése.
      */
     public static void IncreasePlayerAction()
     {
     	playerActionCountInCurrentRound++;
     }
-    
     
     /**Megkersi a legkisebb, még nem használt id-t a csövekből.
      * @return az adott id szám értéke.
@@ -352,7 +350,6 @@ public class GameManager
     	}
     }
     
-    
     /**Ha sikesen végrehajt egy játékos egy elemi akciót, akkor ez a függvény hívódik meg.
      * Növeli az adott játékos lépésszámát, valamint lépteti a vizet a rendszerben.
      */
@@ -363,7 +360,6 @@ public class GameManager
         FireSourceActions();
         //TODO: Logoló függvény,
     }
-    
     
     /**A forrásokból a szomszédos elemekbe folyatja a vizet.
      * A források minden szomszédos elemébe(rákapcsolt cső) juttat vizet.
@@ -378,7 +374,6 @@ public class GameManager
         System.out.println(pipes.get(0).GetId()+" "+pipes.get(0).GetWaterInside());
         System.out.println(pipes.get(1).GetId()+" "+pipes.get(1).GetWaterInside());
     }
-    
     
     /**A térkép összes - kivéve vízforrás - elemében történő vízfolyatás.
      */

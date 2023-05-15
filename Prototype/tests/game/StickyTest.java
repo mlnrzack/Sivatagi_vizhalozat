@@ -7,7 +7,8 @@ import org.junit.Test;
 public class StickyTest extends TestBase{
 
 	@Test
-	public void testSticky() {
+	public void testSticky()
+	{
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
 		assertEquals(0, pipe1.GetSticky());
@@ -17,9 +18,7 @@ public class StickyTest extends TestBase{
 		assertNotEquals(0, pipe1.GetSticky());
 		saboteur.SetCurrentPosition(pipe2);
 		assertEquals(0, pipe2.GetSticky());
-		saboteur.SetSlipperyPipe();
 		saboteur.SetStickyPipe();
-		assertEquals(0, pipe2.GetSticky());
+		assertEquals(Constants.LeakageTimerBound - 1, pipe2.GetSticky());
 	}
-
 }
