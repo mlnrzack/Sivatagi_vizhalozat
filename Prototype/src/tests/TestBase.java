@@ -7,6 +7,12 @@ import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
+/**
+ *A tesztek alapját biztosító osztály.
+ * A teszt osztályok ennek a leszármazótjai.
+ * Létrehozza a tesztekhez szükséges objektumokat, és felállít egy alap WS- pipe1- pump- pipe2 - Cistern  pályát a tesztelés miatt.
+ * A pump2 a többi teszteseten használatos mint új pumpa.
+ */
 public class TestBase
 {
 	GameManager gamem = new GameManager();
@@ -38,6 +44,7 @@ public class TestBase
 		pipe1.AddNeighbour(pump);
 		pipe2.AddNeighbour(pump);
 		pipe2.AddNeighbour(cistern);
+		System.out.println("Szomszédságok beállítva.");
 		
 		map.add(cistern);
 		map.add(pipe1);

@@ -5,7 +5,8 @@ import game.elements.*;
 public class TestConnectPipe extends TestBase
 {
 	/**8.2.11
-     * A szerelő összecsatlakoztatja a csövet egy pumpával
+     * A szerelő összecsatlakoztatja a csövet egy pumpával.
+     * A sikeres teszt esetén a
      */
     public void testConnectPipe()
     {
