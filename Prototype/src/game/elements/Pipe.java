@@ -314,4 +314,23 @@ public class Pipe extends Element implements ISteppable
 
     	return false;
     }
+    
+    /**A vizmennyiség növelése.
+     * @return true ha sikerül vizet fogadnia
+     * @return false ha nem sikerül vizet fogadnia
+     */
+    public boolean FillWaterTo()
+    {
+        if (waterInside < Constants.PipeCapacity)
+        {
+            waterInside++;
+            
+            if (leaking || neighbours.size() < 2)
+            	WaterToDesert();            	
+            
+            return true;
+        }
+
+        return false;
+    }
 }
