@@ -45,12 +45,13 @@ public class Pump extends ActiveElement implements ISteppable
         
         if(!broken)
         {
-        	//if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
-            if (GetWaterInside() == Constants.PumpWaterCapacity ) {
+            if (GetWaterInside() == Constants.PumpWaterCapacity )
+            {
                 pumpWaterToOutputDone = PumpWaterToOutput();
                 pumpWaterFromInputDone = PumpWaterFromInput();
             }
         	if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
+        	
             isBroken = GettingOlder();
         }
 
@@ -206,10 +207,5 @@ public class Pump extends ActiveElement implements ISteppable
         this.AddPipe(pipe);
 
         return true;
-    }
-
-    public String GetType()
-    {
-    	return "pump";
     }
 }

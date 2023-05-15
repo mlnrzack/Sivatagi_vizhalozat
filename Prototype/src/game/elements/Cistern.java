@@ -45,23 +45,16 @@ public class Cistern extends ActiveElement implements ISteppable
     public boolean Step()
     {
         boolean actionDone = false;
-        System.out.print(this.GetId()+ ": ");
+        
         for(int i = 0; i < neighbours.size(); i++)
         {
         	if(neighbours.get(i).GetWaterInside() > 0)
         	{
-        		System.out.print(neighbours.get(i).GetId() + "-ból kapok vizet");
         		PumpWaterToCisternFromNeighbour(neighbours.get(i));
             	actionDone = true;
         	}            	
         }
-        System.out.println();
         
         return actionDone;
-    }
-    
-    public String GetType()
-    {
-    	return "cistern";
     }
 }

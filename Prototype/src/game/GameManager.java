@@ -369,20 +369,16 @@ public class GameManager
     	for(int i = 0; i < waterSprings.size(); i++)
     	{
     		waterSprings.get(i).FillNeighourPipes();
-    		System.out.println(waterSprings.get(i).GetId() + ": " + waterSprings.get(i).GetWaterInside());
     	}
-        System.out.println(pipes.get(0).GetId()+" "+pipes.get(0).GetWaterInside());
-        System.out.println(pipes.get(1).GetId()+" "+pipes.get(1).GetWaterInside());
     }
     
     /**A térkép összes - kivéve vízforrás - elemében történő vízfolyatás.
      */
     public static void StepSteppables()
     {
-    	for(int i = steppables.size() - 1; i > 0; i--)
+    	for(int i = steppables.size() - 1; i >= 0; i--)
     	{
         	steppables.get(i).Step();
-        	System.out.println(steppables.get(i).GetId() + ": " + steppables.get(i).GetWaterInside());
     	}
     }
     

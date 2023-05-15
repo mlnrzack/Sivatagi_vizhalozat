@@ -314,9 +314,4 @@ public class Pipe extends Element implements ISteppable
 
     	return false;
     }
-    
-    public String GetType()
-    {
-    	return "pipe";
-    }
 }
