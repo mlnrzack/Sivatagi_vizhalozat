@@ -30,8 +30,9 @@ public class Pump extends ActiveElement implements ISteppable
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
 
-        if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
         if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
+        if (GetWaterInside() > 0) pumpWaterToOutputDone = PumpWaterToOutput();
+        //if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
 
         return GettingOlder() || pumpWaterToOutputDone || pumpWaterFromInputDone;
     }

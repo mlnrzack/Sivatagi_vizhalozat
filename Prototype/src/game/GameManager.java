@@ -283,17 +283,6 @@ public class GameManager
     	{
         	steppables.get(i).Step();
     	}
-    	/*
-    	var actionDone = false;
-        do
-        {
-        	for(int i = 0; i < steppables.size(); i++)
-            {
-                actionDone = steppables.get(i).Step() || actionDone;
-            }
-        }
-        while (actionDone);
-        */
     }
     
     /**A szerelő játékos karakterek lépéseinek menüje.
@@ -306,18 +295,17 @@ public class GameManager
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
-    			System.out.println("\nSzerelők pontjai: " + mechanicsPoints);
-            	System.out.println("Szabotőrök pontjai: " + saboteursPoints);
+            	System.out.println("\tMechanics' points: " + mechanicsPoints + "\t\tSaboteurs' points: " + saboteursPoints);
             	
-    			System.out.println(mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-    			System.out.println("Pozíció: " + mechanics.get(i).GetCurrentPosition().GetId());
-    			System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
-    			
+            	System.out.println("\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+                System.out.println("Position: " + mechanics.get(i).GetCurrentPosition().GetId() + "\n");
+                System.out.println("Neighbors: \n ** - index name: players standing on it **");
+                
                 for(int j = 0; j < mechanics.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
                 {
                 	int onTop = mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
                 	System.out.print("    - " + j + " " + mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
-                	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
+                	System.out.print(onTop == 0 ? "No one stands on this element.\n" : onTop + " player stand(s) on this element.\n");
                 }
                 
     			System.out.println("\nLehetőségek:");
@@ -395,18 +383,17 @@ public class GameManager
 
             while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
             {
-            	System.out.println("\nSzerelők pontjai: " + mechanicsPoints);
-            	System.out.println("Szabotőrök pontjai: " + saboteursPoints);
+            	System.out.println("\tMechanics' points: " + mechanicsPoints + "\t\tSaboteurs' points: " + saboteursPoints);
             	
-            	System.out.println(saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-                System.out.println("Pozíció: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
-                System.out.println("Szomszédok: \n ** - index név: rajtalévő játékosok száma **");
+            	System.out.println("\n" + saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
+                System.out.println("Position: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
+                System.out.println("Neighbors: \n ** - index name: players standing on it **");
                 
                 for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
                 {
                 	int onTop = saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
                 	System.out.print("    - " + j + " " + saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
-                	System.out.print(onTop == 0 ? "Nem állnak az elemen.\n" : onTop + " játékos áll az elemen.\n");
+                	System.out.print(onTop == 0 ? "No one stands on this element.\n" : onTop + " player stand(s) on this element.\n");
                 }
                 
                 System.out.println("\nLehetőségek:");
