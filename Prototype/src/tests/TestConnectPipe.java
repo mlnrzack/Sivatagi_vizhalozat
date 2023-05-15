@@ -18,5 +18,6 @@ public class TestConnectPipe extends TestBase
         mechanic.SetCurrentPosition(pump2);
         pump2.AcceptPlayer(mechanic);
         mechanic.ConnectPipe();
+        //itt is lehet valamit ki kellene íratni, hogy mi történik, törlendő ez a sor
     }
 }

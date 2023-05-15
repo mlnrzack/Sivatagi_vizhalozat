@@ -27,4 +27,9 @@ public class TestSticky extends TestBase
 		System.out.println("Egyforma értéket várunk");
 		System.out.println(pipe2.GetSticky() == Constants.LeakageTimerBound - 1 ? "Egyformák" : "Nem egyformák");
 	}
+	
+	public void TestStickyFunction()
+	{
+		//TODO
+	}
 }

@@ -9,12 +9,15 @@ public class TrySetPumpTest extends TestBase{
      * Egy játékos pumpák bemenetét állítja be.
      */
     @Test
-    public void testTrySetPump(){
+    public void testTrySetPump()
+    {
         mechanic.SetCurrentPosition(pump);
+        pump.AddPipe(pipe1);
+        pump.AddPipe(pipe2);
         pump.AcceptPlayer(mechanic);
         //spring.FillNeighourPipes();
         pump.TrySetInputOutput(0, 1);
-        assertEquals(pipe1.GetId(), pump.GetNeighbours().get(0).GetId());
-        assertEquals(pipe2.GetId(), pump.GetNeighbours().get(1).GetId());
+        assertEquals(pipe1.GetId(), pump.GetInput().GetId());
+        assertEquals(pipe2.GetId(), pump.GetOutput().GetId());
     }
 }
