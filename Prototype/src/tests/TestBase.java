@@ -1,12 +1,13 @@
-package game;
+package tests;
 
-import java.util.*;
+import java.util.ArrayList;
 
+import game.*;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
-public class TestBase 
+public class TestBase
 {
 	GameManager gamem = new GameManager();
 	Cistern cistern = new Cistern();

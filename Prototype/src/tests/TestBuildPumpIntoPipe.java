@@ -1,14 +1,10 @@
-package game;
+package tests;
 
-import org.junit.Test;
-
-
-public class BuildPumpIntoPipeTest extends TestBase
+public class TestBuildPumpIntoPipe extends TestBase
 {
     /** 8.2.12
      * Egy szerelő beépít egy pumpát egy cső közepébe.
      */
-    @Test
     public void TestTryBuildPump()
     {
         mechanic.SetCurrentPosition(pipe1);
