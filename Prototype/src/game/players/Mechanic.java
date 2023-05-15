@@ -55,7 +55,7 @@ public class Mechanic extends Player
         System.out.println("Nem sikerül az akció. Próbálkozz úgy, aktív elemen állsz és van nálad csővég.");
         return false;
     }
-
+    
     /**A szerelő lecsatlakoztat egy szomszédos csövet az alatt lévő elemről.
      * @param neighbourIdx a szomszédos cső indexe.
      * @return a lecsatlakoztatás sikeressége.
@@ -72,17 +72,6 @@ public class Mechanic extends Player
         }
 
         return false;
-        /*
-    	Pipe pipe = GetCurrentPosition().DisconnectNeighbourPipe(neighbourIdx);
-    	
-    	if(pipe != null)
-    	{
-    		GameManager.ActionExecuted();
-            return true;
-    	}
-    	
-    	return false;
-    	*/
     }
 
     /**A szerelő felvesz egy szabad csővéget.

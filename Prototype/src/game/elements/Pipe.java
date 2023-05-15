@@ -20,6 +20,7 @@ public class Pipe extends Element implements ISteppable
     public Pipe()
     {
     	GameManager.AddSteppable(this);
+    	this.SetId("pipe");
     }
     
     /**Az osztály paraméteres konstruktora.
@@ -29,14 +30,16 @@ public class Pipe extends Element implements ISteppable
      * @param sticky ragadós tulajdonsága
      * @param neighbours szomszédai
      */
-    public Pipe(boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
+    public Pipe(int water, boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
     {
+    	SetWaterInside(water);
     	leaking = leaks;
     	noLeakageTimer = timer;
     	slipperyTimer = slippery;
     	stickyTimer = sticky;
     	if(neighbours != null)
     		this.neighbours = neighbours;
+    	GameManager.AddSteppable(this);
     }
 
     /**Visszaadja a neighbours.
@@ -112,11 +115,11 @@ public class Pipe extends Element implements ISteppable
         	leaking = false;
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
         	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
-        	
+        	System.out.println("Cső javítása sikeres volt." + noLeakageTimer + " ennyi ideig nem lyukasztható újra.\n");
             return true;
         }
 
-        System.out.println("Cső javítása nem sikerül. Nincs elromolva ez az elem.");
+        System.out.println("Cső javítása nem sikerül. Nincs elromolva ez az elem.\n");
         return false;
     }
 
@@ -128,11 +131,11 @@ public class Pipe extends Element implements ISteppable
         if (!leaking && noLeakageTimer == 0)
         {
         	leaking = true;
-        	
+        	System.out.println("Cső rongálása sikeres volt. Lyukas lett.\n");
             return true;
         }
 
-        System.out.println("Cső rongálása nem sikerül. Már el van rontva ez az elem.");
+        System.out.println("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
         return false;
     }
 
