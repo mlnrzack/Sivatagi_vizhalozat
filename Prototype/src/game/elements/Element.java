@@ -8,7 +8,7 @@ import game.players.*;
 
 public abstract class Element implements IElement
 {
-    protected int waterInside = 0;									//az elemben levő víz mennyisége, kezdetben ez nulla
+    private int waterInside = 0;									//az elemben levő víz mennyisége, kezdetben ez nulla
     private String id = "";											//az elem azonosítója, kezdetben ez üres
     private ArrayList<Player> players = new ArrayList<Player>();	//az elemen álló játékosok listája
 
@@ -96,7 +96,6 @@ public abstract class Element implements IElement
 
     public abstract boolean AcceptPlayer(Player player);
     public abstract Pipe DisconnectNeighbourPipe(int neighbourIdx);
-    public abstract ArrayList<? extends IElement> GetNeighbours();
     public abstract Pipe PickUpFreePipeEnd();
     public abstract Pump PickUpPump();
     public abstract boolean TryBuildPumpInto(Pump pump);

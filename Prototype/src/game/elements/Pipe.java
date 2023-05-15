@@ -321,9 +321,9 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean FillWaterTo()
     {
-        if (waterInside < Constants.PipeCapacity)
+        if (this.GetWaterInside() < Constants.PipeCapacity)
         {
-            waterInside++;
+            this.SetWaterInside(this.GetWaterInside() + 1);;
             
             if (leaking || neighbours.size() < 2)
             	WaterToDesert();            	
