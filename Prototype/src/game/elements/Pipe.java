@@ -20,6 +20,7 @@ public class Pipe extends Element implements ISteppable
     public Pipe()
     {
     	GameManager.AddSteppable(this);
+    	GameManager.AddPipe(this);
     	this.SetId("pipe");
     }
     

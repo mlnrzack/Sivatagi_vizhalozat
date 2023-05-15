@@ -18,6 +18,7 @@ public class Pump extends ActiveElement implements ISteppable
     public Pump()
     {
         GameManager.AddSteppable(this);
+        GameManager.AddPump(this);
         this.SetId("pump");
     }
 

@@ -10,5 +10,5 @@ public class Constants
     public static final int RoundNumber = 20;						//a játék köreinek a száma.
     public static final int ActionInRoundPerUser = 2;				//egy adott kör alatt a játékos végrehajtott feladatainak a száma
     public static final int AcceptedPlayersInPipe = 1;				//a csövön tartózkodó játékosok száma
-    public static final int LeakageTimerBound = 1;					//lyukas cső időzítője
+    public static final int LeakageTimerBound = 10;					//lyukas cső időzítője
 }

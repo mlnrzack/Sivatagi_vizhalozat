@@ -11,13 +11,15 @@ public class GameManager
 	private static int round = 0;																	//A kör száma.
 	private static int mechanicsPoints = 0;															//A szerelők pontszáma.
 	private static int saboteursPoints = 0;															//A szabotőrök pontszáma.
-	//private static ArrayList<IElement> map = new ArrayList<IElement>();								//A térképen lévő összes elem.
+	private static ArrayList<IElement> map = new ArrayList<IElement>();								//A térképen lévő összes elem.
+	private static ArrayList<Pipe> pipes = new ArrayList<Pipe>();									//A térképen lévő csövek listája.
+	private static ArrayList<Pump> pumps = new ArrayList<Pump>();									//A térképen lévő pumpák listája.
+	private static ArrayList<Cistern> cisterns = new ArrayList<Cistern>();							//A térképen lévő pumpák listája. 
     private static ArrayList<ISteppable> steppables = new ArrayList<ISteppable>();					//A léptethetők listája(ciszternák, csövek, pumpák).
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();				//A vízforrások listája.
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();						//A szabotőrök listája.
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();						//A szerelők listája.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
-    
     
     /**Az aktuális körszám visszaadása.
      * @return az aktuális körszám.
@@ -67,14 +69,21 @@ public class GameManager
     	saboteursPoints = points;
     }
     
+    /**Térkép átadása külső osztályoknak.
+     * @return a térkép elemeinek listája.
+     */
+    public static ArrayList<IElement> GetMap()
+    {
+    	return map;
+    }
+    
     /**Beállítja a térképet egy a kapott paraméter szerintire.
      * @param map a kapott térkép.
-     *
+     */
     public static void SetMap(ArrayList<IElement> map)
     {
     	GameManager.map = map;
     }
-    */
     
     /**A szerelők listájának visszaadása.
      * @return a szerelők listája.
@@ -126,7 +135,7 @@ public class GameManager
     	GameManager.steppables = steppables;
     }
 
-    /**Adott léptethető elem(ciszterna, cső, pumpa) felvétele a léptethetők listájából.
+    /**Adott léptethető elem(ciszterna, cső, pumpa) felvétele a léptethetők listájába.
      * @param steppable az adott elem.
      * @return a felvétel sikeressége.
      */
@@ -144,6 +153,33 @@ public class GameManager
     	return steppables.remove(steppable);
     }
     
+    /**Adott cső felvétele a csövek listájába.
+     * @param steppable az adott elem.
+     * @return a felvétel sikeressége.
+     */
+    public static boolean AddPipe(Pipe pipe)
+    {
+    	return pipes.add(pipe);
+    }
+    
+    /**Adott cső felvétele a csövek listájába.
+     * @param steppable az adott elem.
+     * @return a felvétel sikeressége.
+     */
+    public static boolean AddPump(Pump pump)
+    {
+    	return pumps.add(pump);
+    }
+    
+    /**Adott cső felvétele a csövek listájába.
+     * @param steppable az adott elem.
+     * @return a felvétel sikeressége.
+     */
+    public static boolean AddCistern(Cistern cistern)
+    {
+    	return cisterns.add(cistern);
+    }
+    
     /**A térképen lévő vízforrások listájának átadása más osztályok felé.
      * @return a vízforrások listája.
      */
@@ -152,6 +188,7 @@ public class GameManager
     	return waterSprings;
     }
     
+    
     /**A térképen lévő vízforrások listájának beállítása adott listából. 
      * @param waterSprings az adott lista.
      */
@@ -159,6 +196,7 @@ public class GameManager
     {
     	GameManager.waterSprings = waterSprings;
     }
+    
     
     /**A térképre adott vízforrás felhelyezése.
      * @param waterspring az adott vízforrás.
@@ -169,6 +207,7 @@ public class GameManager
     	return waterSprings.add(waterspring);
     }
     
+    
     /**A térképről adott vízforrás levétele.
      * @param waterspring az adott vízforrás.
      * @return levétel sikeressége.
@@ -178,6 +217,7 @@ public class GameManager
     	return waterSprings.remove(waterspring);
     }
     
+    
     /**Adott karakter körbeli lépésszámának átadása más osztályoknak.
      * @return adott karakter lépésszáma
      */
@@ -186,6 +226,7 @@ public class GameManager
     	return playerActionCountInCurrentRound;
     }
     
+    
     /**Adott karakter körbeli lépésszámának beállítása paraméterként kapott értékre.
 	*/
     public static void SetPlayerAction(int count)
@@ -193,12 +234,14 @@ public class GameManager
     	playerActionCountInCurrentRound = count;
     }
     
+    
     /**Adot karakter körbeli lépésszámának növelése.
      */
     public static void IncreasePlayerAction()
     {
     	playerActionCountInCurrentRound++;
     }
+    
     
     /**A játékot menetéért felelős függvény.
      * A modell adott lejátszott körszámig játszatja a játékot.
@@ -254,6 +297,7 @@ public class GameManager
     	}
     }
     
+    
     /**Ha sikesen végrehajt egy játékos egy elemi akciót, akkor ez a függvény hívódik meg.
      * Növeli az adott játékos lépésszámát, valamint lépteti a vizet a rendszerben.
      */
@@ -263,6 +307,7 @@ public class GameManager
         FireSourceActions();
         StepSteppables();
     }
+    
     
     /**A forrásokból a szomszédos elemekbe folyatja a vizet.
      * A források minden szomszédos elemébe(rákapcsolt cső) juttat vizet.
@@ -274,6 +319,7 @@ public class GameManager
     		waterSprings.get(i).FillNeighourPipes();
     	}
     }
+    
     
     /**A térkép összes - kivéve vízforrás - elemében történő vízfolyatás.
      */
