@@ -11,7 +11,7 @@ public class TrySetPumpTest extends TestBase{
     public void testTrySetPump(){
         mechanic.SetPumpInInventory(pump2);
         mechanic.SetCurrentPosition(pipe1);
-        mechanic.BuildPumpIntoPipe();
+        mechanic.BuildPumpIntoPipe(100, 100);
         pump2.TrySetInputOutput(0, 1);
         System.out.println("pipe1: "+pipe1+"\npipe2: "+pipe2+"\n"+"newpipe: "+pump2.GetNeighbours().get(0));
         System.out.println("pump1: "+pump+"\npump2: "+pump2+"\n");

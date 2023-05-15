@@ -11,7 +11,6 @@ public class WaterSpring extends ActiveElement
     public WaterSpring() 
     {
         GameManager.AddWaterSpring(this);
-        this.SetId("waterspring");
     }
 
     /**Megtölti a vízforrás szomszédos csöveit vízzel.

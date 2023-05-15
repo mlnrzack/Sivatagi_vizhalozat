@@ -19,7 +19,6 @@ public class Pump extends ActiveElement implements ISteppable
     {
         GameManager.AddSteppable(this);
         GameManager.AddPump(this);
-        this.SetId("pump");
     }
 
     /**Víz pumpálása adott irányba.
@@ -162,10 +161,13 @@ public class Pump extends ActiveElement implements ISteppable
      * @param pipe a létrehozandó cső
      * @return a létrehozás sikeressége
      */
-    public boolean GetBuildedInto(Pipe pipe)
+    public boolean GetBuildedInto(Pipe pipe, int piid, int puid)
     {
         // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
-        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>());
+    	String pipeId = "pipe" + piid;
+    	String pumpId = "pump" + piid;
+    	
+        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
         //egyik oladli szomszéd elem letárolási
         ActiveElement neighbour = pipe.GetNeighbours().get(0);
         //az új cső szomszédjainak beállítása
@@ -178,6 +180,7 @@ public class Pump extends ActiveElement implements ISteppable
         pipe.RemoveNeighbour(neighbour);
         pipe.AddNeighbour(this);
         //az új pumpa szomszédjainak beállítása
+        this.SetId(pumpId);
         this.AddPipe(newPipe);
         this.AddPipe(pipe);
 

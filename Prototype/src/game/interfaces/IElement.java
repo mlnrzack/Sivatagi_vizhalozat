@@ -19,7 +19,7 @@ public interface IElement
     Pump PickUpPump();
     boolean RemovePlayer(Player player);
     void SetWaterInside(int waterInside);
-    boolean TryBuildPumpInto(Pump pump);
+    boolean TryBuildPumpInto(Pump pump, int piid, int puid);
     boolean TryConnectPipe(Pipe pipeInInventory);
     boolean TryDamage();
     boolean TryRepair();

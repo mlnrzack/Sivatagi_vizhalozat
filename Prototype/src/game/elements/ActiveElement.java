@@ -94,7 +94,7 @@ public abstract class ActiveElement extends Element
 	/**Aktív elemen állva nem lehet a csőbe pumpát illeszteni. 
 	 * @return false és szöveg.
 	 */
-	public boolean TryBuildPumpInto(Pump pump)
+	public boolean TryBuildPumpInto(Pump pump, int piid, int puid)
 	{
 		// override-olni leszármazottakban, ott megvalósítani ha be lehet építeni
 		// pumpát.

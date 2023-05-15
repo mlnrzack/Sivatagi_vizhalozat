@@ -100,7 +100,7 @@ public abstract class Element implements IElement
     public abstract ArrayList<? extends IElement> GetNeighbours();
     public abstract Pipe PickUpFreePipeEnd();
     public abstract Pump PickUpPump();
-    public abstract boolean TryBuildPumpInto(Pump pump);
+    public abstract boolean TryBuildPumpInto(Pump pump, int piid, int puid);
     public abstract boolean TryConnectPipe(Pipe pipeInInventory);
     public abstract boolean TryDamage();
     public abstract boolean TryRepair();

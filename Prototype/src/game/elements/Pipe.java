@@ -21,7 +21,6 @@ public class Pipe extends Element implements ISteppable
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddPipe(this);
-    	this.SetId("pipe");
     }
     
     /**Az osztály paraméteres konstruktora.
@@ -31,7 +30,7 @@ public class Pipe extends Element implements ISteppable
      * @param sticky ragadós tulajdonsága
      * @param neighbours szomszédai
      */
-    public Pipe(int water, boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours)
+    public Pipe(int water, boolean leaks, int timer, int slippery, int sticky, ArrayList<ActiveElement> neighbours, String id)
     {
     	SetWaterInside(water);
     	leaking = leaks;
@@ -40,7 +39,7 @@ public class Pipe extends Element implements ISteppable
     	stickyTimer = sticky;
     	if(neighbours != null)
     		this.neighbours = neighbours;
-    	this.SetId("pipe");
+    	this.SetId(id);
     	GameManager.AddSteppable(this);
     }
 
@@ -102,9 +101,9 @@ public class Pipe extends Element implements ISteppable
      * @param lerakni kívánt pumpa
      * @return pumpa lerakásának sikeressége.
      */
-    public boolean TryBuildPumpInto(Pump pump)
+    public boolean TryBuildPumpInto(Pump pump, int piid, int puid)
     {
-    	return pump.GetBuildedInto(this);
+    	return pump.GetBuildedInto(this, piid, puid);
     }
 
     /**Lyukas cső esetén befoltozza a csövet, majd beállítja a noLeakageTimer értékét.

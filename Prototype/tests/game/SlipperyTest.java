@@ -1,6 +1,7 @@
 package game;
 
 import static org.junit.Assert.*;
+import game.*;
 import game.elements.*;
 import java.util.ArrayList;
 
@@ -18,9 +19,8 @@ public class SlipperyTest extends TestBase {
 		assertNotEquals(0, pipe1.GetSlippery());
 		saboteur.SetCurrentPosition(pipe2);
 		assertEquals(0, pipe2.GetSlippery());
-		saboteur.SetStickyPipe();
 		saboteur.SetSlipperyPipe();
-		assertEquals(0, pipe2.GetSlippery());
+		assertEquals(Constants.LeakageTimerBound, pipe2.GetSlippery());
 	}
 
 }
