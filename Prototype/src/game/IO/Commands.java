@@ -104,21 +104,42 @@ public class Commands
 
         switch (param[1])
         {
+        	case"BuildPumpIntoPipeTest":
+        		junit.run(BuildPumpIntoPipeTest.class);
+        		
+        	case"ConnectPipeTest" :
+                junit.run(ConnectPipeTest.class);
+                
             case"DamageTest" :
                 junit.run(DamageTest.class);
 
             case"MoveTest" :
                 junit.run(MoveTest.class);
 
+            case"PickUpFreePipeEndTest" :
+                junit.run(PickUpFreePipeEndTest.class);
+                
+            case"PickUpPumpTest" :
+                junit.run(PickUpPumpTest.class);
+                
+            case"PumpWaterTest" :
+                junit.run(PumpWaterTest.class);
+                
             case"RepairTest" :
                 junit.run(RepairTest.class);
 
             case"SlipperyTest" :
                 junit.run(SlipperyTest.class);
 
-            case"StickyTest" :
-                junit.run(StickyTest.class);
+            case"TestDisconnectNeighbourPipe" :
+                junit.run(TestDisconnectNeighbourPipe.class);
 
+            case"TryBuildPumpTest" :
+                junit.run(TryBuildPumpTest.class);
+                
+            case"TrySetPumpTest" :
+                junit.run(TrySetPumpTest.class);
+                
             case"WinTest" :
                 junit.run(WinTest.class);
 
