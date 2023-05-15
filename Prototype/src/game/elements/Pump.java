@@ -42,7 +42,8 @@ public class Pump extends ActiveElement implements ISteppable
     public boolean TrySetInputOutput(int neighbourIdxFrom, int neighbourIdxTo)
     {
         if (GetNeighbours().size() > neighbourIdxFrom && neighbourIdxFrom >= 0 
-            && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0 && neighbourIdxFrom != neighbourIdxTo)
+            && neighbourIdxTo < GetNeighbours().size() && neighbourIdxTo >= 0
+            && neighbourIdxFrom != neighbourIdxTo)
         {
             input = this.neighbours.get(neighbourIdxFrom);
             output = this.neighbours.get(neighbourIdxTo);
@@ -100,7 +101,7 @@ public class Pump extends ActiveElement implements ISteppable
      */
     private boolean GettingOlder()
     {
-        if (new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
+        if (0.1 < Constants.PumpErrorProbability)//new Random().nextDouble(0, 1) < Constants.PumpErrorProbability)
         {
             GoWrong();
 
@@ -157,15 +158,20 @@ public class Pump extends ActiveElement implements ISteppable
     {
         // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
         Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>());
-        
-        newPipe.AddNeighbour(pipe.GetNeighbours().get(0));
+        //egyik oladli szomszéd elem letárolási
+        ActiveElement neighbour = pipe.GetNeighbours().get(0);
+        //az új cső szomszédjainak beállítása
+        newPipe.AddNeighbour(neighbour);
         newPipe.AddNeighbour(this);
-        
-        pipe.RemoveNeighbour(pipe.GetNeighbours().get(0));
+        //a szomszéd elem értesítése a szomszéd változásról
+        neighbour.AddPipe(newPipe);
+        neighbour.RemovePipe(pipe);
+        //az eredeti cső szomszédjainak kezelése
+        pipe.RemoveNeighbour(neighbour);
         pipe.AddNeighbour(this);
-        
-        AddPipe(newPipe);
-        AddPipe(pipe);
+        //az új pumpa szomszédjainak beállítása
+        this.AddPipe(newPipe);
+        this.AddPipe(pipe);
 
         return true;
     }

@@ -252,6 +252,11 @@ public class Program
         spring2.AddPipe(pipe2);
         map.add(spring2);
         
+        var mec1 = new Mechanic();
+        mec1.SetCurrentPosition(pipe1);
+        pipe1.AcceptPlayer(mec1);
+        
+        /*
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
@@ -302,6 +307,6 @@ public class Program
     	catch(Exception e)
     	{
     		System.out.println("Hibas bemenet!\n" + e);
-    	}
+    	}*/
     }
 }

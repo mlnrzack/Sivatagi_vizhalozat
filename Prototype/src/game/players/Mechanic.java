@@ -131,4 +131,36 @@ public class Mechanic extends Player
 
         return false;
     }
+    
+    /**
+     * @param pipe
+     */
+    public void SetPipeInInventory(Pipe pipe)
+    {
+    	this.pipeInInventory = pipe;
+    }
+    
+    /**
+     * @param pump
+     */
+    public void SetPumpInInventory(Pump pump)
+    {
+    	this.pumpInInventory = pump;
+    }
+    
+    /**
+     * @return
+     */
+    public Pump GetPumpInInventory()
+    {
+    	return pumpInInventory;
+    }
+    
+    /**
+     * @return
+     */
+    public Pipe GetPipeInInventory()
+    {
+    	return pipeInInventory;
+    }
 }

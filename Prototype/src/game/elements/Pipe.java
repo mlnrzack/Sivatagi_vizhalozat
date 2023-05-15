@@ -78,7 +78,8 @@ public class Pipe extends Element implements ISteppable
      */
     public void SetSlippery()
     {
-    	slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+    	slipperyTimer = 1;
+    	//slipperyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
 
     /**Visszaadja a stickyTimer értékét.
@@ -93,7 +94,8 @@ public class Pipe extends Element implements ISteppable
      */
     public void SetSticky()
     {
-    	stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+    	stickyTimer = 1;
+    	//stickyTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
     }
     
     /**Visszaadja, hogy sikerült-e lerakni a pumpát a csőre.
@@ -112,9 +114,10 @@ public class Pipe extends Element implements ISteppable
     {
         if (leaking)
         {
-        	leaking = false;
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
-        	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+        	//int rand = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound);
+        	noLeakageTimer = 1;
+        	leaking = false;
         	System.out.println("Cső javítása sikeres volt." + noLeakageTimer + " ennyi ideig nem lyukasztható újra.\n");
             return true;
         }
@@ -258,6 +261,7 @@ public class Pipe extends Element implements ISteppable
     	if(slipperyTimer == 0)
     	{
     		SetSlippery();
+    		System.out.println("A cső csúszós lett.");
     		return true;
     	}    		
     	System.out.println("Nem sikerült csúszóssá tenni a csövet.");
@@ -272,6 +276,7 @@ public class Pipe extends Element implements ISteppable
     	if(stickyTimer == 0)
     	{
     		SetSticky();
+    		System.out.println("A cső ragacsos lett.");
     		return true;
     	}
     		
