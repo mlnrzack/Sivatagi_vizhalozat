@@ -459,7 +459,6 @@ public class GameManager
                	System.out.println("\tleakpipe - Cső lyukasztás");
                	System.out.println("\tstickypipe - Cső ragacsossá tétele");
                	System.out.println("\tpass - A kör kihagyása");
-               	System.out.println("\texit - KILÉPÉS A JÁTÉKBÓL");
                	
                	try
                	{
@@ -550,7 +549,6 @@ public class GameManager
                 System.out.println("\tstickypipe - A cső ragacsossá tétele maga alatt");
                 System.out.println("\tslipperypipe - A cső csúszóssá tétele");
                 System.out.println("\tpass - A kör kihagyása");
-                System.out.println("\texit - KILÉPÉS A JÁTÉKBÓL");
                 
                 try
                	{
