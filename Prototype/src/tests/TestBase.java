@@ -24,8 +24,8 @@ public class TestBase
 	static WaterSpring spring = new WaterSpring();
 	static ArrayList<IElement> map = new ArrayList<IElement>();
 	
-	Saboteur saboteur = new Saboteur();
-	Mechanic mechanic = new Mechanic();
+	static Saboteur saboteur = new Saboteur();
+	static Mechanic mechanic = new Mechanic();
 	
 	public static void Init()
 	{	

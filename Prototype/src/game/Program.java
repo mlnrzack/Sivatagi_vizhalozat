@@ -6,14 +6,14 @@ import game.elements.*;
 import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
+import tests.TestConnectPipe;
 
 public class Program
 {
     public static void main(String[] args)
     {
-        CreateMap();
-        //CommandInterpreter.getInput();
-        GameManager.StartGame();
+        CommandInterpreter interpreter = new CommandInterpreter();
+        interpreter.getInput();
     }
     
     /**Egy statikus térképet létrehozó függvény.

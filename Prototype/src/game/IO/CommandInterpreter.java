@@ -25,7 +25,7 @@ public class CommandInterpreter
         cmd = new Commands();
     }
 
-    public static void getInput()
+    public void getInput()
     {
         System.out.println("\t~ Sivatagi vízhálózat ~\nEpsilon csapat protorípusa\n");
         System.out.println("A lehetséges bemeneti parancsok: "
@@ -44,27 +44,40 @@ public class CommandInterpreter
 
             switch (interpreterArray[0])
             {
-                case "" -> System.out.println("\n");
-//                 case "in" -> cmd.In(interpreterArray[1]);
-//                 case "out" -> cmd.Out(interpreterArray[1]);
-//                 case "log" -> cmd.Log(interpreterArray[1]);
-//                 case "rnd" -> cmd.RND();
-                case "exit" -> cmd.Exit();
-                case "start" -> cmd.Start();
-//                 case "addPipe" -> cmd.AddPipe();
-//                 case "addPump" -> cmd.AddPump();
-//                 case "addSource" -> cmd.AddSource();
-//                 case "addCistern" -> cmd.AddCistern();
-                case "createMap" -> cmd.CreateMap();
-                case "playerMove" -> cmd.playerMove(interpreterArray);
-//                 case "playerSetIO" -> cmd.playerSetIO(interpreterArray);
-                case "playerAction" -> cmd.playerAction(interpreterArray);
-//                 case "stat" -> cmd.stat(interpreterArray);
-                case "runTest" -> cmd.RunTest(interpreterArray);
-                default -> 
-                {
-                    System.err.println("Hibás parancs!");
-                }
+            	case "":
+            		System.out.println("\n");
+            		break;
+            	case "exit":
+            		cmd.Exit();
+            		break;
+            	case "start":
+            		cmd.Start();
+            		break;
+            	case "createMap":
+            		cmd.CreateMap();
+            		break;
+            	case "playerMove":
+            		cmd.playerMove(interpreterArray);
+            		break;
+            	case "playerAction":
+            		cmd.playerAction(interpreterArray);
+            		break;
+            	case "runTest":
+            		cmd.RunTest(interpreterArray);
+            		break;
+            	default:
+            		System.err.println("Hibas parancs");
+            		break;
+//              case "in" -> cmd.In(interpreterArray[1]);
+//              case "out" -> cmd.Out(interpreterArray[1]);
+//              case "log" -> cmd.Log(interpreterArray[1]);
+//              case "rnd" -> cmd.RND();
+//              case "addPipe" -> cmd.AddPipe();
+//              case "addPump" -> cmd.AddPump();
+//              case "addSource" -> cmd.AddSource();
+//              case "addCistern" -> cmd.AddCistern();
+//              case "playerSetIO" -> cmd.playerSetIO(interpreterArray);
+//              case "stat" -> cmd.stat(interpreterArray);
             }
         }
     }
