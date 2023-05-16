@@ -1,6 +1,8 @@
 package tests;
 
 import game.*;
+import game.elements.*;
+
 public class TestSticky extends TestBase
 {
 	/**
@@ -34,6 +36,38 @@ public class TestSticky extends TestBase
 	
 	public void TestStickyFunction()
 	{
-		//TODO
+		//mini init
+		Pipe pipe3 = new Pipe();
+		Cistern cistern1 = new Cistern();
+		cistern.AddPipe(pipe3);
+		pipe3.AddNeighbour(cistern1);
+		
+		saboteur.SetCurrentPosition(pipe3);
+		pipe3.AcceptPlayer(saboteur);
+		GameManager.SetCurrentSaboteur(saboteur);
+		GameManager.SetCurrentMechanic(null);
+		
+		mechanic.SetCurrentPosition(cistern1);
+		cistern1.AcceptPlayer(mechanic);
+		
+		saboteur.SetStickyPipe();
+		saboteur.Move(0);
+		
+		GameManager.SetCurrentSaboteur(null);
+		GameManager.SetCurrentMechanic(mechanic);
+		
+		mechanic.Move(0);
+		
+		//A GameManager osztály ezt kezeli, itt ez külön nem hívódik meg, igy kézi átállítás lesz.
+		GameManager.SetCurrentSaboteur(saboteur);
+		GameManager.SetCurrentMechanic(null);
+		
+		System.out.println("A következőkben megnézzük, hogy melyik játékos következik.");
+		System.out.println("Szerelő játékos következik?");
+		System.out.println("Nem egyforma értéket várunk");
+		System.out.println(GameManager.GetCurrentMechanic() == mechanic ? "Igen" : "Nem");
+		System.out.println("Szabotőr játékos következik?");
+		System.out.println("Egyforma értéket várunk");
+		System.out.println(GameManager.GetCurrentSaboteur() == saboteur ? "Igen" : "Nem");
 	}
 }
