@@ -2,7 +2,6 @@ package game;
 
 import java.util.*;
 
-import game.IO.command_interpreter;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
@@ -11,16 +10,17 @@ public class Program
 {
     public static void main(String[] args)
     {
-        //CreateMap();
-        //GameManager.StartGame();
-        command_interpreter interpreter = new command_interpreter();
-        interpreter.getInput();
+        CreateMap();
+        GameManager.StartGame();
+
     }
     
     /**Egy statikus térképet létrehozó függvény.
      */
     public static void CreateMap()
     {
+    	ArrayList<IElement> map = new ArrayList<IElement>();
+    	
         Cistern cistern1 = new Cistern();
         Cistern cistern2 = new Cistern();
         Cistern cistern3 = new Cistern();
@@ -59,8 +59,6 @@ public class Program
         
         WaterSpring spring1 = new WaterSpring();
         WaterSpring spring2 = new WaterSpring();
-        
-        ArrayList<IElement> map = new ArrayList<IElement>();
         
         cistern1.SetId("cistern1");
         cistern1.AddPipe(pipe19);
@@ -169,7 +167,7 @@ public class Program
         pipe19.AddNeighbour(cistern1);
         map.add(pipe19);
         
-        pump1.SetId("pipe1");
+        pump1.SetId("pump1");
         pump1.AddPipe(pipe1);
         pump1.AddPipe(pipe4);
         pump1.AddPipe(pipe6);
@@ -240,7 +238,7 @@ public class Program
         pump10.TrySetInputOutput(0, 1);
         map.add(pump10);
         
-        pump11.SetId("pum11");
+        pump11.SetId("pump11");
         pump11.AddPipe(pipe17);
         pump11.AddPipe(pipe19);
         pump11.TrySetInputOutput(0, 1);
@@ -255,6 +253,14 @@ public class Program
         spring2.AddPipe(pipe2);
         map.add(spring2);
 
+        GameManager.SetMap(map);
+        /*
+        var mechanic = new Mechanic();
+        mechanic.SetName("mec");
+        mechanic.SetCurrentPosition(cistern3);
+        cistern3.AcceptPlayer(mechanic);
+        */
+        
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
@@ -272,8 +278,8 @@ public class Program
            		var mechanic = new Mechanic();
            		System.out.println("Add meg a karakter nevét!");
            		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine();
-           		mechanic.SetName(name == null ? "mechanic" + i : name);
+           		String name = inName.nextLine().toUpperCase();
+           		mechanic.SetName(name == "" ? "MECHANIC_" + (i + 1) : name);
            		int pos = new Random().nextInt(map.size() - 1);
            		while(map.get(pos).AcceptPlayer(mechanic) == false)
            			pos = new Random().nextInt(map.size() - 1);
@@ -294,8 +300,8 @@ public class Program
            		var saboteur = new Saboteur();
            		System.out.println("Add meg a karakter nevét!");
            		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine();
-           		saboteur.SetName(name == null ? "saboteur" + i : name);
+           		String name = inName.nextLine().toUpperCase();
+           		saboteur.SetName(name == "" ? "SABOTEUR_" + (i + 1) : name);
            		int pos = new Random().nextInt(map.size() - 1);
            		while(map.get(pos).AcceptPlayer(saboteur) == false)
            			pos = new Random().nextInt(map.size() - 1);

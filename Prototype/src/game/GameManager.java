@@ -44,6 +44,9 @@ public class GameManager
         return map;
     }
 
+    public static void SetMap(ArrayList<IElement> map) {
+    }
+
     /**Az aktuális játékos visszaadása.
      * @return az aktuális játékos.
      */

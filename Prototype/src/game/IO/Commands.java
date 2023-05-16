@@ -86,7 +86,8 @@ public class Commands{
 
     public void RunTest(String[] param){
         if (param.length == 0) {
-            //exception
+            System.err.println("Hiányos paraméter");
+            return;
         }
         JUnitCore junit = new JUnitCore();
         junit.addListener(new TextListener(System.out));
