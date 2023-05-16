@@ -1,8 +1,6 @@
 package game;
 
 import static org.junit.Assert.*;
-import game.elements.*;
-import game.players.Player;
 
 import org.junit.Test;
 

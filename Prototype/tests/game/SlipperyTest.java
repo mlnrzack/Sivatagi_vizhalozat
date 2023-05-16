@@ -1,11 +1,6 @@
 package game;
 
 import static org.junit.Assert.*;
-import game.*;
-import game.elements.*;
-import tests.TestBase;
-
-import java.util.ArrayList;
 
 import org.junit.Test;
 

@@ -1,6 +1,5 @@
 package game;
 
-import game.elements.Pipe;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

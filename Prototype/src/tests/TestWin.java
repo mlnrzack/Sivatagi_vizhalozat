@@ -2,7 +2,6 @@ package tests;
 
 import game.Constants;
 import game.GameManager;
-import game.TestBaseJunit;
 
 public class TestWin extends TestBase
 {

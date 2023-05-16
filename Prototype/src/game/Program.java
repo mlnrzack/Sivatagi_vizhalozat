@@ -253,23 +253,41 @@ public class Program
         map.add(spring2);
 
         GameManager.SetMap(map);
-        /*
-        var mechanic = new Mechanic();
-        mechanic.SetName("mec");
-        mechanic.SetCurrentPosition(cistern3);
-        cistern3.AcceptPlayer(mechanic);
-        */
         
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
     		Scanner in = new Scanner(System.in);
-    		int mechanicsCount = in.nextInt();
+    		String userinput = "";
+    		int mechanicsCount = 0;
+    		
+    		while(mechanicsCount == 0)
+    		{
+    			try
+    			{
+    	    		userinput = in.nextLine();
+    				mechanicsCount = Integer.parseInt(userinput);
+    			}
+    			catch(Exception e)
+    			{
+    				System.out.println("Hibás bemenet!");
+    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
+    			}
+    		}
     		
     		while(mechanicsCount < 2)
     		{
     			System.out.println("Hány játékos alkotja a szerelők csapatát?\nMin 2...");
-    			mechanicsCount = in.nextInt();
+    			try
+    			{
+    	    		userinput = in.nextLine();
+    				mechanicsCount = Integer.parseInt(userinput);
+    			}
+    			catch(Exception e)
+    			{
+    				System.out.println("Hibás bemenet!");
+    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
+    			}
     		}
     		
            	for(int i = 0; i < mechanicsCount; i++)
@@ -287,11 +305,35 @@ public class Program
            	}
            	
            	System.out.println("Hány játékos alkotja a szabotőrök csapatát?");          	
-           	int saboteursCount = in.nextInt();
+           	int saboteursCount = 0;
+           	
+           	while(saboteursCount == 0)
+    		{
+    			try
+    			{
+    	    		userinput = in.nextLine();
+    	    		saboteursCount = Integer.parseInt(userinput);
+    			}
+    			catch(Exception e)
+    			{
+    				System.out.println("Hibás bemenet!");
+    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
+    			}
+    		}
+           	
            	while(saboteursCount < 2)
     		{
     			System.out.println("Hány játékos alkotja a szabotőrök csapatát?\nMin 2...");
-    			saboteursCount = in.nextInt();
+    			try
+    			{
+    	    		userinput = in.nextLine();
+    	    		saboteursCount = Integer.parseInt(userinput);
+    			}
+    			catch(Exception e)
+    			{
+    				System.out.println("Hibás bemenet!");
+    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
+    			}
     		}
            	
            	for(int i = 0; i < saboteursCount; i++)

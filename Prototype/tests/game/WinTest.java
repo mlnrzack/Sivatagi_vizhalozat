@@ -5,10 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import game.elements.Desert;
-
-import org.junit.BeforeClass;
-
 public class WinTest extends TestBaseJunit
 {
 

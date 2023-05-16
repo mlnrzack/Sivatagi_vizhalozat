@@ -1,14 +1,12 @@
 package game.IO;
 
 import game.*;
-import game.elements.*;
 import game.players.Mechanic;
 import game.players.Player;
 import game.players.Saboteur;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
-import java.io.*;
 import java.util.Scanner;
 
 public class Commands

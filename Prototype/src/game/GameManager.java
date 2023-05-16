@@ -472,39 +472,37 @@ public class GameManager
                    			currentMechanicPlayer.Move(neighbourIdx);
                             break;
                         case "repair":
-                        	mechanics.get(i).Repair();
+                        	currentMechanicPlayer.Repair();
                             break;
                         case "pickfreepipe":
-                        	mechanics.get(i).PickUpFreePipeEnd();
+                        	currentMechanicPlayer.PickUpFreePipeEnd();
                             break;
                         case "picknewpump":
-                        	mechanics.get(i).PickUpPump();
+                        	currentMechanicPlayer.PickUpPump();
                             break;
                         case "droppump":
-                        	//int piid = TryPipeIdSet();
-                        	//int puid = TryPumpIdSet();
-                        	mechanics.get(i).BuildPumpIntoPipe();
+                        	currentMechanicPlayer.BuildPumpIntoPipe();
                             break;
                         case "connectpipe":
-                        	mechanics.get(i).ConnectPipe();
+                        	currentMechanicPlayer.ConnectPipe();
                             break;
                         case "pickneighbour":
                             neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
-                            mechanics.get(i).DisconnectNeighbourPipe(neighbourIdx);
+                            currentMechanicPlayer.DisconnectNeighbourPipe(neighbourIdx);
                             break;
                         case "setpump":
                             int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
                             int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-                            mechanics.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                            currentMechanicPlayer.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
                         case "leakpipe":
-                        	mechanics.get(i).Damage();
+                        	currentMechanicPlayer.Damage();
                         	break;
                         case "stickypipe":
-                        	mechanics.get(i).SetStickyPipe();
+                        	currentMechanicPlayer.SetStickyPipe();
                         	break;
                         case "pass":
-                        	mechanics.get(i).Pass();
+                        	currentMechanicPlayer.Pass();
                         default:
                             break;
                    	}

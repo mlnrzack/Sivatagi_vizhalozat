@@ -1,10 +1,6 @@
 package game;
 
-import game.elements.*;
-import game.players.*;
-
 import static org.junit.Assert.*;
-import org.junit.Before;
 import org.junit.Test;
 
 public class DamageTest extends TestBaseJunit

@@ -1,10 +1,8 @@
 package game;
 
 import org.junit.Test;
-
-import game.elements.Pump;
-
 import static org.junit.Assert.*;
+
 public class TryBuildPumpTest extends TestBaseJunit
 {
     /**8.2.8
