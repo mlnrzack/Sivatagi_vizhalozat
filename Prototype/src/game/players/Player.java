@@ -114,6 +114,8 @@ public abstract class Player
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
 
+    /**A játékos körből való kihagyása
+     */
     public void Pass()
     {
     	System.out.println(this.GetName() + " játékos passzolt.");
@@ -122,6 +124,13 @@ public abstract class Player
     		GameManager.ActionExecuted();
     	}
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
+    }
+    
+    /**A játék bezárása
+     */
+    public void Exit()
+    {
+    	System.exit(0);
     }
     
     /**

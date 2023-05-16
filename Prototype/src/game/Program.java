@@ -3,6 +3,7 @@ package game;
 import java.util.*;
 
 import game.elements.*;
+import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
 
@@ -11,6 +12,7 @@ public class Program
     public static void main(String[] args)
     {
         CreateMap();
+        //CommandInterpreter.getInput();
         GameManager.StartGame();
     }
     

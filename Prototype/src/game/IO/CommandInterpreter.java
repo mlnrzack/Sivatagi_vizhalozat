@@ -25,10 +25,16 @@ public class CommandInterpreter
         cmd = new Commands();
     }
 
-    public void getInput()
+    public static void getInput()
     {
         System.out.println("\t~ Sivatagi vízhálózat ~\nEpsilon csapat protorípusa\n");
-        System.out.println("A lehetséges bemeneti parancsok: \n\tcreateMap\n\tstart\n\tplayerMove\n\tplayerAction\n\texit\n\trunTest");
+        System.out.println("A lehetséges bemeneti parancsok: "
+        		+ "\n\tcreateMap"
+        		+ "\n\tstart"
+        		+ "\n\tplayerMove"
+        		+ "\n\tplayerAction"
+        		+ "\n\texit"
+        		+ "\n\trunTest");
 
         while (true)
         {
