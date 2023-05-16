@@ -28,19 +28,17 @@ public class CommandInterpreter
 
     public void getInput()
     {
-        System.out.println("A lehetséges bemeneti parancsok: \n\tcreateMap\n\tstart\n\tplayerMove <név>\n\tplayerAction <név>\n\texit\n\trunTest <tesztnév> //az All lefuttatja egyben az összes parancsot");
+        //System.out.println("A lehetséges bemeneti parancsok: \n\tcreateMap\n\tstart\n\tplayerMove <név>\n\tplayerAction <név>\n\texit\n\trunTest <tesztnév> //az All lefuttatja egyben az összes parancsot");
 
         while (true)
         {
-            String commandLineInput = sc.nextLine();
-            String[] interpreterArray = commandLineInput.split(" ");
-            System.out.println("A lehetséges bemeneti parancsok: "
+        	System.out.println("A lehetséges bemeneti parancsok: "
             		+ "\n\tcreateMap"
             		+ "\n\tstart"
-            		+ "\n\tplayerMove <név>"
-            		+ "\n\tplayerAction <név>"
             		+ "\n\texit"
             		+ "\n\trunTest <tesztnév> //az all lefuttatja egyben az összes parancsot");
+            String commandLineInput = sc.nextLine();
+            String[] interpreterArray = commandLineInput.split(" ");
 
             switch (interpreterArray[0])
             {
@@ -53,13 +51,13 @@ public class CommandInterpreter
                 	break;
                 case "createMap": 
                 	cmd.CreateMap(); 
-                	break;
+                	break;/*
                 case "playerMove": 
                 	cmd.playerMove(interpreterArray); 
                 	break;
                 case "playerAction": 
                 	cmd.playerAction(interpreterArray); 
-                	break;
+                	break;*/
                 case "runTest": 
                 	cmd.RunTest(interpreterArray); 
                 	break;
