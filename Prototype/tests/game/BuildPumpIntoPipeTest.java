@@ -3,7 +3,7 @@ package game;
 import org.junit.Test;
 
 
-public class BuildPumpIntoPipeTest extends TestBase
+public class BuildPumpIntoPipeTest extends TestBaseJunit
 {
     /** 8.2.12
      * Egy szerelő beépít egy pumpát egy cső közepébe.

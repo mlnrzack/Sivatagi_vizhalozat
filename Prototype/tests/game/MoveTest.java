@@ -6,7 +6,7 @@ import game.players.Player;
 
 import org.junit.Test;
 
-public class MoveTest extends TestBase
+public class MoveTest extends TestBaseJunit
 {
 	@Test
 	public void test_defaultMove()

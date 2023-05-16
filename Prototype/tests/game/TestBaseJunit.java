@@ -1,19 +1,12 @@
-package tests;
+package game;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import game.*;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
 
-/**
- *A tesztek alapját biztosító osztály.
- * A teszt osztályok ennek a leszármazótjai.
- * Létrehozza a tesztekhez szükséges objektumokat, és felállít egy alap WS- pipe1- pump- pipe2 - Cistern  pályát a tesztelés miatt.
- * A pump2 a többi teszteseten használatos mint új pumpa.
- */
-public class TestBase
+public class TestBaseJunit 
 {
 	static GameManager gamem = new GameManager();
 	static Cistern cistern = new Cistern();
@@ -27,22 +20,24 @@ public class TestBase
 	Saboteur saboteur = new Saboteur();
 	Mechanic mechanic = new Mechanic();
 	
-	public static void Init()
+	public static void init()
 	{	
+		/*
+		cistern.SetId("cistern");
+		pipe1.SetId("pipe1");
+		pipe2.SetId("pipe2");
+		pump.SetId("pump");
+		pump2.SetId("pump2");
+		spring.SetId("spring");
+		*/
 		spring.AddPipe(pipe1);
-		
-		pipe1.AddNeighbour(spring);
-		pipe1.AddNeighbour(pump);
-		
 		pump.AddPipe(pipe1);
 		pump.AddPipe(pipe2);
-		
+		cistern.AddPipe(pipe2);
+		pipe1.AddNeighbour(spring);
+		pipe1.AddNeighbour(pump);
 		pipe2.AddNeighbour(pump);
 		pipe2.AddNeighbour(cistern);
-		
-		cistern.AddPipe(pipe2);
-		
-		System.out.println("Szomszédságok beállítva.");
 		
 		map.add(cistern);
 		map.add(pipe1);

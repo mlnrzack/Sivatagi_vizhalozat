@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class RepairTest extends TestBase
+public class RepairTest extends TestBaseJunit
 {
 	@Test
 	public void testRepair()

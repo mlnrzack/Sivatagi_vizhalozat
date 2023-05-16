@@ -9,7 +9,7 @@ import game.elements.Desert;
 
 import org.junit.BeforeClass;
 
-public class WinTest extends TestBase
+public class WinTest extends TestBaseJunit
 {
 
 	@Before

@@ -41,6 +41,21 @@ public class TestSlippery extends TestBase
 	
 	public void TestSlipperyFunction()
 	{
-		//TODO
+		TestBase.Init();
+		
+		saboteur.SetCurrentPosition(pipe1);
+		pipe1.AcceptPlayer(saboteur);
+		
+		mechanic.SetCurrentPosition(spring);
+		spring.AcceptPlayer(mechanic);
+		
+		saboteur.SetSlipperyPipe();
+		saboteur.Move(0);
+		
+		mechanic.Move(0);
+		System.out.println("Vajon hova került a mechanic játékos?");
+		System.out.println(mechanic.GetCurrentPosition().GetId() + " erre az elemere került a mechanic játkos!");
+		System.out.println("Ha a mechanic jelenlegi helye valóban szomszédos az eredeti helyével, akkor igaz választ várunk.");
+		System.out.println(mechanic.GetCurrentPosition().GetId() == spring.GetNeighbours().get(0).GetId() ? "Igaz" : "Hamis");
 	}
 }

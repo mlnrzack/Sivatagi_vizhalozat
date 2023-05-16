@@ -21,6 +21,7 @@ public class Pipe extends Element implements ISteppable
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddPipe(this);
+    	this.SetId("pipe" + GameManager.TryPipeIdSet());
     }
     
     /**Az osztály paraméteres konstruktora.
@@ -292,7 +293,7 @@ public class Pipe extends Element implements ISteppable
     public boolean SlipperyPipe(Player player)
     {
     	if(slipperyTimer > 0)
-    		GetNeighbours().get(new Random().nextInt(neighbours.size())).AcceptPlayer(player);
+    		this.GetNeighbours().get(new Random().nextInt(this.neighbours.size())).AcceptPlayer(player);
     	
     	return slipperyTimer > 0;
     }

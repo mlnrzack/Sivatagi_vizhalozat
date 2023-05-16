@@ -19,6 +19,8 @@ public class GameManager
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();				//A vízforrások listája.
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();						//A szabotőrök listája.
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();						//A szerelők listája.
+    //private static Mechanic currentMechanicPlayer = new Mechanic();									//Az aktuális játékos.
+    //private static Saboteur currentSaboteurPlayer = new Saboteur();									//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
     /**Az aktuális körszám visszaadása.
@@ -219,6 +221,40 @@ public class GameManager
     	return waterSprings.remove(waterspring);
     }
     
+    /*
+    /**Átadja az éppen aktuális szerelő játékost külső osztályoknak.
+     * @return az aktuális szerelő.
+     *
+    public static Mechanic GetCurrentMechanic()
+    {
+    	return currentMechanicPlayer;
+    }
+    
+    /**Az aktuális szerelő játékos beállítása adott játékos.
+     * @param current az adott játékos.
+     *
+    public static void SetCurrentMechanic(Mechanic current)
+    {
+    	currentMechanicPlayer = current;
+    }
+    
+    /**Átadja az éppen aktuális szabotőr játékost külső osztályoknak.
+     * @return az aktuális szabotőr.
+     *
+    public static Saboteur GetCurrentSaboteur()
+    {
+    	return currentSaboteurPlayer;
+    }
+    
+    /**Az aktuális szabotőr játékos beállítása adott játékos.
+     * @param current az adott játékos.
+     *
+    public static void SetCurrentSaboteur(Saboteur current)
+    {
+    	currentSaboteurPlayer = current;
+    }
+    */
+    
     /**Adott karakter körbeli lépésszámának átadása más osztályoknak.
      * @return adott karakter lépésszáma
      */
@@ -394,6 +430,8 @@ public class GameManager
     	for(int i = 0; i < mechanics.size(); i++)
     	{
     		playerActionCountInCurrentRound = 0;
+    		//SetCurrentMechanic(mechanics.get(i));
+    		//SetCurrentSaboteur(null);
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{

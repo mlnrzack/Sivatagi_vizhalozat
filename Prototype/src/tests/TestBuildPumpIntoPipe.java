@@ -56,6 +56,7 @@ public class TestBuildPumpIntoPipe extends TestBase
         System.out.println("Cistern: " + cistern.GetWaterInside());
         System.out.println("Mechanic points: " + GameManager.GetMechanincsPoints());
         
+        System.out.println("A ciszternába eljutott-e a víz, ha igen egyforma lesz az érték.");
         System.out.println("Egyforma értéket várunk");
 		System.out.println(cistern.GetWaterInside() == 1 ? "Egyformák" : "Nem egyformák");
     }

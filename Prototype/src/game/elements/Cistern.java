@@ -13,6 +13,7 @@ public class Cistern extends ActiveElement implements ISteppable
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddCistern(this);
+    	this.SetId("cistern" + GameManager.TryCisternIdSet());
     }
 
     /**Visszaad egy új csövet.

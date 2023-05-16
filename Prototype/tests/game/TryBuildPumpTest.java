@@ -5,7 +5,7 @@ import org.junit.Test;
 import game.elements.Pump;
 
 import static org.junit.Assert.*;
-public class TryBuildPumpTest extends TestBase
+public class TryBuildPumpTest extends TestBaseJunit
 {
     /**8.2.8
      * Egy játékos pumpát állít fel
@@ -13,6 +13,7 @@ public class TryBuildPumpTest extends TestBase
     @Test
     public void testTryBuildPump()
     {
+    	TestBaseJunit.init();
         mechanic.SetPumpInInventory(pump2);
         mechanic.SetCurrentPosition(pipe1);
         pipe1.AcceptPlayer(mechanic);

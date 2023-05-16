@@ -4,7 +4,7 @@ import game.elements.Pipe;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-public class PickUpFreePipeEndTest extends TestBase
+public class PickUpFreePipeEndTest extends TestBaseJunit
 {
     /**8.2.10
      * Játékos felveszi egy csőnek az egyik végét a ciszternából.

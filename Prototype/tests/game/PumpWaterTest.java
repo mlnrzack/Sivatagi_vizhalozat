@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PumpWaterTest extends TestBase
+public class PumpWaterTest extends TestBaseJunit
 {
     /**8.2.7
      * A pumpák minden elemi akció után pumpálnak a beállításuk alapján.

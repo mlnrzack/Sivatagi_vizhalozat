@@ -4,7 +4,7 @@ import game.elements.Pipe;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-public class TrySetPumpTest extends TestBase{
+public class TrySetPumpTest extends TestBaseJunit{
     /**8.2.8
      * Egy játékos pumpák bemenetét állítja be.
      */
