@@ -6,7 +6,7 @@ public class TestRepair extends TestBase
 	 * 8.2.2
 	 * Egy szerelő megjavít egy kilyukasztott csövet.
 	 */
-	public void TestRepairs()
+	public static void TestRepairs()
 	{
 		mechanic.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(mechanic);

@@ -1,9 +1,8 @@
 package game.IO;
 
 import game.*;
-import game.players.Mechanic;
-import game.players.Player;
-import game.players.Saboteur;
+import game.players.*;
+import tests.*;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
 
@@ -92,57 +91,102 @@ public class Commands
 
     public void RunTest(String[] param)
     {
-        if (param.length == 0)
-        {
-            //exception
-        }
+    	if (param.length != 2 || param == null) {System.err.println("Hibás bemenet!"); return;}
+        
         
         JUnitCore junit = new JUnitCore();
         junit.addListener(new TextListener(System.out));
 
         switch (param[1])
         {
-        	case"BuildPumpIntoPipeTest":
-        		junit.run(BuildPumpIntoPipeTest.class);
+        	case"TestBuildPumpIntoPipe":
+        		TestBuildPumpIntoPipe.TestTryBuildPump();
+        		TestBuildPumpIntoPipe.TestTryBuildPumpWithWaterFlow();
+        		break;
         		
-        	case"ConnectPipeTest" :
-                junit.run(ConnectPipeTest.class);
+        	case"TestConnectPipe" :
+                TestConnectPipe.TestConnect();
+                break;
                 
-            case"DamageTest" :
-                junit.run(DamageTest.class);
-
-            case"MoveTest" :
-                junit.run(MoveTest.class);
-
-            case"PickUpFreePipeEndTest" :
-                junit.run(PickUpFreePipeEndTest.class);
-                
-            case"PickUpPumpTest" :
-                junit.run(PickUpPumpTest.class);
-                
-            case"PumpWaterTest" :
-                junit.run(PumpWaterTest.class);
-                
-            case"RepairTest" :
-                junit.run(RepairTest.class);
-
-            case"SlipperyTest" :
-                junit.run(SlipperyTest.class);
+            case"TestDamage" :
+                TestDamage.TestDamages();
+                break;
 
             case"TestDisconnectNeighbourPipe" :
-                junit.run(TestDisconnectNeighbourPipe.class);
-
-            case"TryBuildPumpTest" :
-                junit.run(TryBuildPumpTest.class);
+            	TestDisconnectNeighbourPipe.TestDisconnectNeighbourPipes();
+            	break;
                 
-            case"TrySetPumpTest" :
-                junit.run(TrySetPumpTest.class);
-                
-            case"WinTest" :
-                junit.run(WinTest.class);
+            case"TestMove" :
+            	TestMove.Test_defaultMove();
+            	TestMove.Test_morePlayersOnActiveElement();
+            	TestMove.Test_morePlayersOnPipe();
+            	TestMove.Test_movePlayersToSamePipe();
+            	TestMove.Test_wrongIndex();
+            	break;
 
+            case"TestPickUpFreePipeEnd" :
+                TestPickUpFreePipeEnd.TestPickUpFreePipe();
+                break;
+                
+            case"TestPickUpPump" :
+                TestPickUpPump.TestPickPump();
+                break;
+                
+            case"TestPumpWater" :
+                TestPumpWater.TestWaterPump();
+                break;
+                
+            case"TestRepair" :
+                TestRepair.TestRepairs();
+                break;
+                
+            case"TestSetPump" :
+            	TestSetPump.TestTrySetPump();
+            	break;
+            	
+            case"TestSlippery" :
+                TestSlippery.TestSetSlippery();
+                TestSlippery.TestSlipperyFunction();
+                break;
+                
+            case "TestSticky":
+            	TestSticky.TestSetSticky();
+            	TestSticky.TestStickyFunction();
+            	
+            case"TestWin" :
+            	TestWin.InitTest();
+            	TestWin.TestMechanicsWin();
+            	TestWin.TestSaboteursWin();
+            	break;
+            	
+            case"all" :
+            	TestBuildPumpIntoPipe.TestTryBuildPump();
+        		TestBuildPumpIntoPipe.TestTryBuildPumpWithWaterFlow();
+        		TestConnectPipe.TestConnect();
+        		TestDamage.TestDamages();
+        		TestDisconnectNeighbourPipe.TestDisconnectNeighbourPipes();
+        		TestMove.Test_defaultMove();
+            	TestMove.Test_morePlayersOnActiveElement();
+            	TestMove.Test_morePlayersOnPipe();
+            	TestMove.Test_movePlayersToSamePipe();
+            	TestMove.Test_wrongIndex();
+            	TestPickUpFreePipeEnd.TestPickUpFreePipe();
+            	TestPickUpPump.TestPickPump();
+            	TestPumpWater.TestWaterPump();
+            	TestRepair.TestRepairs();
+            	TestSetPump.TestTrySetPump();
+            	TestSlippery.TestSetSlippery();
+                TestSlippery.TestSlipperyFunction();
+                TestSticky.TestSetSticky();
+                TestSticky.TestStickyFunction();
+            	TestWin.InitTest();
+            	TestWin.TestMechanicsWin();
+            	TestWin.TestSaboteursWin();
+            	break;
+            	
             default:
                 System.err.println("Nem létező tesz eset!");
+                break;
         }
     }
 
@@ -153,6 +197,7 @@ public class Commands
 
     public void Start()
     {
+    	if(GameManager.GetMap().size() == 0) Program.CreateMap();
     	GameManager.StartGame();
     }
     
@@ -265,9 +310,10 @@ public class Commands
     {
         Player p = null;
         Scanner sc = new Scanner(System.in);
-        if (param.length < 2) System.err.println("Hibás bemenet!");
+        if (param.length != 2 || param == null) {System.err.println("Hibás bemenet!"); return;}
         else
         {
+        	
             String name = param[1];
             for(var n: GameManager.GetMechanics())
             {
@@ -280,16 +326,18 @@ public class Commands
                 if(n.GetName() == name)
                     p = n;
             }
-            assert p != null;
-            int neighbourIndex = sc.nextInt();
-            if (neighbourIndex < 0 || neighbourIndex > p.GetCurrentPosition().GetNeighbours().size())
-            {
-            	System.err.println("Hibás mezőre lépés"); 
-            	return;
-            }
-            else
-            {
-                p.Move(neighbourIndex);
+            if(p == null) System.err.println("Nem található ilyen nevű játékos");
+            else {
+	            int neighbourIndex = sc.nextInt();
+	            if (neighbourIndex < 0 || neighbourIndex > p.GetCurrentPosition().GetNeighbours().size())
+	            {
+	            	System.err.println("Hibás mezőre lépés"); 
+	            	return;
+	            }
+	            else
+	            {
+	                p.Move(neighbourIndex);
+	            }
             }
         }
     }
@@ -314,7 +362,7 @@ public class Commands
                 if (n.GetName().equals(name))
                     s = n;
             }
-
+            if(m == null || s == null) { System.err.println("Nem található ilyen nevű játékos"); return; }
             Scanner sc = new Scanner(System.in);
             Scanner input = new Scanner(System.in);
             String[] params;
@@ -333,6 +381,8 @@ public class Commands
                     System.out.println("\t7 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
                     System.out.println("\t8 - cső lyukasztás");
                     System.out.println("\t9 - sticky");
+                    System.out.println("\t10 - pass");
+
                     System.out.println("-----------------------------------------------------------------");
                     switch (Integer.parseInt(sc.nextLine())) 
                     {
@@ -354,6 +404,8 @@ public class Commands
                                     m.Damage(); break;
                         case 9:
                                     m.SetStickyPipe(); break;
+                        case 10:
+                        		m.Pass(); break;
                         default:
                             System.err.println("Nem létező parancs!"); break;
                     }
@@ -370,6 +422,8 @@ public class Commands
                     System.out.println("\t2 X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
                     System.out.println("\t3 - A cső ragacsossá tétele maga alatt");
                     System.out.println("\t4 - A cső csúszóssá tétele");
+                    System.out.println("\t5 - Passzolás");
+
                     System.out.println("-----------------------------------------------------------------");
 
                     switch (Integer.parseInt(sc.nextLine()))
@@ -389,6 +443,8 @@ public class Commands
                                     s.SetStickyPipe(); break;
                         case 4:
                                     s.SetSlipperyPipe(); break;
+                        case 5: 
+                        		s.Pass(); break;
                         default:
                             System.err.println("Nem létező parancs!"); break;
                     }

@@ -7,7 +7,7 @@ public class TestDisconnectNeighbourPipe extends TestBase
      * A szerelő lecsatlakoztat egy már csatlakoztatott csövet a pumpáról.
      * Sikeres teszt esetén előszőr 2 szomszédja van, majd 1.
      */
-	public void TestDisconnectNeighbour()
+	public static void TestDisconnectNeighbourPipes()
 	{
         mechanic.SetCurrentPosition(pump);
         System.out.println("A szerelő a pumpán.\n Jelenleg 2 szomszédjának ellenőrzése");

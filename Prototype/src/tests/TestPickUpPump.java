@@ -5,7 +5,7 @@ public class TestPickUpPump extends TestBase
 	/**8.2.13
      * Egy szerelő felvesz egy pumpát (a ciszternánál).
      */
-	public void TestPickPump()
+	public static void TestPickPump()
     {
         mechanic.SetCurrentPosition(cistern);
         cistern.AcceptPlayer(mechanic);

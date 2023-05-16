@@ -8,7 +8,7 @@ public class TestPumpWater extends TestBase
      * 8.2.7
      * A pumpák minden elemi akció után pumpálnak a beállításuk alapján.
      */
-	public void TestWaterPump()
+	public static void TestWaterPump()
     {
         mechanic.SetCurrentPosition(pump);
         pump.AcceptPlayer(mechanic);

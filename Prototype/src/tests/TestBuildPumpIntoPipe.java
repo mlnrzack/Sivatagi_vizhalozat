@@ -1,6 +1,7 @@
 package tests;
 
 import game.*;
+import game.elements.*;
 
 public class TestBuildPumpIntoPipe extends TestBase
 {
@@ -8,13 +9,16 @@ public class TestBuildPumpIntoPipe extends TestBase
      * Egy szerelő beépít egy pumpát a pipe1 cső közepébe.
      * A sikeres tesztet a Sikeres teszt felirat jezli,
      */
-    public void TestTryBuildPump()
+    public static void TestTryBuildPump()
     {
+    	TestBase.Init();
+    	//Pump newPump = new Pump();
         mechanic.SetCurrentPosition(pipe1);
         pipe1.AcceptPlayer(mechanic);
         System.out.println("Mechanic a pipe1-n.");
+        mechanic.SetPumpInInventory(pump2);
         System.out.println("Sikeres teszt eredményt várunk:");
-        if (pipe1.TryBuildPumpInto(pump2))
+        if (mechanic.BuildPumpIntoPipe())
         {
             System.out.println("Sikeres teszt");
         }
@@ -23,14 +27,15 @@ public class TestBuildPumpIntoPipe extends TestBase
     /**8.2.8
      * Egy játékos pumpát állít fel, majd ellenőrzi, hogy sikerült-e
      */
-    public void TestTryBuildPumpWithWaterFlow()
+    public static void TestTryBuildPumpWithWaterFlow()
     {
-        mechanic.SetPumpInInventory(pump2);
+    	TestBase.Init();
+    	//Pump newPump = new Pump();
         System.out.println("A szerelő megkapja a pump2-t");
         mechanic.SetCurrentPosition(pipe1);
         System.out.println("A szerelő a pipe1-n áll.");
         pipe1.AcceptPlayer(mechanic);
-
+        mechanic.SetPumpInInventory(pump2);
 
         mechanic.BuildPumpIntoPipe();
         System.out.println("A szerelő beépítette a pumpát.");
@@ -39,6 +44,8 @@ public class TestBuildPumpIntoPipe extends TestBase
         System.out.println("A szerelő a beállította az újonnan beépített pumpát.");
         spring.FillNeighourPipes();
         pump2.GetNeighbours().get(0).Step();
+        //newPump.Step();
+        //newPump.Step();
         pump2.Step();
         pump2.Step();
         pipe1.Step();

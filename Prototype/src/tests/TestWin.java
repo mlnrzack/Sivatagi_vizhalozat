@@ -5,7 +5,7 @@ import game.GameManager;
 
 public class TestWin extends TestBase
 {
-	public void InitTest()
+	public static void InitTest()
 	{
 		GameManager.SetMechanicsPoints(0);
 		GameManager.SetSaboteursPoints(0);
@@ -21,7 +21,7 @@ public class TestWin extends TestBase
 		System.out.println(pump.TrySetInputOutput(0, 1) ? "Igaz" : "Hamis");
 	}
 
-	public void TestMechanicsWin()
+	public static void TestMechanicsWin()
 	{
 		saboteur.Move(1);
 		
@@ -53,7 +53,7 @@ public class TestWin extends TestBase
 		System.out.println(GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints() ? "Igaz" : "Hamis");
 	}
 	
-	public void TestSaboteursWin()
+	public static void TestSaboteursWin()
 	{
 		saboteur.Move(1);
 		System.out.println("Egyforma értéket várunk");

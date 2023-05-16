@@ -8,7 +8,7 @@ public class TestSlippery extends TestBase
 	 * 8.2.3
 	 * Egy játékos csúszóssá tesz egy csövet.
 	 */
-	public void TestSetSlippery()
+	public static void TestSetSlippery()
 	{
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
@@ -39,7 +39,7 @@ public class TestSlippery extends TestBase
 		System.out.println(pipe2.GetSlippery() == Constants.LeakageTimerBound - 1 ? "Egyformák" : "Nem egyformák");
 	}
 	
-	public void TestSlipperyFunction()
+	public static void TestSlipperyFunction()
 	{
 		TestBase.Init();
 		

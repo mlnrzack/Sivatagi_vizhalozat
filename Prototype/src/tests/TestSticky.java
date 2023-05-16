@@ -9,7 +9,7 @@ public class TestSticky extends TestBase
 	 * 8.2.4
 	 * Egy játékos ragadóssá tesz egy csövet.
 	 */
-	public void TestSetSticky()
+	public static void TestSetSticky()
 	{
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
@@ -34,7 +34,7 @@ public class TestSticky extends TestBase
 		System.out.println(pipe2.GetSticky() == Constants.LeakageTimerBound - 1 ? "Egyformák" : "Nem egyformák");
 	}
 	
-	public void TestStickyFunction()
+	public static void TestStickyFunction()
 	{
 		//mini init
 		Pipe pipe3 = new Pipe();

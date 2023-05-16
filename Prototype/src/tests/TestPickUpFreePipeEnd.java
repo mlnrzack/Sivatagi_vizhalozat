@@ -5,7 +5,7 @@ public class TestPickUpFreePipeEnd extends TestBase
     /**8.2.10
      * Játékos felveszi egy csőnek az egyik végét a ciszternából.
      */
-    public void TestPickUpFreePipe()
+    public static void TestPickUpFreePipe()
     {
         mechanic.SetCurrentPosition(pump);
         pump.AcceptPlayer(mechanic);

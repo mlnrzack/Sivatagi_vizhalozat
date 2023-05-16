@@ -7,7 +7,7 @@ public class TestMove extends TestBase
 	 * Mozgások ellenőrzése,
 	 * 1. az alapmozgás ellenőrzése.
 	 */
-	public void Test_defaultMove()
+	public static void Test_defaultMove()
 	{
 		mechanic.SetCurrentPosition(spring);
 		spring.AcceptPlayer(mechanic);
@@ -33,7 +33,7 @@ public class TestMove extends TestBase
 	/**
 	 * Rossz indexre mozgatás
 	 */
-	public void Test_wrongIndex()
+	public static void Test_wrongIndex()
 	{
 		mechanic.SetCurrentPosition(pump);
 		pump.AcceptPlayer(mechanic);
@@ -58,7 +58,7 @@ public class TestMove extends TestBase
 	/**
 	 * Több player ugyanazon aktív elemre mozgatásának tesztelése
 	 */
-	public void Test_morePlayersOnActiveElement()
+	public static void Test_morePlayersOnActiveElement()
 	{
 		saboteur.SetCurrentPosition(pump);
 		pump.AcceptPlayer(saboteur);
@@ -75,7 +75,7 @@ public class TestMove extends TestBase
 	/**
 	 * Több player egy pipe-n való tesztelése.
 	 */
-	public void Test_morePlayersOnPipe()
+	public static void Test_morePlayersOnPipe()
 	{
 		saboteur.SetCurrentPosition(spring);
 		spring.AcceptPlayer(saboteur);
@@ -98,7 +98,7 @@ public class TestMove extends TestBase
 	/**
 	 *
 	 */
-	public void Test_movePlayersToSamePipe()
+	public static void Test_movePlayersToSamePipe()
 	{
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
