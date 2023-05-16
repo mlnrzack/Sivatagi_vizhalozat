@@ -6,7 +6,7 @@ public class TestDamage extends TestBase
 	 * 8.2.1
 	 * A szabotőr lyukasztással próbálkozik a pipe1-n állva.
 	 */
-	public void TestDamage()
+	public void TestDamages()
 	{
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);

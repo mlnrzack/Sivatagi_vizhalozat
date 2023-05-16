@@ -7,7 +7,7 @@ public class TestSticky extends TestBase
 	 * 8.2.4
 	 * Egy játékos ragadóssá tesz egy csövet.
 	 */
-	public void TestSticky()
+	public void TestSetSticky()
 	{
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);

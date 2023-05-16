@@ -8,7 +8,7 @@ public class TestConnectPipe extends TestBase
      * A szerelő összecsatlakoztatja a csövet egy pumpával.
      * A sikeres teszt esetén a
      */
-    public void TestConnectPipe()
+    public void TestConnect()
     {
         Pipe pipe3 = new Pipe();
         mechanic.SetPipeInInventory(pipe3);
