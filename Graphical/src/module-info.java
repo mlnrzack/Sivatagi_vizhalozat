@@ -5,7 +5,6 @@
  * @author molna
  *
  */
-module Sivatagi_vizhalozat 
-{
-	requires junit;
+module Sivatagi_vizhalozat {
+	requires java.desktop;
 }

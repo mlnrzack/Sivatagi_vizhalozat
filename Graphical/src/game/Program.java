@@ -6,6 +6,7 @@ import game.elements.*;
 import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
+import graphics.*;
 
 public class Program
 {
@@ -13,6 +14,7 @@ public class Program
     {
         CommandInterpreter interpreter = new CommandInterpreter();
         interpreter.getInput();
+        //GameFrame gFram = new GameFrame();
     }
     
     /**Egy statikus térképet létrehozó függvény.

@@ -3,9 +3,6 @@ package game.IO;
 import game.*;
 import game.players.*;
 import tests.*;
-import org.junit.internal.TextListener;
-import org.junit.runner.JUnitCore;
-//import tests.*;
 import java.util.Scanner;
 
 public class Commands
@@ -94,9 +91,6 @@ public class Commands
     	if (param.length != 2 || param == null) {System.err.println("Hibás bemenet!"); return;}
         
         
-        JUnitCore junit = new JUnitCore();
-        junit.addListener(new TextListener(System.out));
-
         switch (param[1])
         {
         	case"TestBuildPumpIntoPipe":

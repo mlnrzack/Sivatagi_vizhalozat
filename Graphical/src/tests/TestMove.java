@@ -15,21 +15,21 @@ public class TestMove extends TestBase
 		spring.AcceptPlayer(mechanic);
 		System.out.println("A szerelő Spring-re állítása. Majd ellenőrzése, hogy ott van-e");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(spring.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(spring.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 		
 		mechanic.Move(0);
 		System.out.println("A szerelő a Spring 0. indexű szomszédjára mozgatása . Majd ellenőrzése, hogy a Spring-en van-e?");
 		System.out.println("Hamis értéket várunk");
-		System.out.println(spring.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(spring.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 
 		System.out.println("A szerelő a Spring 0. indexű szomszédjára mozgatása . Majd ellenőrzése, hogy a Pipe1-n van-e?");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(pipe1.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(pipe1.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 
 		System.out.println("A szerelő pumpára mozgatjuk, majd ellenőrizzük, hogy ott van-e.");
 		mechanic.Move(mechanic.GetCurrentPosition().GetNeighbours().indexOf(pump));
 		System.out.println("Igaz értéket várunk");
-		System.out.println(pump.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(pump.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 	}
 
 	/**
@@ -43,12 +43,12 @@ public class TestMove extends TestBase
 		pump.AcceptPlayer(mechanic);
 		System.out.println("A szerelőt a pumpára állítjuk majd ellenőrizzük, hogy ott van-e");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(pump.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(pump.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 		
 		mechanic.Move(1);
 		System.out.println("A szerelőt a pipe2-re mozgatjuk  majd ellenőrizzük, hogy ott van-e");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(pipe2.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(pipe2.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 
 		System.out.println("A szerelőt a pipe2 -1. indexére mozgatjuk  majd ellenőrizzük, hogy ott van-e");
 		System.out.println("Hamis értéket várunk");
@@ -75,7 +75,7 @@ public class TestMove extends TestBase
 		mechanic.Move(0);
 		System.out.println("A szerelőt a 0. indexére mozgatjuk ahol a szabotőr is áll. Ellenőrizzük, hogy ugyan azon a helyen vannak-e?");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(saboteur.GetCurrentPosition().GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(saboteur.GetCurrentPosition().GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 	}
 
 	/**
@@ -97,10 +97,10 @@ public class TestMove extends TestBase
 		mechanic.Move(0);
 		System.out.println("Mind a kettő player pipe1 re mozgatásának probálkozása\nA szabotőr pipe-n van? ");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(pipe1.GetId().equals(saboteur.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(pipe1.GetId().equals(saboteur.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 		System.out.println("A szerelő nem tud a pipe1-re mozogni mert foglalt. \n A szerelő a pumpán maradt?");
 		System.out.println("Igaz értéket várunk");
-		System.out.println(pump.GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(pump.GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 	}
 
 	/**
@@ -118,6 +118,6 @@ public class TestMove extends TestBase
 		System.out.println("Szerelő pump-n.\nMajd mozgatási probálkozás a már foglalt pipe1-re.");
 		mechanic.Move(0);
 		System.out.println("Hamis értéket várunk");
-		System.out.println(saboteur.GetCurrentPosition().GetId().equals(mechanic.GetCurrentPosition()) ? "Igaz" : "Hamis");
+		System.out.println(saboteur.GetCurrentPosition().GetId().equals(mechanic.GetCurrentPosition().GetId()) ? "Igaz" : "Hamis");
 	}
 }
