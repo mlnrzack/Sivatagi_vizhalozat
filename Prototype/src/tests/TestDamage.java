@@ -8,6 +8,8 @@ public class TestDamage extends TestBase
 	 */
 	public static void TestDamages()
 	{
+		System.out.println("Damages Test\n");
+
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
 		System.out.println("Lyukas-e a cső?");

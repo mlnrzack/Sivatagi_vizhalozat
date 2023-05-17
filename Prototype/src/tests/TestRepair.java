@@ -8,6 +8,8 @@ public class TestRepair extends TestBase
 	 */
 	public static void TestRepairs()
 	{
+		System.out.println("Repairs Test\n");
+
 		mechanic.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(mechanic);
 		System.out.println("Szerelő pipe1-n.\nEllenőrizzük, hogy lyukas-e a cső.");

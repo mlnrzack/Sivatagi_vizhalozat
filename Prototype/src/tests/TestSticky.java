@@ -11,6 +11,8 @@ public class TestSticky extends TestBase
 	 */
 	public static void TestSetSticky()
 	{
+		System.out.println("Set a Pipe Sticky Test\n");
+
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
 		System.out.println("Szabotőr a pipe1-n\nEllenőrizzük, hogy a pipe1 az egy sima cső-e?");
@@ -36,6 +38,8 @@ public class TestSticky extends TestBase
 	
 	public static void TestStickyFunction()
 	{
+		System.out.println("Sticky Function Test\n");
+
 		//mini init
 		Pipe pipe3 = new Pipe();
 		Cistern cistern1 = new Cistern();

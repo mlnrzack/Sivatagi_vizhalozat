@@ -7,6 +7,8 @@ public class TestPickUpPump extends TestBase
      */
 	public static void TestPickPump()
     {
+        System.out.println("Pick Up Pump Test\n");
+
         mechanic.SetCurrentPosition(cistern);
         cistern.AcceptPlayer(mechanic);
         System.out.println("Szerelő a cisternán.\nEllenőrizzük, hogy rendelkezik-e pumpával.");

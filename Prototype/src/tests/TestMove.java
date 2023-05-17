@@ -9,6 +9,8 @@ public class TestMove extends TestBase
 	 */
 	public static void Test_defaultMove()
 	{
+		System.out.println("DefaultMove Test\n");
+
 		mechanic.SetCurrentPosition(spring);
 		spring.AcceptPlayer(mechanic);
 		System.out.println("A szerelő Spring-re állítása. Majd ellenőrzése, hogy ott van-e");
@@ -35,6 +37,8 @@ public class TestMove extends TestBase
 	 */
 	public static void Test_wrongIndex()
 	{
+		System.out.println("WrongIndex Test\n");
+
 		mechanic.SetCurrentPosition(pump);
 		pump.AcceptPlayer(mechanic);
 		System.out.println("A szerelőt a pumpára állítjuk majd ellenőrizzük, hogy ott van-e");
@@ -60,6 +64,8 @@ public class TestMove extends TestBase
 	 */
 	public static void Test_morePlayersOnActiveElement()
 	{
+		System.out.println("MOre Player On Active Element Test\n");
+
 		saboteur.SetCurrentPosition(pump);
 		pump.AcceptPlayer(saboteur);
 		System.out.println("Szabotőr pumpára mozgatása sikeres.");
@@ -77,6 +83,8 @@ public class TestMove extends TestBase
 	 */
 	public static void Test_morePlayersOnPipe()
 	{
+		System.out.println("More Player On Pipe Test\n");
+
 		saboteur.SetCurrentPosition(spring);
 		spring.AcceptPlayer(saboteur);
 		System.out.println("Szabotőr Springre állítása");
@@ -100,6 +108,8 @@ public class TestMove extends TestBase
 	 */
 	public static void Test_movePlayersToSamePipe()
 	{
+		System.out.println("MOve Players To Same Pipe Test\n");
+
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
 		System.out.println("Szabotőr a pipe1-n.");

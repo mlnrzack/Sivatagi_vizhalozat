@@ -7,6 +7,8 @@ public class TestSetPump extends TestBase
      */
     public static void TestTrySetPump()
     {
+        System.out.println("Try Set Pump Test\n");
+
         mechanic.SetCurrentPosition(pump);
         pump.AcceptPlayer(mechanic);
         pump.AddPipe(pipe1);

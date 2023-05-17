@@ -9,6 +9,8 @@ public class TestDisconnectNeighbourPipe extends TestBase
      */
 	public static void TestDisconnectNeighbourPipes()
 	{
+        System.out.println("DisconnectNeighbourPipes Test\n");
+
         mechanic.SetCurrentPosition(pump);
         System.out.println("A szerelő a pumpán.\n Jelenleg 2 szomszédjának ellenőrzése");
         System.out.println("Egyforma értéket várunk");

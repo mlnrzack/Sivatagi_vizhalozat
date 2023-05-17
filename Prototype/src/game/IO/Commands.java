@@ -5,7 +5,7 @@ import game.players.*;
 import tests.*;
 import org.junit.internal.TextListener;
 import org.junit.runner.JUnitCore;
-
+//import tests.*;
 import java.util.Scanner;
 
 public class Commands

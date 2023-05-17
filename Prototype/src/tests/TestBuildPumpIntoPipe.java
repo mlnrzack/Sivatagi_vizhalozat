@@ -29,6 +29,7 @@ public class TestBuildPumpIntoPipe extends TestBase
      */
     public static void TestTryBuildPumpWithWaterFlow()
     {
+        System.out.println("TryTestBuildPumpWithWaterFlow Test\n");
     	TestBase.Init();
     	//Pump newPump = new Pump();
         System.out.println("A szerelő megkapja a pump2-t");

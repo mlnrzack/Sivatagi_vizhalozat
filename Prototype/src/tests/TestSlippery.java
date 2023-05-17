@@ -10,6 +10,8 @@ public class TestSlippery extends TestBase
 	 */
 	public static void TestSetSlippery()
 	{
+		System.out.println("Set a Pipe Slippery Test\n");
+
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
 		System.out.println("Szabotőr a pipe1-n\nEllenőrizzük, hogy a pipe1 az egy sima cső-e?");
@@ -41,6 +43,8 @@ public class TestSlippery extends TestBase
 	
 	public static void TestSlipperyFunction()
 	{
+		System.out.println("Slippery Function Test\n");
+
 		TestBase.Init();
 		
 		saboteur.SetCurrentPosition(pipe1);

@@ -7,6 +7,8 @@ public class TestWin extends TestBase
 {
 	public static void InitTest()
 	{
+		System.out.println("Win Test előtti Init \n");
+
 		GameManager.SetMechanicsPoints(0);
 		GameManager.SetSaboteursPoints(0);
 		spring.SetWaterInside(0);
@@ -23,6 +25,8 @@ public class TestWin extends TestBase
 
 	public static void TestMechanicsWin()
 	{
+		System.out.println("Mechanics Win Test\n");
+
 		saboteur.Move(1);
 		
 		System.out.println("Egyforma értéket várunk");
@@ -55,6 +59,8 @@ public class TestWin extends TestBase
 	
 	public static void TestSaboteursWin()
 	{
+		System.out.println("Saboteur Win Test\n");
+
 		saboteur.Move(1);
 		System.out.println("Egyforma értéket várunk");
 		System.out.println(pipe2.GetId().equals(saboteur.GetCurrentPosition().GetId()) ? "Egyformák" : "Nem egyformák");

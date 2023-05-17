@@ -7,6 +7,8 @@ public class TestPickUpFreePipeEnd extends TestBase
      */
     public static void TestPickUpFreePipe()
     {
+        System.out.println("Pick Up Free Pipe Test\n");
+
         mechanic.SetCurrentPosition(pump);
         pump.AcceptPlayer(mechanic);
         System.out.println("Szerelő a pump.-n majd ellenőrzése, hogy rendelkezik-e pipe-al az inventory-ában.");
