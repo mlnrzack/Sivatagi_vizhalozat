@@ -15,6 +15,7 @@ public class TestBuildPumpIntoPipe extends TestBase
      */
 	public static void TestTryBuildPump()
 	{
+		boolean run = true;
 		TestBase.Init();
 		GameManager.SetCurrentMechanic(mechanic);
 		mechanic.SetCurrentPosition(cistern);
@@ -22,37 +23,44 @@ public class TestBuildPumpIntoPipe extends TestBase
 		System.out.println("Mechanic a cistern-en.");
 		System.out.println("A Mechanic szeretne pumpát felvenni? y/n");
 		input = scan.nextLine(); 
-		if (input.equals("y")) 
+		while(run)
 		{
-			mechanic.SetPumpInInventory(pump2);	//kérdés, hogy jó-e ezzel, vagy inkább legyen a PickUpPump() fv.
-			System.out.println("Position: " + mechanic.GetCurrentPosition().GetId()); 
-			System.out.println("Neighbours: ");
-			for(int i = 0; i < mechanic.GetCurrentPosition().GetNeighbours().size(); i++) 
-				System.out.println(i + ": " + mechanic.GetCurrentPosition().GetNeighbours().get(i).GetId() + "\t"); 
-			System.out.println("Szeretne a Mechanic a szomszédos elemre mozogni?" 
-					+ "\nHa igen, akkor a 'move <kívánt pozíció indexe>' paranccsal teheti"); 
-			input = scan.nextLine(); 
-			if(input.equals("move 0")) 
+			if (input.equals("y")) 
 			{
-				mechanic.SetCurrentPosition(pipe2);
-				pipe1.AcceptPlayer(mechanic);
-				System.out.println("Mechanic a pipe2-n.");
-				System.out.println("Szeretné a Mechanic lerakni ezen a csövön a pumpát? y/n");
-				input = scan.nextLine();
-				if(input.equals("y"))
+				mechanic.SetPumpInInventory(pump2);
+				System.out.println("Position: " + mechanic.GetCurrentPosition().GetId()); 
+				System.out.println("Neighbours: ");
+				for(int i = 0; i < mechanic.GetCurrentPosition().GetNeighbours().size(); i++) 
+					System.out.println(i + ": " + mechanic.GetCurrentPosition().GetNeighbours().get(i).GetId() + "\t"); 
+				System.out.println("Szeretne a Mechanic a szomszédos elemre mozogni?" 
+						+ "\nHa igen, akkor a 'move <kívánt pozíció indexe>' paranccsal teheti"); 
+				input = scan.nextLine(); 
+				if(input.equals("move 0")) 
 				{
-					System.out.println("Sikeres teszt eredményt várunk:");
-					
-					if (mechanic.BuildPumpIntoPipe())
-						System.out.println("Sikeres teszt");
-				} 
-				else
-				{
-					System.out.println("Kérem rakja le a pumpát!"); 
+					mechanic.SetCurrentPosition(pipe2);
+					pipe1.AcceptPlayer(mechanic);
+					System.out.println("Mechanic a pipe2-n.");
+					System.out.println("Szeretné a Mechanic lerakni ezen a csövön a pumpát? y/n");
+					input = scan.nextLine();
+					if(input.equals("y"))
+					{
+						System.out.println("Sikeres teszt eredményt várunk:");
+						
+						if (mechanic.BuildPumpIntoPipe())
+						{
+							System.out.println("Sikeres teszt");
+							run = false;
+						}							
+					}
+					else
+					{
+						System.out.println("Kérem rakja le a pumpát!"); 
+					}
 				}
 			}
-		else if(input.equals("n")) 
-			System.out.println("A teszt sikeres futtatásához kérem nyomjom 'y'-t!"); }
+			else if(input.equals("n")) 
+				System.out.println("A teszt sikeres futtatásához kérem nyomjom 'y'-t!");
+		}
 	}
     
     /**8.2.8
@@ -62,7 +70,6 @@ public class TestBuildPumpIntoPipe extends TestBase
     {
         System.out.println("TryTestBuildPumpWithWaterFlow Test\n");
     	TestBase.Init();
-    	//Pump newPump = new Pump();
         System.out.println("A szerelő megkapja a pump2-t");
         mechanic.SetCurrentPosition(pipe1);
         System.out.println("A szerelő a pipe1-n áll.");
@@ -76,8 +83,6 @@ public class TestBuildPumpIntoPipe extends TestBase
         System.out.println("A szerelő a beállította az újonnan beépített pumpát.");
         spring.FillNeighourPipes();
         pump2.GetNeighbours().get(0).Step();
-        //newPump.Step();
-        //newPump.Step();
         pump2.Step();
         pump2.Step();
         pipe1.Step();
