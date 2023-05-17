@@ -1,28 +1,59 @@
 package tests;
 
+import java.util.*;
+
 import game.*;
-import game.elements.*;
 
 public class TestBuildPumpIntoPipe extends TestBase
 {
+	static Scanner scan = new Scanner(System.in);
+	static String input = "";
+
     /** 8.2.12
      * Egy szerelő beépít egy pumpát a pipe1 cső közepébe.
      * A sikeres tesztet a Sikeres teszt felirat jezli,
      */
-    public static void TestTryBuildPump()
-    {
-    	TestBase.Init();
-    	//Pump newPump = new Pump();
-        mechanic.SetCurrentPosition(pipe1);
-        pipe1.AcceptPlayer(mechanic);
-        System.out.println("Mechanic a pipe1-n.");
-        mechanic.SetPumpInInventory(pump2);
-        System.out.println("Sikeres teszt eredményt várunk:");
-        if (mechanic.BuildPumpIntoPipe())
-        {
-            System.out.println("Sikeres teszt");
-        }
-    }
+	public static void TestTryBuildPump()
+	{
+		TestBase.Init();
+		GameManager.SetCurrentMechanic(mechanic);
+		mechanic.SetCurrentPosition(cistern);
+		cistern.AcceptPlayer(mechanic);
+		System.out.println("Mechanic a cistern-en.");
+		System.out.println("A Mechanic szeretne pumpát felvenni? y/n");
+		input = scan.nextLine(); 
+		if (input.equals("y")) 
+		{
+			mechanic.SetPumpInInventory(pump2);	//kérdés, hogy jó-e ezzel, vagy inkább legyen a PickUpPump() fv.
+			System.out.println("Position: " + mechanic.GetCurrentPosition().GetId()); 
+			System.out.println("Neighbours: ");
+			for(int i = 0; i < mechanic.GetCurrentPosition().GetNeighbours().size(); i++) 
+				System.out.println(i + ": " + mechanic.GetCurrentPosition().GetNeighbours().get(i).GetId() + "\t"); 
+			System.out.println("Szeretne a Mechanic a szomszédos elemre mozogni?" 
+					+ "\nHa igen, akkor a 'move <kívánt pozíció indexe>' paranccsal teheti"); 
+			input = scan.nextLine(); 
+			if(input.equals("move 0")) 
+			{
+				mechanic.SetCurrentPosition(pipe2);
+				pipe1.AcceptPlayer(mechanic);
+				System.out.println("Mechanic a pipe2-n.");
+				System.out.println("Szeretné a Mechanic lerakni ezen a csövön a pumpát? y/n");
+				input = scan.nextLine();
+				if(input.equals("y"))
+				{
+					System.out.println("Sikeres teszt eredményt várunk:");
+					
+					if (mechanic.BuildPumpIntoPipe())
+						System.out.println("Sikeres teszt");
+				} 
+				else
+				{
+					System.out.println("Kérem rakja le a pumpát!"); 
+				}
+			}
+		else if(input.equals("n")) 
+			System.out.println("A teszt sikeres futtatásához kérem nyomjom 'y'-t!"); }
+	}
     
     /**8.2.8
      * Egy játékos pumpát állít fel, majd ellenőrzi, hogy sikerült-e
