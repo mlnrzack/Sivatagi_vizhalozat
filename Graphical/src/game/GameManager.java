@@ -19,8 +19,8 @@ public class GameManager
     private static ArrayList<WaterSpring> waterSprings = new ArrayList<WaterSpring>();				//A vízforrások listája.
     private static ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();						//A szabotőrök listája.
     private static ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();						//A szerelők listája.
-    private static Mechanic currentMechanicPlayer = null;									//Az aktuális játékos.
-    private static Saboteur currentSaboteurPlayer = null;									//Az aktuális játékos.
+    private static Mechanic currentMechanicPlayer = null;											//Az aktuális játékos.
+    private static Saboteur currentSaboteurPlayer = null;											//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
     /**Az aktuális körszám visszaadása.
@@ -429,11 +429,12 @@ public class GameManager
     	for(int i = 0; i < mechanics.size(); i++)
     	{
     		playerActionCountInCurrentRound = 0;
-    		SetCurrentMechanic(mechanics.get(i));
+			SetCurrentMechanic(mechanics.get(i));
     		SetCurrentSaboteur(null);
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
+
             	System.out.println("\tMechanics' points: " + mechanicsPoints + "\t\tSaboteurs' points: " + saboteursPoints);
             	
             	System.out.println("\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
@@ -503,15 +504,17 @@ public class GameManager
                         	break;
                         case "pass":
                         	currentMechanicPlayer.Pass();
+                        	break;
                         case "exit":
                         	currentMechanicPlayer.Exit();
+                        	break;
                         default:
                             break;
                    	}
                	}
                	catch(Exception e)
                	{
-               		System.out.println("Hibás menü bemenet!\n");
+               		System.err.println("Hibás menü bemenet!\n" + e);
                	}
     		}
     	}
@@ -577,15 +580,17 @@ public class GameManager
                         	break;
                         case "pass":
                         	mechanics.get(i).Pass();
+                        	break;
                         case "exit":
                         	mechanics.get(i).Exit();
+                        	break;
                         default:
                         	break;
                     }
                	}
                 catch(Exception e)
                 {
-                	System.out.println("Hibás menü bemenet!\n" + e);
+                	System.err.println("Hibás menü bemenet!\n" + e);
                 }
             }
         }

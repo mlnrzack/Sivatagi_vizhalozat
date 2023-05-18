@@ -14,7 +14,7 @@ public class Program
     {
         CommandInterpreter interpreter = new CommandInterpreter();
         interpreter.getInput();
-        //GameFrame gFram = new GameFrame();
+        //MenuFrame mFrame = new MenuFrame();
     }
     
     /**Egy statikus térképet létrehozó függvény.
