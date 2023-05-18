@@ -1,6 +1,13 @@
 package game;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.*;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JComboBox;
+import javax.swing.JTextField;
 
 import game.elements.*;
 import game.IO.*;
@@ -13,8 +20,8 @@ public class Program
     public static void main(String[] args)
     {
         CommandInterpreter interpreter = new CommandInterpreter();
-        interpreter.getInput();
-        //MenuFrame mFrame = new MenuFrame();
+        //interpreter.getInput();
+        MenuFrame mFrame = new MenuFrame();
     }
     
     /**Egy statikus térképet létrehozó függvény.
@@ -256,7 +263,7 @@ public class Program
         map.add(spring2);
 
         GameManager.SetMap(map);
-        
+        /*
         try 
     	{
     		System.out.println("Hány játékos alkotja a szerelők csapatát?");
@@ -306,7 +313,73 @@ public class Program
            		mechanic.SetCurrentPosition(map.get(pos));
            		
            	}
+           	*/
+        	String[] counts = {"2", "3", "4", "5"};
+        	
+        	JPanel westPanel = MenuFrame.GetWestPanel();
+        	JLabel mechanicLabel = new JLabel("Mechanics' team");
+        	mechanicLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+        	
+        	JLabel mechanicsCountQ = new JLabel("Hányan vannak a szerelők csapatában?");
+        	mechanicsCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        	JComboBox mechanicsCountA = new JComboBox(counts);
+        	mechanicsCountA.setSelectedIndex(0);
+        	mechanicsCountA.setEditable(true);
+        	mechanicsCountA.setBackground(Color.decode("#729685"));
+        	int mCount = mechanicsCountA.getSelectedIndex();			//még nem jó...
+        	
+        	westPanel.add(mechanicLabel);
+        	westPanel.add(mechanicsCountQ);
+        	westPanel.add(mechanicsCountA);
+        	
+        	for(int i = 0; i < mCount; i++)
+           	{
+           		var mechanic = new Mechanic();
+           		JLabel mechanicNameLabel = new JLabel("Add meg a karakter nevét!");
+           		JTextField mechanicNameText = new JTextField("Mechanic_" + (i + 1));
+           		String name = mechanicNameText.getText();
+           		int pos = new Random().nextInt(map.size() - 1);
+           		while(map.get(pos).AcceptPlayer(mechanic) == false)
+           			pos = new Random().nextInt(map.size() - 1);
+           		mechanic.SetCurrentPosition(map.get(pos));
+           		westPanel.add(mechanicNameLabel);
+           		westPanel.add(mechanicNameText);
+           	}
+        	
+        	MenuFrame.SetWestPanel(westPanel);
+        	
+           	JPanel eastPanel = MenuFrame.GetEastPanel();
+           	JLabel saboteurLabel = new JLabel("Saboteurs' team");
+           	saboteurLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
            	
+           	JLabel saboteursCountQ = new JLabel("Hányan vannak a szabotőrök csapatában?");
+           	saboteursCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        	JComboBox sabtoeursCountA = new JComboBox(counts);
+        	sabtoeursCountA.setSelectedIndex(0);
+        	sabtoeursCountA.setEditable(true);
+        	sabtoeursCountA.setBackground(Color.decode("#729685"));
+        	int sCount = sabtoeursCountA.getSelectedIndex();			//még nem jó...
+        	
+        	eastPanel.add(saboteurLabel);
+           	eastPanel.add(saboteursCountQ);
+           	eastPanel.add(sabtoeursCountA);
+        	
+        	for(int i = 0; i < sCount; i++)
+           	{
+           		var saboteur = new Mechanic();
+           		JLabel saboteurNameLabel = new JLabel("Add meg a karakter nevét!");
+           		JTextField saboteurNameText = new JTextField("Saboteur_" + (i + 1));
+           		String name = saboteurNameText.getText();
+           		int pos = new Random().nextInt(map.size() - 1);
+           		while(map.get(pos).AcceptPlayer(saboteur) == false)
+           			pos = new Random().nextInt(map.size() - 1);
+           		saboteur.SetCurrentPosition(map.get(pos));
+           		eastPanel.add(saboteurNameLabel);
+           		eastPanel.add(saboteurNameText);
+           	}
+           	
+           	MenuFrame.SetEastPanel(eastPanel);
+           	/*
            	System.out.println("Hány játékos alkotja a szabotőrök csapatát?");          	
            	int saboteursCount = 0;
            	
@@ -356,5 +429,6 @@ public class Program
     	{
     		System.out.println("Hibas bemenet!\n" + e);
     	}
+    	*/
     }
 }
