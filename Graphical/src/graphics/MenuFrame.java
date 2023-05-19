@@ -14,14 +14,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import game.GameManager;
 import game.Program;
 
 public class MenuFrame extends JFrame
 {
-	private Color color = Color.decode("#729685");
+	private Color color = Color.decode("#c9a77d");
 	private JButton backButton;
 	private JButton newGameButton;
 	private JButton startGameButton;
@@ -262,9 +264,16 @@ public class MenuFrame extends JFrame
 	public void StartGameTrigger()
 	{
 		//TODO
-		//GameFrame gFrame = new GameFrame();
-		setVisible(false);
-		dispose();
+		if(GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0)
+		{
+			GameFrame gFrame = new GameFrame();
+			setVisible(false);
+			dispose();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(this, "Kérlek előbb hozd létre a csapatokat");
+		}
 	}
 	/*
 	public void SettingsTrigger()

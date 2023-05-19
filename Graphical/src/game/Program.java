@@ -1,12 +1,17 @@
 package game;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import game.elements.*;
@@ -19,7 +24,7 @@ public class Program
 {
     public static void main(String[] args)
     {
-        CommandInterpreter interpreter = new CommandInterpreter();
+        //CommandInterpreter interpreter = new CommandInterpreter();
         //interpreter.getInput();
         MenuFrame mFrame = new MenuFrame();
     }
@@ -28,6 +33,9 @@ public class Program
      */
     public static void CreateMap()
     {
+    	String[] counts = {"2", "3", "4", "5"};
+    	Color color = Color.decode("#c9a77d");
+    	
     	ArrayList<IElement> map = new ArrayList<IElement>();
     	
         Cistern cistern1 = new Cistern();
@@ -263,172 +271,143 @@ public class Program
         map.add(spring2);
 
         GameManager.SetMap(map);
-        /*
-        try 
-    	{
-    		System.out.println("Hány játékos alkotja a szerelők csapatát?");
-    		Scanner in = new Scanner(System.in);
-    		String userinput = "";
-    		int mechanicsCount = 0;
-    		
-    		while(mechanicsCount == 0)
+        
+        JPanel westPanel = MenuFrame.GetWestPanel();
+        westPanel.setBackground(color);
+        JLabel mechanicLabel = new JLabel("Mechanics' team");
+        mechanicLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+        	
+        JLabel mechanicsCountQ = new JLabel("Hányan vannak a szerelők csapatában?");
+        mechanicsCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+        
+        var mechanicsCountA = new JComboBox(counts);
+        mechanicsCountA.setSelectedIndex(0);
+        mechanicsCountA.setEditable(true);
+        mechanicsCountA.setBackground(color);
+        mechanicsCountA.setPreferredSize(new Dimension(50, 25));
+        
+        JButton mOkButton = new JButton("Ok");
+        mOkButton.setBackground(color);
+        mOkButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+        mOkButton.addActionListener
+    	(
+    		new ActionListener() 
     		{
-    			try
+    			@Override
+    			public void actionPerformed(ActionEvent e) 
     			{
-    	    		userinput = in.nextLine();
-    				mechanicsCount = Integer.parseInt(userinput);
-    			}
-    			catch(Exception e)
-    			{
-    				System.out.println("Hibás bemenet!");
-    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
+    				int mCount = mechanicsCountA.getSelectedIndex() + 2;
+    				for(int i = 0; i < mCount; i++)
+    	           	{
+    	          		var mechanic = new Mechanic();
+    	           		JLabel mechanicNameLabel = new JLabel("Add meg a karakter nevét!");
+    	           		mechanicNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+    	           		JTextField mechanicNameText = new JTextField();
+    	           		mechanicNameText.setText("Mechanic_" + (i + 1));
+    	           		JButton setNameButton = new JButton("Set");
+    	           		setNameButton.setBackground(color);
+    	           		setNameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+    	           		setNameButton.addActionListener
+    	        		(
+    	        			new ActionListener() 
+    	        			{
+    	        				@Override
+    	        				public void actionPerformed(ActionEvent e) 
+    	        				{
+    	        					mechanic.SetName(mechanicNameText.getText());
+    	        				}
+    	        			}
+    	           		);    		           		
+    	           		int pos = new Random().nextInt(map.size() - 1);
+    	           		while(map.get(pos).AcceptPlayer(mechanic) == false)
+    	          			pos = new Random().nextInt(map.size() - 1);
+    	           		mechanic.SetCurrentPosition(map.get(pos));
+    	           		
+    	           		westPanel.revalidate();
+    	           		westPanel.repaint();
+    	          		
+    	           		westPanel.add(mechanicNameLabel);
+    	           		westPanel.add(mechanicNameText);
+    	           		westPanel.add(setNameButton);
+    	           	}
     			}
     		}
-    		
-    		while(mechanicsCount < 2)
-    		{
-    			System.out.println("Hány játékos alkotja a szerelők csapatát?\nMin 2...");
-    			try
-    			{
-    	    		userinput = in.nextLine();
-    				mechanicsCount = Integer.parseInt(userinput);
-    			}
-    			catch(Exception e)
-    			{
-    				System.out.println("Hibás bemenet!");
-    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
-    			}
-    		}
-    		
-           	for(int i = 0; i < mechanicsCount; i++)
-           	{
-           		var mechanic = new Mechanic();
-           		System.out.println("Add meg a karakter nevét!");
-           		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine().toUpperCase();
-           		mechanic.SetName(name == "" ? "MECHANIC_" + (i + 1) : name);
-           		int pos = new Random().nextInt(map.size() - 1);
-           		while(map.get(pos).AcceptPlayer(mechanic) == false)
-           			pos = new Random().nextInt(map.size() - 1);
-           		mechanic.SetCurrentPosition(map.get(pos));
-           		
-           	}
-           	*/
-        	String[] counts = {"2", "3", "4", "5"};
-        	
-        	JPanel westPanel = MenuFrame.GetWestPanel();
-        	JLabel mechanicLabel = new JLabel("Mechanics' team");
-        	mechanicLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
-        	
-        	JLabel mechanicsCountQ = new JLabel("Hányan vannak a szerelők csapatában?");
-        	mechanicsCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
-        	JComboBox mechanicsCountA = new JComboBox(counts);
-        	mechanicsCountA.setSelectedIndex(0);
-        	mechanicsCountA.setEditable(true);
-        	mechanicsCountA.setBackground(Color.decode("#729685"));
-        	int mCount = mechanicsCountA.getSelectedIndex();			//még nem jó...
-        	
-        	westPanel.add(mechanicLabel);
-        	westPanel.add(mechanicsCountQ);
-        	westPanel.add(mechanicsCountA);
-        	
-        	for(int i = 0; i < mCount; i++)
-           	{
-           		var mechanic = new Mechanic();
-           		JLabel mechanicNameLabel = new JLabel("Add meg a karakter nevét!");
-           		JTextField mechanicNameText = new JTextField("Mechanic_" + (i + 1));
-           		String name = mechanicNameText.getText();
-           		int pos = new Random().nextInt(map.size() - 1);
-           		while(map.get(pos).AcceptPlayer(mechanic) == false)
-           			pos = new Random().nextInt(map.size() - 1);
-           		mechanic.SetCurrentPosition(map.get(pos));
-           		westPanel.add(mechanicNameLabel);
-           		westPanel.add(mechanicNameText);
-           	}
-        	
-        	MenuFrame.SetWestPanel(westPanel);
-        	
-           	JPanel eastPanel = MenuFrame.GetEastPanel();
-           	JLabel saboteurLabel = new JLabel("Saboteurs' team");
-           	saboteurLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
-           	
-           	JLabel saboteursCountQ = new JLabel("Hányan vannak a szabotőrök csapatában?");
-           	saboteursCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
-        	JComboBox sabtoeursCountA = new JComboBox(counts);
-        	sabtoeursCountA.setSelectedIndex(0);
-        	sabtoeursCountA.setEditable(true);
-        	sabtoeursCountA.setBackground(Color.decode("#729685"));
-        	int sCount = sabtoeursCountA.getSelectedIndex();			//még nem jó...
-        	
-        	eastPanel.add(saboteurLabel);
-           	eastPanel.add(saboteursCountQ);
-           	eastPanel.add(sabtoeursCountA);
-        	
-        	for(int i = 0; i < sCount; i++)
-           	{
-           		var saboteur = new Mechanic();
-           		JLabel saboteurNameLabel = new JLabel("Add meg a karakter nevét!");
-           		JTextField saboteurNameText = new JTextField("Saboteur_" + (i + 1));
-           		String name = saboteurNameText.getText();
-           		int pos = new Random().nextInt(map.size() - 1);
-           		while(map.get(pos).AcceptPlayer(saboteur) == false)
-           			pos = new Random().nextInt(map.size() - 1);
-           		saboteur.SetCurrentPosition(map.get(pos));
-           		eastPanel.add(saboteurNameLabel);
-           		eastPanel.add(saboteurNameText);
-           	}
-           	
-           	MenuFrame.SetEastPanel(eastPanel);
-           	/*
-           	System.out.println("Hány játékos alkotja a szabotőrök csapatát?");          	
-           	int saboteursCount = 0;
-           	
-           	while(saboteursCount == 0)
-    		{
-    			try
-    			{
-    	    		userinput = in.nextLine();
-    	    		saboteursCount = Integer.parseInt(userinput);
-    			}
-    			catch(Exception e)
-    			{
-    				System.out.println("Hibás bemenet!");
-    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
-    			}
-    		}
-           	
-           	while(saboteursCount < 2)
-    		{
-    			System.out.println("Hány játékos alkotja a szabotőrök csapatát?\nMin 2...");
-    			try
-    			{
-    	    		userinput = in.nextLine();
-    	    		saboteursCount = Integer.parseInt(userinput);
-    			}
-    			catch(Exception e)
-    			{
-    				System.out.println("Hibás bemenet!");
-    				System.out.println("Hány játékos alkotja a szerelők csapatát?\nSzám legyen...");
-    			}
-    		}
-           	
-           	for(int i = 0; i < saboteursCount; i++)
-           	{
-           		var saboteur = new Saboteur();
-           		System.out.println("Add meg a karakter nevét!");
-           		Scanner inName = new Scanner(System.in); 
-           		String name = inName.nextLine().toUpperCase();
-           		saboteur.SetName(name == "" ? "SABOTEUR_" + (i + 1) : name);
-           		int pos = new Random().nextInt(map.size() - 1);
-           		while(map.get(pos).AcceptPlayer(saboteur) == false)
-           			pos = new Random().nextInt(map.size() - 1);
-           		saboteur.SetCurrentPosition(map.get(pos));
-           	}
-    	}   	
-    	catch(Exception e)
-    	{
-    		System.out.println("Hibas bemenet!\n" + e);
-    	}
-    	*/
+    	);
+        
+        westPanel.add(mechanicLabel);
+        westPanel.add(mechanicsCountQ);
+        westPanel.add(mechanicsCountA);
+        westPanel.add(mOkButton);
+        
+        MenuFrame.SetWestPanel(westPanel);
+        
+       	JPanel eastPanel = MenuFrame.GetEastPanel();
+       	eastPanel.setBackground(color);
+       	JLabel saboteurLabel = new JLabel("Saboteurs' team");
+       	saboteurLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+      	
+      	JLabel saboteursCountQ = new JLabel("Hányan vannak a szerelők csapatában?");
+       	saboteursCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+       	
+       	var saboteursCountA = new JComboBox(counts);
+      	saboteursCountA.setSelectedIndex(0);
+       	saboteursCountA.setEditable(true);
+       	saboteursCountA.setBackground(color);
+       	saboteursCountA.setPreferredSize(new Dimension(50, 25));
+       	
+       	JButton sOkButton = new JButton("Ok");
+       	sOkButton.setBackground(color);
+       	sOkButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+       	sOkButton.addActionListener
+   		(
+   			new ActionListener() 
+   			{
+   				@Override
+   				public void actionPerformed(ActionEvent e) 
+  				{
+  					int sCount = saboteursCountA.getSelectedIndex() + 2;
+  					for(int i = 0; i < sCount; i++)
+   		           	{
+  		           		var saboteur = new Saboteur();
+    	           		JLabel saboteurNameLabel = new JLabel("Add meg a karakter nevét!");
+    	           		saboteurNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+    	           		JTextField saboteurNameText = new JTextField();
+   		           		saboteurNameText.setText("Saboteur_" + (i + 1));
+   		           		JButton setNameButton = new JButton("Set");
+   		           		setNameButton.setBackground(color);
+   		           		setNameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+   		           		setNameButton.addActionListener
+   		        		(
+   		        			new ActionListener() 
+ 		        			{
+   		        				@Override
+   		        				public void actionPerformed(ActionEvent e) 
+   		        				{
+   		        					saboteur.SetName(saboteurNameText.getText());
+   		        				}
+   		        			}
+   		           		);    		           		
+   		           		int pos = new Random().nextInt(map.size() - 1);
+   		           		while(map.get(pos).AcceptPlayer(saboteur) == false)
+   		           			pos = new Random().nextInt(map.size() - 1);
+   		           		saboteur.SetCurrentPosition(map.get(pos));
+   		           		
+  		           		eastPanel.revalidate();
+  		           		eastPanel.repaint();
+   		           		
+  		           		eastPanel.add(saboteurNameLabel);
+   		           		eastPanel.add(saboteurNameText);
+   		           		eastPanel.add(setNameButton);
+   		           	}
+   				}
+   			}
+   		);
+       	
+       	eastPanel.add(saboteurLabel);
+       	eastPanel.add(saboteursCountQ);
+       	eastPanel.add(saboteursCountA);
+       	eastPanel.add(sOkButton);
+       	
+       	MenuFrame.SetEastPanel(eastPanel);
     }
 }
