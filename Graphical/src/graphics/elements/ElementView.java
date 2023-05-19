@@ -1,7 +1,12 @@
 package graphics.elements;
 
-public abstract class ElementView
+import game.interfaces.*;
+
+public abstract class ElementView// implements IElement
 {
+	//itt kell egy position változó, ami a grafika helyét tárolja...
+	//valahogy összekötni a modellből egy objemktummal...
+	
 	public ElementView()
 	{
 		//TODO

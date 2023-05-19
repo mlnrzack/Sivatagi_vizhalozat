@@ -300,10 +300,14 @@ public class Program
     				for(int i = 0; i < mCount; i++)
     	           	{
     	          		var mechanic = new Mechanic();
+    	          		
     	           		JLabel mechanicNameLabel = new JLabel("Add meg a karakter nevét!");
     	           		mechanicNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+    	           		
     	           		JTextField mechanicNameText = new JTextField();
+    	           		mechanicNameText.setPreferredSize(new Dimension(100, 20));
     	           		mechanicNameText.setText("Mechanic_" + (i + 1));
+    	           		
     	           		JButton setNameButton = new JButton("Set");
     	           		setNameButton.setBackground(color);
     	           		setNameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
@@ -317,7 +321,9 @@ public class Program
     	        					mechanic.SetName(mechanicNameText.getText());
     	        				}
     	        			}
-    	           		);    		           		
+    	           		);
+    	           		mechanic.SetName(mechanicNameText.getText());
+    	           		
     	           		int pos = new Random().nextInt(map.size() - 1);
     	           		while(map.get(pos).AcceptPlayer(mechanic) == false)
     	          			pos = new Random().nextInt(map.size() - 1);
@@ -371,8 +377,11 @@ public class Program
   		           		var saboteur = new Saboteur();
     	           		JLabel saboteurNameLabel = new JLabel("Add meg a karakter nevét!");
     	           		saboteurNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+    	           		
     	           		JTextField saboteurNameText = new JTextField();
    		           		saboteurNameText.setText("Saboteur_" + (i + 1));
+   		           		saboteurNameText.setPreferredSize(new Dimension(100, 20));
+   		           		
    		           		JButton setNameButton = new JButton("Set");
    		           		setNameButton.setBackground(color);
    		           		setNameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
@@ -386,7 +395,9 @@ public class Program
    		        					saboteur.SetName(saboteurNameText.getText());
    		        				}
    		        			}
-   		           		);    		           		
+   		           		);
+   		           		saboteur.SetName(saboteurNameText.getText());
+   		           		
    		           		int pos = new Random().nextInt(map.size() - 1);
    		           		while(map.get(pos).AcceptPlayer(saboteur) == false)
    		           			pos = new Random().nextInt(map.size() - 1);

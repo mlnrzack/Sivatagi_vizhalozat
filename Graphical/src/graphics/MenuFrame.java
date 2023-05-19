@@ -27,7 +27,7 @@ public class MenuFrame extends JFrame
 	private JButton backButton;
 	private JButton newGameButton;
 	private JButton startGameButton;
-	private JButton settingsButton;
+	//private JButton settingsButton;
 	//private JButton setButton;
 	
 	private static JLabel westLabel;
@@ -266,9 +266,12 @@ public class MenuFrame extends JFrame
 		//TODO
 		if(GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0)
 		{
+			GameManager.StartGame();
+			/*
 			GameFrame gFrame = new GameFrame();
 			setVisible(false);
 			dispose();
+			*/
 		}
 		else
 		{
