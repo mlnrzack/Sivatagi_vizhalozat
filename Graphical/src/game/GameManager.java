@@ -95,6 +95,14 @@ public class GameManager
     	return mechanics;
     }
     
+    /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
+     * @param mechanics a kapott érték.
+     */
+    public static void SetMechanics(ArrayList<Mechanic> mechanics)
+    {
+    	GameManager.mechanics = mechanics;
+    }
+    
     /**Adott szerelő karakter hozzáfűzése a szerelők listához.
      * @param mechanic a hozzáfűzendő szerelő.
      * @return a hozzáfűzés sikeressége.
@@ -112,6 +120,14 @@ public class GameManager
     	return saboteurs;
     }
 
+    /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
+     * @param mechanics a kapott érték.
+     */
+    public static void SetSaboteurs(ArrayList<Saboteur> saboteurs)
+    {
+    	GameManager.saboteurs = saboteurs;
+    }
+    
     /**Egy szabotőr felvétele a szabotőrök listájához.
      * @param saboteur az adott szabotőr.
      * @return a felvétel sikeressége.

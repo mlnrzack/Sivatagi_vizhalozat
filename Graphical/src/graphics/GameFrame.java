@@ -7,19 +7,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import graphics.elements.*;
+
+/**Ez az osztály felel a játéktér Frame-jéért.
+ */
 public class GameFrame extends JFrame
 {
 	JPanel gamePanel;
 	JPanel interfacePanel;
 	
-	public GameFrame()
+	public GameFrame(MapView map)
 	{
 		super("Sivatagi vizhalozat");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//A következő sorok a frame icon-ját állítja be, ha szeretnénk iyet.
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
 		this.setIconImage(icon.getImage());
-		
+		//A panelek feltöltése adatokkal
+		InitializeGamePanel(map);
+		InitializeInterfacePanel();
+		//A panelek hozzáadása a frame-hez
+		this.add(gamePanel, BorderLayout.WEST);
+		this.add(interfacePanel, BorderLayout.EAST);
+		//további frame beállításaok
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
  		this.setResizable(false);
 		this.pack();
@@ -27,7 +36,7 @@ public class GameFrame extends JFrame
 		this.setVisible(true);
 	}
 	
-	public void InitializeGamePanel()
+	public void InitializeGamePanel(MapView map)
 	{
 		//A játéktérkép megjelenítése
 	}
@@ -37,5 +46,6 @@ public class GameFrame extends JFrame
 		//A játékállás kiírása
 		//Éppen lépő játékos nevének kiírása
 		//Egyéb funkciók megjelenítése
+		//Esetlegesen itt a nem működő pumpák nevét, vagy akár a lyukas csövek nevét is ki lehetne írni
 	}
 }

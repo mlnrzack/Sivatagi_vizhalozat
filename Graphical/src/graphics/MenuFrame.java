@@ -268,7 +268,7 @@ public class MenuFrame extends JFrame
 		{
 			GameManager.StartGame();
 			/*
-			GameFrame gFrame = new GameFrame();
+			GameFrame gFrame = new GameFrame(new MapView());
 			setVisible(false);
 			dispose();
 			*/
@@ -286,8 +286,8 @@ public class MenuFrame extends JFrame
 		eastPanel.revalidate();
 		eastPanel.repaint();
 	}
-	
-	public void SetTrigger()
+	*/
+	/*public void SetTrigger()
 	{
 		this.remove(southPanel);
 		eastPanel.removeAll();
@@ -302,6 +302,5 @@ public class MenuFrame extends JFrame
 		westPanel.add(westLabel);
 		westPanel.revalidate();
 		westPanel.repaint();
-	}
-	*/
+	}*/
 }

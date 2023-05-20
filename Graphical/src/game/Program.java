@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import game.elements.*;
-import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
 import graphics.*;
@@ -293,10 +292,34 @@ public class Program
     	(
     		new ActionListener() 
     		{
+    			int mCount = 0;
     			@Override
     			public void actionPerformed(ActionEvent e) 
     			{
-    				int mCount = mechanicsCountA.getSelectedIndex() + 2;
+    				String[] names = new String[5];
+    				
+    				if(mCount != 0) 
+    				{
+    					westPanel.removeAll();
+    					westPanel.add(mechanicLabel);
+    					westPanel.add(mechanicsCountQ);
+    					westPanel.add(mechanicsCountA);
+    					westPanel.add(mOkButton);
+    					
+    					ArrayList<Mechanic> temp = GameManager.GetMechanics();
+    					
+    					for(int i = 0; i < temp.size(); i++)
+    						names[i] = temp.get(i).GetName();
+    					
+    					temp.clear();
+    					GameManager.SetMechanics(temp);
+    					
+    					westPanel.revalidate();
+    					westPanel.repaint();
+    				}
+    				
+    				mCount = mechanicsCountA.getSelectedIndex() + 2;
+    				
     				for(int i = 0; i < mCount; i++)
     	           	{
     	          		var mechanic = new Mechanic();
@@ -306,7 +329,8 @@ public class Program
     	           		
     	           		JTextField mechanicNameText = new JTextField();
     	           		mechanicNameText.setPreferredSize(new Dimension(100, 20));
-    	           		mechanicNameText.setText("Mechanic_" + (i + 1));
+    	           		mechanicNameText.setText(names[i] == null ? "Mechanic_" + (i + 1) : names[i]);
+    	           		mechanicNameText.setPreferredSize(new Dimension(100, 20));
     	           		
     	           		JButton setNameButton = new JButton("Set");
     	           		setNameButton.setBackground(color);
@@ -368,10 +392,35 @@ public class Program
    		(
    			new ActionListener() 
    			{
+   				int sCount = 0;
+   				
    				@Override
    				public void actionPerformed(ActionEvent e) 
   				{
-  					int sCount = saboteursCountA.getSelectedIndex() + 2;
+   					String[] names = new String[5];
+   					
+   					if(sCount != 0) 
+    				{
+    					eastPanel.removeAll();
+    					eastPanel.add(saboteurLabel);
+    					eastPanel.add(saboteursCountQ);
+    					eastPanel.add(saboteursCountA);
+    					eastPanel.add(sOkButton);
+    					
+    					ArrayList<Saboteur> temp = GameManager.GetSaboteurs();
+    					
+    					for(int i = 0; i < temp.size(); i++)
+    						names[i] = temp.get(i).GetName();
+    					
+    					temp.clear();
+    					GameManager.SetSaboteurs(temp);
+    					
+    					eastPanel.revalidate();
+    					eastPanel.repaint();
+    				}
+   					
+  					sCount = saboteursCountA.getSelectedIndex() + 2;
+  					
   					for(int i = 0; i < sCount; i++)
    		           	{
   		           		var saboteur = new Saboteur();
