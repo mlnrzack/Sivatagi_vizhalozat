@@ -24,6 +24,11 @@ public class Pipe extends Element implements ISteppable
     	this.SetId("pipe" + GameManager.TryPipeIdSet());
     }
     
+    public String GetType()
+    {
+    	return "pipe";
+    }
+    
     /**Az osztály paraméteres konstruktora.
      * @param leaks lyukas tulajdonsága
      * @param timer nem lyukaszthatóság ideje

@@ -2,119 +2,192 @@ package graphics.elements;
 
 import java.awt.Font;
 
+import javax.swing.JComponent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import game.*;
 import game.elements.Pipe;
 
 public class PipeView extends ElementView
 {
 	//itt kell egy position változó, ami a grafika helyét tárolja...
 	//valahogy összekötni a modellből egy objemktummal...
+	private Pipe pipe;
 	JLabel pipeLabel;
 	
-	public PipeView()
+	public PipeView(int x, int y, int index)
 	{
 		//TODO
+		posX = x;
+		posY = y;
+		pipe = GameManager.GetPipes().get(index);
+		LoadImage();
 	}
 	
 	public void LoadImage()
 	{
 		try
 		{
-			//if(Pipe.GetWaterInside() == 0)
+			if(pipe.GetWaterInside() == 0)
 			{
-				//if(!Pipe.getLeaking())
+				if(!pipe.GetLeaking())
 				{
-					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
 				}
 				
-				//else if(Pipe.getLeaking())
+				else if(pipe.GetLeaking())
 				{
-					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
 				}
-				
-			}			
-			//else if(Pipe.GetWaterInside() == 1){
+			}
+			
+			else if(pipe.GetWaterInside() == 1)
 			{
-				//if(!Pipe.getLeaking())
+				if(!pipe.GetLeaking())
 				{
-					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
 				}
 				
-				//else if(Pipe.getLeaking())
+				else if(pipe.GetLeaking())
 				{
-					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
-					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
 						pipeLabel.setIcon(emptyPipe);
 					}
 				}
 			}
-			//fel kell rakni a gamePanel-ra.
+			//mivel térjen vissza
 		}
 		
 		catch(Exception e)
 		{
-			pipeLabel = new JLabel("Pipe");
-			pipeLabel = new JLabel("Pipe full of water");
-			pipeLabel = new JLabel("Leaking Pipe");
+			if(pipe.GetWaterInside() == 0)
+			{
+				if(!pipe.GetLeaking())
+				{
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe empty");
+					}
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe empty slippery");
+					}
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
+					{
+						pipeLabel = new JLabel("Pipe empty sticky");
+					}
+				}
+				
+				else if(pipe.GetLeaking())
+				{
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe empty leaking");
+					}
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe empty leaking slippery");
+					}
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
+					{
+						pipeLabel = new JLabel("Pipe empty leaking sticky");
+					}
+				}
+			}
+			
+			else if(pipe.GetWaterInside() == 1)
+			{
+				if(!pipe.GetLeaking())
+				{
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe full");
+					}
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe full slippery");
+					}
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
+					{
+						pipeLabel = new JLabel("Pipe full sticky");
+					}
+				}
+				
+				else if(pipe.GetLeaking())
+				{
+					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe full leaking");
+					}
+					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
+					{
+						pipeLabel = new JLabel("Pipe full leaking slippery");
+					}
+					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
+					{
+						pipeLabel = new JLabel("Pipe full leaking sticky");
+					}
+				}
+			}
 			pipeLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			pipeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			//fel kell rakni a gamePanel-ra.
+			//mivel térjen vissza
 		}
 	}
 }

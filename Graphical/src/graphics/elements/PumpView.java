@@ -6,15 +6,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import game.GameManager;
+import game.elements.*;
+
 public class PumpView extends ElementView
 {
 	//itt kell egy position változó, ami a grafika helyét tárolja...
 	//valahogy összekötni a modellből egy objemktummal...
+	Pump pump;
+	
 	JLabel pumpLabel;
 	
-	public PumpView()
+	public PumpView(int x, int y, int index)
 	{
-		//TODO
+		posX = x;
+		posY = y;
+		pump = GameManager.GetPumps().get(index);
+		LoadImage();
 	}
 	
 	public void LoadImage()

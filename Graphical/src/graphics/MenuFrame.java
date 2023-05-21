@@ -52,7 +52,7 @@ public class MenuFrame extends JFrame
 	
 	private Font f = new Font(Font.DIALOG, Font.PLAIN, 28);
 	private Font fi = new Font(Font.DIALOG, Font.ITALIC, 48);
-	private Font fs = new Font(Font.DIALOG, Font.ITALIC, 20);
+	private Font fs = new Font(Font.DIALOG, Font.ITALIC, 19);
 	
 	public MenuFrame()
 	{

@@ -17,24 +17,22 @@ import game.IO.*;
  */
 public class GameFrame extends JFrame
 {
-	JPanel gamePanel;
-	JPanel interfacePanel;
+	private JPanel gamePanel;
+	private JPanel interfacePanel;
 	
 	public GameFrame(MapView map)
 	{
 		super("Sivatagi vizhalozat");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
 		this.setIconImage(icon.getImage());
 		//Esetleg valami hátteret (akár képet is) érdemes lehet betölteni a játéktérnek
 		
 		//A panelek feltöltése adatokkal
-		InitializeGamePanel(map);
 		InitializeInterfacePanel();
 		
 		//A panelek hozzáadása a frame-hez
-		//this.add(gamePanel, BorderLayout.WEST);
-		//this.add(interfacePanel, BorderLayout.EAST);
+		this.add(map, BorderLayout.WEST);
+		this.add(interfacePanel, BorderLayout.EAST);
 		
 		//további frame beállításaok
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
@@ -54,11 +52,6 @@ public class GameFrame extends JFrame
 		});
 	}
 	
-	public void InitializeGamePanel(MapView map)
-	{
-		//A játéktérkép megjelenítése
-	}
-	
 	public void InitializeInterfacePanel()
 	{
 		//A játékállás kiírása
@@ -66,10 +59,12 @@ public class GameFrame extends JFrame
 		//Egyéb funkciók megjelenítése
 		//Esetlegesen itt a nem működő pumpák nevét, vagy akár a lyukas csövek nevét is ki lehetne írni
 		JLabel displayCurrentPlayerName = new JLabel();
-		if(GameManager.GetCurrentMechanic() != null) 
+		JLabel displayRound = new JLabel();
+		/*if(GameManager.GetCurrentMechanic() != null) 
 			displayCurrentPlayerName.setText(GameManager.GetCurrentMechanic().GetName());
 		else if(GameManager.GetCurrentSaboteur() != null)
 			displayCurrentPlayerName.setText(GameManager.GetCurrentSaboteur().GetName());
+		*/
 		//interfacePanel.add(displayCurrentPlayerName);
 		/*
 		interfacePanel.revalidate();

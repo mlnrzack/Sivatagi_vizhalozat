@@ -13,7 +13,12 @@ public class WaterSpring extends ActiveElement
         GameManager.AddWaterSpring(this);
         this.SetId("spring" + GameManager.TryWaterSpringIdSet());
     }
-
+    
+    public String GetType()
+    {
+    	return "spring";
+    }    
+    
     /**Megtölti a vízforrás szomszédos csöveit vízzel.
      */
     public void FillNeighourPipes()

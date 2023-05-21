@@ -6,15 +6,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import game.*;
+import game.elements.*;
+
 public class WaterSpringView extends ElementView
 {
 	//itt kell egy position változó, ami a grafika helyét tárolja...
 	//valahogy összekötni a modellből egy objemktummal...
+	WaterSpring spring;
+	
 	JLabel springLabel;
 	
-	public WaterSpringView()
+	public WaterSpringView(int x, int y, int index)
 	{
-		//TODO
+		posX = x;
+		posY = y;
+		spring = GameManager.GetWaterSprings().get(index);
+		LoadImage();
 	}
 	
 	public void LoadImage()

@@ -3,27 +3,36 @@ package graphics.elements;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class CisternView extends ElementView// implements JComponent
+import game.*;
+import game.elements.*;
+
+public class CisternView extends ElementView
 {
 	//itt kell egy position változó, ami a grafika helyét tárolja...
 	//valahogy összekötni a modellből egy objemktummal...
+	Cistern cistern;
+	
 	JLabel cisternLabel;
 	
-	public CisternView()
+	public CisternView(int x, int y, int index)
 	{
 		//TODO
-		//LoadImage();
+		posX = x;
+		posY = y;
+		cistern = GameManager.GetCisterns().get(index);
+		LoadImage();
 	}
 	
 	public void LoadImage()
 	{
 		try
 		{
-			ImageIcon cistern = new ImageIcon(this.getClass().getResource("/cistern.png"));
-			cisternLabel.setIcon(cistern);
+			ImageIcon cisternImage = new ImageIcon(this.getClass().getResource("/cistern.png"));
+			cisternLabel.setIcon(cisternImage);
 			//fel kell rakni a gamePanel-ra.
 		}
 		

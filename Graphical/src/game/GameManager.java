@@ -200,6 +200,16 @@ public class GameManager
     	return cisterns.add(cistern);
     }
     
+    public static ArrayList<Cistern> GetCisterns()
+    {
+    	return cisterns;
+    }
+    
+    public static ArrayList<Pipe> GetPipes()
+    {
+    	return pipes;
+    }
+    
     public static ArrayList<Pump> GetPumps()
     {
     	return pumps;
