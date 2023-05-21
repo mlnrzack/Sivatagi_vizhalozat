@@ -237,7 +237,6 @@ public class GameManager
     	return waterSprings.remove(waterspring);
     }
     
-    
     /**Átadja az éppen aktuális szerelő játékost külső osztályoknak.
      * @return az aktuális szerelő.
      */

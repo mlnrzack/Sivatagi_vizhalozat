@@ -5,8 +5,10 @@ import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import game.GameManager;
 import graphics.elements.*;
 
 /**Ez az osztály felel a játéktér Frame-jéért.
@@ -22,8 +24,9 @@ public class GameFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
 		this.setIconImage(icon.getImage());
+		//Esetleg valami hátteret (akár képet is) érdemes lehet betölteni a játéktérnek
 		//A panelek feltöltése adatokkal
-		InitializeGamePanel(map);
+		//InitializeGamePanel(map);
 		InitializeInterfacePanel();
 		//A panelek hozzáadása a frame-hez
 		this.add(gamePanel, BorderLayout.WEST);
@@ -47,5 +50,14 @@ public class GameFrame extends JFrame
 		//Éppen lépő játékos nevének kiírása
 		//Egyéb funkciók megjelenítése
 		//Esetlegesen itt a nem működő pumpák nevét, vagy akár a lyukas csövek nevét is ki lehetne írni
+		JLabel displayCurrentPlayerName = new JLabel();
+		if(GameManager.GetCurrentMechanic() != null) 
+			displayCurrentPlayerName.setText(GameManager.GetCurrentMechanic().GetName());
+		else if(GameManager.GetCurrentSaboteur() != null)
+			displayCurrentPlayerName.setText(GameManager.GetCurrentSaboteur().GetName());
+		interfacePanel.add(displayCurrentPlayerName);
+		/*
+		interfacePanel.revalidate();
+		interfacePanel.repaint();*/
 	}
 }

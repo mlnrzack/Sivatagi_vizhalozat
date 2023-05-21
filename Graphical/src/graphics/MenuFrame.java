@@ -18,9 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
-import game.Constants;
-import game.GameManager;
-import game.Program;
+import game.*;
+import graphics.elements.*;
 
 public class MenuFrame extends JFrame
 {
@@ -286,8 +285,7 @@ public class MenuFrame extends JFrame
 			/*
 			GameFrame gFrame = new GameFrame(new MapView());
 			setVisible(false);
-			dispose();
-			*/
+			dispose();*/
 		}
 		else
 		{
