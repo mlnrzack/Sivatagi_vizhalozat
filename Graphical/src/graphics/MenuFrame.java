@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,7 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.JTextField;
 
+import game.Constants;
 import game.GameManager;
 import game.Program;
 
@@ -27,8 +28,8 @@ public class MenuFrame extends JFrame
 	private JButton backButton;
 	private JButton newGameButton;
 	private JButton startGameButton;
-	//private JButton settingsButton;
-	//private JButton setButton;
+	private JButton settingsButton;
+	private JButton setButton;
 	
 	private static JLabel westLabel;
 	private JLabel northLabel;
@@ -38,8 +39,18 @@ public class MenuFrame extends JFrame
 	private JPanel northPanel;	
 	private JPanel southPanel;
 	
+	JTextField actionsPerUserSet;
+	JTextField gameRoundsSet;
+	JTextField leakageTimerSet;
+	JTextField maxNeighboursSet;
+	JTextField playerCapacitySet;
+	JTextField pipeCapacitySet;
+	JTextField pumpCapacitySet;
+	JTextField pumpErrorSet;
+	
 	private Font f = new Font(Font.DIALOG, Font.PLAIN, 28);
 	private Font fi = new Font(Font.DIALOG, Font.ITALIC, 48);
+	private Font fs = new Font(Font.DIALOG, Font.ITALIC, 20);
 	
 	public MenuFrame()
 	{
@@ -118,7 +129,7 @@ public class MenuFrame extends JFrame
 				}
 			}
 		);
-		/*
+
 		settingsButton = new JButton("Settings");
 		settingsButton.setFont(f);
 		settingsButton.setBackground(color);
@@ -134,10 +145,10 @@ public class MenuFrame extends JFrame
 				}
 			}
 		);
-		*/
+		
 		eastPanel = new JPanel();
 		eastPanel.add(newGameButton);
-		//eastPanel.add(settingsButton);
+		eastPanel.add(settingsButton);
 		eastPanel.setPreferredSize(new Dimension(250, 500));
 		eastPanel.setBackground(color);
 		eastPanel.revalidate();
@@ -204,7 +215,7 @@ public class MenuFrame extends JFrame
 				}
 			}
 		);
-		/*
+		
 		setButton = new JButton("Set");
 		setButton.setFont(f);
 		setButton.setBackground(color);
@@ -220,7 +231,7 @@ public class MenuFrame extends JFrame
 				}
 			}
 		);
-		*/
+		
 		southPanel = new JPanel(new GridLayout(1, 2));
 		southPanel.setBackground(color);
 		southPanel.setPreferredSize(new Dimension(800, 80));
@@ -228,8 +239,12 @@ public class MenuFrame extends JFrame
 		southPanel.add(startGameButton);
 	}
 	
+	
 	public void NewGameTrigger()
 	{
+		southPanel.removeAll();
+		southPanel.add(backButton);
+		southPanel.add(startGameButton);
 		this.add(southPanel, BorderLayout.SOUTH);
 		eastPanel.removeAll();
 		eastPanel.setPreferredSize(new Dimension(500, 500));
@@ -244,13 +259,14 @@ public class MenuFrame extends JFrame
     	Program.CreateMap();
 	}
 	
+
 	public void BackTrigger()
 	{
 		this.remove(southPanel);
 		eastPanel.removeAll();
 		eastPanel.setPreferredSize(new Dimension(200, 500));
 		eastPanel.add(newGameButton);
-		//eastPanel.add(settingsButton);
+		eastPanel.add(settingsButton);
 		eastPanel.revalidate();
 		eastPanel.repaint();
 		
@@ -278,16 +294,87 @@ public class MenuFrame extends JFrame
 			JOptionPane.showMessageDialog(this, "Kérlek előbb hozd létre a csapatokat");
 		}
 	}
-	/*
+	
 	public void SettingsTrigger()
 	{
-		this.add(southPanel);
+		southPanel.removeAll();
+		southPanel.add(backButton);
+		southPanel.add(setButton);
+		southPanel.revalidate();
+		southPanel.repaint();
+		this.add(southPanel, BorderLayout.SOUTH);
+		
 		eastPanel.removeAll();
+		
+		JLabel playerCapacity = new JLabel("Pipe capacity: ");
+		playerCapacity.setFont(fs);
+		playerCapacitySet = new JTextField();
+		playerCapacitySet.setText(Constants.PipeCapacity + "");		
+		playerCapacitySet.setPreferredSize(new Dimension(100, 20));
+		eastPanel.add(playerCapacity);
+		eastPanel.add(playerCapacitySet);
+		
+		JLabel actionPerUser = new JLabel("Actions per user: ");
+		actionPerUser.setFont(fs);
+		actionsPerUserSet = new JTextField();
+		actionsPerUserSet.setText(Constants.ActionInRoundPerUser + "");	
+		actionsPerUserSet.setPreferredSize(new Dimension(75, 20));
+		eastPanel.add(actionPerUser);
+		eastPanel.add(actionsPerUserSet);
+		
+		JLabel gameRound = new JLabel("Game rounds: ");
+		gameRound.setFont(fs);
+		gameRoundsSet = new JTextField();
+		gameRoundsSet.setText(Constants.RoundNumber + "");
+		gameRoundsSet.setPreferredSize(new Dimension(100, 20));
+		eastPanel.add(gameRound);
+		eastPanel.add(gameRoundsSet);
+		
+		JLabel leakageTimer = new JLabel("Leakage timer: ");
+		leakageTimer.setFont(fs);
+		leakageTimerSet = new JTextField();
+		leakageTimerSet.setText(Constants.LeakageTimerBound + "");
+		leakageTimerSet.setPreferredSize(new Dimension(95, 20));
+		eastPanel.add(leakageTimer);
+		eastPanel.add(leakageTimerSet);
+		
+		JLabel maxNeighbours = new JLabel("Neighbours of elements: ");
+		maxNeighbours.setFont(new Font(Font.DIALOG, Font.ITALIC, 19));
+		maxNeighboursSet = new JTextField();
+		maxNeighboursSet.setText(Constants.MaxNeighboursOfActiveElements + "");
+		maxNeighboursSet.setPreferredSize(new Dimension(18, 20));
+		eastPanel.add(maxNeighbours);
+		eastPanel.add(maxNeighboursSet);
+		
+		JLabel pipeCapacity = new JLabel("Pipe capacity: ");
+		pipeCapacity.setFont(fs);
+		pipeCapacitySet = new JTextField();
+		pipeCapacitySet.setText(Constants.PipeCapacity + "");
+		pipeCapacitySet.setPreferredSize(new Dimension(105, 20));
+		eastPanel.add(pipeCapacity);
+		eastPanel.add(pipeCapacitySet);
+		
+		JLabel pumpCapacity = new JLabel("Pump water capacity: ");
+		pumpCapacity.setFont(fs);
+		pumpCapacitySet = new JTextField();
+		pumpCapacitySet.setText(Constants.PumpWaterCapacity + "");
+		pumpCapacitySet.setPreferredSize(new Dimension(40, 20));
+		eastPanel.add(pumpCapacity);
+		eastPanel.add(pumpCapacitySet);
+		
+		JLabel pumpError = new JLabel("Pump age before error: ");
+		pumpError.setFont(fs);
+		pumpErrorSet = new JTextField();
+		pumpErrorSet.setText(Constants.PumpErrorProbability + "");
+		pumpErrorSet.setPreferredSize(new Dimension(25, 20));
+		eastPanel.add(pumpError);
+		eastPanel.add(pumpErrorSet);
+		
 		eastPanel.revalidate();
 		eastPanel.repaint();
 	}
-	*/
-	/*public void SetTrigger()
+	
+	public void SetTrigger()
 	{
 		this.remove(southPanel);
 		eastPanel.removeAll();
@@ -297,10 +384,20 @@ public class MenuFrame extends JFrame
 		eastPanel.revalidate();
 		eastPanel.repaint();
 		
+		//értékek beállítása
+		Constants.AcceptedPlayersInPipe = Integer.parseInt(playerCapacitySet.getText());
+		Constants.ActionInRoundPerUser = Integer.parseInt(actionsPerUserSet.getText());
+		Constants.LeakageTimerBound = Integer.parseInt(leakageTimerSet.getText());
+		Constants.MaxNeighboursOfActiveElements = Integer.parseInt(maxNeighboursSet.getText());
+		Constants.PipeCapacity = Integer.parseInt(pipeCapacitySet.getText());
+		Constants.PumpErrorProbability = Integer.parseInt(pumpErrorSet.getText());
+		Constants.PumpWaterCapacity = Integer.parseInt(pumpCapacitySet.getText());
+		Constants.RoundNumber = Integer.parseInt(gameRoundsSet.getText());
+		
 		westPanel.removeAll();
 		westPanel.setPreferredSize(new Dimension(800, 500));
 		westPanel.add(westLabel);
 		westPanel.revalidate();
 		westPanel.repaint();
-	}*/
+	}
 }
