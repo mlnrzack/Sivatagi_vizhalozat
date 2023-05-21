@@ -127,7 +127,6 @@ public abstract class Player
     	for(int i = GameManager.GetPlayerAction(); i < Constants.ActionInRoundPerUser; i++)
     	{
     		GameManager.ActionExecuted();
-            //GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
         }
     }
     

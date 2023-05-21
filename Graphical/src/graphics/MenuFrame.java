@@ -241,7 +241,6 @@ public class MenuFrame extends JFrame
 		southPanel.add(startGameButton);
 	}
 	
-	
 	public void NewGameTrigger()
 	{
 		southPanel.removeAll();
@@ -261,7 +260,6 @@ public class MenuFrame extends JFrame
     	Program.CreateMap();
 	}
 	
-
 	public void BackTrigger()
 	{
 		this.remove(southPanel);
@@ -284,11 +282,11 @@ public class MenuFrame extends JFrame
 		//TODO
 		if(GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0)
 		{
-			GameManager.StartGame();
-			/*
+			//GameManager.StartGame();
+			
 			GameFrame gFrame = new GameFrame(new MapView());
 			setVisible(false);
-			dispose();*/
+			dispose();
 		}
 		else
 		{

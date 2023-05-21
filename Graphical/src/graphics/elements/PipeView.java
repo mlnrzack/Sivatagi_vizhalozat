@@ -6,6 +6,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import game.elements.Pipe;
+
 public class PipeView extends ElementView
 {
 	//itt kell egy position változó, ami a grafika helyét tárolja...
@@ -21,15 +23,87 @@ public class PipeView extends ElementView
 	{
 		try
 		{
-			//if(ha üres a cső)// Pipe.GetWaterInside() == 0
-			ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
-			pipeLabel.setIcon(emptyPipe);
-			//else if(ha van víz a csőben) //Pipe.GetWaterInside() == 1
-			ImageIcon fullPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
-			pipeLabel.setIcon(fullPipe);
-			//else if(ha lyukas a cső) //Pipe.GetLeaking()
-			ImageIcon leakingPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking.png"));
-			pipeLabel.setIcon(leakingPipe);
+			//if(Pipe.GetWaterInside() == 0)
+			{
+				//if(!Pipe.getLeaking())
+				{
+					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+				}
+				
+				//else if(Pipe.getLeaking())
+				{
+					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+				}
+				
+			}			
+			//else if(Pipe.GetWaterInside() == 1){
+			{
+				//if(!Pipe.getLeaking())
+				{
+					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+				}
+				
+				//else if(Pipe.getLeaking())
+				{
+					//if(!Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(Pipe.GetSlippery() && !Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+					//else if(!Pipe.GetSlippery() && Pipe.GetSticky())
+					{
+						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
+						pipeLabel.setIcon(emptyPipe);
+					}
+				}
+			}
 			//fel kell rakni a gamePanel-ra.
 		}
 		

@@ -258,12 +258,19 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TrySetSlippery()
     {
-    	if(slipperyTimer == 0)
+    	if(slipperyTimer == 0 && stickyTimer == 0)
     	{
     		SetSlippery();
     		System.out.println("A cső csúszós lett.");
     		return true;
-    	}    		
+    	}
+    	
+    	else if(slipperyTimer == 0 && stickyTimer > 0)
+    	{
+    		System.out.println("A cső már ragacsos...");
+    		return true;
+    	}
+    	
     	System.out.println("Nem sikerült csúszóssá tenni a csövet.");
     	return false;
     }
@@ -273,11 +280,17 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TrySetSticky()
     {
-    	if(stickyTimer == 0)
+    	if(stickyTimer == 0 && slipperyTimer == 0)
     	{
     		SetSticky();
     		System.out.println("A cső ragacsos lett.");
     		return true;
+    	}
+    	
+    	else if(stickyTimer == 0 && slipperyTimer > 0)
+    	{
+    		System.out.println("A cső már csúszós...");
+    		return false;
     	}
     		
     	System.out.println("Nem sikerült ragadóssá tenni a csövet.");

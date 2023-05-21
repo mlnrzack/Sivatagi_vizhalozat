@@ -1,5 +1,7 @@
 package game.IO;
 
+import java.io.*;
+
 import game.*;
 import game.players.*;
 import tests.*;
@@ -7,7 +9,7 @@ import java.util.Scanner;
 
 public class Commands
 {
-
+	CommandInterpreter commandInterpreter = new CommandInterpreter();
 /**
  * runTest
  * exit
@@ -191,11 +193,12 @@ public class Commands
 
     public void Start()
     {
-    	if(GameManager.GetMap().size() == 0) Program.CreateMap();
+    	if(GameManager.GetMap().size() == 0) 
+    		Program.CreateMap();
     	GameManager.StartGame();
     }
-    
-    /*public void In(String path)
+    /*
+    public void In(String path)
     {
         String line;
         File f = new File(path);
@@ -217,7 +220,7 @@ public class Commands
                 try 
                 {
                     if ((line = br.readLine()) != null)
-                    	command_interpreter.getInput(line);
+                    	commandInterpreter.getInput(line);
 
                     else
                     {
@@ -235,7 +238,7 @@ public class Commands
             System.err.println("A fájl nem létezik");
         }
     }
-
+    /*
     public void Log(String path)
     {
 

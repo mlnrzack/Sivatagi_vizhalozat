@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import game.elements.*;
+import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
 import graphics.*;
@@ -23,8 +24,6 @@ public class Program
 {
     public static void main(String[] args)
     {
-        //CommandInterpreter interpreter = new CommandInterpreter();
-        //interpreter.getInput();
         MenuFrame mFrame = new MenuFrame();
     }
     

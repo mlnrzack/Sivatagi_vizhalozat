@@ -11,8 +11,7 @@ import javax.swing.JPanel;
 import game.GameManager;
 import graphics.elements.*;
 
-import static game.IO.DebugLog.WriteOutDebugLog;
-import static game.IO.InfoLog.WriteOutInfoLog;
+import game.IO.*;
 
 /**Ez az osztály felel a játéktér Frame-jéért.
  */
@@ -28,12 +27,15 @@ public class GameFrame extends JFrame
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
 		this.setIconImage(icon.getImage());
 		//Esetleg valami hátteret (akár képet is) érdemes lehet betölteni a játéktérnek
+		
 		//A panelek feltöltése adatokkal
-		//InitializeGamePanel(map);
+		InitializeGamePanel(map);
 		InitializeInterfacePanel();
+		
 		//A panelek hozzáadása a frame-hez
-		this.add(gamePanel, BorderLayout.WEST);
-		this.add(interfacePanel, BorderLayout.EAST);
+		//this.add(gamePanel, BorderLayout.WEST);
+		//this.add(interfacePanel, BorderLayout.EAST);
+		
 		//további frame beállításaok
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
  		this.setResizable(false);
@@ -41,10 +43,13 @@ public class GameFrame extends JFrame
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Runtime.getRuntime().addShutdownHook(new Thread(){
-			public void run(){
-				WriteOutDebugLog();
-				WriteOutInfoLog();
+		//Logolások hívása záráskor
+		Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+			public void run()
+			{
+				DebugLog.WriteOutDebugLog();
+				InfoLog.WriteOutInfoLog();
 			}
 		});
 	}
@@ -65,7 +70,7 @@ public class GameFrame extends JFrame
 			displayCurrentPlayerName.setText(GameManager.GetCurrentMechanic().GetName());
 		else if(GameManager.GetCurrentSaboteur() != null)
 			displayCurrentPlayerName.setText(GameManager.GetCurrentSaboteur().GetName());
-		interfacePanel.add(displayCurrentPlayerName);
+		//interfacePanel.add(displayCurrentPlayerName);
 		/*
 		interfacePanel.revalidate();
 		interfacePanel.repaint();*/

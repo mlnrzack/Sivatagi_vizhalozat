@@ -16,66 +16,23 @@ public class TestBuildPumpIntoPipe extends TestBase
 	public static void TestTryBuildPump()
 	{
 		System.out.println("TestBuildPumpIntoPipe");
-		boolean run = true;
 		TestBase.Init();
+		
 		GameManager.SetCurrentMechanic(mechanic);
 		mechanic.SetCurrentPosition(cistern);
 		cistern.AcceptPlayer(mechanic);
-		System.out.println("Mechanic a cistern-en.");
-		System.out.println("A Mechanic szeretne pumpát felvenni? y/n");
-		while(run)
-		{
-			input = scan.nextLine(); 
-			if (input.equals("y")) 
-			{
-				mechanic.SetPumpInInventory(pump2);
-				System.out.println("Position: " + mechanic.GetCurrentPosition().GetId()); 
-				System.out.println("Neighbours: ");
-				for(int i = 0; i < mechanic.GetCurrentPosition().GetNeighbours().size(); i++) 
-					System.out.println(i + ": " + mechanic.GetCurrentPosition().GetNeighbours().get(i).GetId() + "\t"); 
-				
-				System.out.println("Szeretne a Mechanic a szomszédos elemre mozogni?" 
-						+ "\nHa igen, akkor a 'move <kívánt pozíció indexe>' paranccsal teheti"); 
-				input = scan.nextLine();
-				while(input.equals("move 0"))
-				{
-					//input = scan.nextLine();
-					if(input.equals("move 0")) 
-					{
-						mechanic.SetCurrentPosition(pipe2);
-						pipe1.AcceptPlayer(mechanic);
-						System.out.println("Mechanic a pipe2-n.");
-						System.out.println("Szeretné a Mechanic lerakni ezen a csövön a pumpát? y/n");
-						input = scan.nextLine();
-						while(input.equals("y") || input.equals("n"))
-						{
-							if(input.equals("y"))
-							{
-								System.out.println("Sikeres teszt eredményt várunk:");
-								
-								if (mechanic.BuildPumpIntoPipe())
-								{
-									System.out.println("Sikeres teszt");
-									run = false;
-								}							
-							}
-							else
-							{
-								System.out.println("Kérem rakja le a pumpát!"); 
-							}
-						}
-					}
-					else
-					{
-						System.out.println("Kérem adjon meg helyes bemenetet");
-					}
-				}
-			}	
-			else if(input.equals("n")) 
-				System.out.println("A teszt sikeres futtatásához kérem nyomjom 'y'-t!");
-		}
+		
+		System.out.println(GameManager.GetCurrentMechanic().GetName() + " a " + GameManager.GetCurrentMechanic().GetCurrentPosition().GetId() + "-n");
+		mechanic.SetPumpInInventory(pump2);
+		
+		mechanic.SetCurrentPosition(pipe2);
+		pipe2.AcceptPlayer(mechanic);
+		System.out.println(GameManager.GetCurrentMechanic().GetName() + " a " + GameManager.GetCurrentMechanic().GetCurrentPosition().GetId() + "-n");
+		
+		if(mechanic.BuildPumpIntoPipe())
+			System.out.println("Sikeres teszt");
 	}
-    
+		
     /**8.2.8
      * Egy játékos pumpát állít fel, majd ellenőrzi, hogy sikerült-e
      */
