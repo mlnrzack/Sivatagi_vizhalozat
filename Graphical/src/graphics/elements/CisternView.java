@@ -27,13 +27,14 @@ public class CisternView extends ElementView
 		LoadImage();
 	}
 	
-	public void LoadImage()
+	public JLabel LoadImage()
 	{
 		try
 		{
+			cisternLabel = new JLabel();
 			ImageIcon cisternImage = new ImageIcon(this.getClass().getResource("/cistern.png"));
 			cisternLabel.setIcon(cisternImage);
-			//fel kell rakni a gamePanel-ra.
+			return cisternLabel;
 		}
 		
 		catch(Exception e)
@@ -41,7 +42,7 @@ public class CisternView extends ElementView
 			cisternLabel = new JLabel("Cistern");
 			cisternLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			cisternLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			//fel kell rakni a gamePanel-ra.
+			return cisternLabel;
 		}
 	}
 }

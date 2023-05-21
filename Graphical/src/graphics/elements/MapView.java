@@ -1,5 +1,11 @@
 package graphics.elements;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JPanel;
 
 import java.util.ArrayList;
@@ -21,9 +27,19 @@ public class MapView extends JPanel
 {
 	//private MechanicView currentMechanic = new MechanicView();
 	//private SaboteurView currentSaboteur = new SaboteurView();
-	private static int SQUARE_SIZE = 100;
+	//private BufferedImage mapImage;
+	//private static int SQUARE_SIZE = 100;
 	
-	private IElement[][] map;
+	//private IElement[][] map;
+	
+	private Color color = Color.decode("#c9a77d");
+	
+	private ArrayList<IElement> map = new ArrayList<IElement>();
+	private ArrayList<Cistern> cisterns = new ArrayList<Cistern>();
+	private ArrayList<Pipe> pipes = new ArrayList<Pipe>();
+	private ArrayList<Pump> pumps = new ArrayList<Pump>();
+	private ArrayList<WaterSpring> springs= new ArrayList<WaterSpring>();
+	
 	private Map mapView = new HashMap();
 	//valami itt kell csinálni, hogy megjelenjenek az elemek
 	
@@ -31,9 +47,15 @@ public class MapView extends JPanel
 	
 	public MapView()
 	{
-		map = new IElement[10][10];
-		ArrayList<IElement> consoleMap = GameManager.GetMap();
+		//map = new IElement[10][10];
+		map = GameManager.GetMap();
+		cisterns = GameManager.GetCisterns();
+		pipes = GameManager.GetPipes();
+		pumps = GameManager.GetPumps();
+		springs = GameManager.GetWaterSprings();
 		drawMap();
+		
+		//MouseListener();
 	}
 	
 	public void ReDraw()
@@ -43,6 +65,12 @@ public class MapView extends JPanel
 	
 	public void drawMap()
 	{
+		this.setBackground(color);
+		this.setPreferredSize(new Dimension(1000, 1000));
+		PipeView piV = new PipeView(10, 10, 1);
+		this.add(piV.LoadImage());
+		PumpView puV = new PumpView(50, 50, 1);
+		this.add(puV.LoadImage());
 		
 	}
 	

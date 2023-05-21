@@ -1,10 +1,11 @@
 package graphics.elements;
 
-import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import game.interfaces.*;
 
-public abstract class ElementView// implements IElement
+public abstract class ElementView
 {
 	protected int posX;
 	protected int posY;
@@ -17,5 +18,5 @@ public abstract class ElementView// implements IElement
 		//TODO
 	}
 	
-	public abstract void LoadImage();
+	public abstract JLabel LoadImage();
 }

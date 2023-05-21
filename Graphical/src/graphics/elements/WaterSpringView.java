@@ -25,13 +25,14 @@ public class WaterSpringView extends ElementView
 		LoadImage();
 	}
 	
-	public void LoadImage()
+	public JLabel LoadImage()
 	{
 		try
 		{
+			springLabel = new JLabel();
 			ImageIcon waterSpring = new ImageIcon(this.getClass().getResource("/waterspring.png"));
 			springLabel.setIcon(waterSpring);
-			//fel kell rakni a gamePanel-ra.
+			return springLabel;
 		}
 		
 		catch(Exception e)
@@ -39,7 +40,7 @@ public class WaterSpringView extends ElementView
 			springLabel = new JLabel("WaterSpring");
 			springLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			springLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			//fel kell rakni a gamePanel-ra.
+			return springLabel;
 		}
 	}
 }

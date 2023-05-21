@@ -27,6 +27,11 @@ public class Pump extends ActiveElement implements ISteppable
     	return "pump";
     }
     
+    public boolean GetBroken()
+    {
+    	return broken;
+    }
+    
     public Pipe GetInput()
     {
     	return input;

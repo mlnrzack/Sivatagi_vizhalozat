@@ -2,7 +2,6 @@ package graphics.elements;
 
 import java.awt.Font;
 
-import javax.swing.JComponent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -26,28 +25,29 @@ public class PipeView extends ElementView
 		LoadImage();
 	}
 	
-	public void LoadImage()
+	public JLabel LoadImage()
 	{
 		try
 		{
+			pipeLabel = new JLabel();
 			if(pipe.GetWaterInside() == 0)
 			{
 				if(!pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 				}
 				
@@ -55,18 +55,18 @@ public class PipeView extends ElementView
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 				}
 			}
@@ -77,18 +77,18 @@ public class PipeView extends ElementView
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 				}
 				
@@ -96,22 +96,22 @@ public class PipeView extends ElementView
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  emptyPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
-						pipeLabel.setIcon(emptyPipe);
+						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
+						pipeLabel.setIcon(iPipe);
 					}
 				}
 			}
-			//mivel térjen vissza
+			return pipeLabel;
 		}
 		
 		catch(Exception e)
@@ -186,8 +186,8 @@ public class PipeView extends ElementView
 				}
 			}
 			pipeLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			pipeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			//mivel térjen vissza
+			System.err.println(e);
+			return pipeLabel;
 		}
 	}
 }

@@ -25,15 +25,22 @@ public class PumpView extends ElementView
 		LoadImage();
 	}
 	
-	public void LoadImage()
+	public JLabel LoadImage()
 	{
 		try
 		{
-			ImageIcon  pump = new ImageIcon(this.getClass().getResource("/pump.png"));
-			pumpLabel.setIcon(pump);
-			ImageIcon brokenPump = new ImageIcon(this.getClass().getResource("/pump_broken.png"));
-			pumpLabel.setIcon(brokenPump);
-			//fel kell rakni a gamePanel-ra.
+			pumpLabel = new JLabel();
+			if(!pump.GetBroken())
+			{
+				ImageIcon  pump = new ImageIcon(this.getClass().getResource("/pump.png"));
+				pumpLabel.setIcon(pump);
+			}
+			else if(pump.GetBroken())
+			{
+				ImageIcon brokenPump = new ImageIcon(this.getClass().getResource("/pump_broken.png"));
+				pumpLabel.setIcon(brokenPump);
+			}
+			return pumpLabel;
 		}
 		
 		catch(Exception e)
@@ -42,8 +49,7 @@ public class PumpView extends ElementView
 			pumpLabel = new JLabel("Broken Pump");
 			pumpLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			pumpLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			//fel kell rakni a gamePanel-ra.
+			return pumpLabel;
 		}
 	}
-
 }
