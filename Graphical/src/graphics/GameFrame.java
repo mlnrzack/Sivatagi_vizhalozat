@@ -11,6 +11,9 @@ import javax.swing.JPanel;
 import game.GameManager;
 import graphics.elements.*;
 
+import static game.IO.DebugLog.WriteOutDebugLog;
+import static game.IO.InfoLog.WriteOutInfoLog;
+
 /**Ez az osztály felel a játéktér Frame-jéért.
  */
 public class GameFrame extends JFrame
@@ -37,6 +40,13 @@ public class GameFrame extends JFrame
 		this.pack();
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Runtime.getRuntime().addShutdownHook(new Thread(){
+			public void run(){
+				WriteOutDebugLog();
+				WriteOutInfoLog();
+			}
+		});
 	}
 	
 	public void InitializeGamePanel(MapView map)

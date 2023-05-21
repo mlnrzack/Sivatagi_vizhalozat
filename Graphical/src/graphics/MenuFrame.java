@@ -21,6 +21,9 @@ import javax.swing.JTextField;
 import game.*;
 import graphics.elements.*;
 
+import static game.IO.DebugLog.WriteOutDebugLog;
+import static game.IO.InfoLog.WriteOutInfoLog;
+
 public class MenuFrame extends JFrame
 {
 	private Color color = Color.decode("#c9a77d");

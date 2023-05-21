@@ -2,6 +2,8 @@ package game;
 
 import java.util.*;
 
+import game.IO.DebugLog;
+import game.IO.InfoLog;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
@@ -121,7 +123,7 @@ public class GameManager
     }
 
     /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
-     * @param mechanics a kapott érték.
+     * @param saboteurs a kapott érték.
      */
     public static void SetSaboteurs(ArrayList<Saboteur> saboteurs)
     {
@@ -389,7 +391,9 @@ public class GameManager
     	
     	if(round == Constants.RoundNumber)
     	{
-    		System.out.print("Gratulálunk a");
+            InfoLog.WriteOutInfoLog();
+            DebugLog.WriteOutDebugLog();
+    		System.out.print("Gratulálunk a ");
     		System.out.println(saboteursPoints < mechanicsPoints ? "Szerelők nyertek!" : "Szabotőrök nyertek!");
     		System.out.println("A nyertes csapat tagjai:");
     		if(saboteursPoints < mechanicsPoints)
@@ -594,10 +598,10 @@ public class GameManager
                         	saboteurs.get(i).SetSlipperyPipe();
                         	break;
                         case "pass":
-                        	mechanics.get(i).Pass();
+                        	saboteurs.get(i).Pass();
                         	break;
                         case "exit":
-                        	mechanics.get(i).Exit();
+                        	saboteurs.get(i).Exit();
                         	break;
                         default:
                         	break;

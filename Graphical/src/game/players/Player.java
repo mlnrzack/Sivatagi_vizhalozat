@@ -3,6 +3,11 @@ package game.players;
 import game.*;
 import game.interfaces.*;
 
+import javax.swing.*;
+
+import static game.IO.DebugLog.WriteOutDebugLog;
+import static game.IO.InfoLog.WriteOutInfoLog;
+
 public abstract class Player
 {
     private String name;							//A játékos neve.
@@ -122,8 +127,8 @@ public abstract class Player
     	for(int i = GameManager.GetPlayerAction(); i < Constants.ActionInRoundPerUser; i++)
     	{
     		GameManager.ActionExecuted();
-    	}
-    	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
+            //GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
+        }
     }
     
     /**A játék bezárása
@@ -131,8 +136,14 @@ public abstract class Player
     public void Exit()
     {
     	System.exit(0);
+        Runtime.getRuntime().addShutdownHook(new Thread(){
+            public void run(){
+                WriteOutDebugLog();
+                WriteOutInfoLog();
+            }
+        });
     }
-    
+
     /**
      */    
     public abstract String GetType();

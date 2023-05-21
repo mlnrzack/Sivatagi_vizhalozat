@@ -6,20 +6,20 @@ import java.io.ObjectOutputStream;
 
 public class DebugLog
 {
-	String debugLog = "";
+	static String debugLog = "Aktuális futáshoz tartozó logszintű infók";
 	
 	//Itt csak a debugoláshoz szükséges infók kerülnek kiírásra
 	public void WriteDebugLog(String newDebugInfo)
 	{
-		debugLog += newDebugInfo + "\n";
+		debugLog = new StringBuilder().append(debugLog).append(newDebugInfo + "\n").toString();
 	}
 	
-	public void WriteOutDebugLog()
+	public static void WriteOutDebugLog()
 	{
 		//itt írjuk ki fájlba a teljes debuglog-ot.
 		try 
     	{
-    		FileOutputStream fos = new FileOutputStream(new File("/debuglog.txt"));
+    		FileOutputStream fos = new FileOutputStream(new File("debuglog.txt"));
     		ObjectOutputStream oos = new ObjectOutputStream(fos);
 
     		oos.writeObject(debugLog);
