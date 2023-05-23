@@ -1,6 +1,7 @@
 package game.elements;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import game.*;
 import game.interfaces.*;
@@ -211,5 +212,18 @@ public class Pump extends ActiveElement implements ISteppable
         this.AddPipe(pipe);
 
         return true;
+    }
+    
+    public String toString() {
+    	List<String> neighbours = this.GetNeighbours().stream().map(p -> p.GetId()).collect(Collectors.toList());
+    	
+        return this.GetId() + ": {" + "\n"
+        		+ "\t" + "neighbours: [" + String.join(", ", neighbours) + "]" + "," + "\n"
+        		+ "\t" + "waterInside: " + this.GetWaterInside() + "," + "\n"
+        		+ "\t" + "playersHere: [" + String.join(", ", this.GetPlayers().stream().map(p -> p.GetName()).collect(Collectors.toList())) + "]" + "," + "\n"
+        		+ "\t" + "input: " + (this.GetInput() == null ? "null" : this.GetInput().GetId()) + "," + "\n"
+        		+ "\t" + "output: " + (this.GetOutput() == null ? "null" : this.GetOutput().GetId()) + "," + "\n"
+        		+ "\t" + "broken:" + (this.broken ? "true" : "false") + "," + "\n"
+        		+ "}";
     }
 }

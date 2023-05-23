@@ -1,0 +1,6 @@
+addpump pump1
+addpipe pipe1
+addmechanic mechanic1 pipe1
+addmechanic mechanic2 pump1
+setneighbours pipe1 pump1
+move mechanic2 0

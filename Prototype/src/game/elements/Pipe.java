@@ -1,6 +1,7 @@
 package game.elements;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import game.*;
 import game.interfaces.*;
@@ -333,5 +334,19 @@ public class Pipe extends Element implements ISteppable
         }
 
         return false;
+    }
+    
+    @Override
+    public String toString() {
+    	List<String> neighbours = this.GetNeighbours().stream().map(p -> p.GetId()).collect(Collectors.toList());
+    	
+        return this.GetId() + ": {" + "\n"
+        		+ "\t" + "neighbours: [" + String.join(", ", neighbours) + "]" + "," + "\n"
+        		+ "\t" + "waterInside: " + this.GetWaterInside() + "," + "\n"
+        		+ "\t" + "playersHere: [" + String.join(", ", this.GetPlayers().stream().map(p -> p.GetName()).collect(Collectors.toList())) + "]" + "," + "\n"
+        		+ "\t" + "leaking: " + (this.GetLeaking() == true ? "true" : "false") + "," + "\n"
+        		+ "\t" + "slippery:" + (this.GetSlippery() > 0 ? "true" : "false") + "," + "\n"
+        		+ "\t" + "sticky:" + (this.GetSticky() > 0 ? "true" : "false") + "," + "\n"
+        		+ "}";
     }
 }

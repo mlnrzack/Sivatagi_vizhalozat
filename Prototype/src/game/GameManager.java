@@ -23,6 +23,14 @@ public class GameManager
     private static Saboteur currentSaboteurPlayer = null;									//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
+    public static void AddToMap(IElement e) {
+    	map.add(e);
+    }
+    
+    public static ArrayList<Pipe> GetPipes(){
+    	return pipes;
+    }
+    
     /**Az aktuális körszám visszaadása.
      * @return az aktuális körszám.
      */
@@ -398,6 +406,9 @@ public class GameManager
     	IncreasePlayerAction();
         StepSteppables();
         FireSourceActions();
+        
+        Commands.WriteMapStateToFile("lastMapState.txt");
+        
         //TODO: Logoló függvény,
     }
     

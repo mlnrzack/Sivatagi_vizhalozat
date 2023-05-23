@@ -1,0 +1,4 @@
+addpipe pipe1
+addsaboteur saboteur1 pipe1
+leakpipe saboteur1
+repair saboteur1

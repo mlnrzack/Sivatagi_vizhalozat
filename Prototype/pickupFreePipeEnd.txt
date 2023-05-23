@@ -1,0 +1,16 @@
+addcistern cistern1
+addpipe pipe1
+addpump pump1
+addpipe pipe2
+addpump pump2
+setneighbours pipe1 cistern1
+setneighbours pipe1 pump1
+setneighbours pipe2 pump1
+setneighbours pipe2 pump2
+addmechanic mechanic1 cistern1
+pickfreepipe mechanic1
+move mechanic1 0
+move mechanic1 1
+move mechanic1 1
+move mechanic1 1
+connectpipe mechanic1

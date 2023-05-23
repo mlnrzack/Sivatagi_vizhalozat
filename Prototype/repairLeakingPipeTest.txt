@@ -1,0 +1,4 @@
+addpipe pipe1
+addmechanic mechanic1 pipe1
+leakpipe mechanic1
+repair mechanic1

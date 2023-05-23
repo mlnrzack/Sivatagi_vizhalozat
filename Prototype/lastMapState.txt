@@ -1,0 +1,15 @@
+pump1: {
+	neighbours: [pipe1],
+	waterInside: 0,
+	playersHere: [mechanic1],
+	input: null,
+	output: null,
+	broken:false,
+}pipe1: {
+	neighbours: [pump1],
+	waterInside: 0,
+	playersHere: [],
+	leaking: false,
+	slippery:false,
+	sticky:false,
+}

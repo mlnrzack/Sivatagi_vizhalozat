@@ -1,5 +1,9 @@
 package game;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 
 import game.elements.*;
@@ -11,8 +15,41 @@ public class Program
 {
     public static void main(String[] args)
     {
-        CommandInterpreter interpreter = new CommandInterpreter();
-        interpreter.getInput();
+    	if (args.length == 0) {
+	        CommandInterpreter interpreter = new CommandInterpreter();
+	        interpreter.getInput();
+    	} else {
+    		BufferedReader reader;
+
+    		try {
+    			reader = new BufferedReader(new FileReader(args[0]));
+    			String line = reader.readLine();
+
+    			while (line != null) {
+    				Commands.ExecuteCommand(line);
+
+    				line = reader.readLine();
+    			}
+
+    			reader.close();
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+    		Commands.WriteMapStateToFile("lastMapState.txt");
+    		
+    		try {
+    			if (Commands.filesCompareByLine(Paths.get(args[1]), Paths.get("lastMapState.txt")) == -1L) {
+        			System.out.println(args[0] + " teszt sikeres");
+        		} else {
+        			System.out.println(args[0] + " teszt sikertelen");
+        		}
+    		} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+    			
+    		}
+    	}
     }
     
     /**Egy statikus térképet létrehozó függvény.
