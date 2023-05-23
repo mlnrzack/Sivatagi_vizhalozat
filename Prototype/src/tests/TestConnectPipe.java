@@ -10,26 +10,29 @@ public class TestConnectPipe extends TestBase
      */
     public static void TestConnect()
     {
-        System.out.println("TestConnect Test\n");
-        Pipe pipe3 = new Pipe();
+        System.out.println("\nTestConnectTest");
+        Pipe testPipe = new Pipe();
+        testPipe.SetId("pipe3");
         Pump testPump1 = new Pump();
+        testPump1.SetId("testPump1");
         Pump testPump2 = new Pump();
-        mechanic.SetPipeInInventory(pipe3);
+        testPump2.SetId("testPump2");
+        mechanic.SetPipeInInventory(testPipe);
         mechanic.SetCurrentPosition(testPump1);
         testPump1.AcceptPlayer(mechanic);
         
         mechanic.ConnectPipe();        
-        mechanic.SetPipeInInventory(pipe3);
+        mechanic.SetPipeInInventory(testPipe);
         
         mechanic.SetCurrentPosition(testPump2);
         testPump2.AcceptPlayer(mechanic);
         mechanic.ConnectPipe();
 
-        System.out.println("Amennyiben sikeres volt a cső lehelyezése az új cső két szomszédja pump és pump 1");
+        System.out.println("Amennyiben sikeres volt a cső lehelyezése az új cső két szomszédja testPump1 és testPump2");
         //itt is lehet valamit ki kellene íratni, hogy mi történik, törlendő ez a sor
-        System.out.println(pipe3.GetNeighbours().get(0).GetId() + " " + pipe3.GetNeighbours().get(1).GetId());
+        System.out.println(testPipe.GetNeighbours().get(0).GetId() + " " + testPipe.GetNeighbours().get(1).GetId());
         System.out.println("A két szomszéd étékének vizsgálata. Két egymás utáni igaz értéket várunk");
-        System.out.println(pump.GetId().equals(pipe3.GetNeighbours().get(0).GetId()) ? "Igaz" : "Hamis");
-        System.out.println(pump2.GetId().equals(pipe3.GetNeighbours().get(1).GetId()) ? "Igaz" : "Hamis");
+        System.out.println(testPump1.GetId().equals(testPipe.GetNeighbours().get(0).GetId()) ? "Igaz" : "Hamis");
+        System.out.println(testPump2.GetId().equals(testPipe.GetNeighbours().get(1).GetId()) ? "Igaz" : "Hamis");
     }
 }

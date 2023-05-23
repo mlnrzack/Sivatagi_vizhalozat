@@ -14,7 +14,8 @@ public class PipeView extends ElementView
 	//itt kell egy position változó, ami a grafika helyét tárolja...
 	//valahogy összekötni a modellből egy objemktummal...
 	private Pipe pipe;
-	JLabel pipeLabel;
+	private JLabel pipeLabel;
+	private ElementView[] neighbours = new ElementView[2];
 	
 	public PipeView(int x, int y, int index)
 	{

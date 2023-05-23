@@ -9,7 +9,7 @@ public class DebugLog
 	static String debugLog = "Aktuális futáshoz tartozó logszintű infók";
 	
 	//Itt csak a debugoláshoz szükséges infók kerülnek kiírásra
-	public void WriteDebugLog(String newDebugInfo)
+	public static void WriteDebugLog(String newDebugInfo)
 	{
 		debugLog = new StringBuilder().append(debugLog).append(newDebugInfo + "\n").toString();
 	}

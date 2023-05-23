@@ -28,7 +28,6 @@ public class Pump extends ActiveElement implements ISteppable
     	return input;
     }
 
-
     public Pipe GetOutput()
     {
     	return output;
@@ -171,13 +170,24 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
-    	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
+    	if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size())
+        {
+    		System.out.println("Szomszéd lecsatlakoztatása sikertelen, mert érvénytelen a szomszéd azonosítója.");
+    		return null;
+    	}
     	
-        if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        
+    	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) 
+    	{
+    		System.out.println(GetNeighbours().get(neighbourIdx).GetId() + " lecsatlakoztatása sikertelen, mert állnak rajta.");
+    		return null;
+    	}
         Pipe neighbourtoDisconnect = this.neighbours.get(neighbourIdx);
 
-        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
+        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect)
+        {
+    		System.out.println(GetNeighbours().get(neighbourIdx).GetId() + " lecsatlakoztatása sikertelen, mert a pumpa egy bemeneti, vagy kimeneti ága.");
+    		return null;
+    	}
 
         RemovePipe(neighbourtoDisconnect);
         neighbourtoDisconnect.WaterToDesert();
@@ -214,7 +224,8 @@ public class Pump extends ActiveElement implements ISteppable
         return true;
     }
     
-    public String toString() {
+    public String toString() 
+    {
     	List<String> neighbours = this.GetNeighbours().stream().map(p -> p.GetId()).collect(Collectors.toList());
     	
         return this.GetId() + ": {" + "\n"

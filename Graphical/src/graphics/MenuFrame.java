@@ -279,7 +279,6 @@ public class MenuFrame extends JFrame
 	
 	public void StartGameTrigger()
 	{
-		//TODO
 		if(GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0)
 		{
 			//GameManager.StartGame();

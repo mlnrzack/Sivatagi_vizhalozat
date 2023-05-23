@@ -111,11 +111,11 @@ public class Commands
             	break;
                 
             case"TestMove" :
-            	TestMove.Test_defaultMove();
-            	TestMove.Test_morePlayersOnActiveElement();
-            	TestMove.Test_morePlayersOnPipe();
-            	TestMove.Test_movePlayersToSamePipe();
-            	TestMove.Test_wrongIndex();
+            	TestMove.TestDefaultMove();
+            	TestMove.TestMorePlayersOnActiveElement();
+            	TestMove.TestMorePlayersOnPipe();
+            	TestMove.TestMovePlayersToSamePipe();
+            	TestMove.TestWrongIndex();
             	break;
 
             case"TestPickUpFreePipeEnd" :
@@ -148,7 +148,6 @@ public class Commands
             	TestSticky.TestStickyFunction();
             	
             case"TestWin" :
-            	TestWin.InitTest();
             	TestWin.TestMechanicsWin();
             	TestWin.TestSaboteursWin();
             	break;
@@ -159,11 +158,11 @@ public class Commands
         		TestConnectPipe.TestConnect();
         		TestDamage.TestDamages();
         		TestDisconnectNeighbourPipe.TestDisconnectNeighbourPipes();
-        		TestMove.Test_defaultMove();
-            	TestMove.Test_morePlayersOnActiveElement();
-            	TestMove.Test_morePlayersOnPipe();
-            	TestMove.Test_movePlayersToSamePipe();
-            	TestMove.Test_wrongIndex();
+        		TestMove.TestDefaultMove();
+            	TestMove.TestMorePlayersOnActiveElement();
+            	TestMove.TestMorePlayersOnPipe();
+            	TestMove.TestMovePlayersToSamePipe();
+            	TestMove.TestWrongIndex();
             	TestPickUpFreePipeEnd.TestPickUpFreePipe();
             	TestPickUpPump.TestPickPump();
             	TestPumpWater.TestWaterPump();
@@ -173,7 +172,6 @@ public class Commands
                 TestSlippery.TestSlipperyFunction();
                 TestSticky.TestSetSticky();
                 TestSticky.TestStickyFunction();
-            	TestWin.InitTest();
             	TestWin.TestMechanicsWin();
             	TestWin.TestSaboteursWin();
             	break;

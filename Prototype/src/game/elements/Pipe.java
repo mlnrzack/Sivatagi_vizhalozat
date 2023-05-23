@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import game.*;
+import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
 
@@ -135,11 +136,14 @@ public class Pipe extends Element implements ISteppable
         if (!leaking && noLeakageTimer == 0)
         {
         	leaking = true;
-        	System.out.println("Cső rongálása sikeres volt. Lyukas lett.\n");
+        	DebugLog.WriteDebugLog("Cső rongálása sikeres volt. Lyukas lett.\n");
+        	InfoLog.WriteInfoLog("Cső rongálása sikeres volt. Lyukas lett.\n");
+        	System.out.println(this.GetId() + " rongálása sikeres volt. Lyukas lett.\n");
             return true;
         }
-
-        System.out.println("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
+        DebugLog.WriteDebugLog("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
+        InfoLog.WriteInfoLog("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
+        System.out.println(this.GetId() + " rongálása nem sikerül. Már lyukas ez az elem.\n");
         return false;
     }
 
@@ -215,13 +219,14 @@ public class Pipe extends Element implements ISteppable
         {
         	if(SlipperyPipe(player))
         	{
-        		return true;
+        		return false;
         	}
-        	StickyPipe(player);
         	
-        	AddPlayer(player);
-                
-        	return true;        
+            StickyPipe(player);
+            	
+            AddPlayer(player);
+                    
+           	return true; 
         }
 
         System.out.println("Cső nem tud fogadni, mert tele van. Válassz más műveletet.");
@@ -294,8 +299,14 @@ public class Pipe extends Element implements ISteppable
     public boolean SlipperyPipe(Player player)
     {
     	if(slipperyTimer > 0)
+    	{
+    		player.GetCurrentPosition().RemovePlayer(player);
     		this.GetNeighbours().get(new Random().nextInt(this.neighbours.size())).AcceptPlayer(player);
-    	
+    		GameManager.ActionExecuted();
+    		
+    		System.out.println(player.GetCurrentPosition().GetId() + "-re került a " + player.GetName() + " játékos.");
+    		System.out.println("Még ennyi ideig csúszós a cső: " + this.GetSlippery());
+    	}
     	return slipperyTimer > 0;
     }
     

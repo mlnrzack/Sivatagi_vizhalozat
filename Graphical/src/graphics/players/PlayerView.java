@@ -4,11 +4,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import game.interfaces.*;
+import graphics.elements.*;
 
 public abstract class PlayerView
 {
-	protected int posX;
-	protected int posY;
+	protected ElementView pos;
+	//protected int posX;
+	//protected int posY;
 	
 	//itt kell egy position változó, ami a grafika helyét tárolja...
 	//valahogy összekötni a modellből egy objemktummal...

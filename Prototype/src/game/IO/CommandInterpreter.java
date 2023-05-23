@@ -2,6 +2,8 @@ package game.IO;
 
 import java.util.Scanner;
 
+import tests.TestBase;
+
 /**
  * Ez a java osztály felel a konzolon bekért parancsok értelmezéséért
  * A parancsok listájáért érdemes átnézni a dokumantáció 7.1.2-es fejezetét, ahol a Bemeneti nyelvet részletezzük
@@ -28,8 +30,6 @@ public class CommandInterpreter
 
     public void getInput()
     {
-        //System.out.println("A lehetséges bemeneti parancsok: \n\tcreateMap\n\tstart\n\tplayerMove <név>\n\tplayerAction <név>\n\texit\n\trunTest <tesztnév> //az All lefuttatja egyben az összes parancsot");
-
         while (true)
         {
         	System.out.println("A lehetséges bemeneti parancsok: "
@@ -39,7 +39,7 @@ public class CommandInterpreter
             		+ "\n\trunTest <tesztnév> //az all lefuttatja egyben az összes parancsot");
             String commandLineInput = sc.nextLine();
             String[] interpreterArray = commandLineInput.split(" ");
-
+            
             switch (interpreterArray[0])
             {
                 case "" : System.out.println("\n"); break;

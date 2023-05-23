@@ -10,45 +10,72 @@ import game.elements.*;
 import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
+import tests.TestBase;
+import tests.TestBuildPumpIntoPipe;
+import tests.TestDamage;
+import tests.TestDisconnectNeighbourPipe;
+import tests.TestMove;
+import tests.TestPickUpFreePipeEnd;
+import tests.TestPickUpPump;
+import tests.TestPumpWater;
+import tests.TestRepair;
+import tests.TestSetPump;
+import tests.TestSlippery;
+import tests.TestSticky;
+import tests.TestWin;
 
 public class Program
 {
     public static void main(String[] args)
     {
-    	if (args.length == 0) {
+    	TestBase.Init();
+    	if (args.length == 0) 
+    	{
 	        CommandInterpreter interpreter = new CommandInterpreter();
 	        interpreter.getInput();
-    	} else {
+    	}
+    	
+    	else 
+    	{
     		BufferedReader reader;
 
-    		try {
+    		try 
+    		{
     			reader = new BufferedReader(new FileReader(args[0]));
     			String line = reader.readLine();
 
-    			while (line != null) {
+    			while (line != null) 
+    			{
     				Commands.ExecuteCommand(line);
 
     				line = reader.readLine();
     			}
 
     			reader.close();
-    		} catch (IOException e) {
+    		}
+    		catch (IOException e) 
+    		{
     			e.printStackTrace();
     		}
+    		
     		Commands.WriteMapStateToFile("lastMapState.txt");
     		
-    		try {
-    			if (Commands.filesCompareByLine(Paths.get(args[1]), Paths.get("lastMapState.txt")) == -1L) {
+    		try 
+    		{
+    			if (Commands.filesCompareByLine(Paths.get(args[1]), Paths.get("lastMapState.txt")) == -1L) 
+    			{
         			System.out.println(args[0] + " teszt sikeres");
-        		} else {
+        		}
+    			else
+    			{
         			System.out.println(args[0] + " teszt sikertelen");
         		}
-    		} catch (IOException e) {
+    		}
+    		catch (IOException e) 
+    		{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-    			
-    		}
+			} 
     	}
     }
     

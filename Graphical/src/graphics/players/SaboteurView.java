@@ -1,22 +1,23 @@
 package graphics.players;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import game.*;
 import game.players.*;
+import graphics.elements.*;
 
 public class SaboteurView extends PlayerView
 {
 	Saboteur saboteur;
 	JLabel saboteurLabel;
 	
-	public SaboteurView(int x, int y, int index)
+	public SaboteurView(ElementView pos, int index)
 	{
-		posX = x;
-		posY = y;
+		this.pos = pos;
 		saboteur = GameManager.GetSaboteurs().get(index);
 		LoadImage();
 	}
@@ -26,8 +27,10 @@ public class SaboteurView extends PlayerView
 		try
 		{
 			saboteurLabel = new JLabel();
-			ImageIcon  saboteurView = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
-			saboteurLabel.setIcon(saboteurView);
+			ImageIcon  iSaboteur = new ImageIcon(this.getClass().getResource("/saboteur.png"));
+			Image loadedImage = iSaboteur.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+			iSaboteur = new ImageIcon(loadedImage);
+			saboteurLabel.setIcon(iSaboteur);
 			return saboteurLabel;
 		}
 		catch (Exception e)

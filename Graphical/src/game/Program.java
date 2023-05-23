@@ -19,12 +19,15 @@ import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
 import graphics.*;
+import tests.TestBuildPumpIntoPipe;
 
 public class Program
 {
     public static void main(String[] args)
     {
         MenuFrame mFrame = new MenuFrame();
+    	//CreateMap();
+    	//GameManager.StartGame();
     }
     
     /**Egy statikus térképet létrehozó függvény.
@@ -269,7 +272,13 @@ public class Program
         map.add(spring2);
 
         GameManager.SetMap(map);
-        
+        /*
+        Mechanic testM = new Mechanic();
+        spring1.AcceptPlayer(testM);
+        testM.SetCurrentPosition(spring1);
+        testM.SetName("testM");
+        pipe1.TrySetSlippery();
+        */
         JPanel westPanel = MenuFrame.GetWestPanel();
         westPanel.setBackground(color);
         JLabel mechanicLabel = new JLabel("Mechanics' team");
@@ -468,5 +477,6 @@ public class Program
        	eastPanel.add(sOkButton);
        	
        	MenuFrame.SetEastPanel(eastPanel);
+       	//*/
     }
 }

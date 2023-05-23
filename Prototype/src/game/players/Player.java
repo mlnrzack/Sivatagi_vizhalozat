@@ -1,6 +1,8 @@
 package game.players;
 
 import game.*;
+import game.IO.DebugLog;
+import game.IO.InfoLog;
 import game.interfaces.*;
 
 public abstract class Player
@@ -52,12 +54,11 @@ public abstract class Player
             if (toNeighbour.AcceptPlayer(this))
             {
             	currentPosition.RemovePlayer(this);
-            	currentPosition = toNeighbour;
+                currentPosition = toNeighbour;	
             	GameManager.ActionExecuted();
             	return true;
             }
         }
-        System.out.println("Hibás bemenet! Nem jó indexet adtál meg a szomszédhoz, vagy a szomszéd csövön már állnak...");
         return false;
     }
 
@@ -130,6 +131,8 @@ public abstract class Player
      */
     public void Exit()
     {
+    	DebugLog.WriteOutDebugLog();
+    	InfoLog.WriteOutInfoLog();
     	System.exit(0);
     }
     

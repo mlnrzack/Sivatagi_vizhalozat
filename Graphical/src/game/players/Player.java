@@ -1,12 +1,9 @@
 package game.players;
 
 import game.*;
+import game.IO.DebugLog;
+import game.IO.InfoLog;
 import game.interfaces.*;
-
-import javax.swing.*;
-
-import static game.IO.DebugLog.WriteOutDebugLog;
-import static game.IO.InfoLog.WriteOutInfoLog;
 
 public abstract class Player
 {
@@ -57,12 +54,11 @@ public abstract class Player
             if (toNeighbour.AcceptPlayer(this))
             {
             	currentPosition.RemovePlayer(this);
-            	currentPosition = toNeighbour;
+                currentPosition = toNeighbour;
             	GameManager.ActionExecuted();
             	return true;
             }
         }
-        System.out.println("Hibás bemenet! Nem jó indexet adtál meg a szomszédhoz, vagy a szomszéd csövön már állnak...");
         return false;
     }
 
@@ -127,22 +123,19 @@ public abstract class Player
     	for(int i = GameManager.GetPlayerAction(); i < Constants.ActionInRoundPerUser; i++)
     	{
     		GameManager.ActionExecuted();
-        }
+    	}
+    	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
     
     /**A játék bezárása
      */
     public void Exit()
     {
+    	DebugLog.WriteOutDebugLog();
+    	InfoLog.WriteOutInfoLog();
     	System.exit(0);
-        Runtime.getRuntime().addShutdownHook(new Thread(){
-            public void run(){
-                WriteOutDebugLog();
-                WriteOutInfoLog();
-            }
-        });
     }
-
+    
     /**
      */    
     public abstract String GetType();

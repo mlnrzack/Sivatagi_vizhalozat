@@ -10,7 +10,7 @@ public class TestPumpWater extends TestBase
      */
 	public static void TestWaterPump()
     {
-        System.out.println("Water Pump Test\n");
+        System.out.println("\nWater Pump Test");
 
         mechanic.SetCurrentPosition(pump);
         pump.AcceptPlayer(mechanic);
@@ -20,7 +20,6 @@ public class TestPumpWater extends TestBase
         System.out.println("pumpa input és output beállítása.");
         pipe1.Step();
         pump.Step();
-        spring.FillNeighourPipes();
         pump.Step();
         pipe2.Step();
         cistern.Step();

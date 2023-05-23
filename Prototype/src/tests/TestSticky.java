@@ -11,7 +11,7 @@ public class TestSticky extends TestBase
 	 */
 	public static void TestSetSticky()
 	{
-		System.out.println("Set a Pipe Sticky Test\n");
+		System.out.println("\nSet a Pipe Sticky Test");
 
 		saboteur.SetCurrentPosition(pipe1);
 		pipe1.AcceptPlayer(saboteur);
@@ -38,7 +38,7 @@ public class TestSticky extends TestBase
 	
 	public static void TestStickyFunction()
 	{
-		System.out.println("Sticky Function Test\n");
+		System.out.println("\nSticky Function Test");
 
 		//mini init
 		Pipe pipe3 = new Pipe();

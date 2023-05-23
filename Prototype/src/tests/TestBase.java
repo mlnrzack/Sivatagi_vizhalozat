@@ -15,7 +15,6 @@ import game.players.*;
  */
 public class TestBase
 {
-	static GameManager gamem = new GameManager();
 	static Cistern cistern = new Cistern();
 	static Pipe pipe1 = new Pipe();
 	static Pipe pipe2 = new Pipe();
@@ -29,6 +28,9 @@ public class TestBase
 	
 	public static void Init()
 	{	
+		mechanic.SetName("mechanic");
+		saboteur.SetName("saboteur");
+		
 		spring.AddPipe(pipe1);
 		
 		pipe1.AddNeighbour(spring);
@@ -36,13 +38,12 @@ public class TestBase
 		
 		pump.AddPipe(pipe1);
 		pump.AddPipe(pipe2);
+		pump.TrySetInputOutput(0, 1);
 		
 		pipe2.AddNeighbour(pump);
 		pipe2.AddNeighbour(cistern);
 		
 		cistern.AddPipe(pipe2);
-		
-		System.out.println("Szomszédságok beállítva.");
 		
 		map.add(cistern);
 		map.add(pipe1);

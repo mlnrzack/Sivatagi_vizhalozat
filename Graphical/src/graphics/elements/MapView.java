@@ -41,15 +41,15 @@ public class MapView extends JPanel
 	
 	private Map mapView = new HashMap();
 	
-	private MechanicView currentMechanic;															//az aktuális szerelő megjelnítése
-	private SaboteurView currentSaboteur;
-	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();
-	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();
-	private ArrayList<PumpView> pumpsView = new ArrayList<PumpView>();
-	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();
+	private MechanicView currentMechanic;															//az aktuális szerelő megjelenítése
+	private SaboteurView currentSaboteur;															//az aktuális szabotőr megjenenítése
+	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();						//a ciszternák megjelenítésere szolgáló lista
+	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();								//a csövek megjelenítésére szolgáló lista
+	private ArrayList<PumpView> pumpsView = new ArrayList<PumpView>();								//a pumpák megjelenítésére szolgáló lista
+	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();				//a vízforrások megjelenítésére szolgáló lista
+	private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();					//a szerelők megjelenítésére szolgáló lista
+	private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();					//a szabotőrök megjelenítésére szolgáló lista
 	//valami itt kell csinálni, hogy megjelenjenek az elemek
-	
-	
 	
 	public MapView()
 	{
@@ -127,6 +127,23 @@ public class MapView extends JPanel
 			springsView.add(sV);
 			this.add(sV.LoadImage());
 		}
+		/*
+		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
+		{
+			GameManager.GetMechanics().get(i).GetCurrentPosition();
+			MechanicView mV = new MechanicView(, i);
+			mechanicsView.add(mV);
+			this.add(mechanicsView.get(i).LoadImage());
+		}
+		
+		for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
+		{
+			GameManager.GetSaboteurs().get(i).GetCurrentPosition();
+			SaboteurView sV = new SaboteurView(, i);
+			saboteursView.add(sV);
+			this.add(saboteursView.get(i).LoadImage());
+		}
+		*/
 	}
 	
 	//TODO

@@ -18,15 +18,16 @@ public class TestConnectPipe extends TestBase
         mechanic.SetCurrentPosition(testPump1);
         testPump1.AcceptPlayer(mechanic);
         
+        System.out.println("A szerelő a teszt pump1-en állva csatlakoztatja ahhoz a csövet.");
         mechanic.ConnectPipe();        
         mechanic.SetPipeInInventory(pipe3);
         
+        System.out.println("A szerelő a teszt pump2-n állva csatlakoztatja ahhoz a csövet.");
         mechanic.SetCurrentPosition(testPump2);
         testPump2.AcceptPlayer(mechanic);
         mechanic.ConnectPipe();
 
         System.out.println("Amennyiben sikeres volt a cső lehelyezése az új cső két szomszédja pump és pump 1");
-        //itt is lehet valamit ki kellene íratni, hogy mi történik, törlendő ez a sor
         System.out.println(pipe3.GetNeighbours().get(0).GetId() + " " + pipe3.GetNeighbours().get(1).GetId());
         System.out.println("A két szomszéd étékének vizsgálata. Két egymás utáni igaz értéket várunk");
         System.out.println(pump.GetId().equals(pipe3.GetNeighbours().get(0).GetId()) ? "Igaz" : "Hamis");

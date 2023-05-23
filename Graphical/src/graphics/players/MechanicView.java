@@ -1,22 +1,23 @@
 package graphics.players;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import game.*;
 import game.players.*;
+import graphics.elements.*;
 
 public class MechanicView extends PlayerView 
 {
 	private Mechanic mechanic;
 	private JLabel mechanicLabel;
 	
-	public MechanicView(int x, int y, int index)
+	public MechanicView(ElementView pos, int index)
 	{
-		posX = x;
-		posY = y;
+		this.pos = pos;
 		mechanic = GameManager.GetMechanics().get(index);
 		LoadImage();
 	}
@@ -26,10 +27,13 @@ public class MechanicView extends PlayerView
 		try
 		{
 			mechanicLabel = new JLabel();
-			ImageIcon  mechanicView = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
-			mechanicLabel.setIcon(mechanicView);
+			ImageIcon  iMechanic= new ImageIcon(this.getClass().getResource("/mechanic.png"));
+			Image loadedImage = iMechanic.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+			iMechanic = new ImageIcon(loadedImage);
+			mechanicLabel.setIcon(iMechanic);
 			return mechanicLabel;
 		}
+		
 		catch (Exception e)
 		{
 			mechanicLabel = new JLabel(mechanic.GetName());
