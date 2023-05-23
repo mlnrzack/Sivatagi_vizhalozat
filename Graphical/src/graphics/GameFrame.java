@@ -1,6 +1,7 @@
 package graphics;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -113,6 +114,7 @@ public class GameFrame extends JFrame
 		}
 
 		interfacePanel = new JPanel();
+		interfacePanel.setPreferredSize(new Dimension(500, 900));
 		interfacePanel.add(displayCurrentPlayerName);
 		interfacePanel.add(displayRound);
 		interfacePanel.add(playerRemainingActionCount);

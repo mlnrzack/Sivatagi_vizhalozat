@@ -27,6 +27,7 @@ public class PipeView extends ElementView
 	
 	public JLabel LoadImage()
 	{
+		//talán itt még a méretet be kell állítani
 		try
 		{
 			pipeLabel = new JLabel();

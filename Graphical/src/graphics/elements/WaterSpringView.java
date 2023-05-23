@@ -1,6 +1,7 @@
 package graphics.elements;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -30,8 +31,10 @@ public class WaterSpringView extends ElementView
 		try
 		{
 			springLabel = new JLabel();
-			ImageIcon waterSpring = new ImageIcon(this.getClass().getResource("/waterspring.png"));
-			springLabel.setIcon(waterSpring);
+			ImageIcon iSpring = new ImageIcon(this.getClass().getResource("/waterspring.png"));
+			Image loadedImage = iSpring.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			iSpring = new ImageIcon(loadedImage);
+			springLabel.setIcon(iSpring);
 			return springLabel;
 		}
 		

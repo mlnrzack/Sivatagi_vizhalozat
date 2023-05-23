@@ -1,6 +1,7 @@
 package graphics.elements;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -32,8 +33,10 @@ public class CisternView extends ElementView
 		try
 		{
 			cisternLabel = new JLabel();
-			ImageIcon cisternImage = new ImageIcon(this.getClass().getResource("/cistern.png"));
-			cisternLabel.setIcon(cisternImage);
+			ImageIcon iCistern = new ImageIcon(this.getClass().getResource("/cistern.png"));
+			Image loadedImage = iCistern.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+			iCistern = new ImageIcon(loadedImage);
+			cisternLabel.setIcon(iCistern);
 			return cisternLabel;
 		}
 		

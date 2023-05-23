@@ -66,6 +66,14 @@ public class Pipe extends Element implements ISteppable
     	return leaking;
     }
     
+    /**Beállítja a leaking értékét adott értékre.
+     * @param leaks az adott érték.
+     */
+    public void SetLeaking(boolean leaks)
+    {
+    	leaking = leaks;
+    }
+    
     /**Visszaadja a noLeakageTimer értékét.
      * @return meddig nem lyukasztható.
      */
@@ -138,7 +146,7 @@ public class Pipe extends Element implements ISteppable
     {
         if (!leaking && noLeakageTimer == 0)
         {
-        	leaking = true;
+        	SetLeaking(true);
         	System.out.println("Cső rongálása sikeres volt. Lyukas lett.\n");
             return true;
         }

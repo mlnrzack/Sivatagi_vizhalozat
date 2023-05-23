@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.util.ArrayList;
@@ -25,22 +28,25 @@ import graphics.players.*;
  */
 public class MapView extends JPanel
 {
-	//private MechanicView currentMechanic = new MechanicView();
-	//private SaboteurView currentSaboteur = new SaboteurView();
 	//private BufferedImage mapImage;
 	//private static int SQUARE_SIZE = 100;
 	
 	//private IElement[][] map;
 	
-	private Color color = Color.decode("#c9a77d");
+	private Color color = Color.decode("#c9a77d");													//a háttérszín
 	
-	private ArrayList<IElement> map = new ArrayList<IElement>();
-	private ArrayList<Cistern> cisterns = new ArrayList<Cistern>();
-	private ArrayList<Pipe> pipes = new ArrayList<Pipe>();
-	private ArrayList<Pump> pumps = new ArrayList<Pump>();
-	private ArrayList<WaterSpring> springs= new ArrayList<WaterSpring>();
+	private ArrayList<IElement> map = new ArrayList<IElement>();									//a modell pályája
+	private ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
+	private ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
 	
 	private Map mapView = new HashMap();
+	
+	private MechanicView currentMechanic;															//az aktuális szerelő megjelnítése
+	private SaboteurView currentSaboteur;
+	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();
+	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();
+	private ArrayList<PumpView> pumpsView = new ArrayList<PumpView>();
+	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();
 	//valami itt kell csinálni, hogy megjelenjenek az elemek
 	
 	
@@ -49,33 +55,82 @@ public class MapView extends JPanel
 	{
 		//map = new IElement[10][10];
 		map = GameManager.GetMap();
-		cisterns = GameManager.GetCisterns();
-		pipes = GameManager.GetPipes();
-		pumps = GameManager.GetPumps();
-		springs = GameManager.GetWaterSprings();
-		drawMap();
+		mechanics = GameManager.GetMechanics();
+		saboteurs = GameManager.GetSaboteurs();
 		
-		//MouseListener();
+		DrawMap();
+		
+		MouseListener();
 	}
 	
+	//egyelőre csak ráfrissít a nézetekre...
 	public void ReDraw()
 	{
+		for(int i = 0; i < pipesView.size(); i++)
+		{
+			this.add(pipesView.get(i).LoadImage());
+		}
 		
+		for(int i = 0; i < pumpsView.size(); i++)
+		{
+			this.add(pumpsView.get(i).LoadImage());
+		}
+		
+		for(int i = 0; i < cisternsView.size(); i++)
+		{
+			this.add(cisternsView.get(i).LoadImage());
+		}
+		
+		for(int i = 0; i < springsView.size(); i++)
+		{
+			this.add(springsView.get(i).LoadImage());
+		}	
 	}
 	
-	public void drawMap()
+	//egyelőre csak felhelyezi a modellben inicializált elemeket, de nem adott helyre és nem is adott szomszédokhoz
+	public void DrawMap()
 	{
 		this.setBackground(color);
-		this.setPreferredSize(new Dimension(1000, 1000));
-		PipeView piV = new PipeView(10, 10, 1);
-		this.add(piV.LoadImage());
-		PumpView puV = new PumpView(50, 50, 1);
-		this.add(puV.LoadImage());
+		this.setPreferredSize(new Dimension(1000, 900));
+		//this.setLayout(null);
+		/* így lehet pozícióra rakni egy elemet
+		PipeView testpiV = new PipeView(100, 100, 1);
+		JLabel testPipe = testpiV.LoadImage();
+		this.add(testPipe);
+		Dimension size = testPipe.getPreferredSize();
+		testPipe.setBounds(100, 100, size.width, size.height);
+		*/
+		for(int i = 0; i < GameManager.GetPipes().size(); i++)
+		{
+			PipeView piV = new PipeView(10, 10, i);
+			pipesView.add(piV);
+			this.add(piV.LoadImage());
+		}
 		
+		for(int i = 0; i < GameManager.GetPumps().size(); i++)
+		{
+			PumpView puV = new PumpView(50, 50, i);
+			pumpsView.add(puV);
+			this.add(puV.LoadImage());
+		}
+		
+		for(int i = 0; i < GameManager.GetCisterns().size(); i++)
+		{
+			CisternView cV = new CisternView(10, 10, i);
+			cisternsView.add(cV);
+			this.add(cV.LoadImage());
+		}
+		
+		for(int i = 0; i < GameManager.GetWaterSprings().size(); i++)
+		{
+			WaterSpringView sV = new WaterSpringView(10, 10, i);
+			springsView.add(sV);
+			this.add(sV.LoadImage());
+		}
 	}
 	
-	/*
-	private void MouseListner() 
+	//TODO
+	private void MouseListener() 
 	{
 		 addMouseListener(new MouseAdapter()
 		 { 
@@ -83,10 +138,10 @@ public class MapView extends JPanel
 	         {
 	        	 int tempX = me.getX();
 	        	 int tempY = me.getY();
-	        	 if((board[tempX][tempY] == null && selected == null) || !enabled)
-	        		 return;
+	        	 //if((board[tempX][tempY] == null && selected == null) || !enabled)
+	        		 //return;
 	        	 
-	        	 else if(selected == null)
+	        	 /*else if(selected == null)
 	        	 {
 	            	 selected = board[tempX][tempY];
 	            	 if(selected.getColor() == SideColor.WHITE && !whiteMove) 
@@ -103,9 +158,9 @@ public class MapView extends JPanel
 	            	 
 	                 possibleMoves = preventCheck(selected.GetMoves(board), board, selected);
 	                 repaint();
-	        	 }
+	        	 }*/
 	        	 
-	        	 else if(selected != null) 
+	        	 /*else if(selected != null) 
 	        	 {
 	        		 if(board[tempX][tempY]!= null && board[tempX][tempY].getColor() == selected.getColor())
 	        		 {
@@ -121,7 +176,7 @@ public class MapView extends JPanel
 	        			 possibleMoves.clear();
 	        			 repaint();
 	        		 }	        		 
-	        	 }
+	        	 }*/
 	         }
 	     }); 
 		 
@@ -130,13 +185,13 @@ public class MapView extends JPanel
 			 @Override
 			public void mouseMoved(MouseEvent me) 
 			{
-	        	 focus.setX(me.getX() / SQUARE_SIZE);
-	        	 focus.setY(me.getY() / SQUARE_SIZE);
+	        	 //focus.setX(me.getX() / SQUARE_SIZE);
+	        	 //focus.setY(me.getY() / SQUARE_SIZE);
 	        	 repaint();
 			}
 	
 			@Override
 			public void mouseDragged(MouseEvent arg0) {}
 		 });		
-	}*/
+	}
 }

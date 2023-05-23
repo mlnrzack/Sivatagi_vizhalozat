@@ -1,6 +1,7 @@
 package graphics.elements;
 
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -32,8 +33,10 @@ public class PumpView extends ElementView
 			pumpLabel = new JLabel();
 			if(!pump.GetBroken())
 			{
-				ImageIcon  pump = new ImageIcon(this.getClass().getResource("/pump.png"));
-				pumpLabel.setIcon(pump);
+				ImageIcon  iPpump = new ImageIcon(this.getClass().getResource("/pump.png"));
+				Image loadedImage = iPpump.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+				iPpump = new ImageIcon(loadedImage);
+				pumpLabel.setIcon(iPpump);
 			}
 			else if(pump.GetBroken())
 			{
