@@ -25,6 +25,7 @@ public class GameManager
     
     public static void AddToMap(IElement e) {
     	map.add(e);
+    	System.out.println(e.GetId() + " hozzáadva a pályához.");
     }
     
     public static ArrayList<Pipe> GetPipes(){

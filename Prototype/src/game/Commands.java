@@ -62,21 +62,114 @@ public class Commands {
     	    	
     	switch (action)
        	{
-    		// Command: move playerName indexOfTheNeighbour
-       		case "move":
+    		// Command: playerMove playerName indexOfTheNeighbour
+       		case "playerMove":
        		{
        			Player player = GetPlayer(parameters[0]);
+       			IElement currPos = player.GetCurrentPosition();
+       			int neighbourIdx = currPos.GetNeighbourIndex(parameters[1]);
+       			if (neighbourIdx == -1)
+       				System.out.println("Nem létező szomszéd: " + parameters[1]);
        			
-       			int neighbourIdx = Integer.parseInt(parameters[1]);
        			player.Move(neighbourIdx);
                 break;
        		}
+       	// Command: playerSetIO playerName neighbourNameOfInput neighbourNameOfOutput
+            case "playerSetIO":{
+            	Player player = GetPlayer(parameters[0]);
+            
+            	int neighbourIndexOfInput = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);
+       			if (neighbourIndexOfInput == -1)
+       				System.out.println("Nem létező szomszéd: " + parameters[1]);
+       			
+       			int neighbourIndexOfOutput = player.GetCurrentPosition().GetNeighbourIndex(parameters[2]);
+       			if (neighbourIndexOfOutput == -1)
+       				System.out.println("Nem létező szomszéd: " + parameters[1]);
+                
+                if (player != null && neighbourIndexOfOutput != -1 && neighbourIndexOfInput != -1)
+                	player.TrySetPump(neighbourIndexOfInput, neighbourIndexOfOutput);
+                
+                break;
+            }
+         // Command: addPump name
+            case "addPump":{
+            	if (IsElementNameUnique(parameters[0])) {
+            		Pump p = new Pump();
+            		p.SetId(parameters[0]);
+            		GameManager.AddToMap(p);
+            	}
+                
+                break;
+            }
+         // Command: addPipe name
+            case "addPipe":{
+            	if (IsElementNameUnique(parameters[0])) {
+            		Pipe p = new Pipe();
+            		p.SetId(parameters[0]);
+            		GameManager.AddToMap(p);
+            	}
+                
+                break;
+            }
+         // Command: addCistern name
+            case "addCistern":{
+            	if (IsElementNameUnique(parameters[0])) {
+            		Cistern c = new Cistern();
+            		c.SetId(parameters[0]);
+            		GameManager.AddToMap(c);
+            	}
+                
+                break;
+            }
+         // Command: addSource name
+            case "addSource":{
+            	if (IsElementNameUnique(parameters[0])) {
+            		WaterSpring w = new WaterSpring();
+            		w.SetId(parameters[0]);
+            		GameManager.AddToMap(w);
+            	}
+                
+                break;
+            }
+         // Command: spawnMechanic playerName elementName
+            case "spawnMechanic":{
+            	IElement e = GetElement(parameters[1]); 
+            	
+            	// Nem foglalt a név.
+            	if (GetPlayer(parameters[0]) == null && e != null) {
+            		Mechanic m = new Mechanic();
+            		m.SetName(parameters[0]);         			
+            		m.SetCurrentPosition(e);
+            		System.out.println(parameters[0] + " szerelő hozzáadva a játékhoz ide: " + e.GetId());
+            	} else {
+            		System.out.println(parameters[0] + " szerelő hozzáadása sikertelen. Foglalt név vagy nem létező elem.");
+            	}
+
+                break;
+            }
+         // Command: spawnSaboteur playerName elementName
+            case "spawnSaboteur":{
+            	IElement e = GetElement(parameters[1]); 
+            	
+            	// Nem foglalt a név.
+            	if (GetPlayer(parameters[0]) == null && e != null) {
+            		Saboteur s = new Saboteur();
+            		s.SetName(parameters[0]);
+            		System.out.println(parameters[0] + " szabotőr hozzáadva a játékhoz ide: " + e.GetId());
+            	} else {
+            		System.out.println(parameters[0] + " szabotőr hozzáadása sikertelen. Foglalt név vagy nem létező elem.");
+            	}
+
+                break;
+            }
        		// Command: repair playerName 
             case "repair":{
             	Mechanic player = GetMechanic(parameters[0]);
        			
        			if (player != null)
        				player.Repair();
+       			else
+       				System.out.println("Javítás sikertelen. Nincs ilyen nevű szerelő: " + parameters[0]);
        			
                 break;
             }
@@ -86,6 +179,8 @@ public class Commands {
        			
        			if (player != null)
        				player.PickUpFreePipeEnd();
+       			else
+       				System.out.println("Cső felvétele sikertelen. Nincs ilyen nevű szerelő: " + parameters[0]);
        			
                 break;
             }
@@ -95,6 +190,8 @@ public class Commands {
        			
        			if (player != null)
        				player.PickUpPump();
+       			else
+       				System.out.println("Pumpa felvétele sikertelen. Nincs ilyen nevű szerelő: " + parameters[0]);
        			
                 break;
             }
@@ -113,37 +210,32 @@ public class Commands {
        			
        			if (player != null)
        				player.ConnectPipe();
+       			else
+       				System.out.println("Pumpa felvétele sikertelen. Nincs ilyen nevű szerelő: " + parameters[0]);
        			
                 break;
             }
-            // Command: pickneighbour playerName neighbourIndex
+            // Command: pickneighbour playerName neighbourName
             case "pickneighbour":{
     			Mechanic player = GetMechanic(parameters[0]);
-    			int neighbourIdx = Integer.parseInt(parameters[1]);
     			
-       			if (player != null)
-       				player.DisconnectNeighbourPipe(neighbourIdx);
+    			int neighbourIndex = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);       				
+    			
+       			if (player != null && neighbourIndex != -1)
+       				player.DisconnectNeighbourPipe(neighbourIndex);
+       			else
+       				System.out.println(parameters[0] + " játékos vagy " + parameters[1] + " szomszéd nem létezik");
        			
                 break;
-            }
-            // Command: setpump playerName neighbourIndexOfInput neighbourIndexOfOutput
-            case "setpump":{
-            	Player player = GetPlayer(parameters[0]);
-            
-                int neighbourIdxFrom = Integer.parseInt(parameters[1]);
-                int neighbourIdxTo = Integer.parseInt(parameters[2]);
-                
-                if (player != null)
-                	player.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-                
-                break;
-            }
+            }            
             // Command: leakpipe playerName
             case "leakpipe":{
             	Player player = GetPlayer(parameters[0]);
             	
                 if (player != null)
                 	player.Damage();
+                else
+       				System.out.println(parameters[0] + " játékos nem létezik");
                 
                 break;
             }
@@ -162,49 +254,11 @@ public class Commands {
             	
                 if (player != null)
                 	player.Pass();
+                else
+       				System.out.println(parameters[0] + " játékos nem létezik");
                 
                 break;
-            }
-         // Command: addpump name
-            case "addpump":{
-            	if (IsElementNameUnique(parameters[0])) {
-            		Pump p = new Pump();
-            		p.SetId(parameters[0]);
-            		GameManager.AddToMap(p);
-            	}
-                
-                break;
-            }
-         // Command: addpipe name
-            case "addpipe":{
-            	if (IsElementNameUnique(parameters[0])) {
-            		Pipe p = new Pipe();
-            		p.SetId(parameters[0]);
-            		GameManager.AddToMap(p);
-            	}
-                
-                break;
-            }
-         // Command: addcistern name
-            case "addcistern":{
-            	if (IsElementNameUnique(parameters[0])) {
-            		Cistern c = new Cistern();
-            		c.SetId(parameters[0]);
-            		GameManager.AddToMap(c);
-            	}
-                
-                break;
-            }
-         // Command: addwaterspring name
-            case "addwaterspring":{
-            	if (IsElementNameUnique(parameters[0])) {
-            		WaterSpring w = new WaterSpring();
-            		w.SetId(parameters[0]);
-            		GameManager.AddToMap(w);
-            	}
-                
-                break;
-            }
+            }         
             // Command: setneighbours pipeName activeElementName
             case "setneighbours":{
             	Pipe p = GetPipe(parameters[0]);
@@ -213,44 +267,10 @@ public class Commands {
             	if (p != null && a != null) {
             		p.AddNeighbour(a);
             		a.AddPipe(p);
+            	} else {
+            		System.out.println(parameters[0] + " cső vagy " +  parameters[1] + " aktív elem nem létezik");
             	}
                 
-                break;
-            }
-         // Command: addmechanic playerName elementName
-            case "addmechanic":{
-            	IElement e = GetElement(parameters[1]); 
-            	
-            	// Nem foglalt a név.
-            	if (GetPlayer(parameters[0]) == null) {
-            		Mechanic m = new Mechanic();
-            		m.SetName(parameters[0]);
-            		if (e.AcceptPlayer(m)) {            			
-                		m.SetCurrentPosition(e);
-            		}
-            		else {
-            			GameManager.GetSaboteurs().removeIf(mech -> mech.GetName().equals(parameters[1]));
-            		}
-            	}
-
-                break;
-            }
-         // Command: addsaboteur playerName elementName
-            case "addsaboteur":{
-            	IElement e = GetElement(parameters[1]); 
-            	
-            	// Nem foglalt a név.
-            	if (GetPlayer(parameters[0]) == null) {
-            		Saboteur s = new Saboteur();
-            		s.SetName(parameters[0]);
-            		if (e.AcceptPlayer(s)) {            			
-                		s.SetCurrentPosition(e);
-            		}
-            		else {
-            			GameManager.GetSaboteurs().removeIf(saboteur -> saboteur.GetName().equals(parameters[1]));
-            		}
-            	}
-
                 break;
             }
             default:
@@ -304,8 +324,6 @@ public class Commands {
     }
     
     private static ActiveElement GetActiveElement(String id) {
-    	ActiveElement a = null;
-    	
     	if (GameManager.GetPipes().stream().anyMatch(pipe -> pipe.GetId().toUpperCase().contains(id.toUpperCase())))
     		return null;
     	

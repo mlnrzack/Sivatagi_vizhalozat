@@ -17,6 +17,15 @@ public class Pipe extends Element implements ISteppable
     
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
+    public int GetNeighbourIndex(String name) {
+		for (IElement e : neighbours) {
+			if (e.GetId().equals(name))
+				return neighbours.indexOf(e);
+		}
+		
+		return -1;
+	}
+    
     /**A Pipe osztály konstruktora.
      */
     public Pipe()
@@ -187,6 +196,7 @@ public class Pipe extends Element implements ISteppable
      */
     public void AddNeighbour(ActiveElement newNeighbour)
     {
+    	System.out.println(GetId() + " és " + newNeighbour.GetId() + " szomszédok lettek.");
     	neighbours.add(newNeighbour);
     }
 
@@ -217,15 +227,19 @@ public class Pipe extends Element implements ISteppable
     {
         if (GetPlayers().size() < Constants.AcceptedPlayersInPipe)
         {
-        	if(SlipperyPipe(player))
+        	if(this.slipperyTimer > 0)
         	{
-        		return false;
+        		IElement randomNeighbour = this.GetNeighbours().get(new Random().nextInt(this.neighbours.size()));
+        		System.out.println(player.GetName() + " csúszós csőre érkezett: " + this.GetId() + " Random szomszédra kerül: " + randomNeighbour.GetId());
+        		return randomNeighbour.AcceptPlayer(player);
         	}
-        	
-            StickyPipe(player);
-            	
+
+    		StickyPipe(player);
+    		
+    		player.SetCurrentPosition(this);
             AddPlayer(player);
                     
+            System.out.println(player.GetName() + " erre a csőre érkezett: " + this.GetId());
            	return true; 
         }
 
@@ -290,26 +304,6 @@ public class Pipe extends Element implements ISteppable
     	return false;
     }
     
-    /**Csúszós cső általi műveletek.
-     * Ha a cső csúszós, tehát a slipperyTimer nagyobb, mint nulla,
-     * akkor a csőre csatlakoztatott elemek közül random segítségével a játékos elléptetése adott szomszédra
-     * @param player a játékos.
-     * @return a slipperyTimer nullához képesti vizsgálata.
-     */
-    public boolean SlipperyPipe(Player player)
-    {
-    	if(slipperyTimer > 0)
-    	{
-    		player.GetCurrentPosition().RemovePlayer(player);
-    		this.GetNeighbours().get(new Random().nextInt(this.neighbours.size())).AcceptPlayer(player);
-    		GameManager.ActionExecuted();
-    		
-    		System.out.println(player.GetCurrentPosition().GetId() + "-re került a " + player.GetName() + " játékos.");
-    		System.out.println("Még ennyi ideig csúszós a cső: " + this.GetSlippery());
-    	}
-    	return slipperyTimer > 0;
-    }
-    
     /**Ragacsos cső általi műveletek.
      * Ha ragacsos a cső, akkor a rálépő játékos kizárása a játékkörből,
      * majd a ragacsosság megszüntetése a csövön.
@@ -320,6 +314,7 @@ public class Pipe extends Element implements ISteppable
     {
     	if(stickyTimer > 0)
     	{
+    		System.out.println(player.GetName() + " ragadós csőre érkezett: " + this.GetId());
     		player.Stuck();
         	stickyTimer = 0;
         	return true;

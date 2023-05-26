@@ -49,7 +49,7 @@ public class Cistern extends ActiveElement implements ISteppable
      */
     public Pump PickUpPump()
     {
-Pump pump = new Pump();
+    	Pump pump = new Pump();
         
         String name = "pump";
     	boolean foundUniqueName = false;

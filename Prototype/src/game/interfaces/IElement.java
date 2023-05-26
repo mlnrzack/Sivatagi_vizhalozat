@@ -27,4 +27,5 @@ public interface IElement
     boolean TrySetSlippery();
     boolean TrySetSticky();
     void WaterToDesert();
+    int GetNeighbourIndex(String name);
 }
