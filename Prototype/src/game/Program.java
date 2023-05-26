@@ -16,47 +16,6 @@ public class Program
 {
     public static void main(String[] args)
     {
-    	if (args.length > 0) {
-    		BufferedReader reader;
-
-    		try 
-    		{
-    			reader = new BufferedReader(new FileReader(args[0]));
-    			String line = reader.readLine();
-    			while (line != null) 
-    			{
-    				Commands.ExecuteCommand(line);
-
-    				line = reader.readLine();
-    			}
-
-    			reader.close();
-    		}
-    		catch (IOException e) 
-    		{
-    			e.printStackTrace();
-    		}
-    		
-    		Commands.WriteMapStateToFile("lastMapState.txt");
-    		
-    		try 
-    		{
-    			if (Commands.filesCompareByLine(Paths.get(args[1]), Paths.get("lastMapState.txt")) == -1L) 
-    			{
-        			System.out.println(args[0] + " teszt sikeres");
-        		}
-    			else
-    			{
-        			System.out.println(args[0] + " teszt sikertelen");
-        		}
-    		}
-    		catch (IOException e) 
-    		{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-    	}
-    	
     	Test.ListAllTests();
     	Test.Execute("MoveTest");
     	System.out.println("MoveTest futtatva");

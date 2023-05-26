@@ -1,0 +1,7 @@
+addPipe pipe1
+spawnMechanic mechanic1 pipe1
+leakpipe mechanic1
+-- Expected Output --
+pipe1 hozzáadva a pályához.
+mechanic1 szerelő hozzáadva a játékhoz ide: pipe1
+mechanic1 megrongálta a csövet: pipe1

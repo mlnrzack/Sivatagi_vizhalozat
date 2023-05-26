@@ -109,9 +109,12 @@ public abstract class Player
     	if(currentPosition.TrySetSticky())
     	{
     		GameManager.ActionExecuted();
+    		
+    		System.out.println(this.GetName() + " ragacsossá tette a csövet: " + this.currentPosition.GetId());
     		return true;
     	}
     	
+    	System.out.println(this.GetName() + " nem tudott csövet ragacsossá tenni.");
     	return false;
     }
     

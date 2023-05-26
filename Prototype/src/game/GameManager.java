@@ -23,6 +23,7 @@ public class GameManager
     private static Saboteur currentSaboteurPlayer = null;									//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
+    // Used after every test execution, so tests will be isolated.
     public static void Reset() {
     	round = 0;
     	mechanicsPoints = 0;
@@ -300,66 +301,6 @@ public class GameManager
     public static void IncreasePlayerAction()
     {
     	playerActionCountInCurrentRound++;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a csövekből.
-     * @return az adott id szám értéke.
-     */
-    public static int TryPipeIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < pipes.size(); i++)
-    	{
-    		String piid = "pipe" + id;
-    		if(pipes.get(i).GetId().compareTo(piid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a pumpákból.
-     * @return az adott id szám értéke.
-     */
-    public static int TryPumpIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < pumps.size(); i++)
-    	{
-    		String puid = "pump" + id;
-    		if(pumps.get(i).GetId().compareTo(puid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a ciszternákból.
-     * @return az adott id szám értéke.
-     */
-    public static int TryCisternIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < cisterns.size(); i++)
-    	{
-    		String cid = "cistern" + id;
-    		if(cisterns.get(i).GetId().compareTo(cid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a vízforrásokból.
-     * @return az adott id szám értéke.
-     */
-    public static int TryWaterSpringIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < waterSprings.size(); i++)
-    	{
-    		String spid = "spring" + id;
-    		if(waterSprings.get(i).GetId().compareTo(spid) == 0)
-    			id++;
-    	}
-    	return id;
     }
     
     /**A játékot menetéért felelős függvény.

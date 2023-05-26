@@ -62,7 +62,7 @@ public class Commands {
     	    	
     	switch (action)
        	{
-    		// Command: playerMove playerName indexOfTheNeighbour
+    		// Command: playerMove playerName nameOfTheNeighbour
        		case "playerMove":
        		{
        			Player player = GetPlayer(parameters[0]);
@@ -78,16 +78,20 @@ public class Commands {
             case "playerSetIO":{
             	Player player = GetPlayer(parameters[0]);
             
-            	int neighbourIndexOfInput = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);
-       			if (neighbourIndexOfInput == -1)
-       				System.out.println("Nem létező szomszéd: " + parameters[1]);
-       			
-       			int neighbourIndexOfOutput = player.GetCurrentPosition().GetNeighbourIndex(parameters[2]);
-       			if (neighbourIndexOfOutput == -1)
-       				System.out.println("Nem létező szomszéd: " + parameters[1]);
-                
-                if (player != null && neighbourIndexOfOutput != -1 && neighbourIndexOfInput != -1)
-                	player.TrySetPump(neighbourIndexOfInput, neighbourIndexOfOutput);
+            	if (player != null) {
+            		int neighbourIndexOfInput = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);
+           			if (neighbourIndexOfInput == -1)
+           				System.out.println("Nem létező szomszéd: " + parameters[1]);
+           			
+           			int neighbourIndexOfOutput = player.GetCurrentPosition().GetNeighbourIndex(parameters[2]);
+           			if (neighbourIndexOfOutput == -1)
+           				System.out.println("Nem létező szomszéd: " + parameters[1]);
+                    
+                    if (neighbourIndexOfOutput != -1 && neighbourIndexOfInput != -1)
+                    	player.TrySetPump(neighbourIndexOfInput, neighbourIndexOfOutput);
+            	} else {
+            		System.out.println("Nem létező játékos");
+            	}            	
                 
                 break;
             }
@@ -101,12 +105,25 @@ public class Commands {
                 
                 break;
             }
-         // Command: addPipe name
+         // Command: addPipe name <optionally broken sticky slippery withWater>
             case "addPipe":{
             	if (IsElementNameUnique(parameters[0])) {
             		Pipe p = new Pipe();
             		p.SetId(parameters[0]);
             		GameManager.AddToMap(p);
+            		
+            		if (parameters.length > 1){
+            			for (int i = 1; i < parameters.length; i++) {
+            				if (parameters[i].equals("broken"))
+            					p.SetLeaking(true);
+            				if (parameters[i].equals("sticky"))
+            					p.SetSticky();
+            				if (parameters[i].equals("slippery"))
+            					p.SetSlippery();
+            				if (parameters[i].equals("withWater"))
+            					p.SetWaterInside(1);
+            			}
+            		}
             	}
                 
                 break;
@@ -155,6 +172,7 @@ public class Commands {
             	if (GetPlayer(parameters[0]) == null && e != null) {
             		Saboteur s = new Saboteur();
             		s.SetName(parameters[0]);
+            		s.SetCurrentPosition(e);
             		System.out.println(parameters[0] + " szabotőr hozzáadva a játékhoz ide: " + e.GetId());
             	} else {
             		System.out.println(parameters[0] + " szabotőr hozzáadása sikertelen. Foglalt név vagy nem létező elem.");
@@ -162,7 +180,7 @@ public class Commands {
 
                 break;
             }
-       		// Command: repair playerName 
+       		// Command: repair playerName
             case "repair":{
             	Mechanic player = GetMechanic(parameters[0]);
        			
@@ -219,12 +237,17 @@ public class Commands {
             case "pickneighbour":{
     			Mechanic player = GetMechanic(parameters[0]);
     			
-    			int neighbourIndex = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);       				
-    			
-       			if (player != null && neighbourIndex != -1)
-       				player.DisconnectNeighbourPipe(neighbourIndex);
+       			if (player != null) {
+       				int neighbourIndex = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);
+       				
+       				if (neighbourIndex != -1)
+       					player.DisconnectNeighbourPipe(neighbourIndex);
+       				else {
+       					System.out.println(parameters[1] + " szomszéd nem létezik");
+       				}
+       			}       				
        			else
-       				System.out.println(parameters[0] + " játékos vagy " + parameters[1] + " szomszéd nem létezik");
+       				System.out.println(parameters[0] + " játékos nem létezik");
        			
                 break;
             }            
@@ -245,6 +268,19 @@ public class Commands {
             	
                 if (player != null)
                 	player.SetStickyPipe();
+                else
+                	System.out.println(parameters[0] + " játékos nem létezik");
+                
+                break;
+            }
+         // Command: stickypipe playerName
+            case "slipperyPipe":{
+            	Saboteur saboteur = GetSaboteur(parameters[0]);
+            	
+                if (saboteur != null)
+                	saboteur.SetSlipperyPipe();
+                else
+                	System.out.println(parameters[0] + " szabotőr nem létezik");
                 
                 break;
             }

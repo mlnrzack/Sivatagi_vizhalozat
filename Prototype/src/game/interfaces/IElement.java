@@ -28,4 +28,5 @@ public interface IElement
     boolean TrySetSticky();
     void WaterToDesert();
     int GetNeighbourIndex(String name);
+    void TryIdSet();
 }

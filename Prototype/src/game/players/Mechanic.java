@@ -58,7 +58,7 @@ public class Mechanic extends Player
 
                 GameManager.ActionExecuted();
                 
-                System.out.println("Cső csatlakoztatása sikeres. Cső csatlakoztatva: " + pipe.GetId() + " Ide: " + this.GetCurrentPosition().GetId());
+                // System.out.println("Cső csatlakoztatása sikeres. Cső csatlakoztatva: " + pipe.GetId() + " Ide: " + this.GetCurrentPosition().GetId());
                 return true;
             }
         }

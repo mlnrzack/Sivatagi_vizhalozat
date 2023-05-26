@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import game.*;
+import game.interfaces.IElement;
 
 public class WaterSpring extends ActiveElement
 {
@@ -14,7 +15,7 @@ public class WaterSpring extends ActiveElement
     public WaterSpring() 
     {
         GameManager.AddWaterSpring(this);
-        this.SetId("spring" + GameManager.TryWaterSpringIdSet());
+        this.TryIdSet();
     }
 
     /**Megtölti a vízforrás szomszédos csöveit vízzel.
@@ -27,13 +28,24 @@ public class WaterSpring extends ActiveElement
         }
     }
     
-    public String toString() {
-    	List<String> neighbours = this.GetNeighbours().stream().map(p -> p.GetId()).collect(Collectors.toList());
+    public void TryIdSet() {
+    	if (!this.GetId().equals(""))
+    		return;
     	
-        return this.GetId() + ": {" + "\n"
-		        + "\t" + "neighbours: [" + String.join(", ", neighbours) + "]" + "," + "\n"
-		        + "\t" + "waterInside: " + this.GetWaterInside() + "," + "\n"
-		        + "\t" + "playersHere: [" + String.join(", ", this.GetPlayers().stream().map(p -> p.GetName()).collect(Collectors.toList())) + "]" + "," + "\n"
-        		+ "}";
+    	String name = "waterspring";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String newName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName) {
+    			this.SetId(newName);
+    		}
+    	}
     }
 }
