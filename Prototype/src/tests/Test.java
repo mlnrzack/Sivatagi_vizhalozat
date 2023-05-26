@@ -87,6 +87,7 @@ public class Test {
 	
 	public void Execute() {
 		InputCommands.forEach(input -> Commands.ExecuteCommand(input));
+		GameManager.Reset();
 	}
 	
 	public static void Execute(String testName) {		

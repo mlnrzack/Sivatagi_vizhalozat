@@ -23,6 +23,23 @@ public class GameManager
     private static Saboteur currentSaboteurPlayer = null;									//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
     
+    public static void Reset() {
+    	round = 0;
+    	mechanicsPoints = 0;
+    	saboteursPoints = 0;
+    	map = new ArrayList<IElement>();
+    	pipes = new ArrayList<Pipe>();
+    	pumps = new ArrayList<Pump>();
+    	cisterns = new ArrayList<Cistern>();
+        steppables = new ArrayList<ISteppable>();
+        waterSprings = new ArrayList<WaterSpring>();
+        saboteurs = new ArrayList<Saboteur>();
+        mechanics = new ArrayList<Mechanic>();
+        currentMechanicPlayer = null;
+        currentSaboteurPlayer = null;
+        playerActionCountInCurrentRound = 0;
+    }
+    
     public static void AddToMap(IElement e) {
     	map.add(e);
     	System.out.println(e.GetId() + " hozzáadva a pályához.");
