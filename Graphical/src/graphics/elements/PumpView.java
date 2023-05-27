@@ -1,11 +1,12 @@
 package graphics.elements;
 
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import game.GameManager;
 import game.elements.*;
@@ -18,41 +19,49 @@ public class PumpView extends ElementView
 	
 	JLabel pumpLabel;
 	
-	public PumpView(int x, int y, int index)
+	public PumpView(int x, int y, int widths, int heights, int index)
 	{
 		posX = x;
 		posY = y;
+		width = widths;
+		height = heights;
 		pump = GameManager.GetPumps().get(index);
 		LoadImage();
 	}
-	
-	public JLabel LoadImage()
+
+	public void setIndex(int i)
 	{
+		pump = GameManager.GetPumps().get(i);
+	}
+	
+	public Image LoadImage()
+	{
+		BufferedImage  iPpump, brokenPump;
+		Image loadedImage;
 		try
 		{
-			pumpLabel = new JLabel();
 			if(!pump.GetBroken())
 			{
-				ImageIcon  iPpump = new ImageIcon(this.getClass().getResource("/pump.png"));
-				Image loadedImage = iPpump.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-				iPpump = new ImageIcon(loadedImage);
-				pumpLabel.setIcon(iPpump);
+				iPpump = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\pump.png"));
+				loadedImage = iPpump.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+				return loadedImage;
 			}
 			else if(pump.GetBroken())
 			{
-				ImageIcon brokenPump = new ImageIcon(this.getClass().getResource("/pump_broken.png"));
-				pumpLabel.setIcon(brokenPump);
+				brokenPump = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\pump_broken.png"));
+				loadedImage = brokenPump.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+				return loadedImage;
 			}
-			return pumpLabel;
+			return null;
 		}
 		
 		catch(Exception e)
 		{
-			pumpLabel = new JLabel("Pump");
+			/*pumpLabel = new JLabel("Pump");
 			pumpLabel = new JLabel("Broken Pump");
 			pumpLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			pumpLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			return pumpLabel;
+			*/return null;
 		}
 	}
 }

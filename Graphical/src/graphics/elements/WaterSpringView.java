@@ -1,11 +1,12 @@
 package graphics.elements;
 
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import game.*;
 import game.elements.*;
@@ -17,33 +18,39 @@ public class WaterSpringView extends ElementView
 	WaterSpring spring;
 	
 	JLabel springLabel;
-	
-	public WaterSpringView(int x, int y, int index)
+
+	public WaterSpring getSpring() {
+		return spring;
+	}
+
+	public WaterSpringView(int x, int y, int widths, int heights, int index)
 	{
 		posX = x;
 		posY = y;
+		width = widths;
+		height = heights;
 		spring = GameManager.GetWaterSprings().get(index);
 		LoadImage();
 	}
+
+
 	
-	public JLabel LoadImage()
+	public Image LoadImage()
 	{
 		try
 		{
-			springLabel = new JLabel();
-			ImageIcon iSpring = new ImageIcon(this.getClass().getResource("/waterspring.png"));
-			Image loadedImage = iSpring.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-			iSpring = new ImageIcon(loadedImage);
-			springLabel.setIcon(iSpring);
-			return springLabel;
+
+			BufferedImage iSpring = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\waterspring.png"));
+			Image loadedImage = iSpring.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			return loadedImage;
 		}
 		
 		catch(Exception e)
-		{
+		{/*
 			springLabel = new JLabel("WaterSpring");
 			springLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			springLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			return springLabel;
+			*/return null;
 		}
 	}
 }

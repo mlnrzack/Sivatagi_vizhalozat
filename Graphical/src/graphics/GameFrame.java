@@ -1,7 +1,6 @@
 package graphics;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -17,6 +16,9 @@ import game.IO.*;
  */
 public class GameFrame extends JFrame
 {
+
+	private Color color = Color.decode("#c9a77d");
+
 	private JPanel gamePanel;
 	private JPanel interfacePanel;
 	private ArrayList<String> damagedPipes;
@@ -32,6 +34,7 @@ public class GameFrame extends JFrame
 	private JLabel damagedPipesLabel;
 	private JLabel damagedPumpsLabel;
 	private JPanel playerActionPanel;
+	private JPanel buttonsHoldingPanel;
 	
 	
 	public GameFrame(MapView map)
@@ -47,9 +50,10 @@ public class GameFrame extends JFrame
 		//A panelek hozzáadása a frame-hez
 		this.add(map, BorderLayout.WEST);
 		this.add(interfacePanel, BorderLayout.EAST);
-		
+
 		//további frame beállításaok
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		this.setBackground(color);
  		this.setResizable(false);
 		this.pack();
 		this.setLocationRelativeTo(null);
@@ -89,9 +93,10 @@ public class GameFrame extends JFrame
 		sabPoints = new JLabel();
 		damagedPipesLabel = new JLabel();
 		damagedPumpsLabel = new JLabel();
-		playerActionPanel = new JPanel();
+		playerActionPanel = new JPanel(new GridLayout(0, 4));
 		damagedPipes = new ArrayList<>();
 		damagedPumps = new ArrayList<>();
+
 
 		//Játékos akcióinak összeszedése:
 		actionButtons = new ArrayList<JButton>();
@@ -107,6 +112,7 @@ public class GameFrame extends JFrame
 		actionButtons.add(new JButton("stickypipe"));
 		actionButtons.add(new JButton("slipperypipe"));
 		actionButtons.add(new JButton("pass"));
+
 
 		for(JButton butt: actionButtons)
 		{
@@ -124,7 +130,6 @@ public class GameFrame extends JFrame
 		interfacePanel.add(damagedPumpsLabel);
 		interfacePanel.add(playerActionPanel);
 
-
 		UpdateHud();
 
 		interfacePanel.revalidate();
@@ -133,6 +138,8 @@ public class GameFrame extends JFrame
 
 	public void UpdateHud()
 	{
+		System.out.println(GameManager.GetMechanics().size());
+		//System.out.println(GameManager.GetCurrentMechanic().GetName());
 		if(GameManager.GetCurrentMechanic() != null)
 			displayCurrentPlayerName.setText(GameManager.GetCurrentMechanic().GetName());
 		

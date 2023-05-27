@@ -1,13 +1,13 @@
 package graphics.elements;
 
-import java.awt.Font;
+import java.awt.*;
+import java.awt.geom.Point2D;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
 import game.*;
 import game.elements.Pipe;
+import graphics.Paintable;
 
 public class PipeView extends ElementView
 {
@@ -16,22 +16,41 @@ public class PipeView extends ElementView
 	private Pipe pipe;
 	private JLabel pipeLabel;
 	private ElementView[] neighbours = new ElementView[2];
-	
-	public PipeView(int x, int y, int index)
+
+	private final ElementView obj1;
+	private ElementView obj2 ;
+
+	public PipeView(ElementView obj1, ElementView obj2, int index)
 	{
 		//TODO
-		posX = x;
-		posY = y;
+		this.obj1 = obj1;
+		this.obj2 = obj2;
 		pipe = GameManager.GetPipes().get(index);
 		LoadImage();
 	}
+
+	public ElementView getObj1(){
+		return obj1;
+	}
+
+	public ElementView getObj2()
+	{
+		return obj2;
+	}
+
+	public void paint(Graphics g){
+		Graphics2D g2 = (Graphics2D) g.create();
+		g2.setColor(Color.BLACK);
+		g2.drawLine(obj1.getPosX(),obj1.getPosY(), obj2.getPosX(), obj2.getPosY() );
+	}
+
+
 	
-	public JLabel LoadImage()
+	public Image LoadImage()
 	{
 		//talán itt még a méretet be kell állítani
 		try
 		{
-			pipeLabel = new JLabel();
 			if(pipe.GetWaterInside() == 0)
 			{
 				if(!pipe.GetLeaking())
@@ -39,40 +58,46 @@ public class PipeView extends ElementView
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 				}
-				
+
 				else if(pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 				}
 			}
-			
+
 			else if(pipe.GetWaterInside() == 1)
 			{
 				if(!pipe.GetLeaking())
@@ -80,40 +105,46 @@ public class PipeView extends ElementView
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 				}
-				
+
 				else if(pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
 						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+						return loadedImage;
 					}
 				}
 			}
-			return pipeLabel;
+			return null;
 		}
 		
 		catch(Exception e)
@@ -135,7 +166,7 @@ public class PipeView extends ElementView
 						pipeLabel = new JLabel("Pipe empty sticky");
 					}
 				}
-				
+
 				else if(pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
@@ -152,7 +183,7 @@ public class PipeView extends ElementView
 					}
 				}
 			}
-			
+
 			else if(pipe.GetWaterInside() == 1)
 			{
 				if(!pipe.GetLeaking())
@@ -170,7 +201,7 @@ public class PipeView extends ElementView
 						pipeLabel = new JLabel("Pipe full sticky");
 					}
 				}
-				
+
 				else if(pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
@@ -189,7 +220,7 @@ public class PipeView extends ElementView
 			}
 			pipeLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
 			System.err.println(e);
-			return pipeLabel;
+			return null;
 		}
 	}
 }
