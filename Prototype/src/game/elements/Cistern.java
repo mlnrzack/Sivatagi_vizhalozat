@@ -1,5 +1,6 @@
 package game.elements;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,14 +17,13 @@ public class Cistern extends ActiveElement implements ISteppable
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddCistern(this);
-    	this.SetId("cistern" + GameManager.TryCisternIdSet());
+    	this.TryIdSet();
     }
 
     /**Visszaad egy új csövet.
      */
     public Pipe PickUpFreePipeEnd()
     {
-    	Pipe pipe = new Pipe();
     	String name = "pipe";
     	boolean foundUniqueName = false;
     	int i = 1;
@@ -35,21 +35,26 @@ public class Cistern extends ActiveElement implements ISteppable
         			foundUniqueName = false;
         	}
     		
-    		if (foundUniqueName)
-    			pipe.SetId(pipeName);
+    		if (foundUniqueName) {
+    			ArrayList<ActiveElement> pipeNeighbours = new ArrayList<ActiveElement>();
+    			pipeNeighbours.add(this);
+    			Pipe pipe = new Pipe(0, false, 0, 0, 0, pipeNeighbours, pipeName);
+    			
+    			this.AddPipe(pipe);
+    	    	
+    	        return pipe;
+    		}
     	}
     	
-    	pipe.AddNeighbour(this);
-    	this.AddPipe(pipe);
-    	
-        return pipe;
+    	// Elvileg ide nem fog eljutni
+    	return null;
     }
     
     /**Visszaad egy új pumpát.
      */
     public Pump PickUpPump()
     {
-Pump pump = new Pump();
+    	Pump pump = new Pump();
         
         String name = "pump";
     	boolean foundUniqueName = false;
@@ -100,14 +105,24 @@ Pump pump = new Pump();
         return actionDone;
     }
     
-    @Override
-    public String toString() {
-    	List<String> neighbours = this.GetNeighbours().stream().map(p -> p.GetId()).collect(Collectors.toList());
+    public void TryIdSet() {
+    	if (!this.GetId().equals(""))
+    		return;
     	
-        return this.GetId() + ": {" + "\n"
-        		+ "\t" + "neighbours: [" + String.join(", ", neighbours) + "]" + "," + "\n"
-        		+ "\t" + "waterInside: " + this.GetWaterInside() + "," + "\n"
-        		+ "\t" + "playersHere: [" + String.join(", ", this.GetPlayers().stream().map(p -> p.GetName()).collect(Collectors.toList())) + "]" + "," + "\n"
-        		+ "}";        
+    	String name = "cistern";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String newName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName) {
+    			this.SetId(newName);
+    		}
+    	}
     }
 }

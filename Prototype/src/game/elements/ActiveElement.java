@@ -3,11 +3,21 @@ package game.elements;
 import java.util.ArrayList;
 
 import game.*;
+import game.interfaces.IElement;
 import game.players.*;
 
 public abstract class ActiveElement extends Element
 {
 	protected ArrayList<Pipe> neighbours = new ArrayList<Pipe>();		//az aktív elem szomszédos csöveinek listája
+	
+	public int GetNeighbourIndex(String name) {
+		for (IElement e : neighbours) {
+			if (e.GetId().equals(name))
+				return neighbours.indexOf(e);
+		}
+		
+		return -1;
+	}
 	
 	/**Visszaadja a neighbours értékét 
 	 * @return az aktív elem szomszédsági listája
@@ -48,6 +58,7 @@ public abstract class ActiveElement extends Element
 	 */
 	public boolean AcceptPlayer(Player player)
 	{
+		player.SetCurrentPosition(this);
 		return AddPlayer(player);
 	}
 	

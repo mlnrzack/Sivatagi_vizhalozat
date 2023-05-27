@@ -10,73 +10,21 @@ import game.elements.*;
 import game.IO.*;
 import game.interfaces.*;
 import game.players.*;
-import tests.TestBase;
-import tests.TestBuildPumpIntoPipe;
-import tests.TestDamage;
-import tests.TestDisconnectNeighbourPipe;
-import tests.TestMove;
-import tests.TestPickUpFreePipeEnd;
-import tests.TestPickUpPump;
-import tests.TestPumpWater;
-import tests.TestRepair;
-import tests.TestSetPump;
-import tests.TestSlippery;
-import tests.TestSticky;
-import tests.TestWin;
+import tests.Test;
 
 public class Program
 {
     public static void main(String[] args)
     {
-    	TestBase.Init();
-    	if (args.length == 0) 
-    	{
-	        CommandInterpreter interpreter = new CommandInterpreter();
-	        interpreter.getInput();
-    	}
-    	
-    	else 
-    	{
-    		BufferedReader reader;
+    	Test.ListAllTests();
+    	Test.Execute("MoveTest");
+    	System.out.println("MoveTest futtatva");
+    	Test.ExecuteAllTests();
+    	System.out.println("Tesztek futtatva");
+    	Test.TestMenu();
 
-    		try 
-    		{
-    			reader = new BufferedReader(new FileReader(args[0]));
-    			String line = reader.readLine();
-
-    			while (line != null) 
-    			{
-    				Commands.ExecuteCommand(line);
-
-    				line = reader.readLine();
-    			}
-
-    			reader.close();
-    		}
-    		catch (IOException e) 
-    		{
-    			e.printStackTrace();
-    		}
-    		
-    		Commands.WriteMapStateToFile("lastMapState.txt");
-    		
-    		try 
-    		{
-    			if (Commands.filesCompareByLine(Paths.get(args[1]), Paths.get("lastMapState.txt")) == -1L) 
-    			{
-        			System.out.println(args[0] + " teszt sikeres");
-        		}
-    			else
-    			{
-        			System.out.println(args[0] + " teszt sikertelen");
-        		}
-    		}
-    		catch (IOException e) 
-    		{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-    	}
+    	CreateMap();
+    	GameManager.StartGame();
     }
     
     /**Egy statikus térképet létrehozó függvény.

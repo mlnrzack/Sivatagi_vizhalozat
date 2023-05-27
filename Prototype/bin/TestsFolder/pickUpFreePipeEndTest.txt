@@ -1,0 +1,7 @@
+addCistern cistern1
+spawnMechanic mechanic1 cistern1
+pickfreepipe mechanic1
+-- Expected Output --
+cistern1 hozzáadva a pályához.
+mechanic1 szerelő hozzáadva a játékhoz ide: cistern1
+Szabad csővég felvétele sikeres. Cső felvéve: pipe1

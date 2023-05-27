@@ -25,8 +25,12 @@ public class Saboteur extends Player
     	if(GetCurrentPosition().TrySetSlippery())
     	{
     		GameManager.ActionExecuted();
+    		
+    		System.out.println(this.GetName() + " csúszóssá tette a csövet: " + this.GetCurrentPosition().GetId());
     		return true;
     	}
+    	
+    	System.out.println(this.GetName() + " nem tudott csövet csúszóssá tenni.");
     	return false;
     }
 }

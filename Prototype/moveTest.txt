@@ -1,5 +1,5 @@
-addpump pump1
-addpipe pipe1
-addmechanic mechanic1 pipe1
+addPump pump1
+addPipe pipe1
+spawnMechanic mechanic1 pipe1
 setneighbours pipe1 pump1
-move mechanic1 0
+playerMove mechanic1 pump1

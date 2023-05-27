@@ -1,0 +1,15 @@
+addPump pump1
+addPipe pipe1
+addPipe pipe2
+setneighbours pipe1 pump1
+setneighbours pipe2 pump1
+spawnMechanic mechanic1 pump1
+playerSetIO mechanic1 pipe1 pipe2
+-- Expected Output --
+pump1 hozzáadva a pályához.
+pipe1 hozzáadva a pályához.
+pipe2 hozzáadva a pályához.
+pipe1 és pump1 szomszédok lettek.
+pipe2 és pump1 szomszédok lettek.
+mechanic1 szerelő hozzáadva a játékhoz ide: pump1
+mechanic1 átállította a csövet: pump1 Input: pipe1 Output: pipe2
