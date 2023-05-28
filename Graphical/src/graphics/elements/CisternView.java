@@ -63,7 +63,7 @@ public class CisternView extends ElementView
 		try
 		{
 			BufferedImage iCistern = ImageIO.read(new File(path));
-			Image loadedImage = iCistern.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+			Image loadedImage = iCistern.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
 			return iCistern;
 		}
 		catch(Exception e)

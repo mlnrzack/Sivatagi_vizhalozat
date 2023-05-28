@@ -94,7 +94,7 @@ public class GameFrame extends JFrame
 	public void InitializeInterfacePanel()
 	{
 		interfacePanel = new JPanel();
-		interfacePanel.setPreferredSize(new Dimension(300, JFrame.MAXIMIZED_HORIZ));
+		interfacePanel.setPreferredSize(new Dimension(500, JFrame.MAXIMIZED_HORIZ));
 		interfacePanel.setBackground(color);
 		
 		//gombokon használt font
@@ -173,7 +173,7 @@ public class GameFrame extends JFrame
 		interfacePanel.add(sabPoints);
 		interfacePanel.add(damagedPipesLabel);
 		interfacePanel.add(damagedPumpsLabel);
-		interfacePanel.add(playerActionPanel);
+		//interfacePanel.add(playerActionPanel);
 		interfacePanel.add(gameStatisticsPanel);
 
 		interfacePanel.setLayout(new BoxLayout(interfacePanel, BoxLayout.Y_AXIS));
