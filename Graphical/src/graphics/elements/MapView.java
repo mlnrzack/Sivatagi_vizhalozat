@@ -147,7 +147,7 @@ public class MapView extends JPanel
 				g2.rotate(angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2, 
 								pipesView.get(i).GetNeighbours()[0].getCenterY() + (double) pipesView.get(i).getHeight() / 2);
 				//a kép betöltése
-				g2.drawImage(pipesView.get(i).LoadImage(), pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(), pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null, null );
+				//g2.drawImage(pipesView.get(i).LoadImage(), pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(), pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null, null );
 				//visszaforgatás a szöggel
 				g2.rotate(-angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2, 
 						pipesView.get(i).GetNeighbours()[0].getCenterY() + (double) pipesView.get(i).getHeight() / 2);
@@ -175,13 +175,13 @@ public class MapView extends JPanel
 		for(int i = 0; i < GameManager.GetPumps().size(); i++)
 		{
 
-			puV = new PumpView(220, 195 + (i * 70), 90, 90, i);
+			puV = new PumpView((int)(screenWidth * 0.05) + (i % 4 * 55), 195 + (i * 70), 90, 90, i);
 			pumpsView.add(puV);
 			activesView.add(puV);
 			if (i == 10) break;
 			i++;
 
-			puV = new PumpView(470, 195 + ((i - 1) * 70), 90, 90, i);
+			puV = new PumpView((int)(screenWidth * 0.25) + (i % 4 * 45), 195 + ((i - 1) * 70), 90, 90, i);
 			pumpsView.add(puV);
 			activesView.add(puV);
 
@@ -193,7 +193,7 @@ public class MapView extends JPanel
 */
 		for(int i = GameManager.GetCisterns().size() - 1; i >= 0; i--)
 		{
-			CisternView cV = new CisternView(200 + (i * 250), 900, 100, 100,  i);
+			CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)) , (int)(screenHeight * 0.85) - (i % 8 * (int)(screenHeight * 0.05)), 100, 100,  i);
 			cisternsView.add(cV);
 			activesView.add(cV);
 		}
