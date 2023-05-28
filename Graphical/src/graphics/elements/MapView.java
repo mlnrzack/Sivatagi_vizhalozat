@@ -149,15 +149,16 @@ public class MapView extends JPanel
 				double b = Math.abs(pipesView.get(i).GetNeighbours()[0].posY - pipesView.get(i).GetNeighbours()[1].posY);
 				double c = pipesView.get(i).getWidth();
 				//double angle = Math.cos(a / c);
-				double angle = (Math.atan2(pipesView.get(i).GetNeighbours()[0].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
-										pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[1].getCenterY()));
+				double angle = (Math.atan2(pipesView.get(i).GetNeighbours()[1].getCenterY() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
+										pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterX()));
+				double angleD = Math.toDegrees(angle)*-1;
 				//elforgatás a szöggel
-				g2.rotate(-angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2, 
+				g2.rotate(angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2,
 								pipesView.get(i).GetNeighbours()[0].getCenterY() + (double) pipesView.get(i).getHeight() / 2);
 				//a kép betöltése
 				g2.drawImage(pipesView.get(i).LoadImage(), pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(), pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null, null );
 				//visszaforgatás a szöggel
-				g2.rotate(angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2, 
+				g2.rotate(-angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2,
 						pipesView.get(i).GetNeighbours()[0].getCenterY() + (double) pipesView.get(i).getHeight() / 2);
 			}
 		}
