@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import game.*;
 import game.elements.Pipe;
-import graphics.Paintable;
+//import graphics.Paintable;
 
 public class PipeView extends ElementView
 {

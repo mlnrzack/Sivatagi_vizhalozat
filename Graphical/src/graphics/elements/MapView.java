@@ -38,7 +38,8 @@ public class MapView extends JPanel
 	
 	//private IElement[][] map;
 	
-	private final Color color = Color.decode("#c9a77d");													//a háttérszín
+	private final Color color = Color.decode("#c9a77d");											//a háttérszín
+	private final Color circleColor = Color.decode("#c9a77d");
 	
 	private ArrayList<IElement> map = new ArrayList<IElement>();									//a modell pályája
 	private ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
@@ -63,14 +64,9 @@ public class MapView extends JPanel
 	CisternView cv ;
 	public MapView()
 	{
-		//map = new IElement[10][10];
-		map = GameManager.GetMap();
-		mechanics = GameManager.GetMechanics();
-		saboteurs = GameManager.GetSaboteurs();
-		//g.create();
+		this.setBackground(Color.decode("#c9a77d"));
+
 		DrawMap();
-		frame.add(this);
-		frame.setBackground(Color.decode("#c9a77d"));
 
 		MouseListener();
 	}
@@ -79,43 +75,44 @@ public class MapView extends JPanel
 	//egyelőre csak ráfrissít a nézetekre...
 	public void ReDraw()
 	{
-		for (PipeView pipeView : pipesView) {
+		for (PipeView pipeView : pipesView) 
 			this.add(pipeView);
-		}
 
-		for (PumpView pumpView : pumpsView) {
+		for (PumpView pumpView : pumpsView)
 			this.add(pumpView);
-		}
 
-		for (CisternView cisternView : cisternsView) {
+		for (CisternView cisternView : cisternsView)
 			this.add(cisternView);
-		}
 
-		for (WaterSpringView waterSpringView : springsView) {
+		for (WaterSpringView waterSpringView : springsView)
 			this.add(waterSpringView);
-		}	
 	}
+	
 	@Override
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponents(g);
-		Graphics2D g2 = (Graphics2D) g.create();/*
+		Graphics2D g2 = (Graphics2D) g.create();
+		/*
 		for (PipeView pipeView: pipesView){
 			Point2D p1 = new Point2D.Double(pipeView.getObj1().getBounds().getCenterX(), pipeView.getObj1().getBounds().getCenterY());
 			Point2D p2 = new Point2D.Double(pipeView.getObj2().getBounds().getCenterX(), pipeView.getObj2().getBounds().getCenterY());
 
 			g2.draw(new Line2D.Double(p1,p2));
 		}*/
-		this.setForeground(color);
+		this.setBackground(color);
 		imX = 200;
 		imY = 633;
 		dragging = false;
-		setBackground(color);
-		for (int i = 0 ; i <GameManager.GetCisterns().size(); i++){
-			g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).getPosX() ,cisternsView.get(i).getPosY(), cisternsView.get(i).getWidth(), cisternsView.get(i).getHeight(), null, null );
-			g2.setColor(Color.RED);
-			g2.drawOval(cisternsView.get(i).getPosX()+10, cisternsView.get(i).getPosY()+20, 82, 82);
+		
+		for (int i = 0 ; i <GameManager.GetCisterns().size(); i++)
+		{
+			g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).getPosX() ,cisternsView.get(i).getPosY(),
+					cisternsView.get(i).getWidth(), cisternsView.get(i).getHeight(), null, null );
+			g2.setColor(circleColor);
+			g2.drawOval(cisternsView.get(i).getPosX(), cisternsView.get(i).getPosY(), 100, 100);
 		}
+		
 		for (int i = 0; i < GameManager.GetWaterSprings().size();i++)
 		{
 			/*BufferedImage bufferedImage =  springsView.get(i).LoadImage();
@@ -132,9 +129,10 @@ public class MapView extends JPanel
 			int width = bi.getWidth();
 			int diameter =Math.min(width,height);*/
 			//g2.setClip(springsView.get(i).getPosX()+ diameter /2, springsView.get(i).getPosY() +  diameter /2,width, height);
-			g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).getPosX(), springsView.get(i).getPosY(), springsView.get(i).getWidth(), springsView.get(i).getHeight(), null, null);
-			g2.setColor(Color.RED);
-			g2.drawOval(50, 50, 100, 100);
+			g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).getPosX(), springsView.get(i).getPosY(),
+					springsView.get(i).getWidth(), springsView.get(i).getHeight(), null, null);
+			g2.setColor(circleColor);
+			g2.drawOval(springsView.get(i).getPosX(), springsView.get(i).getPosY(), 100, 100);
 		}
 		for(int i = 0; i < (GameManager.GetPumps().size()); i++)
 		{
@@ -247,70 +245,36 @@ public class MapView extends JPanel
 		final PumpView[] pm = new PumpView[1];
 		final int[] selectedPump = new int[1];
 		System.out.println("Mouse listeren megnyitva");
-		 this.addMouseListener(new MouseAdapter()
-		 {
-			 @Override
-	         public void mousePressed(MouseEvent me)
-	         {
-				// cv = new CisternView(x, y, 0);
-				 for (int i = 0 ; i < pumpsView.size();i++)
-				 if (me.getX()>= pumpsView.get(i).getPosX() && me.getX()< pumpsView.get(i).getPosX()+pumpsView.get(i).getWidth() && me.getY()>=pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY()+pumpsView.get(i).getHeight()){
-					 dragging = true;
-					 pm[0] = pumpsView.get(i);
-					 selectedPump[0] = i ;
-					 System.out.println(GameManager.GetPumps().get(i).GetId());
-				 }
+		this.addMouseListener(new MouseAdapter()
+		{
+			@Override
+	        public void mousePressed(MouseEvent me)
+	        {
+				for (int i = 0 ; i < pumpsView.size(); i++)
+				{
+					if (me.getX() >= pumpsView.get(i).getPosX() && me.getX()< pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
+							&& me.getY()>=pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY()+pumpsView.get(i).getHeight())
+					{
+						 dragging = true;
+						 pm[0] = pumpsView.get(i);
+						 selectedPump[0] = i ;
+						 System.out.println(GameManager.GetPumps().get(i).GetId());
+					 }
+				}
 				 System.out.println(dragging);
-				 //if((board[tempX][tempY] == null && selected == null) || !enabled)
-	        		 //return;
-	        	 
-	        	 /*else if(selected == null)
-	        	 {
-	            	 selected = board[tempX][tempY];
-	            	 if(selected.getColor() == SideColor.WHITE && !whiteMove) 
-	            	 {
-	            		 selected = null;
-	            		 return;
-	            	 }
-	            	 
-	            	 else if(selected.getColor() == SideColor.BLACK && whiteMove) 
-	            	 {
-	            		 selected = null;
-	            		 return;
-	            	 }
-	            	 
-	                 possibleMoves = preventCheck(selected.GetMoves(board), board, selected);
-	                 repaint();
-	        	 }*/
-	        	 
-	        	 /*else if(selected != null) 
-	        	 {
-	        		 if(board[tempX][tempY]!= null && board[tempX][tempY].getColor() == selected.getColor())
-	        		 {
-	                	 selected = board[tempX][tempY];
-	                     possibleMoves = preventCheck(selected.GetMoves(board), board, selected);
-	                     repaint();
-	        		 }
-	        		 
-	        		 else
-	        		 {	        			 
-	        			 checkChess_pieceMove(new Position(tempX, tempY));
-	        			 selected = null;
-	        			 possibleMoves.clear();
-	        			 repaint();
-	        		 }	        		 
-	        	 }*/
 	         }
+			 
 			 @Override
-			 public void mouseReleased(MouseEvent e) {
+			 public void mouseReleased(MouseEvent e) 
+			 {
 				 dragging = false;
 				 pm[0]=null;
 				 repaint();
 				 System.out.println("false lett");
 			 }
+			 
 			 @Override
-			 public void mouseDragged(MouseEvent e) {
-			 }
+			 public void mouseDragged(MouseEvent e) { }
 	     }); 
 
 		 this.addMouseMotionListener(new MouseMotionListener()
@@ -319,17 +283,15 @@ public class MapView extends JPanel
 			 int ny;
 			 @Override
 			 public void mouseDragged(MouseEvent e) {
-				 if (pm[0]!=null) {
+				 if (pm[0] != null)
+				 {
 					 nx = e.getX();
 					 ny = e.getY();
-					 System.out.println(nx);
-					 System.out.println(ny);
+
 					 pumpsView.get(selectedPump[0]).setCenterX(nx);
 					 pumpsView.get(selectedPump[0]).setCenterY(ny);
+					 
 					 repaint();
-					 System.out.println(pumpsView.get(selectedPump[0]).getCenterX());
-					 System.out.println(pumpsView.get(selectedPump[0]).getCenterY());
-					 System.out.println("motion dragged");
 				 }
 				/* if (!dragging ){
 					 pumpsView.get(selectedPump[0]).setPosX(nx);
@@ -342,7 +304,6 @@ public class MapView extends JPanel
 			 @Override
 			public void mouseMoved(MouseEvent me) 
 			{
-
 	        	 //focus.setX(me.getX() / SQUARE_SIZE);
 	        	 //focus.setY(me.getY() / SQUARE_SIZE);
 	        	 repaint();

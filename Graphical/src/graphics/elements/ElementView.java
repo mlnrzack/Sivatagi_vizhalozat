@@ -3,7 +3,6 @@ package graphics.elements;
 import javax.swing.*;
 
 import game.interfaces.*;
-import graphics.Paintable;
 
 import java.awt.*;
 import java.io.File;
@@ -34,17 +33,21 @@ public abstract class ElementView extends JPanel
 	
 	public abstract Image LoadImage();
 
-	public int getCenterX(){
+	public int getCenterX()
+	{
 		return (posX+getWidth()/2);
 	}
-	public int getCenterY(){
+	public int getCenterY()
+	{
 		return (posY+getHeight()/2);
 	}
-	public int getPosX(){
+	public int getPosX()
+	{
 		return posX;
 	}
 
-	public int getPosY(){
+	public int getPosY()
+	{
 		return posY;
 	}
 
@@ -57,17 +60,22 @@ public abstract class ElementView extends JPanel
 	{
 		posY = i - getHeight()/2;
 	}
-	public void setPosX(int i){
+	
+	public void setPosX(int i)
+	{
 		posX = i;
 	}
-	public void setPosY(int i){
+	
+	public void setPosY(int i)
+	{
 		posY = i;
 	}
 
-	public static String StringMagic(){
+	public static String StringMagic()
+	{
 		File currentDirFile = new File(".");
 		String helper = currentDirFile.getAbsolutePath();
-		String midhelp= helper.substring(0,helper.length()-2);
-		return midhelp.concat("\\Graphical\\bin\\");
+		String midhelp = helper.substring(0, helper.length() - 2);
+		return midhelp.concat("\\bin\\");
 	}
 }

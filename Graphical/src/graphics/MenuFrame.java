@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,10 +17,8 @@ import javax.swing.JTextField;
 import game.*;
 import graphics.elements.*;
 
-import static game.IO.DebugLog.WriteOutDebugLog;
-import static game.IO.InfoLog.WriteOutInfoLog;
-
-public class MenuFrame extends JFrame {
+public class MenuFrame extends JFrame 
+{
 	private Color color = Color.decode("#c9a77d");
 	private JButton backButton;
 	private JButton newGameButton;
@@ -49,27 +46,29 @@ public class MenuFrame extends JFrame {
 	private Font f = new Font(Font.DIALOG, Font.PLAIN, 28);
 	private Font fi = new Font(Font.DIALOG, Font.ITALIC, 48);
 	private Font fs = new Font(Font.DIALOG, Font.ITALIC, 19);
-	private JPanel panel1;
-	private JTextPane textPane1;
 
-	public MenuFrame() {
+	public MenuFrame() 
+	{
 		super("Sivatagi vizhalozat");
-		//ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
-		//this.setIconImage(icon.getImage());
+		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
+		this.setIconImage(icon.getImage());
 		this.setBackground(Color.decode("#c29c84"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		LoadInterface();
 	}
 
-	public static JPanel GetEastPanel() {
+	public static JPanel GetEastPanel() 
+	{
 		return eastPanel;
 	}
 
-	public static void SetEastPanel(JPanel panel) {
+	public static void SetEastPanel(JPanel panel) 
+	{
 		eastPanel = panel;
 	}
 
-	public static JPanel GetWestPanel() {
+	public static JPanel GetWestPanel() 
+	{
 		return westPanel;
 	}
 
@@ -94,7 +93,8 @@ public class MenuFrame extends JFrame {
 		this.setVisible(true);
 	}
 
-	public void InitializeNorthPanel() {
+	public void InitializeNorthPanel() 
+	{
 		northLabel = new JLabel("Sivatagi vízhálózat");
 		northLabel.setFont(fi);
 		northLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,7 +105,8 @@ public class MenuFrame extends JFrame {
 		northPanel.add(northLabel);
 	}
 
-	public void InitializeEastPanel() {
+	public void InitializeEastPanel() 
+	{
 		newGameButton = new JButton("New Game");
 		newGameButton.setFont(f);
 		newGameButton.setBackground(color);
@@ -147,7 +148,8 @@ public class MenuFrame extends JFrame {
 		eastPanel.repaint();
 	}
 
-	public void InitializeWestPanel() {
+	public void InitializeWestPanel() 
+	{
 		try {
 			ImageIcon logo = new ImageIcon(this.getClass().getResource("/logo.png"));
 			westLabel = new JLabel();
@@ -157,19 +159,22 @@ public class MenuFrame extends JFrame {
 			westPanel.add(westLabel);
 			westPanel.setPreferredSize(new Dimension(750, 500));
 			westPanel.setBackground(color);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			westLabel = new JLabel("Sivatagi vízhálózat");
 			westLabel.setFont(fi);
 			westLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
 			westPanel = new JPanel();
 			westPanel.add(westLabel);
-			westPanel.setPreferredSize(new Dimension(750, 350));
+			westPanel.setPreferredSize(new Dimension(750, 500));
 			westPanel.setBackground(color);
 		}
 	}
 
-	public void InitializeSouthPanel() {
+	public void InitializeSouthPanel()
+	{
 		backButton = new JButton("Back");
 		backButton.setFont(f);
 		backButton.setBackground(color);
@@ -220,13 +225,13 @@ public class MenuFrame extends JFrame {
 		
 		southPanel = new JPanel(new GridLayout(1, 2));
 		southPanel.setBackground(color);
-		southPanel.setPreferredSize(new Dimension(800, 80));
+		southPanel.setPreferredSize(new Dimension(1000, 100));
 		southPanel.add(backButton);
 		southPanel.add(startGameButton);
 	}
 
-
-	public void NewGameTrigger() {
+	public void NewGameTrigger() 
+	{
 		southPanel.removeAll();
 		southPanel.add(backButton);
 		southPanel.add(startGameButton);
@@ -244,36 +249,38 @@ public class MenuFrame extends JFrame {
 		Program.CreateMap();
 	}
 
-
-	public void BackTrigger() {
+	public void BackTrigger()
+	{
 		this.remove(southPanel);
 		eastPanel.removeAll();
-		eastPanel.setPreferredSize(new Dimension(200, 500));
+		eastPanel.setPreferredSize(new Dimension(250, 500));
 		eastPanel.add(newGameButton);
 		eastPanel.add(settingsButton);
 		eastPanel.revalidate();
 		eastPanel.repaint();
 
 		westPanel.removeAll();
-		westPanel.setPreferredSize(new Dimension(800, 500));
+		westPanel.setPreferredSize(new Dimension(750, 500));
 		westPanel.add(westLabel);
 		westPanel.revalidate();
 		westPanel.repaint();
 	}
 
-	public void StartGameTrigger() {
-		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0) {
+	public void StartGameTrigger() 
+	{
+		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0) 
+		{
 			//GameManager.StartGame();
-
 			GameFrame gFrame = new GameFrame(new MapView());
 			setVisible(false);
 			dispose();
-		} else {
+		} 
+		else
 			JOptionPane.showMessageDialog(this, "Kérlek előbb hozd létre a csapatokat");
-		}
 	}
 
-	public void SettingsTrigger() {
+	public void SettingsTrigger() 
+	{
 		southPanel.removeAll();
 		southPanel.add(backButton);
 		southPanel.add(setButton);
@@ -351,7 +358,8 @@ public class MenuFrame extends JFrame {
 		eastPanel.repaint();
 	}
 
-	public void SetTrigger() {
+	public void SetTrigger() 
+	{
 		this.remove(southPanel);
 		eastPanel.removeAll();
 		eastPanel.setPreferredSize(new Dimension(200, 500));

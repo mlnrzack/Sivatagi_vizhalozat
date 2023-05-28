@@ -16,36 +16,40 @@ import game.IO.*;
  */
 public class GameFrame extends JFrame
 {
+	private Color color = Color.decode("#c9a77d");					//háttérszín
 
-	private Color color = Color.decode("#c9a77d");
-
-	private JPanel gamePanel;
-	private JPanel interfacePanel;
-	private ArrayList<String> damagedPipes;
-	private ArrayList<String> damagedPumps;
+	private JPanel interfacePanel;									//a kezelőfelület panelja
+	private ArrayList<String> damagedPipes;							//
+	private ArrayList<String> damagedPumps;							//
 	
-	private ArrayList<JButton> actionButtons;
+	private ArrayList<JButton> actionButtons;						//
 	
-	private JLabel displayCurrentPlayerName;
-	private JLabel displayRound;
-	private JLabel playerRemainingActionCount;
-	private JLabel mechPoints;
-	private JLabel sabPoints;
-	private JLabel damagedPipesLabel;
-	private JLabel damagedPumpsLabel;
-	private JPanel playerActionPanel;
-	private JPanel buttonsHoldingPanel;
+	private JLabel displayCurrentPlayerName;						//
+	private JLabel displayRound;									//
+	private JLabel playerRemainingActionCount;						//
+	private JLabel mechPoints;										//
+	private JLabel sabPoints;										//
+	private JLabel damagedPipesLabel;								//
+	private JLabel damagedPumpsLabel;								//
+	private JPanel playerActionPanel;								//
+	private JPanel buttonsHoldingPanel;								//
 	
-	
+	/**
+	 */
 	public GameFrame(MapView map)
 	{
 		super("Sivatagi vizhalozat");
 		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
 		this.setIconImage(icon.getImage());
-		//Esetleg valami hátteret (akár képet is) érdemes lehet betölteni a játéktérnek
+		this.setBackground(color);
 		
 		//A panelek feltöltése adatokkal
-		InitializeInterfacePanel();
+		InitializeInterfacePanel();		
+		//a térkép méretének beállítása
+		Dimension mapDimension = new Dimension(1400, 800);
+		map.setMaximumSize(mapDimension);
+		map.setMinimumSize(mapDimension);
+		map.setPreferredSize(mapDimension);
 		
 		//A panelek hozzáadása a frame-hez
 		this.add(map, BorderLayout.WEST);
@@ -53,9 +57,13 @@ public class GameFrame extends JFrame
 
 		//további frame beállításaok
 		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		this.setBackground(color);
+		Dimension dimension = new Dimension(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
+		this.setMaximumSize(dimension);
+		this.setMinimumSize(dimension);
+		this.setPreferredSize(dimension);
  		this.setResizable(false);
 		this.pack();
+
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,8 +78,13 @@ public class GameFrame extends JFrame
 		});
 	}
 	
+	/**
+	 */
 	public void InitializeInterfacePanel()
 	{
+		interfacePanel = new JPanel();
+		interfacePanel.setPreferredSize(new Dimension(500, JFrame.MAXIMIZED_VERT));
+		interfacePanel.setBackground(color);
 		//A játékállás kiírása
 		//Éppen lépő játékos nevének kiírása
 		//Egyéb funkciók megjelenítése
@@ -119,8 +132,6 @@ public class GameFrame extends JFrame
 			playerActionPanel.add(butt);
 		}
 
-		interfacePanel = new JPanel();
-		interfacePanel.setPreferredSize(new Dimension(500, 900));
 		interfacePanel.add(displayCurrentPlayerName);
 		interfacePanel.add(displayRound);
 		interfacePanel.add(playerRemainingActionCount);
@@ -128,7 +139,7 @@ public class GameFrame extends JFrame
 		interfacePanel.add(sabPoints);
 		interfacePanel.add(damagedPipesLabel);
 		interfacePanel.add(damagedPumpsLabel);
-		interfacePanel.add(playerActionPanel);
+		//interfacePanel.add(playerActionPanel);
 
 		UpdateHud();
 
@@ -136,6 +147,8 @@ public class GameFrame extends JFrame
 		interfacePanel.repaint();
 	}
 
+	/**
+	 */
 	public void UpdateHud()
 	{
 		System.out.println(GameManager.GetMechanics().size());
