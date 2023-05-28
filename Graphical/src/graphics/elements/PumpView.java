@@ -37,9 +37,8 @@ public class PumpView extends ElementView
 	public Image LoadImage()
 	{
 		String pathPump = StringMagic().concat("pump.png");
-		String pathBrokenPump= StringMagic().concat("pump_broken.png");
-		System.out.println(pathPump);
-		System.out.println(pathBrokenPump);
+		String pathBrokenPump = StringMagic().concat("pump_broken.png");
+
 		BufferedImage  iPpump, brokenPump;
 		Image loadedImage;
 		try
@@ -61,11 +60,7 @@ public class PumpView extends ElementView
 		
 		catch(Exception e)
 		{
-			/*pumpLabel = new JLabel("Pump");
-			pumpLabel = new JLabel("Broken Pump");
-			pumpLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			pumpLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			*/return null;
+			return null;
 		}
 	}
 }

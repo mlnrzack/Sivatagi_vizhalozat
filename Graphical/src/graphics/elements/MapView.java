@@ -6,19 +6,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+
+import javax.swing.*;
 
 import game.*;
 import game.elements.*;
@@ -33,19 +24,10 @@ import graphics.players.*;
  */
 public class MapView extends JPanel
 {
-	//private BufferedImage mapImage;
-	//private static int SQUARE_SIZE = 100;
-	
-	//private IElement[][] map;
-	
 	private final Color color = Color.decode("#c9a77d");											//a háttérszín
-	private final Color circleColor = Color.decode("#c9a77d");
+	private final Color circleColor = Color.decode("#c9a77d");										// a körök színe
 	
-	private ArrayList<IElement> map = new ArrayList<IElement>();									//a modell pályája
-	private ArrayList<Mechanic> mechanics = new ArrayList<Mechanic>();
-	private ArrayList<Saboteur> saboteurs = new ArrayList<Saboteur>();
-	
-	private Map mapView = new HashMap();
+	private HashMap<Element, ElementView> mapView = new HashMap<Element, ElementView>();			//térkép összekötése a modellel
 	
 	private MechanicView currentMechanic;															//az aktuális szerelő megjelenítése
 	private SaboteurView currentSaboteur;															//az aktuális szabotőr megjenenítése
@@ -55,23 +37,27 @@ public class MapView extends JPanel
 	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();				//a vízforrások megjelenítésére szolgáló lista
 	private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();					//a szerelők megjelenítésére szolgáló lista
 	private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();					//a szabotőrök megjelenítésére szolgáló lista
-	//valami itt kell csinálni, hogy megjelenjenek az elemek
 	//private Graphics g ;
-
 	private int x, y, imX, imY;
 	private boolean dragging;
 
-	CisternView cv ;
 	public MapView()
 	{
+		//háttérszín beállítása
 		this.setBackground(Color.decode("#c9a77d"));
-
+		//méret beállítása
+		Dimension dimension = new Dimension(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
+		this.setMaximumSize(dimension);
+		this.setMinimumSize(dimension);
+		this.setPreferredSize(dimension);
+		
+		//térkép felrajzolása
 		DrawMap();
-
+		//egértevékenység figyelése
 		MouseListener();
 	}
 
-
+	/*
 	//egyelőre csak ráfrissít a nézetekre...
 	public void ReDraw()
 	{
@@ -87,6 +73,7 @@ public class MapView extends JPanel
 		for (WaterSpringView waterSpringView : springsView)
 			this.add(waterSpringView);
 	}
+	*/
 	
 	@Override
 	protected void paintComponent(Graphics g)
@@ -146,6 +133,7 @@ public class MapView extends JPanel
 		int centerXpump0 = (int)(pumpsView.get(0).getPosX() + pumpsView.get(0).getHeight() / 2d);
 		int centerYpump0 = (int)(pumpsView.get(0).getPosY() + pumpsView.get(0).getWidth() / 2d);
 */
+		g2.setColor(color.BLACK);
 		g2.drawLine( springsView.get(0).getCenterX(), springsView.get(0).getCenterY(), pumpsView.get(0).getCenterX(), pumpsView.get(0).getCenterY());
 		g2.drawLine( springsView.get(0).getCenterX(), springsView.get(0).getCenterY(), pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY());
 		g2.drawLine( springsView.get(1).getCenterX(), springsView.get(1).getCenterY(), pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY());
@@ -165,7 +153,7 @@ public class MapView extends JPanel
 		g2.drawLine( pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY(), cisternsView.get(2).getCenterX(), cisternsView.get(2).getCenterY());
 		g2.drawLine( pumpsView.get(9).getCenterX(), pumpsView.get(9).getCenterY(), cisternsView.get(1).getCenterX(), cisternsView.get(1).getCenterY());
 		g2.drawLine( pumpsView.get(10).getCenterX(), pumpsView.get(10).getCenterY(), cisternsView.get(0).getCenterX(), cisternsView.get(0).getCenterY());
-
+		
 		//g2.drawImage(cisternsView.get(1).getImageOfCistern(), imX +450,imY, 100, 100, null, null );
 		//g2.drawLine(cisternsView.get(0).getCenterX(),cisternsView.get(0).getCenterY(),cisternsView.get(1).getCenterX(), cisternsView.get(1).getCenterY());
 		//g2.drawOval(imX+460, imY+20, 82, 82);
@@ -177,21 +165,6 @@ public class MapView extends JPanel
 		this.setPreferredSize(new Dimension(1000, 900));
 		setBackground(color);
 
-		//this.setLayout(null);
-		/* így lehet pozícióra rakni egy elemet
-		PipeView testpiV = new PipeView(100, 100, 1);
-		JLabel testPipe = testpiV.LoadImage();
-		this.add(testPipe);
-		Dimension size = testPipe.getPreferredSize();
-		testPipe.setBounds(100, 100, size.width, size.height);
-		*//*
-		for(int i = 0; i < GameManager.GetPipes().size(); i++)
-		{
-			PipeView piV = new PipeView(10, 10, i);
-			pipesView.add(piV);
-			this.add(piV.LoadImage());
-		}
-		*/
 		PumpView puV;
 		for(int i = 0; i < GameManager.GetPumps().size(); i++)
 		{
@@ -237,14 +210,12 @@ public class MapView extends JPanel
 		}
 
 	}
-	
-	//TODO
 
 	private void MouseListener() 
 	{
 		final PumpView[] pm = new PumpView[1];
 		final int[] selectedPump = new int[1];
-		System.out.println("Mouse listeren megnyitva");
+
 		this.addMouseListener(new MouseAdapter()
 		{
 			@Override
@@ -255,60 +226,55 @@ public class MapView extends JPanel
 					if (me.getX() >= pumpsView.get(i).getPosX() && me.getX()< pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
 							&& me.getY()>=pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY()+pumpsView.get(i).getHeight())
 					{
-						 dragging = true;
-						 pm[0] = pumpsView.get(i);
-						 selectedPump[0] = i ;
-						 System.out.println(GameManager.GetPumps().get(i).GetId());
-					 }
+						dragging = true;
+						pm[0] = pumpsView.get(i);
+						selectedPump[0] = i ;
+					}
 				}
-				 System.out.println(dragging);
-	         }
+	        }
 			 
-			 @Override
-			 public void mouseReleased(MouseEvent e) 
-			 {
-				 dragging = false;
-				 pm[0]=null;
-				 repaint();
-				 System.out.println("false lett");
-			 }
+			@Override
+			public void mouseReleased(MouseEvent e) 
+			{
+				dragging = false;
+				pm[0] = null;
+				repaint();
+			}
 			 
-			 @Override
-			 public void mouseDragged(MouseEvent e) { }
-	     }); 
+			@Override
+			public void mouseDragged(MouseEvent e) { }
+		}); 
 
-		 this.addMouseMotionListener(new MouseMotionListener()
-		 {
-			 int nx;
-			 int ny;
-			 @Override
-			 public void mouseDragged(MouseEvent e) {
-				 if (pm[0] != null)
-				 {
-					 nx = e.getX();
-					 ny = e.getY();
+		this.addMouseMotionListener(new MouseMotionListener()
+		{
+			int nx;
+			int ny;
+			@Override
+			public void mouseDragged(MouseEvent e) 
+			{
+				if (pm[0] != null)
+				{
+					nx = e.getX();
+					ny = e.getY();
 
-					 pumpsView.get(selectedPump[0]).setCenterX(nx);
-					 pumpsView.get(selectedPump[0]).setCenterY(ny);
-					 
-					 repaint();
-				 }
+					pumpsView.get(selectedPump[0]).setCenterX(nx);
+					pumpsView.get(selectedPump[0]).setCenterY(ny);
+					
+					update(getGraphics());
+				}
 				/* if (!dragging ){
 					 pumpsView.get(selectedPump[0]).setPosX(nx);
 					 pumpsView.get(selectedPump[0]).setPosY(ny);
 					 repaint();
 					 System.out.println("!dragging");
 				 }*/
-			 }
+			}
 
-			 @Override
+			@Override
 			public void mouseMoved(MouseEvent me) 
 			{
-	        	 //focus.setX(me.getX() / SQUARE_SIZE);
-	        	 //focus.setY(me.getY() / SQUARE_SIZE);
 	        	 repaint();
 			}
-		 }
-		 );
+		});
 	}
 }

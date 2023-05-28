@@ -38,7 +38,6 @@ public class WaterSpringView extends ElementView
 	public Image LoadImage()
 	{
 		String path = StringMagic().concat("waterspring.png");
-		System.out.println(path);
 		try
 		{
 			BufferedImage iSpring = ImageIO.read(new File(path));
@@ -47,11 +46,8 @@ public class WaterSpringView extends ElementView
 		}
 		
 		catch(Exception e)
-		{/*
-			springLabel = new JLabel("WaterSpring");
-			springLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			springLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			*/return null;
+		{
+			return null;
 		}
 	}
 }
