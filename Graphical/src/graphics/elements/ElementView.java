@@ -47,13 +47,20 @@ public abstract class ElementView extends JPanel
 		return posY;
 	}
 
+	public void setCenterX(int i)
+	{
+		posX = i - getWidth()/2;
+	}
+
+	public void setCenterY(int i)
+	{
+		posY = i - getHeight()/2;
+	}
 	public void setPosX(int i){
 		posX = i;
-		return;
 	}
 	public void setPosY(int i){
 		posY = i;
-		return;
 	}
 
 

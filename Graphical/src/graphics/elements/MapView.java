@@ -9,6 +9,13 @@ import java.awt.event.MouseMotionListener;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,7 +57,6 @@ public class MapView extends JPanel
 	//valami itt kell csinálni, hogy megjelenjenek az elemek
 	//private Graphics g ;
 
-	JFrame frame = new JFrame();
 	private int x, y, imX, imY;
 	private boolean dragging;
 
@@ -165,7 +171,7 @@ public class MapView extends JPanel
 		//g2.drawImage(cisternsView.get(1).getImageOfCistern(), imX +450,imY, 100, 100, null, null );
 		//g2.drawLine(cisternsView.get(0).getCenterX(),cisternsView.get(0).getCenterY(),cisternsView.get(1).getCenterX(), cisternsView.get(1).getCenterY());
 		//g2.drawOval(imX+460, imY+20, 82, 82);
-
+		g2.dispose();
 	}
 	//egyelőre csak felhelyezi a modellben inicializált elemeket, de nem adott helyre és nem is adott szomszédokhoz
 	public void DrawMap()
@@ -238,6 +244,7 @@ public class MapView extends JPanel
 
 	private void MouseListener() 
 	{
+		final PumpView[] pm = new PumpView[1];
 		final int[] selectedPump = new int[1];
 		System.out.println("Mouse listeren megnyitva");
 		 this.addMouseListener(new MouseAdapter()
@@ -249,8 +256,9 @@ public class MapView extends JPanel
 				 for (int i = 0 ; i < pumpsView.size();i++)
 				 if (me.getX()>= pumpsView.get(i).getPosX() && me.getX()< pumpsView.get(i).getPosX()+pumpsView.get(i).getWidth() && me.getY()>=pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY()+pumpsView.get(i).getHeight()){
 					 dragging = true;
+					 pm[0] = pumpsView.get(i);
 					 selectedPump[0] = i ;
-
+					 System.out.println(GameManager.GetPumps().get(i).GetId());
 				 }
 				 System.out.println(dragging);
 				 //if((board[tempX][tempY] == null && selected == null) || !enabled)
@@ -296,33 +304,45 @@ public class MapView extends JPanel
 			 @Override
 			 public void mouseReleased(MouseEvent e) {
 				 dragging = false;
+				 pm[0]=null;
+				 repaint();
 				 System.out.println("false lett");
 			 }
 			 @Override
 			 public void mouseDragged(MouseEvent e) {
-				 if (dragging) {
-					 System.out.println("dragged");
-					 pumpsView.get(selectedPump[0]).setPosX(e.getX());
-					 pumpsView.get(selectedPump[0]).setPosY(e.getY());
-					 repaint();
-				 }
 			 }
 	     }); 
 
 		 this.addMouseMotionListener(new MouseMotionListener()
 		 {
+			 int nx;
+			 int ny;
 			 @Override
 			 public void mouseDragged(MouseEvent e) {
-				 if (dragging) {
-					 imX = e.getX();
-					 imY = e.getY();
+				 if (pm[0]!=null) {
+					 nx = e.getX();
+					 ny = e.getY();
+					 System.out.println(nx);
+					 System.out.println(ny);
+					 pumpsView.get(selectedPump[0]).setCenterX(nx);
+					 pumpsView.get(selectedPump[0]).setCenterY(ny);
 					 repaint();
+					 System.out.println(pumpsView.get(selectedPump[0]).getCenterX());
+					 System.out.println(pumpsView.get(selectedPump[0]).getCenterY());
+					 System.out.println("motion dragged");
 				 }
+				/* if (!dragging ){
+					 pumpsView.get(selectedPump[0]).setPosX(nx);
+					 pumpsView.get(selectedPump[0]).setPosY(ny);
+					 repaint();
+					 System.out.println("!dragging");
+				 }*/
 			 }
 
 			 @Override
 			public void mouseMoved(MouseEvent me) 
 			{
+
 	        	 //focus.setX(me.getX() / SQUARE_SIZE);
 	        	 //focus.setY(me.getY() / SQUARE_SIZE);
 	        	 repaint();
