@@ -1,5 +1,8 @@
 package graphics.players;
 
+import java.awt.Image;
+import java.io.File;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,5 +23,16 @@ public abstract class PlayerView
 		//TODO
 	}
 	
-	public abstract JLabel LoadImage();
+	public abstract Image LoadImage();
+	
+	/**
+	 * @return
+	 */
+	public static String StringMagic()
+	{
+		File currentDirFile = new File(".");
+		String helper = currentDirFile.getAbsolutePath();
+		String midhelp = helper.substring(0, helper.length() - 2);
+		return midhelp.concat("\\bin\\");
+	}
 }

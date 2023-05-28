@@ -1,10 +1,10 @@
 package graphics.players;
 
-import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 
 import game.*;
 import game.players.*;
@@ -13,7 +13,6 @@ import graphics.elements.*;
 public class SaboteurView extends PlayerView
 {
 	Saboteur saboteur;
-	JLabel saboteurLabel;
 	
 	public SaboteurView(ElementView pos, int index)
 	{
@@ -22,22 +21,18 @@ public class SaboteurView extends PlayerView
 		LoadImage();
 	}
 	
-	public JLabel LoadImage()
+	public Image LoadImage()
 	{
 		try
 		{
-			saboteurLabel = new JLabel();
-			ImageIcon  iSaboteur = new ImageIcon(this.getClass().getResource("/saboteur.png"));
-			Image loadedImage = iSaboteur.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			iSaboteur = new ImageIcon(loadedImage);
-			saboteurLabel.setIcon(iSaboteur);
-			return saboteurLabel;
+			String pathSaboteur = StringMagic().concat("saboteur.png");
+			BufferedImage  iSaboteur = ImageIO.read(new File(pathSaboteur));
+			return iSaboteur;
 		}
+		
 		catch (Exception e)
 		{
-			saboteurLabel = new JLabel(saboteur.GetName());
-			saboteurLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			return saboteurLabel;
+			return null;
 		}
 	}
 }

@@ -60,10 +60,9 @@ public class PipeView extends ElementView
 			
 			if(neighbours[1] != null)
 			{
-				
-				width = (int) Math.sqrt(((neighbours[0].posX - neighbours[1].posX)*(neighbours[0].posX - neighbours[1].posX)) 
-									+ ((neighbours[0].posY - neighbours[1].posY)*(neighbours[0].posY - neighbours[1].posY)));
-				height = 50;
+				width = (int) Math.sqrt(((neighbours[0].posX - neighbours[1].posX)*(neighbours[0].posX - neighbours[1].posX))
+							+ ((neighbours[0].posY - neighbours[1].posY)*(neighbours[0].posY - neighbours[1].posY)));
+				height = 20;
 			}
 		}
 	}
