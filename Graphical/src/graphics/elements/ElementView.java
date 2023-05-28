@@ -6,6 +6,7 @@ import game.interfaces.*;
 import graphics.Paintable;
 
 import java.awt.*;
+import java.io.File;
 
 public abstract class ElementView extends JPanel
 {
@@ -61,6 +62,17 @@ public abstract class ElementView extends JPanel
 	}
 	public void setPosY(int i){
 		posY = i;
+	}
+
+	public static String StringMagic(){
+		File currentDirFile = new File(".");
+		String helper = currentDirFile.getAbsolutePath();
+		System.out.println(helper.length());
+		String midhelp= helper.substring(0,helper.length()-2);
+		String nemhelp= midhelp.concat("\\Graphical\\bin\\");
+		System.out.println(nemhelp.length());
+		System.out.println(nemhelp);
+		return nemhelp;
 	}
 
 

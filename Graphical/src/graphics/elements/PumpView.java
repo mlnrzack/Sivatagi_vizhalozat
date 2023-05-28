@@ -36,19 +36,20 @@ public class PumpView extends ElementView
 	
 	public Image LoadImage()
 	{
+		String path = StringMagic();
 		BufferedImage  iPpump, brokenPump;
 		Image loadedImage;
 		try
 		{
 			if(!pump.GetBroken())
 			{
-				iPpump = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\pump.png"));
+				iPpump = ImageIO.read(new File(path.concat("pump.png")));
 				loadedImage = iPpump.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 				return loadedImage;
 			}
 			else if(pump.GetBroken())
 			{
-				brokenPump = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\pump_broken.png"));
+				brokenPump = ImageIO.read(new File(path.concat("pump_broken.png")));
 				loadedImage = brokenPump.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 				return loadedImage;
 			}

@@ -63,9 +63,11 @@ public class CisternView extends ElementView
 
 	public Image LoadImage()
 	{
+
+		String path = StringMagic();
 		try
 		{
-			BufferedImage iCistern = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\cistern.png"));
+			BufferedImage iCistern = ImageIO.read(new File(path.concat("cistern.png")));
 			//ImageIcon iCistern = new ImageIcon(this.getClass().getResource("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\cistern.png"));
 			Image loadedImage = iCistern.getScaledInstance(120, 120, Image.SCALE_SMOOTH);
 			return iCistern;
