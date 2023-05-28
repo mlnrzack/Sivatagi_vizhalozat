@@ -37,11 +37,11 @@ public class WaterSpringView extends ElementView
 	
 	public Image LoadImage()
 	{
-		String path = StringMagic();
+		String path = StringMagic().concat("waterspring.png");
+		System.out.println(path);
 		try
 		{
-
-			BufferedImage iSpring = ImageIO.read(new File(path.concat("waterspring.png")));
+			BufferedImage iSpring = ImageIO.read(new File(path));
 			Image loadedImage = iSpring.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
 			return loadedImage;
 		}
