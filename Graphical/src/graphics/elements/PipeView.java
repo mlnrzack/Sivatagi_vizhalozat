@@ -1,19 +1,22 @@
 package graphics.elements;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.*;
+import javax.imageio.ImageIO;
 
 import game.*;
 import game.elements.*;
 
 public class PipeView extends ElementView
 {
-	//itt kell egy position változó, ami a grafika helyét tárolja...
-	//valahogy összekötni a modellből egy objemktummal...
-	private Pipe pipe;
-	private ElementView[] neighbours = new ElementView[2];
+	private Pipe pipe;														//
+	private ElementView[] neighbours = new ElementView[2];					//
 	
+	/**
+	 * @param index
+	 */
 	public PipeView(int index)
 	{
 		//TODO
@@ -23,57 +26,79 @@ public class PipeView extends ElementView
 		LoadImage();
 	}
 	
+	/**
+	 */
 	public Element GetElement()
 	{
 		return pipe;
 	}
 	
+	/**
+	 * @return
+	 */
 	public ElementView[] GetNeighbours()
 	{
 		return neighbours;
 	}
 	
+	/**
+	 * @param neighbours
+	 */
 	public void SetNeighbours(ElementView[] neighbours)
 	{
 		for(int i = 0; i < this.neighbours.length; i++)
 			this.neighbours[i] = neighbours[i];
+		SetDimensions();
 	}
-	/*
-	public void paint(Graphics g)
+
+	public void SetDimensions()
 	{
-		Graphics2D g2 = (Graphics2D) g.create();
-		g2.setColor(Color.BLACK);
-		//vizsgálni, hogy van-e megfelelő számú szomszédja
-		g2.drawLine(neighbours[0].getPosX(), neighbours[0].getPosY(), neighbours[1].getPosX(), neighbours[1].getPosY() );
+		if(neighbours[0] != null)
+		{
+			posX = neighbours[0].getCenterX();
+			posY = neighbours[0].getCenterY();
+			
+			if(neighbours[1] != null)
+			{
+				
+				width = (int) Math.sqrt(((neighbours[0].posX - neighbours[1].posX)*(neighbours[0].posX - neighbours[1].posX)) 
+									+ ((neighbours[0].posY - neighbours[1].posY)*(neighbours[0].posY - neighbours[1].posY)));
+				height = 50;
+			}
+		}
 	}
+	
+	/**
 	 */
 	public Image LoadImage()
 	{
 		//talán itt még a méretet be kell állítani
 		try
 		{
-			String pathPipe = StringMagic().concat("pump.png");
+			String pathPipe;
+			BufferedImage iPipe;
+			
 			if(pipe.GetWaterInside() == 0)
 			{
 				if(!pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("pipe_empty.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("pipe_empty_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("pipe_empty_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					return null;
 				}
@@ -82,21 +107,21 @@ public class PipeView extends ElementView
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_leaking_empty.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_leaking_empty_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_leaking_empty_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					return null;
 				}
@@ -109,21 +134,21 @@ public class PipeView extends ElementView
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_full.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_full_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_full_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					return null;
 				}
@@ -132,21 +157,21 @@ public class PipeView extends ElementView
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_leaking_full.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_leaking_full_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
-						Image loadedImage = iPipe.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-						return loadedImage;
+						pathPipe = StringMagic().concat("/pipe_leaking_full_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					return null;
 				}

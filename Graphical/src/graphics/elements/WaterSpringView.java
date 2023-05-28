@@ -15,6 +15,13 @@ public class WaterSpringView extends ElementView
 {
 	WaterSpring spring;																				//a megjelenítő modellbeli párja
 
+	/**
+	 * @param x
+	 * @param y
+	 * @param widths
+	 * @param heights
+	 * @param index
+	 */
 	public WaterSpringView(int x, int y, int widths, int heights, int index)
 	{
 		posX = x;
@@ -25,21 +32,28 @@ public class WaterSpringView extends ElementView
 		LoadImage();
 	}
 
+	/**
+	 */
 	public Element GetElement() 
 	{
 		return spring;
 	}
 	
+	/**
+	 * @return
+	 */
 	public WaterSpring GetSpring()
 	{
 		return spring;
 	}
 
+	/**
+	 */
 	public Image LoadImage()
 	{
-		String path = StringMagic().concat("waterspring.png");
 		try
 		{
+			String path = StringMagic().concat("waterspring.png");
 			BufferedImage iSpring = (BufferedImage) ImageIO.read(new File(path));
 			return iSpring;
 		}

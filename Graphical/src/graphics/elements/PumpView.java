@@ -12,12 +12,15 @@ import game.elements.*;
 
 public class PumpView extends ElementView
 {
-	//itt kell egy position változó, ami a grafika helyét tárolja...
-	//valahogy összekötni a modellből egy objemktummal...
-	Pump pump;
+	Pump pump;																//
 	
-	JLabel pumpLabel;
-	
+	/**
+	 * @param x
+	 * @param y
+	 * @param widths
+	 * @param heights
+	 * @param index
+	 */
 	public PumpView(int x, int y, int widths, int heights, int index)
 	{
 		posX = x;
@@ -28,45 +31,51 @@ public class PumpView extends ElementView
 		LoadImage();
 	}
 
+	/**
+	 */
 	public Element GetElement()
 	{
 		return pump;
 	}
 	
+	/**
+	 * @return
+	 */
 	public Pump GetPump()
 	{
 		return pump;
 	}
 	
+	/**
+	 * @param i
+	 */
 	public void setIndex(int i)
 	{
 		pump = GameManager.GetPumps().get(i);
 	}
 	
+	/**
+	 */
 	public Image LoadImage()
 	{
 		String pathPump = StringMagic().concat("pump.png");
 		String pathBrokenPump = StringMagic().concat("pump_broken.png");
 
-		BufferedImage  iPpump, brokenPump;
-		Image loadedImage;
+		BufferedImage  iPump;
 		try
 		{
 			if(!pump.GetBroken())
 			{
-				iPpump = ImageIO.read(new File(pathPump));
-				loadedImage = iPpump;
-				return loadedImage;
+				iPump = ImageIO.read(new File(pathPump));
+				return iPump;
 			}
 			else if(pump.GetBroken())
 			{
-				brokenPump = ImageIO.read(new File(pathBrokenPump));
-				loadedImage = brokenPump;
-				return loadedImage;
+				iPump = ImageIO.read(new File(pathBrokenPump));
+				return iPump;
 			}
 			return null;
-		}
-		
+		}		
 		catch(Exception e)
 		{
 			return null;

@@ -1,7 +1,5 @@
 package game.IO;
 
-import java.io.*;
-
 import game.*;
 import game.players.*;
 import tests.*;

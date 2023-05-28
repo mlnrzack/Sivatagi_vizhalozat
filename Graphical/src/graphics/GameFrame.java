@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -26,25 +27,29 @@ import game.IO.*;
  */
 public class GameFrame extends JFrame
 {
-	private final Color color = Color.decode("#c9a77d");				//
+	private final Color color = Color.decode("#c9a77d");											//háttérszín
 	
-	private JPanel interfacePanel;										//a kezelőfelület panelja
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();								//a képernyő mérete
+	int screenHeight = screenSize.height;															//képernyő magassága
+	int screenWidth = screenSize.width;																//képernyő szélessége
 	
-	private ArrayList<String> damagedPipes;								//
-	private ArrayList<String> damagedPumps;								//
+	private JPanel interfacePanel;																	//a kezelőfelület panelja
+	
+	private ArrayList<String> damagedPipes;															//
+	private ArrayList<String> damagedPumps;															//
 
-	private ArrayList<JButton> actionButtons;							//
-	private JLabel displayCurrentPlayerName;							//
-	private JLabel displayRound;										//
-	private JLabel playerRemainingActionCount;							//
-	private JLabel mechPoints;											//
-	private JLabel sabPoints;											//
-	private JLabel damagedPartsText;									//
-	private JLabel damagedPipesLabel;									//
-	private JLabel damagedPumpsLabel;									//
-	private JPanel playerActionPanel;									//
-	private JPanel gameStatisticsPanel;									//
-	private JPanel damagedPartsPanel;									//
+	private ArrayList<JButton> actionButtons;														//
+	private JLabel displayCurrentPlayerName;														//
+	private JLabel displayRound;																	//
+	private JLabel playerRemainingActionCount;														//
+	private JLabel mechPoints;																		//
+	private JLabel sabPoints;																		//
+	private JLabel damagedPartsText;																//
+	private JLabel damagedPipesLabel;																//
+	private JLabel damagedPumpsLabel;																//
+	private JPanel playerActionPanel;																//
+	private JPanel gameStatisticsPanel;																//
+	private JPanel damagedPartsPanel;																//
 
 	/**
 	 * @param map
@@ -68,8 +73,8 @@ public class GameFrame extends JFrame
 		this.add(interfacePanel, BorderLayout.EAST);
 
 		//teljesképernyős megjelenítés
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		Dimension dimension = new Dimension(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
+		this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		Dimension dimension = new Dimension(screenWidth, screenHeight);
 		this.setMaximumSize(dimension);
 		this.setMinimumSize(dimension);
 		this.setPreferredSize(dimension);
@@ -94,7 +99,7 @@ public class GameFrame extends JFrame
 	public void InitializeInterfacePanel()
 	{
 		interfacePanel = new JPanel();
-		interfacePanel.setPreferredSize(new Dimension(500, JFrame.MAXIMIZED_HORIZ));
+		interfacePanel.setPreferredSize(new Dimension((int)(screenWidth * 0.3), screenHeight));
 		interfacePanel.setBackground(color);
 		
 		//gombokon használt font
