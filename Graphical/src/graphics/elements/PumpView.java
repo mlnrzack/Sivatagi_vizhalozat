@@ -1,7 +1,6 @@
 package graphics.elements;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -29,6 +28,16 @@ public class PumpView extends ElementView
 		LoadImage();
 	}
 
+	public Element GetElement()
+	{
+		return pump;
+	}
+	
+	public Pump GetPump()
+	{
+		return pump;
+	}
+	
 	public void setIndex(int i)
 	{
 		pump = GameManager.GetPumps().get(i);
@@ -46,13 +55,13 @@ public class PumpView extends ElementView
 			if(!pump.GetBroken())
 			{
 				iPpump = ImageIO.read(new File(pathPump));
-				loadedImage = iPpump.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+				loadedImage = iPpump;
 				return loadedImage;
 			}
 			else if(pump.GetBroken())
 			{
 				brokenPump = ImageIO.read(new File(pathBrokenPump));
-				loadedImage = brokenPump.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+				loadedImage = brokenPump;
 				return loadedImage;
 			}
 			return null;

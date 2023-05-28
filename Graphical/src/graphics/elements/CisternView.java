@@ -27,14 +27,17 @@ public class CisternView extends ElementView
 		height = heights;
 		cistern = GameManager.GetCisterns().get(index);
 	}
-	/*
-	public Image getImageOfCistern() throws IOException 
-	{
-		BufferedImage image = ImageIO.read(new File("C:\\Users\\I551956\\IdeaProjects\\Sivatagi_vizhalozat\\Graphical\\bin\\cistern.png"));
-		return image;
-	}
-	 */
 
+	public Element GetElement()
+	{
+		return cistern;
+	}
+	
+	public Cistern GetCistern()
+	{
+		return cistern;
+	}
+	
 	public JPanel LoadCircle()
 	 {
 		try 

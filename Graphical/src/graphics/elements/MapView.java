@@ -24,7 +24,11 @@ import graphics.players.*;
  */
 public class MapView extends JPanel
 {
-	private BufferedImage mapImage;
+	private BufferedImage mapImage;																	//háttérkép
+	
+	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();								//a képernyő mérete
+	int screenHeight = screenSize.height;															//képernyő magassága
+	int screenWidth = screenSize.width;																//képernyő szélessége
 	
 	private final Color color = Color.decode("#c9a77d");											//a háttérszín
 	private final Color circleColor = Color.decode("#94744d");										// a körök színe
@@ -33,8 +37,9 @@ public class MapView extends JPanel
 	
 	private MechanicView currentMechanic;															//az aktuális szerelő megjelenítése
 	private SaboteurView currentSaboteur;															//az aktuális szabotőr megjenenítése
-	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();						//a ciszternák megjelenítésere szolgáló lista
 	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();								//a csövek megjelenítésére szolgáló lista
+	private ArrayList<ElementView> activesView = new ArrayList<ElementView>();						//
+	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();						//a ciszternák megjelenítésere szolgáló lista
 	private ArrayList<PumpView> pumpsView = new ArrayList<PumpView>();								//a pumpák megjelenítésére szolgáló lista
 	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();				//a vízforrások megjelenítésére szolgáló lista
 	private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();					//a szerelők megjelenítésére szolgáló lista
@@ -54,13 +59,17 @@ public class MapView extends JPanel
 		this.setMaximumSize(dimension);
 		this.setMinimumSize(dimension);
 		this.setPreferredSize(dimension);
-		
 		//térkép felrajzolása
 		DrawMap();
 		//egértevékenység figyelése
 		MouseListener();
 	}
 
+	//public ElementView[] GetNeighbourViews()
+	{
+		
+	}
+	
 	/*
 	//egyelőre csak ráfrissít a nézetekre...
 	public void ReDraw()
@@ -95,55 +104,67 @@ public class MapView extends JPanel
 		
 		g2.setColor(color.BLACK);
 		g2.drawLine(springsView.get(0).getCenterX(), springsView.get(0).getCenterY(), pumpsView.get(0).getCenterX(), pumpsView.get(0).getCenterY());
-		g2.drawLine( springsView.get(0).getCenterX(), springsView.get(0).getCenterY(), pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY());
-		g2.drawLine( springsView.get(1).getCenterX(), springsView.get(1).getCenterY(), pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY());
-		g2.drawLine( pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY(), pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY());
-		g2.drawLine( pumpsView.get(0).getCenterX(), pumpsView.get(0).getCenterY(), pumpsView.get(3).getCenterX(), pumpsView.get(3).getCenterY());
-		g2.drawLine( pumpsView.get(0).getCenterX(), pumpsView.get(0).getCenterY(), pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY());
-		g2.drawLine( pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY(), pumpsView.get(6).getCenterX(), pumpsView.get(6).getCenterY());
-		g2.drawLine( pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY(), pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY());
-		g2.drawLine( pumpsView.get(3).getCenterX(), pumpsView.get(3).getCenterY(), pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY());
-		g2.drawLine( pumpsView.get(3).getCenterX(), pumpsView.get(3).getCenterY(), pumpsView.get(4).getCenterX(), pumpsView.get(4).getCenterY());
-		g2.drawLine( pumpsView.get(6).getCenterX(), pumpsView.get(6).getCenterY(), pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY());
-		g2.drawLine( pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY(), pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY());
-		g2.drawLine( pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY(), pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY());
-		g2.drawLine( pumpsView.get(4).getCenterX(), pumpsView.get(4).getCenterY(), pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY());
-		g2.drawLine( pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY(), pumpsView.get(9).getCenterX(), pumpsView.get(9).getCenterY());
-		g2.drawLine( pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY(), pumpsView.get(10).getCenterX(), pumpsView.get(10).getCenterY());
-		g2.drawLine( pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY(), cisternsView.get(2).getCenterX(), cisternsView.get(2).getCenterY());
-		g2.drawLine( pumpsView.get(9).getCenterX(), pumpsView.get(9).getCenterY(), cisternsView.get(1).getCenterX(), cisternsView.get(1).getCenterY());
-		g2.drawLine( pumpsView.get(10).getCenterX(), pumpsView.get(10).getCenterY(), cisternsView.get(0).getCenterX(), cisternsView.get(0).getCenterY());
+		g2.drawLine(springsView.get(0).getCenterX(), springsView.get(0).getCenterY(), pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY());
+		g2.drawLine(springsView.get(1).getCenterX(), springsView.get(1).getCenterY(), pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY());
+		g2.drawLine(pumpsView.get(1).getCenterX(), pumpsView.get(1).getCenterY(), pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY());
+		g2.drawLine(pumpsView.get(0).getCenterX(), pumpsView.get(0).getCenterY(), pumpsView.get(3).getCenterX(), pumpsView.get(3).getCenterY());
+		g2.drawLine(pumpsView.get(0).getCenterX(), pumpsView.get(0).getCenterY(), pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY());
+		g2.drawLine(pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY(), pumpsView.get(6).getCenterX(), pumpsView.get(6).getCenterY());
+		g2.drawLine(pumpsView.get(2).getCenterX(), pumpsView.get(2).getCenterY(), pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY());
+		g2.drawLine(pumpsView.get(3).getCenterX(), pumpsView.get(3).getCenterY(), pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY());
+		g2.drawLine(pumpsView.get(3).getCenterX(), pumpsView.get(3).getCenterY(), pumpsView.get(4).getCenterX(), pumpsView.get(4).getCenterY());
+		g2.drawLine(pumpsView.get(6).getCenterX(), pumpsView.get(6).getCenterY(), pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY());
+		g2.drawLine(pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY(), pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY());
+		g2.drawLine(pumpsView.get(5).getCenterX(), pumpsView.get(5).getCenterY(), pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY());
+		g2.drawLine(pumpsView.get(4).getCenterX(), pumpsView.get(4).getCenterY(), pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY());
+		g2.drawLine(pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY(), pumpsView.get(9).getCenterX(), pumpsView.get(9).getCenterY());
+		g2.drawLine(pumpsView.get(8).getCenterX(), pumpsView.get(8).getCenterY(), pumpsView.get(10).getCenterX(), pumpsView.get(10).getCenterY());
+		g2.drawLine(pumpsView.get(7).getCenterX(), pumpsView.get(7).getCenterY(), cisternsView.get(2).getCenterX(), cisternsView.get(2).getCenterY());
+		g2.drawLine(pumpsView.get(9).getCenterX(), pumpsView.get(9).getCenterY(), cisternsView.get(1).getCenterX(), cisternsView.get(1).getCenterY());
+		g2.drawLine(pumpsView.get(10).getCenterX(), pumpsView.get(10).getCenterY(), cisternsView.get(0).getCenterX(), cisternsView.get(0).getCenterY());
 		
 		for (int i = 0 ; i < GameManager.GetCisterns().size(); i++)
 		{
 			g2.setColor(color);
-			g2.fillOval(cisternsView.get(i).getPosX(), cisternsView.get(i).getPosY(), 100, 100);
+			g2.fillOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
 			g2.setColor(circleColor);
-			g2.drawOval(cisternsView.get(i).getPosX(), cisternsView.get(i).getPosY(), 100, 100);
+			g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
 			g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).getPosX() ,cisternsView.get(i).getPosY(),
 					cisternsView.get(i).getWidth(), cisternsView.get(i).getHeight(), null, null );
+			g2.setColor(Color.BLACK);
+			g2.drawString(cisternsView.get(i).GetCistern().GetId(), cisternsView.get(i).getPosX() + 30, cisternsView.get(i).getPosY() + 100);
 		}
 		
 		for (int i = 0; i < GameManager.GetWaterSprings().size();i++)
 		{
 			g2.setColor(color);
-			g2.fillOval(springsView.get(i).getPosX(), springsView.get(i).getPosY(), 100, 100);
+			g2.fillOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
 			g2.setColor(circleColor);
-			g2.drawOval(springsView.get(i).getPosX(), springsView.get(i).getPosY(), 100, 100);
+			g2.drawOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
 			g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).getPosX(), springsView.get(i).getPosY(),
 					springsView.get(i).getWidth(), springsView.get(i).getHeight(), null, null);
+			g2.setColor(Color.BLACK);
+			g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).getPosX() + 55, springsView.get(i).getPosY() + 115);
 		}
 
 		for(int i = 0; i < GameManager.GetPumps().size(); i++)
 		{
 			g2.setColor(color);
-			g2.fillOval(pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(), 100, 100);
+			g2.fillOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
 			g2.setColor(circleColor);
-			g2.drawOval(pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(), 100, 100);
+			g2.drawOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
 			g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(),
 					pumpsView.get(i).getWidth(), pumpsView.get(i).getHeight(), null, null );
+			g2.setColor(Color.BLACK);
+			g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).getPosX() + 22, pumpsView.get(i).getPosY() + 85);
 		}
-
+		/*
+		for(int i = 0; i < GameManager.GetPipes().size(); i++)
+		{
+			g2.drawImage(pipesView.get(i).LoadImage(), pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
+					pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null, null );
+		}
+		*/
 		g2.dispose();
 	}
 
@@ -154,36 +175,66 @@ public class MapView extends JPanel
 		g2d.setColor(color);
 		g2d.fillRect(0, 0, 1420, 1100);
 		
+		for(int i = 0; i < GameManager.GetWaterSprings().size(); i++)
+		{
+			WaterSpringView sV = new WaterSpringView(200 + (i * 250), 30, 150, 150, i);
+			springsView.add(sV);
+			activesView.add(sV);
+		}
+		
 		PumpView puV;
 		for(int i = 0; i < GameManager.GetPumps().size(); i++)
 		{
 
-			puV = new PumpView(220, 175+(i*45),90,90, i);
+			puV = new PumpView(220, 195 + (i * 70), 90, 90, i);
 			pumpsView.add(puV);
+			activesView.add(puV);
 			i++;
 
-			puV = new PumpView(470, 175+((i-1)*45), 90, 90, i);
+			puV = new PumpView(470, 195 + ((i - 1) * 70), 90, 90, i);
 			pumpsView.add(puV);
+			activesView.add(puV);
 			if (i == 7) break;
 		}
 
-		pumpsView.add(new PumpView(100, 535, 90, 90, 8));
-		pumpsView.add(new PumpView(350, 535, 90, 90, 9));
-		pumpsView.add(new PumpView(600, 535, 90, 90, 10 ));
+		pumpsView.add(new PumpView(100, 720, 90, 90, 8));
+		pumpsView.add(new PumpView(350, 720, 90, 90, 9));
+		pumpsView.add(new PumpView(600, 720, 90, 90, 10 ));
 
-
-		for(int i = 0; i < GameManager.GetCisterns().size(); i++)
+		for(int i = GameManager.GetCisterns().size() - 1; i >= 0; i--)
 		{
-			CisternView cV = new CisternView(200 + (i * 150), 750, 100, 100,  i);
+			CisternView cV = new CisternView(200 + (i * 250), 900, 100, 100,  i);
 			cisternsView.add(cV);
+			activesView.add(cV);
 		}
-
-		for(int i = 0; i < GameManager.GetWaterSprings().size(); i++)
+		
+		for(int i = 0; i < GameManager.GetPipes().size(); i++) 
 		{
-			WaterSpringView sV = new WaterSpringView(200 + (i * 250), 30, 100, 100, i);
-			springsView.add(sV);
+			PipeView piV = new PipeView(i);
+			pipesView.add(piV);
+			
+			ElementView[] neighbours = new ElementView[2];
+			neighbours[0] = null;
+			neighbours[1] = null;
+			int l = 0;
+			
+			for(int j = 0; j < GameManager.GetPipes().get(i).GetNeighbours().size(); j++)
+			{
+				for(int k = 0; k < activesView.size(); k++)
+				{
+					if(GameManager.GetPipes().get(i).GetNeighbours().get(j).GetId().equals(activesView.get(k).GetElement().GetId()))
+					{
+						neighbours[l] = activesView.get(k);
+						l++;
+					}
+					if(l == 2)
+						break;
+				}
+			}
+			//szomszédok átadása
+			piV.SetNeighbours(neighbours);
 		}
-
+		
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
 		{
 			GameManager.GetMechanics().get(i).GetCurrentPosition();
@@ -211,7 +262,7 @@ public class MapView extends JPanel
 	        {
 				for (int i = 0 ; i < pumpsView.size(); i++)
 				{
-					if (me.getX() >= pumpsView.get(i).getPosX() && me.getX()< pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
+					if (me.getX() >= pumpsView.get(i).getPosX() && me.getX() < pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
 							&& me.getY()>=pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY()+ pumpsView.get(i).getHeight())
 					{
 						dragging = true;

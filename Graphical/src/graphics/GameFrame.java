@@ -173,7 +173,7 @@ public class GameFrame extends JFrame
 		interfacePanel.add(sabPoints);
 		interfacePanel.add(damagedPipesLabel);
 		interfacePanel.add(damagedPumpsLabel);
-		//interfacePanel.add(playerActionPanel);
+		interfacePanel.add(playerActionPanel);
 		interfacePanel.add(gameStatisticsPanel);
 
 		interfacePanel.setLayout(new BoxLayout(interfacePanel, BoxLayout.Y_AXIS));

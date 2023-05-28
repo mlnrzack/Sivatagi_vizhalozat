@@ -3,6 +3,7 @@ package graphics;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -49,9 +50,15 @@ public class MenuFrame extends JFrame
 
 	public MenuFrame() 
 	{
+		//a frame elnevezése
 		super("Sivatagi vizhalozat");
-		ImageIcon icon = new ImageIcon(this.getClass().getResource("/icon.png"));
+		//icon betöltése
+		File currentDirFile = new File(".");
+		String helper = currentDirFile.getAbsolutePath();
+		String midhelp = helper.substring(0, helper.length() - 2).concat("\\bin\\");
+		ImageIcon icon = new ImageIcon(midhelp.concat("/icon.png"));
 		this.setIconImage(icon.getImage());
+		//további beállítások
 		this.setBackground(Color.decode("#c29c84"));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		LoadInterface();

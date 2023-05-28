@@ -2,21 +2,24 @@ package graphics.elements;
 
 import javax.swing.*;
 
+import game.elements.*;
 import game.interfaces.*;
 
 import java.awt.*;
 import java.io.File;
 
-public abstract class ElementView extends JPanel
+public abstract class ElementView //extends JPanel
 {
 	protected int posX;
 	protected int posY;
 
-	public int getWidth() {
+	public int getWidth()
+	{
 		return width;
 	}
 
-	public int getHeight() {
+	public int getHeight()
+	{
 		return height;
 	}
 
@@ -32,6 +35,7 @@ public abstract class ElementView extends JPanel
 	}
 	
 	public abstract Image LoadImage();
+	public abstract Element GetElement();
 
 	public int getCenterX()
 	{

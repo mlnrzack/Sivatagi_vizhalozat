@@ -25,7 +25,12 @@ public class WaterSpringView extends ElementView
 		LoadImage();
 	}
 
-	public WaterSpring getSpring() 
+	public Element GetElement() 
+	{
+		return spring;
+	}
+	
+	public WaterSpring GetSpring()
 	{
 		return spring;
 	}
@@ -36,12 +41,7 @@ public class WaterSpringView extends ElementView
 		try
 		{
 			BufferedImage iSpring = (BufferedImage) ImageIO.read(new File(path));
-			BufferedImage resizedImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
-			Graphics2D graphics2D = resizedImage.createGraphics();
-			graphics2D.drawImage(iSpring, 0, 0, 50, 50, null);
-			graphics2D.dispose();
-			Image loadedImage = resizedImage;
-			return loadedImage;
+			return iSpring;
 		}
 		
 		catch(Exception e)
