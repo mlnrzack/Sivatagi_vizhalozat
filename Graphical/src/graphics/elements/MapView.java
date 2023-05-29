@@ -91,7 +91,7 @@ public class MapView extends JPanel
 	public void DrawMap()
 	{
 		this.setBackground(color);
-		this.setPreferredSize(new Dimension(1000, 900));
+		this.setPreferredSize(new Dimension(900, 900));
 		//this.setLayout(null);
 		/* így lehet pozícióra rakni egy elemet
 		PipeView testpiV = new PipeView(100, 100, 1);

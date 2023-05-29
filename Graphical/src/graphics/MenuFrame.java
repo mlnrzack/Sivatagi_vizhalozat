@@ -283,7 +283,8 @@ public class MenuFrame extends JFrame
 		{
 			//GameManager.StartGame();
 			
-			GameFrame gFrame = new GameFrame(new MapView());
+			//GameFrame gFrame = new GameFrame(new MapView());
+			Controller controller = new Controller(new GameFrame(new MapView()));
 			setVisible(false);
 			dispose();
 		}

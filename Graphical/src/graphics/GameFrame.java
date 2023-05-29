@@ -2,6 +2,7 @@ package graphics;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class GameFrame extends JFrame
 	private ArrayList<String> damagedPumps;
 	
 	private ArrayList<JButton> actionButtons;
+	public ArrayList<JButton> getActionButtons() { return actionButtons; }
 	
 	private JLabel displayCurrentPlayerName;
 	private JLabel displayRound;
@@ -45,7 +47,9 @@ public class GameFrame extends JFrame
 		InitializeInterfacePanel();
 		
 		//A panelek hozzáadása a frame-hez
-		this.add(map, BorderLayout.WEST);
+		JPanel mapPanel = new JPanel();
+		mapPanel.add(map);
+		this.add(mapPanel, BorderLayout.WEST);
 		this.add(interfacePanel, BorderLayout.EAST);
 		
 		//további frame beállításaok
@@ -107,14 +111,15 @@ public class GameFrame extends JFrame
 		actionButtons.add(new JButton("stickypipe"));
 		actionButtons.add(new JButton("slipperypipe"));
 		actionButtons.add(new JButton("pass"));
-
+		
+		playerActionPanel.setLayout(new GridLayout(12,1,2,2));
 		for(JButton butt: actionButtons)
 		{
 			playerActionPanel.add(butt);
 		}
 
 		interfacePanel = new JPanel();
-		interfacePanel.setPreferredSize(new Dimension(500, 900));
+		interfacePanel.setPreferredSize(new Dimension(400, 900));
 		interfacePanel.add(displayCurrentPlayerName);
 		interfacePanel.add(displayRound);
 		interfacePanel.add(playerRemainingActionCount);
@@ -122,8 +127,13 @@ public class GameFrame extends JFrame
 		interfacePanel.add(sabPoints);
 		interfacePanel.add(damagedPipesLabel);
 		interfacePanel.add(damagedPumpsLabel);
+		//playerActionPanel.setLayout(new GridLayout(12,1,2,2));
+		/*for(JButton butt: actionButtons)
+		{
+			interfacePanel.add(butt);
+		}*/
 		interfacePanel.add(playerActionPanel);
-
+		
 
 		UpdateHud();
 
