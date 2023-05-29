@@ -41,21 +41,19 @@ public class Pump extends ActiveElement implements ISteppable
     {
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
-        var isBroken = false;
         
         if(!broken)
         {
-            if (GetWaterInside() == Constants.PumpWaterCapacity )
-            {
-                pumpWaterToOutputDone = PumpWaterToOutput();
-                pumpWaterFromInputDone = PumpWaterFromInput();
-            }
-        	if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
+        	pumpWaterFromInputDone = PumpWaterFromInput();
         	
-            isBroken = GettingOlder();
+        	if (!pumpWaterFromInputDone)
+        		pumpWaterToOutputDone = PumpWaterToOutput();
         }
+        
+        if (pumpWaterToOutputDone || pumpWaterFromInputDone)
+            GettingOlder();
 
-        return broken || isBroken || pumpWaterToOutputDone || pumpWaterFromInputDone;
+        return pumpWaterToOutputDone || pumpWaterFromInputDone;
     }
 
     /**Ha megfelelő indexeket kap a függvény,
@@ -85,11 +83,12 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public boolean PumpWaterFromInput()
     {
-        if (input != null && input.GetWaterInside() > 0)
+        if (input != null && input.GetWaterInside() > 0 && GetWaterInside() < Constants.PumpWaterCapacity)
         {
             input.SetWaterInside(input.GetWaterInside() - 1);
             SetWaterInside(GetWaterInside() + 1);
-
+            
+            System.out.println(this.GetId() + " vizet pumpált az átmeneti tárolójába.");
             return true;
         }
 
@@ -101,10 +100,12 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public boolean PumpWaterToOutput()
     {
-        if (output != null)
+        if (output != null && output.GetWaterInside() < Constants.PipeCapacity && GetWaterInside() > 0)
         {
         	output.FillWaterTo();
         	SetWaterInside(GetWaterInside() - 1);
+        	
+        	System.out.println(this.GetId() + " vizet pumpált a szomszédjába: " + output.GetId());
             return true;
         }
 

@@ -386,10 +386,21 @@ public class GameManager
      */
     public static void StepSteppables()
     {
-    	for(int i = steppables.size() - 1; i >= 0; i--)
-    	{
-        	steppables.get(i).Step();
-    	}
+    	boolean[] actionDone = new boolean[steppables.size()];
+    	
+    	boolean actionDoneInLoop = false;
+    	
+    	do {
+    		actionDoneInLoop = false;
+    		
+    		for(int i = steppables.size() - 1; i >= 0; i--)
+        	{
+            	if (actionDone[i] == false) {
+            		actionDone[i] = steppables.get(i).Step();
+            		actionDoneInLoop = actionDone[i] || actionDoneInLoop;
+            	}            			
+        	}
+    	} while (actionDoneInLoop);
     }
     
     /**A szerelő játékos karakterek lépéseinek menüje.
