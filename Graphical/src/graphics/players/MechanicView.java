@@ -13,12 +13,19 @@ import graphics.elements.*;
 public class MechanicView extends PlayerView 
 {
 	private Mechanic mechanic;
-	
-	public MechanicView(ElementView pos, int index)
+
+
+
+	public MechanicView(ElementView pos, int width , int height, int index )
 	{
 		this.pos = pos;
+		this.width = width;
+		this.height = height;
 		mechanic = GameManager.GetMechanics().get(index);
 		LoadImage();
+	}
+	public Mechanic getMechanic() {
+		return mechanic;
 	}
 	
 	public Image LoadImage()

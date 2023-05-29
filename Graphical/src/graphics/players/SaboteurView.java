@@ -13,12 +13,19 @@ import graphics.elements.*;
 public class SaboteurView extends PlayerView
 {
 	Saboteur saboteur;
-	
-	public SaboteurView(ElementView pos, int index)
+
+
+
+	public SaboteurView(ElementView pos, int width , int height, int index)
 	{
 		this.pos = pos;
+		this.width = width;
+		this.height = height;
 		saboteur = GameManager.GetSaboteurs().get(index);
 		LoadImage();
+	}
+	public Saboteur getSaboteur() {
+		return saboteur;
 	}
 	
 	public Image LoadImage()

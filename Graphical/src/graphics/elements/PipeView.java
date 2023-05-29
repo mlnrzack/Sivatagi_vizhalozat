@@ -17,9 +17,7 @@ public class PipeView extends ElementView
 	private Pipe pipe;														//
 	private ElementView[] neighbours = new ElementView[2];
 	//
-
-	double angle= 0;
-	int index= 0;
+	int centerX, centerY;
 	/**
 	 * @param index
 	 */
@@ -29,7 +27,6 @@ public class PipeView extends ElementView
 		pipe = GameManager.GetPipes().get(index);
 		neighbours[0] = null;
 		neighbours[1] = null;
-		this.index = index;
 		LoadImage();
 	}
 	
@@ -68,39 +65,37 @@ public class PipeView extends ElementView
 
 			int pposX = 0;
 			int pposY= 0 ;
-			/*
-			pposY = midY - (height / 2);
-			if (slope > 0) {
-				System.out.println("slope > 0");
-				pposX -= (int) (slope * (pposY - midY));
-			} else if (slope < 0) {
-				System.out.println("slope < 0");
-				pposX += (int) (slope * (pposY - midY));
-			} else {
-				pposX = midX - (width / 2);
-			}
-
-			// Adjust pposX based on the vertical position of point A
-			int verticalDistance = Math.abs(midY - neighbours[0].getPosY());
-
-			// Define a scaling factor based on the vertical distance from the horizontal line
-			double scalingFactor = 1.0; // Adjust this value to control the amount of movement on the X coordinates
-
-			pposX += (int) (scalingFactor * verticalDistance);
-*/
 
 			pposX = this.neighbours[0].getCenterX();
 			pposY = this.neighbours[0].getCenterY();
 			this.setPosX(pposX);
 			this.setPosY(pposY);
 
-			InfoLog.WriteInfoLog((GameManager.GetPipes().get(index).GetId()));
+			InfoLog.WriteInfoLog((pipe.GetId()));
 			InfoLog.WriteInfoLog(("MidX: " + Integer.toString(midX)));
 			InfoLog.WriteInfoLog(("MidY " + Integer.toString(midY)));
 			InfoLog.WriteInfoLog(("Width  " + Integer.toString(width)));
 			InfoLog.WriteInfoLog(("PosX " + Integer.toString(pposX)));
 			InfoLog.WriteInfoLog(("PosY " + Integer.toString(pposY)));
 		}
+	}
+
+	@Override
+	public int getCenterX(){
+		Point center = calculateCenter(this.GetNeighbours()[0].getCenterX(), this.GetNeighbours()[0].getCenterY(),
+				this.GetNeighbours()[1].getCenterX(), this.GetNeighbours()[1].getCenterY());
+		int imageX = (int) (center.x - this.getWidth() / 2);
+		centerX = imageX + this.getWidth() / 2;
+		return centerX;
+	}
+
+	@Override
+	public int getCenterY(){
+		Point center = calculateCenter(this.GetNeighbours()[0].getCenterX(), this.GetNeighbours()[0].getCenterY(),
+				this.GetNeighbours()[1].getCenterX(), this.GetNeighbours()[1].getCenterY());
+		int imageY = (int) (center.y - this.getHeight() / 2);
+		centerY = imageY + this.getHeight() / 2;
+		return centerY;
 	}
 	
 	/**
@@ -219,5 +214,15 @@ public class PipeView extends ElementView
 		{
 			return null;
 		}
+	}
+
+	public IElement GetPipe() {
+		return pipe;
+	}
+
+	public static Point calculateCenter(int x1, int y1, int x2, int y2) {
+		int centerX = (x1 + x2) / 2;
+		int centerY = (y1 + y2) / 2;
+		return new Point(centerX, centerY);
 	}
 }

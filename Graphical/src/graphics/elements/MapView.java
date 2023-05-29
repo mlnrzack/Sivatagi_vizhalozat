@@ -14,7 +14,11 @@ import javax.swing.*;
 
 import game.*;
 import game.IO.DebugLog;
+import game.elements.Element;
+import game.interfaces.IElement;
 import graphics.players.*;
+
+import static game.GameManager.GetMechanics;
 
 /**Ez az osztály felel a játéktér megjelenítéséért.
  */
@@ -28,9 +32,8 @@ public class MapView extends JPanel
 	
 	private final Color color = Color.decode("#c9a77d");											//a háttérszín
 	private final Color circleColor = Color.decode("#94744d");										// a körök színe
-	
-	//private HashMap<Element, ElementView> mapView = new HashMap<Element, ElementView>();			//térkép összekötése a modellel
-	
+	private final Color currentColor = Color.decode("#ffffff");                                        //az aktuális játékost jelölő szín
+	private ArrayList<ElementView> mapView = new ArrayList<ElementView>();                            //térkép megjelnítéseére szolgáló lista
 	private MechanicView currentMechanic;															//az aktuális szerelő megjelenítése
 	private SaboteurView currentSaboteur;															//az aktuális szabotőr megjenenítése
 	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();								//a csövek megjelenítésére szolgáló lista
@@ -96,7 +99,9 @@ public class MapView extends JPanel
 		this.setBackground(color);
 		imX = 200;
 		imY = 633;
-		dragging = false;
+
+		int stringX;
+		int stringY;
 		g2.setColor(color.BLACK);
 		for (int i = 0; i < pipesView.size(); i++) {
 		if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) {
@@ -131,11 +136,20 @@ public class MapView extends JPanel
 			g2.drawImage(pipesView.get(i).LoadImage(), imageX, imageY,
 					pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null);
 
+			 stringX = imageX + pipesView.get(i).getWidth() / 2;
+			 stringY = imageY + pipesView.get(i).getHeight() / 2;
+
+			// Set the font and color for the string
+			g2.setFont(new Font("Arial",Font.PLAIN, 18));
+
+			// Draw the string in the middle of the image
+			g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX, stringY+8);
+
 			// Restore the original transform
 			g2.setTransform(oldTransform);
 		}
 	}
-
+		g2.setFont(new Font("Arial",Font.PLAIN, 12));
 		for(int i = 0; i < pumpsView.size(); i++)
 		{
 			g2.setColor(color);
@@ -177,12 +191,34 @@ public class MapView extends JPanel
 		//TODO
 		for(int i = 0; i < mechanicsView.size(); i++)
 		{
-			//TODO
+			g2.setColor(circleColor);
+			if (mechanicsView.get(i) == currentMechanic){
+				g2.setColor(currentColor);
+			}
+			g2.drawOval(mechanicsView.get(i).getPos().getCenterX() + 3, mechanicsView.get(i).getPos().getCenterY() + 10, 80, 80);
+			//g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
+
+			g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).getPos().getCenterX()+3 ,mechanicsView.get(i).getPos().getCenterY()+10,
+					mechanicsView.get(i).getWidth(), mechanicsView.get(i).getHeight(), null, null );
+			g2.setColor(Color.BLACK);
+			g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).getPos().getCenterX()  + 30, mechanicsView.get(i).getPos().getCenterY()  + 100);
+
 		}
 
 		for(int i = 0; i < saboteursView.size(); i++)
 		{
-			//TODO
+			g2.setColor(circleColor);
+			if (saboteursView.get(i) == currentSaboteur){
+				g2.setColor(currentColor);
+			}
+			g2.drawOval(saboteursView.get(i).getPos().getCenterX() + 3, saboteursView.get(i).getPos().getCenterY() + 10, 80, 80);
+			//g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
+
+			g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).getPos().getCenterX()+3 ,saboteursView.get(i).getPos().getCenterY()+10,
+					saboteursView.get(i).getWidth(), saboteursView.get(i).getHeight(), null, null );
+			g2.setColor(Color.BLACK);
+			g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).getPos().getCenterX()  + 30, saboteursView.get(i).getPos().getCenterY()  + 100);
+
 		}
 
 		g2.dispose();
@@ -200,6 +236,7 @@ public class MapView extends JPanel
 			WaterSpringView sV = new WaterSpringView((int)(screenWidth * 0.05) + (i * (int)(screenWidth * 0.15)), (int)(screenHeight * 0.02), 150, 150, i);
 			springsView.add(sV);
 			activesView.add(sV);
+			mapView.add(sV);
 		}
 		
 		PumpView puV;
@@ -208,12 +245,24 @@ public class MapView extends JPanel
 			puV = new PumpView((int)(screenWidth * 0.1) + (i % 5 * 55), 195 + (i * 70), 90, 90, i);
 			pumpsView.add(puV);
 			activesView.add(puV);
+			mapView.add(puV);
+			DebugLog.WriteDebugLog(GameManager.GetPumps().get(i).GetId());
+			DebugLog.WriteDebugLog("CenterX  "+Integer.toString(puV.getCenterX()));
+			DebugLog.WriteDebugLog("CenterY  "+Integer.toString(puV.getCenterY()));
+			DebugLog.WriteDebugLog("PosX "+Integer.toString(puV.getPosX()));
+			DebugLog.WriteDebugLog("PosY "+Integer.toString(puV.getPosY()));
 			if (i == 10) break;
 			i++;
 
 			puV = new PumpView((int)(screenWidth * 0.3) + (i % 4 * 45), 195 + ((i - 1) * 70), 90, 90, i);
+			DebugLog.WriteDebugLog(GameManager.GetPumps().get(i).GetId());
+			DebugLog.WriteDebugLog("CenterX  "+ puV.getCenterX());
+			DebugLog.WriteDebugLog("CenterY  "+Integer.toString(puV.getCenterY()));
+			DebugLog.WriteDebugLog("PosX "+Integer.toString(puV.getPosX()));
+			DebugLog.WriteDebugLog("PosY "+Integer.toString(puV.getPosY()));
 			pumpsView.add(puV);
 			activesView.add(puV);
+			mapView.add(puV);
 
 		}
 
@@ -222,12 +271,14 @@ public class MapView extends JPanel
 			CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)) , (int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
 			cisternsView.add(cV);
 			activesView.add(cV);
+			mapView.add(cV);
 		}
 		
 		for(int i = 0; i < GameManager.GetPipes().size(); i++) 
 		{
 			PipeView piV = new PipeView(i);
 			pipesView.add(piV);
+			mapView.add(piV);
 			
 			ElementView[] neighbours = new ElementView[2];
 			neighbours[0] = null;
@@ -253,16 +304,25 @@ public class MapView extends JPanel
 		
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
 		{
-			GameManager.GetMechanics().get(i).GetCurrentPosition();
-			MechanicView mV = new MechanicView(null, i);
-			mechanicsView.add(mV);
+			String ie = GameManager.GetMechanics().get(i).GetCurrentPosition().GetId();
+			for (int k = 0; k < mapView.size(); k++){
+				if(ie.equals(mapView.get(k).GetElement().GetId() ) ){
+					MechanicView mV = new MechanicView(mapView.get(k),60,60, i);
+					mechanicsView.add(mV);
+				}
+			}
+
 		}
 
 		for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
 		{
-			GameManager.GetSaboteurs().get(i).GetCurrentPosition();
-			SaboteurView sV = new SaboteurView(null, i);
-			saboteursView.add(sV);
+			String ie = GameManager.GetSaboteurs().get(i).GetCurrentPosition().GetId();
+			for (int k = 0; k < mapView.size(); k++){
+				if(ie.equals(mapView.get(k).GetElement().GetId() ) ){
+					SaboteurView sV = new SaboteurView(mapView.get(k), 60,60, i);
+					saboteursView.add(sV);
+				}
+			}
 		}
 	}
 	public static Point calculateCenter(int x1, int y1, int x2, int y2) {
