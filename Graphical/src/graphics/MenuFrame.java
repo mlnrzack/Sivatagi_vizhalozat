@@ -158,8 +158,14 @@ public class MenuFrame extends JFrame
 
 	public void InitializeWestPanel() 
 	{
-		try {
-			ImageIcon logo = new ImageIcon(this.getClass().getResource("/logo.png"));
+		try 
+		{
+			File currentDirFile = new File(".");
+			String helper = currentDirFile.getAbsolutePath();
+			String midhelp = helper.substring(0, helper.length() - 2).concat("\\bin\\");
+			
+			ImageIcon logo = new ImageIcon(midhelp.concat("/logo.png"));
+			
 			westLabel = new JLabel();
 			westLabel.setIcon(logo);
 
