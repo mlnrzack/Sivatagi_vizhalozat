@@ -191,14 +191,14 @@ public class MapView extends JPanel
                 g2.setColor(currentColor);
             
             //player surrounding circle draw
-            g2.drawOval(mechanicsView.get(i).GetPos().GetCenterX() + 3, mechanicsView.get(i).GetPos().GetCenterY() + 10, 80, 80);
+            g2.drawOval(mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10), mechanicsView.get(i).GetPos().GetCenterY() + 10, 80, 80);
 
             //load the image of the player
-            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).GetPos().GetCenterX() + 20 ,mechanicsView.get(i).GetPos().GetCenterY() + 20,
-                    mechanicsView.get(i).GetWidth(), mechanicsView.get(i).GetHeight(), null, null );
+            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10) + 20, 
+            		mechanicsView.get(i).GetPos().GetCenterY() + 20, mechanicsView.get(i).GetWidth(), mechanicsView.get(i).GetHeight(), null, null );
             //set the drawing color for the name writing
             g2.setColor(Color.BLACK);
-            g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).GetPos().GetCenterX() + 10, mechanicsView.get(i).GetPos().GetCenterY()  + 100);
+            g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10) + 10, mechanicsView.get(i).GetPos().GetCenterY()  + 100);
 
         }
 
@@ -229,7 +229,7 @@ public class MapView extends JPanel
                 g.drawRect(mapView.get(i).GetPosX(), mapView.get(i).GetPosY(), mapView.get(i).GetWidth(), mapView.get(i).GetHeight());
             }
         }
-        
+
         for (int k = 0; k < pipesView.size(); k++)
         {
             PipeView pipeView = pipesView.get(k);
