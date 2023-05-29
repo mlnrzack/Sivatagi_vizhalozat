@@ -234,7 +234,6 @@ public class Program
         pump7.TrySetInputOutput(0, 1);
         map.add(pump7);
         
-        
         pump8.SetId("pump8");
         pump8.AddPipe(pipe11);
         pump8.AddPipe(pipe12);

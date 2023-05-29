@@ -448,6 +448,7 @@ public class GameManager
     	for(int i = steppables.size() - 1; i >= 0; i--)
     	{
         	steppables.get(i).Step();
+            InfoLog.WriteInfoLog(steppables.get(i).GetId());
     	}
     }
     

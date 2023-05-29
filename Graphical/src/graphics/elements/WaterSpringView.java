@@ -1,49 +1,66 @@
 package graphics.elements;
 
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.*;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 import game.*;
 import game.elements.*;
 
 public class WaterSpringView extends ElementView
 {
-	//itt kell egy position változó, ami a grafika helyét tárolja...
-	//valahogy összekötni a modellből egy objemktummal...
-	WaterSpring spring;
-	
-	JLabel springLabel;
-	
-	public WaterSpringView(int x, int y, int index)
+	WaterSpring spring;																				//a megjelenítő modellbeli párja
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param widths
+	 * @param heights
+	 * @param index
+	 */
+	public WaterSpringView(int x, int y, int widths, int heights, int index)
 	{
 		posX = x;
 		posY = y;
+		width = widths;
+		height = heights;
 		spring = GameManager.GetWaterSprings().get(index);
 		LoadImage();
 	}
+
+	/**
+	 */
+	public Element GetElement() 
+	{
+		return spring;
+	}
 	
-	public JLabel LoadImage()
+	/**
+	 * @return
+	 */
+	public WaterSpring GetSpring()
+	{
+		return spring;
+	}
+
+	/**
+	 */
+	public Image LoadImage()
 	{
 		try
 		{
-			springLabel = new JLabel();
-			ImageIcon iSpring = new ImageIcon(this.getClass().getResource("/waterspring.png"));
-			Image loadedImage = iSpring.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
-			iSpring = new ImageIcon(loadedImage);
-			springLabel.setIcon(iSpring);
-			return springLabel;
+			String path = StringMagic().concat("waterspring.png");
+			BufferedImage iSpring = (BufferedImage) ImageIO.read(new File(path));
+			return iSpring;
 		}
 		
 		catch(Exception e)
 		{
-			springLabel = new JLabel("WaterSpring");
-			springLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			springLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			return springLabel;
+			return null;
 		}
 	}
 }

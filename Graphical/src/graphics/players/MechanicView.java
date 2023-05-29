@@ -1,10 +1,10 @@
 package graphics.players;
 
-import java.awt.Font;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 
 import game.*;
 import game.players.*;
@@ -13,32 +13,33 @@ import graphics.elements.*;
 public class MechanicView extends PlayerView 
 {
 	private Mechanic mechanic;
-	private JLabel mechanicLabel;
-	
-	public MechanicView(ElementView pos, int index)
+
+
+
+	public MechanicView(ElementView pos, int width , int height, int index )
 	{
 		this.pos = pos;
+		this.width = width;
+		this.height = height;
 		mechanic = GameManager.GetMechanics().get(index);
 		LoadImage();
 	}
+	public Mechanic getMechanic() {
+		return mechanic;
+	}
 	
-	public JLabel LoadImage()
+	public Image LoadImage()
 	{
 		try
 		{
-			mechanicLabel = new JLabel();
-			ImageIcon  iMechanic= new ImageIcon(this.getClass().getResource("/mechanic.png"));
-			Image loadedImage = iMechanic.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			iMechanic = new ImageIcon(loadedImage);
-			mechanicLabel.setIcon(iMechanic);
-			return mechanicLabel;
+			String pathMechanic = StringMagic().concat("mechanic.png");
+			BufferedImage  iMechanic = ImageIO.read(new File(pathMechanic));
+			return iMechanic;
 		}
 		
 		catch (Exception e)
 		{
-			mechanicLabel = new JLabel(mechanic.GetName());
-			mechanicLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			return mechanicLabel;
+			return null;
 		}
 	}
 }

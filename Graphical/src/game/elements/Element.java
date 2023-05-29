@@ -19,7 +19,6 @@ public abstract class Element implements IElement
     {
     	return waterInside;
     }
-
     
     /**Beállítja az adott elemben levő víz mennyiségét.
      */

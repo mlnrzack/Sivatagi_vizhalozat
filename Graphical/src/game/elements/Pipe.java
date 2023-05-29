@@ -26,6 +26,11 @@ public class Pipe extends Element implements ISteppable
     	this.SetId("pipe" + GameManager.TryPipeIdSet());
     }
     
+    public String GetType()
+    {
+    	return "pipe";
+    }
+
     /**Az osztály paraméteres konstruktora.
      * @param leaks lyukas tulajdonsága
      * @param timer nem lyukaszthatóság ideje
@@ -63,6 +68,14 @@ public class Pipe extends Element implements ISteppable
     	return leaking;
     }
     
+    /**Beállítja a leaking értékét adott értékre.
+     * @param leaks az adott érték.
+     */
+    public void SetLeaking(boolean leaks)
+    {
+    	leaking = leaks;
+    }
+
     /**Visszaadja a noLeakageTimer értékét.
      * @return meddig nem lyukasztható.
      */
@@ -221,12 +234,12 @@ public class Pipe extends Element implements ISteppable
         	{
         		return false;
         	}
-        	
+
             StickyPipe(player);
-            	
+
             AddPlayer(player);
-                    
-           	return true; 
+
+           	return true;
         }
 
         System.out.println("Cső nem tud fogadni, mert tele van. Válassz más műveletet.");
@@ -269,7 +282,7 @@ public class Pipe extends Element implements ISteppable
     		SetSlippery();
     		System.out.println("A cső csúszós lett.");
     		return true;
-    	}    		
+    	}
     	System.out.println("Nem sikerült csúszóssá tenni a csövet.");
     	return false;
     }
@@ -285,7 +298,7 @@ public class Pipe extends Element implements ISteppable
     		System.out.println("A cső ragacsos lett.");
     		return true;
     	}
-    		
+
     	System.out.println("Nem sikerült ragadóssá tenni a csövet.");
     	return false;
     }
@@ -303,7 +316,7 @@ public class Pipe extends Element implements ISteppable
     		player.GetCurrentPosition().RemovePlayer(player);
     		this.GetNeighbours().get(new Random().nextInt(this.neighbours.size())).AcceptPlayer(player);
     		GameManager.ActionExecuted();
-    		
+
     		System.out.println(player.GetCurrentPosition().GetId() + "-re került a " + player.GetName() + " játékos.");
     		System.out.println("Még ennyi ideig csúszós a cső: " + this.GetSlippery());
     	}

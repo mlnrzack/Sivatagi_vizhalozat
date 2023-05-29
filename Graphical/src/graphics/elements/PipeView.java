@@ -1,195 +1,228 @@
 package graphics.elements;
 
-import java.awt.Font;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.imageio.ImageIO;
 
 import game.*;
-import game.elements.Pipe;
+import game.IO.InfoLog;
+import game.elements.*;
+import game.interfaces.IElement;
 
 public class PipeView extends ElementView
 {
-	//itt kell egy position változó, ami a grafika helyét tárolja...
-	//valahogy összekötni a modellből egy objemktummal...
-	private Pipe pipe;
-	private JLabel pipeLabel;
+	private Pipe pipe;														//
 	private ElementView[] neighbours = new ElementView[2];
-	
-	public PipeView(int x, int y, int index)
+	//
+	int centerX, centerY;
+	/**
+	 * @param index
+	 */
+	public PipeView(int index)
 	{
 		//TODO
-		posX = x;
-		posY = y;
 		pipe = GameManager.GetPipes().get(index);
+		neighbours[0] = null;
+		neighbours[1] = null;
 		LoadImage();
 	}
 	
-	public JLabel LoadImage()
+	/**
+	 */
+	public Element GetElement()
+	{
+		return pipe;
+	}
+	
+	/**
+	 * @return
+	 */
+	public ElementView[] GetNeighbours()
+	{
+		return neighbours;
+	}
+	
+	/**
+	 * @param neighbours
+	 */
+	public void SetNeighbours(ElementView[] neighbours)
+	{
+		for(int i = 0; i < this.neighbours.length; i++)
+			this.neighbours[i] = neighbours[i];
+		SetDimensions();
+	}
+
+	public void SetDimensions() {
+		if (neighbours[0] != null && neighbours[1] != null) {
+			double slope = (neighbours[1].getPosY() - neighbours[0].getPosY()) / (double)(neighbours[1].getPosX() - neighbours[0].getPosX());
+			int midX = (neighbours[0].getPosX() + neighbours[1].getPosX()) / 2;
+			int midY = (neighbours[0].getPosY() + neighbours[1].getPosY()) / 2;
+			width = (int) Math.sqrt(Math.pow(neighbours[0].getPosX() - neighbours[1].getPosX(), 2) + Math.pow(neighbours[0].getPosY() - neighbours[1].getPosY(), 2));
+			height = 20;
+
+			int pposX = 0;
+			int pposY= 0 ;
+
+			pposX = this.neighbours[0].getCenterX();
+			pposY = this.neighbours[0].getCenterY();
+			this.setPosX(pposX);
+			this.setPosY(pposY);
+
+			InfoLog.WriteInfoLog((pipe.GetId()));
+			InfoLog.WriteInfoLog(("MidX: " + Integer.toString(midX)));
+			InfoLog.WriteInfoLog(("MidY " + Integer.toString(midY)));
+			InfoLog.WriteInfoLog(("Width  " + Integer.toString(width)));
+			InfoLog.WriteInfoLog(("PosX " + Integer.toString(pposX)));
+			InfoLog.WriteInfoLog(("PosY " + Integer.toString(pposY)));
+		}
+	}
+
+	@Override
+	public int getCenterX(){
+		Point center = calculateCenter(this.GetNeighbours()[0].getCenterX(), this.GetNeighbours()[0].getCenterY(),
+				this.GetNeighbours()[1].getCenterX(), this.GetNeighbours()[1].getCenterY());
+		int imageX = (int) (center.x - this.getWidth() / 2);
+		centerX = imageX + this.getWidth() / 2;
+		return centerX;
+	}
+
+	@Override
+	public int getCenterY(){
+		Point center = calculateCenter(this.GetNeighbours()[0].getCenterX(), this.GetNeighbours()[0].getCenterY(),
+				this.GetNeighbours()[1].getCenterX(), this.GetNeighbours()[1].getCenterY());
+		int imageY = (int) (center.y - this.getHeight() / 2);
+		centerY = imageY + this.getHeight() / 2;
+		return centerY;
+	}
+	
+	/**
+	 */
+	public Image LoadImage()
 	{
 		//talán itt még a méretet be kell állítani
 		try
 		{
-			pipeLabel = new JLabel();
+			String pathPipe;
+			BufferedImage iPipe;
+			
 			if(pipe.GetWaterInside() == 0)
 			{
 				if(!pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("pipe_empty.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("pipe_empty_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_empty_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("pipe_empty_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
+					return null;
 				}
-				
+
 				else if(pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_leaking_empty.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_leaking_empty_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_empty_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_leaking_empty_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
+					return null;
 				}
+				return null;
 			}
-			
+
 			else if(pipe.GetWaterInside() == 1)
 			{
 				if(!pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_full.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_full_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_full_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_full_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
+					return null;
 				}
-				
+
 				else if(pipe.GetLeaking())
 				{
 					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_leaking_full.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_slippery.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_leaking_full_slippery.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
 					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
 					{
-						ImageIcon  iPipe = new ImageIcon(this.getClass().getResource("/pipe_leaking_full_sticky.png"));
-						pipeLabel.setIcon(iPipe);
+						pathPipe = StringMagic().concat("/pipe_leaking_full_sticky.png");
+						iPipe = ImageIO.read(new File(pathPipe));
+						return iPipe;
 					}
+					return null;
 				}
+				return null;
 			}
-			return pipeLabel;
+			return null;
 		}
 		
 		catch(Exception e)
 		{
-			if(pipe.GetWaterInside() == 0)
-			{
-				if(!pipe.GetLeaking())
-				{
-					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe empty");
-					}
-					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe empty slippery");
-					}
-					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
-					{
-						pipeLabel = new JLabel("Pipe empty sticky");
-					}
-				}
-				
-				else if(pipe.GetLeaking())
-				{
-					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe empty leaking");
-					}
-					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe empty leaking slippery");
-					}
-					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
-					{
-						pipeLabel = new JLabel("Pipe empty leaking sticky");
-					}
-				}
-			}
-			
-			else if(pipe.GetWaterInside() == 1)
-			{
-				if(!pipe.GetLeaking())
-				{
-					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe full");
-					}
-					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe full slippery");
-					}
-					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
-					{
-						pipeLabel = new JLabel("Pipe full sticky");
-					}
-				}
-				
-				else if(pipe.GetLeaking())
-				{
-					if(pipe.GetSlippery() == 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe full leaking");
-					}
-					else if(pipe.GetSlippery() != 0 && pipe.GetSticky() == 0)
-					{
-						pipeLabel = new JLabel("Pipe full leaking slippery");
-					}
-					else if(pipe.GetSlippery() == 0 && pipe.GetSticky() != 0)
-					{
-						pipeLabel = new JLabel("Pipe full leaking sticky");
-					}
-				}
-			}
-			pipeLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 28));
-			System.err.println(e);
-			return pipeLabel;
+			return null;
 		}
+	}
+
+	public IElement GetPipe() {
+		return pipe;
+	}
+
+	public static Point calculateCenter(int x1, int y1, int x2, int y2) {
+		int centerX = (x1 + x2) / 2;
+		int centerY = (y1 + y2) / 2;
+		return new Point(centerX, centerY);
 	}
 }
