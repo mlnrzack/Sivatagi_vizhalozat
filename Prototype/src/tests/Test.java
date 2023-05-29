@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.net.URL;
 
 import game.Commands;
 import game.GameManager;
@@ -113,7 +114,7 @@ public class Test {
 			System.out.println(Name + " teszt sikeres");
 		} else {
 			System.out.println(Name + " teszt sikertelen");
-			System.out.println("\tElvárt kimenet");
+			System.out.println("\tElvárt minta");
 			ExpectedOutput.forEach(line -> System.out.println(line));
 			System.out.println("---------------------------------------------------");
 			System.out.println("\tValós kimenet");
@@ -145,7 +146,7 @@ public class Test {
 			return AllTests;
 		
 		ArrayList<Test> tests = new ArrayList<Test>();
-		File folder = new File(Test.class.getResource("/TestsFolder").getPath());
+		File folder = new File("src/tests/TestsFolder");
 		
 	    for (final File fileEntry : folder.listFiles()) {
 	    	String fileEntryName = fileEntry.getName();
