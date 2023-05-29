@@ -9,22 +9,26 @@ import java.util.Map;
 import javax.swing.*;
 
 
-public class InputDialog extends JPanel 
+public class InputDialog extends JPanel
 {
 	JLabel inptMsg;
-	public static final String[] LABEL_TEXTS = { "Bemenet", "Kimenet"};
-	public static final int COLS = 2;
+	String _msg;
+	public static final String[] LABEL_TEXTS = { "Bemenet"};
+	public static int COLS = 2;
+	private String _title;
 	private Map<String, JTextField> labelFieldMap = new HashMap<>();
-	
-	InputDialog(String msg)
-	{
+	InputDialog(int inputSize,String msg, String title){
+		COLS = inputSize;
+		_title = title;
+		_msg = msg;
 		inptMsg = new JLabel();
+		
+		
 		inptMsg.setText(msg);
-		add(inptMsg);
+		add(inptMsg, createGbc(0, 1));
 		setLayout(new GridBagLayout());
-		for (int i = 0; i < LABEL_TEXTS.length; i++) 
-		{
-			String labelTxt = LABEL_TEXTS[i];
+		for (int i = 0; i < COLS; i++) {
+			String labelTxt = (i + 1) + ". " + LABEL_TEXTS[0];
 			add(new JLabel(labelTxt), createGbc(0, i));
 
 			JTextField textField = new JTextField(COLS);
@@ -32,70 +36,67 @@ public class InputDialog extends JPanel
 			add(textField, createGbc(1, i));
 
 
-			setBorder(BorderFactory.createTitledBorder("Add meg a be- és kimenetet az indexek alapján"));
+			setBorder(BorderFactory.createTitledBorder(_title));
 		}	
+
 	}
 	
-	public static GridBagConstraints createGbc(int x, int y) 
-	{
+	public static GridBagConstraints createGbc(int x, int y) {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = x;
 		gbc.gridy = y;
 		gbc.weightx = 1.0;
 		gbc.weighty = gbc.weightx;
-		if (x == 0)
-		{
+		if (x == 0) {
 			gbc.anchor = GridBagConstraints.LINE_START;
 			gbc.fill = GridBagConstraints.BOTH;
 			gbc.insets = new Insets(3, 3, 3, 8);
-		}
-		else
-		{
+		} else {
 			gbc.anchor = GridBagConstraints.LINE_END;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.insets = new Insets(3, 3, 3, 3);
 		}
-		
 		return gbc;
 	}
 
-	public String getText(String labelText) 
-	{
+	public String getText(String labelText) {
 		JTextField textField = labelFieldMap.get(labelText);
-		if (textField != null) 
+		if (textField != null) {
 			return textField.getText();
-		 else 
+		} else {
 			throw new IllegalArgumentException(labelText);
+		}
 	}
 
-	public static String[] createAndShowGui(String msg) 
-	{
-		InputDialog mainPanel = new InputDialog(msg);
-
+	public String[] createAndShowGui() {
+		//InputDialog mainPanel = new InputDialog(COLS,msg,_title);
+		
 		int optionType = JOptionPane.DEFAULT_OPTION;
 		int messageType = JOptionPane.PLAIN_MESSAGE;
 		Icon icon = null;
 		String[] options = { "Ok", "Mégse" };
 		Object initialValue = options[0];
-		int reply = JOptionPane.showOptionDialog(null, mainPanel,
-				"Pumpa Beállítása", optionType, messageType, icon, options,
+		int reply = JOptionPane.showOptionDialog(null, this,
+				_msg, optionType, messageType, icon, options,
 				initialValue);
-		String[] res = {};
-		if (reply == 0) 
-		{
+		String[] res = new String[COLS];
+		if (reply == 0) {
 			System.out.println("Választék:");
 
 			int i = 0;
-			for (String labelText : LABEL_TEXTS) 
-			{
-				res[i++] = mainPanel.getText(labelText);
+			for (String labelText : LABEL_TEXTS) {
+				res[i++] = this.getText(labelText);
 
-				System.out.printf("%12s: %s%n", labelText, mainPanel.getText(labelText));
+				System.out.printf("%12s: %s%n", labelText,
+						this.getText(labelText));
 			}
 		}
-		else 
-			res = new String[]{"",""};
-
+		else {
+			for(int i = 0; i < COLS; i++)
+			{
+				res[i] = "";
+			}
+		}
 		return res;
 	}
 }

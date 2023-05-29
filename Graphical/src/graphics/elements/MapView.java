@@ -32,8 +32,9 @@ public class MapView extends JPanel
 	
 	private final Color color = Color.decode("#c9a77d");											//a háttérszín
 	private final Color circleColor = Color.decode("#94744d");										// a körök színe
-	private final Color currentColor = Color.decode("#ffffff");                                        //az aktuális játékost jelölő szín
-	private ArrayList<ElementView> mapView = new ArrayList<ElementView>();                            //térkép megjelnítéseére szolgáló lista
+	private final Color currentColor = Color.decode("#ffffff");                                     //az aktuális játékost jelölő szín
+	
+	private ArrayList<ElementView> mapView = new ArrayList<ElementView>();                          //térkép megjelnítéseére szolgáló lista
 	private MechanicView currentMechanic;															//az aktuális szerelő megjelenítése
 	private SaboteurView currentSaboteur;															//az aktuális szabotőr megjenenítése
 	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();								//a csövek megjelenítésére szolgáló lista
@@ -43,7 +44,7 @@ public class MapView extends JPanel
 	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();				//a vízforrások megjelenítésére szolgáló lista
 	private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();					//a szerelők megjelenítésére szolgáló lista
 	private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();					//a szabotőrök megjelenítésére szolgáló lista
-	//private Graphics g ;
+
 	private int x, y, imX, imY;
 	private boolean dragging;
 
@@ -103,10 +104,12 @@ public class MapView extends JPanel
 		int stringX;
 		int stringY;
 		g2.setColor(color.BLACK);
-		for (int i = 0; i < pipesView.size(); i++) {
-		if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) {
-			// Draw the line between the two elements
-			g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
+		for (int i = 0; i < pipesView.size(); i++) 
+		{
+			if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) 
+			{
+				// Draw the line between the two elements
+				g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
 					pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
 
 			// Set the dimensions of the pipe
@@ -187,37 +190,33 @@ public class MapView extends JPanel
 			g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).getPosX() + 55, springsView.get(i).getPosY() + 115);
 		}
 
-
-		//TODO
 		for(int i = 0; i < mechanicsView.size(); i++)
 		{
 			g2.setColor(circleColor);
-			if (mechanicsView.get(i) == currentMechanic){
+			if (mechanicsView.get(i) == currentMechanic)
 				g2.setColor(currentColor);
-			}
-			g2.drawOval(mechanicsView.get(i).getPos().getCenterX() + 3, mechanicsView.get(i).getPos().getCenterY() + 10, 80, 80);
-			//g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
 
-			g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).getPos().getCenterX()+3 ,mechanicsView.get(i).getPos().getCenterY()+10,
+			g2.drawOval(mechanicsView.get(i).getPos().getCenterX() + 3, mechanicsView.get(i).getPos().getCenterY() + 10, 80, 80);
+
+			g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).getPos().getCenterX() + 20 ,mechanicsView.get(i).getPos().getCenterY() + 20,
 					mechanicsView.get(i).getWidth(), mechanicsView.get(i).getHeight(), null, null );
 			g2.setColor(Color.BLACK);
-			g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).getPos().getCenterX()  + 30, mechanicsView.get(i).getPos().getCenterY()  + 100);
+			g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).getPos().getCenterX() + 10, mechanicsView.get(i).getPos().getCenterY()  + 100);
 
 		}
 
 		for(int i = 0; i < saboteursView.size(); i++)
 		{
 			g2.setColor(circleColor);
-			if (saboteursView.get(i) == currentSaboteur){
+			if (saboteursView.get(i) == currentSaboteur)
 				g2.setColor(currentColor);
-			}
+			
 			g2.drawOval(saboteursView.get(i).getPos().getCenterX() + 3, saboteursView.get(i).getPos().getCenterY() + 10, 80, 80);
-			//g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
 
-			g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).getPos().getCenterX()+3 ,saboteursView.get(i).getPos().getCenterY()+10,
+			g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).getPos().getCenterX() + 10, saboteursView.get(i).getPos().getCenterY() + 15,
 					saboteursView.get(i).getWidth(), saboteursView.get(i).getHeight(), null, null );
 			g2.setColor(Color.BLACK);
-			g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).getPos().getCenterX()  + 30, saboteursView.get(i).getPos().getCenterY()  + 100);
+			g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).getPos().getCenterX() + 5, saboteursView.get(i).getPos().getCenterY()  + 100);
 
 		}
 
@@ -233,7 +232,7 @@ public class MapView extends JPanel
 		
 		for(int i = 0; i < GameManager.GetWaterSprings().size(); i++)
 		{
-			WaterSpringView sV = new WaterSpringView((int)(screenWidth * 0.05) + (i * (int)(screenWidth * 0.15)), (int)(screenHeight * 0.02), 150, 150, i);
+			WaterSpringView sV = new WaterSpringView((int)(screenWidth * 0.05) + (i * (int)(screenWidth * 0.15)),(int)(screenHeight * 0.02), 150, 150, i);
 			springsView.add(sV);
 			activesView.add(sV);
 			mapView.add(sV);
@@ -268,7 +267,8 @@ public class MapView extends JPanel
 
 		for(int i = GameManager.GetCisterns().size() - 1; i >= 0; i--)
 		{
-			CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)) , (int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
+			CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)),
+					(int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
 			cisternsView.add(cV);
 			activesView.add(cV);
 			mapView.add(cV);
@@ -305,27 +305,38 @@ public class MapView extends JPanel
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
 		{
 			String ie = GameManager.GetMechanics().get(i).GetCurrentPosition().GetId();
-			for (int k = 0; k < mapView.size(); k++){
-				if(ie.equals(mapView.get(k).GetElement().GetId() ) ){
-					MechanicView mV = new MechanicView(mapView.get(k),60,60, i);
-					mechanicsView.add(mV);
+			for (int k = 0; k < mapView.size(); k++)
+			{
+				if(ie.equals(mapView.get(k).GetElement().GetId()))
+				{
+					MechanicView meV = new MechanicView(mapView.get(k),60,60, i);
+					mechanicsView.add(meV);
+					
+					//if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
+						currentMechanic = meV;
 				}
 			}
-
 		}
 
 		for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
 		{
 			String ie = GameManager.GetSaboteurs().get(i).GetCurrentPosition().GetId();
-			for (int k = 0; k < mapView.size(); k++){
-				if(ie.equals(mapView.get(k).GetElement().GetId() ) ){
-					SaboteurView sV = new SaboteurView(mapView.get(k), 60,60, i);
-					saboteursView.add(sV);
+			for (int k = 0; k < mapView.size(); k++)
+			{
+				if(ie.equals(mapView.get(k).GetElement().GetId()))
+				{
+					SaboteurView saV = new SaboteurView(mapView.get(k), 60,60, i);
+					saboteursView.add(saV);
+					
+					//if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
+						currentSaboteur = saV;
 				}
 			}
 		}
 	}
-	public static Point calculateCenter(int x1, int y1, int x2, int y2) {
+	
+	public static Point calculateCenter(int x1, int y1, int x2, int y2) 
+	{
 		int centerX = (x1 + x2) / 2;
 		int centerY = (y1 + y2) / 2;
 		return new Point(centerX, centerY);
