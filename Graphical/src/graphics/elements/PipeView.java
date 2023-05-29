@@ -15,9 +15,9 @@ import game.interfaces.IElement;
 public class PipeView extends ElementView
 {
 	private Pipe pipe;														//
-	private ElementView[] neighbours = new ElementView[2];
-	//
-	int centerX, centerY;
+	private ElementView[] neighbours = new ElementView[2];					//
+	private int centerX, centerY;											//
+	
 	/**
 	 * @param index
 	 */

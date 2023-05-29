@@ -1,444 +1,587 @@
 package graphics.elements;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-//import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-//import java.util.HashMap;
 
 import javax.swing.*;
 
 import game.*;
 import game.IO.DebugLog;
-import game.elements.Element;
-import game.interfaces.IElement;
 import graphics.players.*;
 
-import static game.GameManager.GetMechanics;
 
 /**Ez az osztály felel a játéktér megjelenítéséért.
  */
 public class MapView extends JPanel
 {
-	private BufferedImage mapImage;																	//háttérkép
-	
-	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();								//a képernyő mérete
-	int screenHeight = screenSize.height;															//képernyő magassága
-	int screenWidth = screenSize.width;																//képernyő szélessége
-	
-	private final Color color = Color.decode("#c9a77d");											//a háttérszín
-	private final Color circleColor = Color.decode("#94744d");										// a körök színe
-	private final Color currentColor = Color.decode("#ffffff");                                     //az aktuális játékost jelölő szín
-	
-	private ArrayList<ElementView> mapView = new ArrayList<ElementView>();                          //térkép megjelnítéseére szolgáló lista
-	private MechanicView currentMechanic;															//az aktuális szerelő megjelenítése
-	private SaboteurView currentSaboteur;															//az aktuális szabotőr megjenenítése
-	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();								//a csövek megjelenítésére szolgáló lista
-	private ArrayList<ElementView> activesView = new ArrayList<ElementView>();						//
-	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();						//a ciszternák megjelenítésere szolgáló lista
-	private ArrayList<PumpView> pumpsView = new ArrayList<PumpView>();								//a pumpák megjelenítésére szolgáló lista
-	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();				//a vízforrások megjelenítésére szolgáló lista
-	private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();					//a szerelők megjelenítésére szolgáló lista
-	private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();					//a szabotőrök megjelenítésére szolgáló lista
+    private BufferedImage mapImage;                                                                 //háttérkép
+    
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();                             //a képernyő mérete
+    int screenHeight = screenSize.height;                                                           //képernyő magassága
+    int screenWidth = screenSize.width;                                                             //képernyő szélessége
+    
+    private final Color color = Color.decode("#c9a77d");                                            //a háttérszín
+    private final Color circleColor = Color.decode("#94744d");                                      //a körök színe
+    private final Color currentColor = Color.decode("#ffffff");                                     //az aktuális játékost jelölő szín
+    
+    private ArrayList<ElementView> mapView = new ArrayList<ElementView>();                          //térkép megjelnítéseére szolgáló lista
+    private MechanicView currentMechanic;                                                           //az aktuális szerelő megjelenítése
+    private SaboteurView currentSaboteur;                                                           //az aktuális szabotőr megjenenítése
+    private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();                              //a csövek megjelenítésére szolgáló lista
+    private ArrayList<ElementView> activesView = new ArrayList<ElementView>();                      //
+    private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();                     //a ciszternák megjelenítésere szolgáló lista
+    private ArrayList<PumpView> pumpsView = new ArrayList<PumpView>();                              //a pumpák megjelenítésére szolgáló lista
+    private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();              //a vízforrások megjelenítésére szolgáló lista
+    private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();                  //a szerelők megjelenítésére szolgáló lista
+    private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();                  //a szabotőrök megjelenítésére szolgáló lista
 
-	private int x, y, imX, imY;
-	private boolean dragging;
+    private int x, y, imX, imY;																		//
+    private boolean dragging;																		//
+    public boolean isPlayerMoving = false;															//
 
-	public MapView()
-	{
-		//térkép képének létrehozása
-		mapImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
-		//háttérszín beállítása
-		this.setBackground(Color.decode("#c9a77d"));
-		//méret beállítása
-		Dimension dimension = new Dimension((int)(screenWidth * 0.7), 1000);
-		this.setMaximumSize(dimension);
-		this.setMinimumSize(dimension);
-		this.setPreferredSize(dimension);
-		//térkép felrajzolása
-		DrawMap();
-		//egértevékenység figyelése
-		MouseListener();
-	}
+    /**Osztály konstruktor
+     */
+    public MapView()
+    {
+        //térkép képének létrehozása
+    	mapImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+        //háttérszín beállítása
+        this.setBackground(color);
+        //méret beállítása
+        Dimension dimension = new Dimension((int)(screenWidth * 0.7), screenHeight);
+        this.setMaximumSize(dimension);
+        this.setMinimumSize(dimension);
+        this.setPreferredSize(dimension);
+        
+        //térkép felrajzolása
+        DrawMap();
+        //egértevékenység figyelése
+        MouseListener();
+    }
 
-	//public ElementView[] GetNeighbourViews()
-	{
-		
-	}
-	
-	/*
-	//egyelőre csak ráfrissít a nézetekre...
-	public void ReDraw()
-	{
-		for (PipeView pipeView : pipesView) 
-			this.add(pipeView);
+    /**A térkép felrajzolása a JPanelra, majd annak frissítése
+     */
+    @Override
+    protected void paintComponent(Graphics g)
+    {
+        super.paintComponents(g);
 
-		for (PumpView pumpView : pumpsView)
-			this.add(pumpView);
+        Graphics2D g2 = (Graphics2D) g.create();
+        
+        g2.drawImage(mapImage, 0, 0, (int)(screenWidth * 0.7), screenHeight, null);
+        
+        this.setBackground(color);
+        imX = 200;
+        imY = 633;
 
-		for (CisternView cisternView : cisternsView)
-			this.add(cisternView);
+        int stringX;
+        int stringY;
+        
+        g2.setColor(color.BLACK);
+        for (int i = 0; i < pipesView.size(); i++) 
+        {
+            if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) 
+            {
+                // Draw the line between the two elements
+                g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
+                        pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
 
-		for (WaterSpringView waterSpringView : springsView)
-			this.add(waterSpringView);
-	}
-	*/
-	
-	@Override
-	protected void paintComponent(Graphics g)
-	{
-		super.paintComponents(g);
+                // Set the dimensions of the pipe
+                pipesView.get(i).SetDimensions();
 
-		Graphics2D g2 = (Graphics2D) g.create();
-		
-		g2.drawImage(mapImage, 0, 0, (int)(screenWidth * 0.7), screenHeight, null);
-		
-		this.setBackground(color);
-		imX = 200;
-		imY = 633;
+                // Determine the angle of the line
+                double x = Math.abs(pipesView.get(i).GetNeighbours()[0].posX - pipesView.get(i).GetNeighbours()[1].posX);
+                double y = Math.abs(pipesView.get(i).GetNeighbours()[0].posY - pipesView.get(i).GetNeighbours()[1].posY);
+                double angle = Math.atan2(pipesView.get(i).GetNeighbours()[1].getCenterY() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
+                        pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterX());
 
-		int stringX;
-		int stringY;
-		g2.setColor(color.BLACK);
-		for (int i = 0; i < pipesView.size(); i++) 
-		{
-			if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) 
-			{
-				// Draw the line between the two elements
-				g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
-					pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
+                // Calculate the center point of the line
+                Point center = calculateCenter(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
+                        pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
 
-			// Set the dimensions of the pipe
-			pipesView.get(i).SetDimensions();
+                // Save the current transform
+                AffineTransform oldTransform = g2.getTransform();
 
-			// Determine the angle of the line
-			double x = Math.abs(pipesView.get(i).GetNeighbours()[0].posX - pipesView.get(i).GetNeighbours()[1].posX);
-			double y = Math.abs(pipesView.get(i).GetNeighbours()[0].posY - pipesView.get(i).GetNeighbours()[1].posY);
-			double angle = Math.atan2(pipesView.get(i).GetNeighbours()[1].getCenterY() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
-					pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterX());
+                // Apply the rotation transformation
+                g2.rotate(angle, center.x, center.y);
 
-			// Calculate the center point of the line
-			Point center = calculateCenter(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
-					pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
+                // Calculate the new position for drawing the image
+                int imageX = (int) (center.x - pipesView.get(i).getWidth() / 2);
+                int imageY = (int) (center.y - pipesView.get(i).getHeight() / 2);
 
-			// Save the current transform
-			AffineTransform oldTransform = g2.getTransform();
+                // Draw the image on top of the line
+                g2.drawImage(pipesView.get(i).LoadImage(), imageX, imageY,
+                        pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null);
 
-			// Apply the rotation transformation
-			g2.rotate(angle, center.x, center.y);
+                stringX = imageX + pipesView.get(i).getWidth() / 2;
+                stringY = imageY + pipesView.get(i).getHeight() / 2;
 
-			// Calculate the new position for drawing the image
-			int imageX = (int) (center.x - pipesView.get(i).getWidth() / 2);
-			int imageY = (int) (center.y - pipesView.get(i).getHeight() / 2);
+                // Set the font and color for the string
+                g2.setFont(new Font("Arial", Font.PLAIN, 18));
 
-			// Draw the image on top of the line
-			g2.drawImage(pipesView.get(i).LoadImage(), imageX, imageY,
-					pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null);
+                // Draw the string in the middle of the image
+                g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX+40, stringY + 8);
 
-			 stringX = imageX + pipesView.get(i).getWidth() / 2;
-			 stringY = imageY + pipesView.get(i).getHeight() / 2;
+                // Draw a small circle next to the center
+                int circleSize = 45; // Adjust the size as needed
+                int circleX = center.x - circleSize / 2;
+                int circleY = center.y - circleSize / 2;
+                g2.drawOval(circleX, circleY, circleSize, circleSize);
 
-			// Set the font and color for the string
-			g2.setFont(new Font("Arial",Font.PLAIN, 18));
+                // Restore the original transform
+                g2.setTransform(oldTransform);
+            }
+        }
 
-			// Draw the string in the middle of the image
-			g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX, stringY+8);
+        g2.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        for(int i = 0; i < pumpsView.size(); i++)
+        {
+            g2.setColor(color);
+            g2.fillOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
+            
+            g2.setColor(circleColor);
+            g2.drawOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
+            
+            g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(),
+                    pumpsView.get(i).getWidth(), pumpsView.get(i).getHeight(), null, null );
+            
+            g2.setColor(Color.BLACK);
+            g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).getPosX() + 22, pumpsView.get(i).getPosY() + 85);
 
-			// Restore the original transform
-			g2.setTransform(oldTransform);
-		}
-	}
-		g2.setFont(new Font("Arial",Font.PLAIN, 12));
-		for(int i = 0; i < pumpsView.size(); i++)
-		{
-			g2.setColor(color);
-			g2.fillOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
-			g2.setColor(circleColor);
-			g2.drawOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
-			g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(),
-					pumpsView.get(i).getWidth(), pumpsView.get(i).getHeight(), null, null );
-			g2.setColor(Color.BLACK);
-			g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).getPosX() + 22, pumpsView.get(i).getPosY() + 85);
+        }
 
-		}
+        for (int i = 0 ; i < cisternsView.size(); i++)
+        {
+            g2.setColor(color);
+            g2.fillOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
+            
+            g2.setColor(circleColor);
+            g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
+            
+            g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).getPosX() ,cisternsView.get(i).getPosY(),
+                    cisternsView.get(i).getWidth(), cisternsView.get(i).getHeight(), null, null );
+            
+            g2.setColor(Color.BLACK);
+            g2.drawString(cisternsView.get(i).GetCistern().GetId(), cisternsView.get(i).getPosX() + 30, cisternsView.get(i).getPosY() + 100);
+        }
+        
+        for (int i = 0; i < springsView.size();i++)
+        {
+            g2.setColor(color);
+            g2.fillOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
+            
+            g2.setColor(circleColor);
+            g2.drawOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
+            
+            g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).getPosX(), springsView.get(i).getPosY(),
+                    springsView.get(i).getWidth(), springsView.get(i).getHeight(), null, null);
+            
+            g2.setColor(Color.BLACK);
+            g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).getPosX() + 55, springsView.get(i).getPosY() + 115);
+        }
 
-		for (int i = 0 ; i < cisternsView.size(); i++)
-		{
-			g2.setColor(color);
-			g2.fillOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
-			g2.setColor(circleColor);
-			g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
-			g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).getPosX() ,cisternsView.get(i).getPosY(),
-					cisternsView.get(i).getWidth(), cisternsView.get(i).getHeight(), null, null );
-			g2.setColor(Color.BLACK);
-			g2.drawString(cisternsView.get(i).GetCistern().GetId(), cisternsView.get(i).getPosX() + 30, cisternsView.get(i).getPosY() + 100);
-		}
-		
-		for (int i = 0; i < springsView.size();i++)
-		{
-			g2.setColor(color);
-			g2.fillOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
-			g2.setColor(circleColor);
-			g2.drawOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
-			g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).getPosX(), springsView.get(i).getPosY(),
-					springsView.get(i).getWidth(), springsView.get(i).getHeight(), null, null);
-			g2.setColor(Color.BLACK);
-			g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).getPosX() + 55, springsView.get(i).getPosY() + 115);
-		}
+        for(int i = 0; i < mechanicsView.size(); i++)
+        {
+        	//player surrounding circle color set
+            g2.setColor(circleColor);
+        	//current player surrounding circle color set
+            if (mechanicsView.get(i) == currentMechanic)
+                g2.setColor(currentColor);
+            
+            //player surrounding circle draw
+            g2.drawOval(mechanicsView.get(i).getPos().getCenterX() + 3, mechanicsView.get(i).getPos().getCenterY() + 10, 80, 80);
 
-		for(int i = 0; i < mechanicsView.size(); i++)
-		{
-			g2.setColor(circleColor);
-			if (mechanicsView.get(i) == currentMechanic)
-				g2.setColor(currentColor);
+            //load the image of the player
+            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).getPos().getCenterX() + 20 ,mechanicsView.get(i).getPos().getCenterY() + 20,
+                    mechanicsView.get(i).getWidth(), mechanicsView.get(i).getHeight(), null, null );
+            //set the drawing color for the name writing
+            g2.setColor(Color.BLACK);
+            g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).getPos().getCenterX() + 10, mechanicsView.get(i).getPos().getCenterY()  + 100);
 
-			g2.drawOval(mechanicsView.get(i).getPos().getCenterX() + 3, mechanicsView.get(i).getPos().getCenterY() + 10, 80, 80);
+        }
 
-			g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).getPos().getCenterX() + 20 ,mechanicsView.get(i).getPos().getCenterY() + 20,
-					mechanicsView.get(i).getWidth(), mechanicsView.get(i).getHeight(), null, null );
-			g2.setColor(Color.BLACK);
-			g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).getPos().getCenterX() + 10, mechanicsView.get(i).getPos().getCenterY()  + 100);
+        for(int i = 0; i < saboteursView.size(); i++)
+        {
+        	//player surrounding circle color set
+            g2.setColor(circleColor);
+        	//current player surrounding circle color set
+            if (saboteursView.get(i) == currentSaboteur)
+                g2.setColor(currentColor);
+            
+            //player surrounding circle draw
+            g2.drawOval(saboteursView.get(i).getPos().getCenterX() + 3, saboteursView.get(i).getPos().getCenterY() + 10, 80, 80);
+            
+            //load the image of the player
+            g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).getPos().getCenterX() + 10, saboteursView.get(i).getPos().getCenterY() + 15,
+                    saboteursView.get(i).getWidth(), saboteursView.get(i).getHeight(), null, null );
+            //set the drawing color for the name writing
+            g2.setColor(Color.BLACK);
+            g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).getPos().getCenterX() + 5, saboteursView.get(i).getPos().getCenterY()  + 100);
 
-		}
+        }
 
-		for(int i = 0; i < saboteursView.size(); i++)
-		{
-			g2.setColor(circleColor);
-			if (saboteursView.get(i) == currentSaboteur)
-				g2.setColor(currentColor);
-			
-			g2.drawOval(saboteursView.get(i).getPos().getCenterX() + 3, saboteursView.get(i).getPos().getCenterY() + 10, 80, 80);
+        for(int i = 0 ; i < mapView.size(); i++)
+        {
+            if (contains(mapView.get(i), getMousePosition())) 
+            {
+                g.setColor(Color.RED);
+                g.drawRect(mapView.get(i).getPosX(), mapView.get(i).getPosY(), mapView.get(i).getWidth(), mapView.get(i).getHeight());
+            }
+        }
+        
+        for (int k = 0; k < pipesView.size(); k++)
+        {
+            PipeView pipeView = pipesView.get(k);
+            Point pointA = new Point();
+            pointA.x = pipeView.GetNeighbours()[0].getCenterX();
+            pointA.y = pipeView.GetNeighbours()[0].getCenterY();
 
-			g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).getPos().getCenterX() + 10, saboteursView.get(i).getPos().getCenterY() + 15,
-					saboteursView.get(i).getWidth(), saboteursView.get(i).getHeight(), null, null );
-			g2.setColor(Color.BLACK);
-			g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).getPos().getCenterX() + 5, saboteursView.get(i).getPos().getCenterY()  + 100);
+            Point pointB = new Point();
+            pointB.x = pipeView.GetNeighbours()[1].getCenterX();
+            pointB.y = pipeView.GetNeighbours()[1].getCenterY();
 
-		}
+            Point mousePosition = getMousePosition();
+            double tolerance = 2.0;
 
-		g2.dispose();
-	}
+            if (isMouseNearLine(pointA, pointB, mousePosition, tolerance)) 
+            {
+                // Mouse is near the line, display the green circle
+                int centerX = (pointA.x + pointB.x) / 2;
+                int centerY = (pointA.y + pointB.y) / 2;
+                int radius = 30;
 
-	//egyelőre csak felhelyezi a modellben inicializált elemeket, de nem adott helyre és nem is adott szomszédokhoz
-	public void DrawMap()
-	{
-<<<<<<< HEAD
-		this.setBackground(color);
-		this.setPreferredSize(new Dimension(900, 900));
-		//this.setLayout(null);
-		/* így lehet pozícióra rakni egy elemet
-		PipeView testpiV = new PipeView(100, 100, 1);
-		JLabel testPipe = testpiV.LoadImage();
-		this.add(testPipe);
-		Dimension size = testPipe.getPreferredSize();
-		testPipe.setBounds(100, 100, size.width, size.height);
-		*/
-		for(int i = 0; i < GameManager.GetPipes().size(); i++)
-		{
-			PipeView piV = new PipeView(10, 10, i);
-			pipesView.add(piV);
-			this.add(piV.LoadImage());
-		}
-		
-		for(int i = 0; i < GameManager.GetPumps().size(); i++)
-		{
-			PumpView puV = new PumpView(50, 50, i);
-			pumpsView.add(puV);
-			this.add(puV.LoadImage());
-		}
-		
-		for(int i = 0; i < GameManager.GetCisterns().size(); i++)
-		{
-			CisternView cV = new CisternView(10, 10, i);
-			cisternsView.add(cV);
-			this.add(cV.LoadImage());
-		}
-=======
-		Graphics2D g2d = (Graphics2D) mapImage.getGraphics();
-		g2d.setColor(color);
-		g2d.fillRect(0, 0, screenWidth, screenHeight);
->>>>>>> 44580ac452c8b8bce906796d6c069ac989bb9e1f
-		
-		for(int i = 0; i < GameManager.GetWaterSprings().size(); i++)
-		{
-			WaterSpringView sV = new WaterSpringView((int)(screenWidth * 0.05) + (i * (int)(screenWidth * 0.15)),(int)(screenHeight * 0.02), 150, 150, i);
-			springsView.add(sV);
-			activesView.add(sV);
-			mapView.add(sV);
-		}
-		
-		PumpView puV;
-		for(int i = 0; i < GameManager.GetPumps().size(); i++)
-		{
-			puV = new PumpView((int)(screenWidth * 0.1) + (i % 5 * 55), 195 + (i * 70), 90, 90, i);
-			pumpsView.add(puV);
-			activesView.add(puV);
-			mapView.add(puV);
-			DebugLog.WriteDebugLog(GameManager.GetPumps().get(i).GetId());
-			DebugLog.WriteDebugLog("CenterX  "+Integer.toString(puV.getCenterX()));
-			DebugLog.WriteDebugLog("CenterY  "+Integer.toString(puV.getCenterY()));
-			DebugLog.WriteDebugLog("PosX "+Integer.toString(puV.getPosX()));
-			DebugLog.WriteDebugLog("PosY "+Integer.toString(puV.getPosY()));
-			if (i == 10) break;
-			i++;
+                g2.setColor(Color.GREEN);
+                g2.drawOval(centerX - radius, centerY - radius, 2 * radius, 2 * radius);
+            }
+        }
 
-			puV = new PumpView((int)(screenWidth * 0.3) + (i % 4 * 45), 195 + ((i - 1) * 70), 90, 90, i);
-			DebugLog.WriteDebugLog(GameManager.GetPumps().get(i).GetId());
-			DebugLog.WriteDebugLog("CenterX  "+ puV.getCenterX());
-			DebugLog.WriteDebugLog("CenterY  "+Integer.toString(puV.getCenterY()));
-			DebugLog.WriteDebugLog("PosX "+Integer.toString(puV.getPosX()));
-			DebugLog.WriteDebugLog("PosY "+Integer.toString(puV.getPosY()));
-			pumpsView.add(puV);
-			activesView.add(puV);
-			mapView.add(puV);
+        g2.dispose();
+    }
 
-		}
+    //egyelőre csak felhelyezi a modellben inicializált elemeket, de nem adott helyre és nem is adott szomszédokhoz
+    /**A térkép felrajzolása kezdetben
+     */
+    public void DrawMap()
+    {
+        Graphics2D g2d = (Graphics2D) mapImage.getGraphics();
+        g2d.setColor(color);
+        g2d.fillRect(0, 0, screenWidth, screenHeight);
 
-		for(int i = GameManager.GetCisterns().size() - 1; i >= 0; i--)
-		{
-			CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)),
-					(int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
-			cisternsView.add(cV);
-			activesView.add(cV);
-			mapView.add(cV);
-		}
-		
-		for(int i = 0; i < GameManager.GetPipes().size(); i++) 
-		{
-			PipeView piV = new PipeView(i);
-			pipesView.add(piV);
-			mapView.add(piV);
-			
-			ElementView[] neighbours = new ElementView[2];
-			neighbours[0] = null;
-			neighbours[1] = null;
-			int l = 0;
-			
-			for(int j = 0; j < GameManager.GetPipes().get(i).GetNeighbours().size(); j++)
-			{
-				for(int k = 0; k < activesView.size(); k++)
-				{
-					if(GameManager.GetPipes().get(i).GetNeighbours().get(j).GetId().equals(activesView.get(k).GetElement().GetId()))
-					{
-						neighbours[l] = activesView.get(k);
-						l++;
-					}
-					if(l == 2)
-						break;
-				}
-			}
-			//szomszédok átadása
-			piV.SetNeighbours(neighbours);
-		}
-		
-		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
-		{
-			String ie = GameManager.GetMechanics().get(i).GetCurrentPosition().GetId();
-			for (int k = 0; k < mapView.size(); k++)
-			{
-				if(ie.equals(mapView.get(k).GetElement().GetId()))
-				{
-					MechanicView meV = new MechanicView(mapView.get(k),60,60, i);
-					mechanicsView.add(meV);
-					
-					//if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
-						currentMechanic = meV;
-				}
-			}
-		}
+        for(int i = 0; i < GameManager.GetWaterSprings().size(); i++)
+        {
+            WaterSpringView sV = new WaterSpringView((int)(screenWidth * 0.05) + (i * (int)(screenWidth * 0.15)), (int)(screenHeight * 0.02), 150, 150, i);
+            springsView.add(sV);
+            activesView.add(sV);
+            mapView.add(sV);
+        }
 
-		for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
-		{
-			String ie = GameManager.GetSaboteurs().get(i).GetCurrentPosition().GetId();
-			for (int k = 0; k < mapView.size(); k++)
-			{
-				if(ie.equals(mapView.get(k).GetElement().GetId()))
-				{
-					SaboteurView saV = new SaboteurView(mapView.get(k), 60,60, i);
-					saboteursView.add(saV);
-					
-					//if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
-						currentSaboteur = saV;
-				}
-			}
-		}
-	}
-	
-	public static Point calculateCenter(int x1, int y1, int x2, int y2) 
-	{
-		int centerX = (x1 + x2) / 2;
-		int centerY = (y1 + y2) / 2;
-		return new Point(centerX, centerY);
-	}
+        PumpView puV;
+        for(int i = 0; i < GameManager.GetPumps().size(); i++)
+        {
+            puV = new PumpView((int)(screenWidth * 0.1) + (i % 5 * 55), 195 + (i * 70), 90, 90, i);
+            pumpsView.add(puV);
+            activesView.add(puV);
+            mapView.add(puV);
+            DebugLog.WriteDebugLog(puV.GetPump().GetId());
+            DebugLog.WriteDebugLog("CenterX  " + Integer.toString(puV.getCenterX()));
+            DebugLog.WriteDebugLog("CenterY  " + Integer.toString(puV.getCenterY()));
+            DebugLog.WriteDebugLog("PosX " + Integer.toString(puV.getPosX()));
+            DebugLog.WriteDebugLog("PosY " + Integer.toString(puV.getPosY()));
+            if (i == 10) break;
+            i++;
 
-	private void MouseListener() 
-	{
-		final PumpView[] pm = new PumpView[1];
-		final int[] selectedPump = new int[1];
+            puV = new PumpView((int)(screenWidth * 0.3) + (i % 4 * 45), 195 + ((i - 1) * 70), 90, 90, i);
+            DebugLog.WriteDebugLog(GameManager.GetPumps().get(i).GetId());
+            DebugLog.WriteDebugLog(puV.GetPump().GetId());
+            DebugLog.WriteDebugLog("CenterY  " +Integer.toString(puV.getCenterY()));
+            DebugLog.WriteDebugLog("PosX " + Integer.toString(puV.getPosX()));
+            DebugLog.WriteDebugLog("PosY " + Integer.toString(puV.getPosY()));
+            pumpsView.add(puV);
+            activesView.add(puV);
+            mapView.add(puV);
 
-		this.addMouseListener(new MouseAdapter()
-		{
-			@Override
-	        public void mousePressed(MouseEvent me)
-	        {
-				for (int i = 0 ; i < pumpsView.size(); i++)
-				{
-					if (me.getX() >= pumpsView.get(i).getPosX() && me.getX() < pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
-							&& me.getY()>=pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY()+ pumpsView.get(i).getHeight())
-					{
-						dragging = true;
-						pm[0] = pumpsView.get(i);
-						selectedPump[0] = i ;
-					}
-				}
-	        }
-			 
-			@Override
-			public void mouseReleased(MouseEvent e) 
-			{
-				dragging = false;
-				pm[0] = null;
-				repaint();
-			}
-			 
-			@Override
-			public void mouseDragged(MouseEvent e) { }
-		}); 
+        }
+        
+        for(int i = GameManager.GetCisterns().size() - 1; i >= 0; i--)
+        {
+            CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)),
+            		(int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
+            cisternsView.add(cV);
+            activesView.add(cV);
+            mapView.add(cV);
+        }
 
-		this.addMouseMotionListener(new MouseMotionListener()
-		{
-			int nx;
-			int ny;
-			@Override
-			public void mouseDragged(MouseEvent e) 
-			{
-				if (pm[0] != null)
-				{
-					nx = e.getX();
-					ny = e.getY();
+        for(int i = 0; i < GameManager.GetPipes().size(); i++)
+        {
+            PipeView piV = new PipeView(i);
+            pipesView.add(piV);
+            mapView.add(piV);
 
-					pumpsView.get(selectedPump[0]).setCenterX(nx);
-					pumpsView.get(selectedPump[0]).setCenterY(ny);
-					
-					repaint();
-				}
-				/* if (!dragging ){
-					 pumpsView.get(selectedPump[0]).setPosX(nx);
-					 pumpsView.get(selectedPump[0]).setPosY(ny);
-					 repaint();
-					 System.out.println("!dragging");
-				 }*/
-			}
+            ElementView[] neighbours = new ElementView[2];
+            neighbours[0] = null;
+            neighbours[1] = null;
+            int l = 0;
 
-			@Override
-			public void mouseMoved(MouseEvent me) 
-			{
-	        	 repaint();
-			}
-		});
-	}
+            for(int j = 0; j < GameManager.GetPipes().get(i).GetNeighbours().size(); j++)
+            {
+                for(int k = 0; k < activesView.size(); k++)
+                {
+                    if(GameManager.GetPipes().get(i).GetNeighbours().get(j).GetId().equals(activesView.get(k).GetElement().GetId()))
+                    {
+                        neighbours[l] = activesView.get(k);
+                        l++;
+                    }
+                    if(l == 2)
+                        break;
+                }
+            }
+            //szomszédok átadása
+            piV.SetNeighbours(neighbours);
+        }
+
+        for(int i = 0; i < GameManager.GetMechanics().size(); i++)
+        {
+            String ie = GameManager.GetMechanics().get(i).GetCurrentPosition().GetId();
+            for (int k = 0; k < mapView.size(); k++)
+            {
+                if(ie.equals(mapView.get(k).GetElement().GetId()))
+                {
+                    MechanicView meV = new MechanicView(mapView.get(k),60,60, i);
+                    mechanicsView.add(meV);
+                    
+                  //if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
+					currentMechanic = meV;
+                }
+            }
+        }
+
+        for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
+        {
+            String ie = GameManager.GetSaboteurs().get(i).GetCurrentPosition().GetId();
+            for (int k = 0; k < mapView.size(); k++)
+            {
+                if(ie.equals(mapView.get(k).GetElement().GetId()))
+                {
+                    SaboteurView saV = new SaboteurView(mapView.get(k), 60,60, i);
+                    saboteursView.add(saV);
+                    
+                  //if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
+					currentSaboteur = saV;
+                }
+            }
+        }
+    }
+
+    /**
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @return
+     */
+    public static Point calculateCenter(int x1, int y1, int x2, int y2) 
+    {
+        int centerX = (x1 + x2) / 2;
+        int centerY = (y1 + y2) / 2;
+        return new Point(centerX, centerY);
+    }
+
+    /**
+     */
+    private void MouseListener() 
+    {
+        final PumpView[] pm = new PumpView[1];
+        final int[] selectedPump = new int[1];
+        final ElementView[] mv = new ElementView[1];
+
+        this.addMouseListener(new MouseAdapter()
+        {
+            @Override
+            public void mousePressed(MouseEvent me)
+            {
+                if(!isPlayerMoving)
+                {
+                    for (int i = 0 ; i < pumpsView.size(); i++)
+                    {
+                        if (me.getX() >= pumpsView.get(i).getPosX() && me.getX() < pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
+                         && me.getY() >= pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY() + pumpsView.get(i).getHeight())
+                        {
+                            dragging = true;
+                            pm[0] = pumpsView.get(i);
+                            selectedPump[0] = i ;
+                        }
+                    }
+                }
+                
+                else if (isPlayerMoving)
+                {
+                    JFrame jf = new JFrame();
+                    for (int k = 0; k < pipesView.size(); k++) 
+                    {
+                        PipeView pipeView = pipesView.get(k);
+                        Point pointA = new Point(pipeView.GetNeighbours()[0].getCenterX(), pipeView.GetNeighbours()[0].getCenterY());
+                        Point pointB = new Point(pipeView.GetNeighbours()[1].getCenterX(), pipeView.GetNeighbours()[1].getCenterY());
+                        Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
+
+                        if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
+                        {
+                            System.out.println("ismouseclick true");
+                            mv[0] = pipeView;
+                            
+                            JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));
+                            break;
+                        }
+                    }
+
+                    for (int i = 0; i < activesView.size(); i++)
+                    {
+                        if (me.getX() >= activesView.get(i).getPosX() && me.getX() < activesView.get(i).getPosX() + activesView.get(i).getWidth()
+                                && me.getY() >= activesView.get(i).getPosY() && me.getY() < activesView.get(i).getPosY() + activesView.get(i).getHeight())
+                        {
+                            mv[0] = activesView.get(i);
+                                //isPlayerMoving= false;
+                            JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId());
+                        }
+                    }
+                }
+            }
+             
+            @Override
+            public void mouseReleased(MouseEvent e) 
+            {
+                dragging = false;
+                pm[0] = null;
+                repaint();
+            }
+             
+            @Override
+            public void mouseDragged(MouseEvent e) { }
+        }); 
+
+        this.addMouseMotionListener(new MouseMotionListener()
+        {
+            int nx;
+            int ny;
+            @Override
+            public void mouseDragged(MouseEvent e) 
+            {
+                if (pm[0] != null)
+                {
+                    nx = e.getX();
+                    ny = e.getY();
+
+                    pumpsView.get(selectedPump[0]).setCenterX(nx);
+                    pumpsView.get(selectedPump[0]).setCenterY(ny);
+                    
+                    repaint();
+                }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent me) 
+            {
+                 repaint();
+            }
+        });
+    }
+    
+    /**
+     * @param pipeV
+     * @param point
+     * @return
+     */
+    public boolean isOnTheLine(PipeView pipeV, Point point)
+    {
+
+        Point p = new Point();
+        p = calculateCenter(
+        pipeV.GetNeighbours()[0].getCenterX(), pipeV.GetNeighbours()[0].getCenterY(),
+                pipeV.GetNeighbours()[1].getCenterX(), pipeV.GetNeighbours()[1].getCenterY());
+
+        pipeV.getWidth();
+        return false;
+    }
+
+    /**
+     * @param pointA
+     * @param pointB
+     * @param mouseClick
+     * @return
+     */
+    public boolean isMouseClickOnLine(Point pointA, Point pointB, Point mouseClick)
+    {
+        // Calculate the center point of the line
+        Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
+
+        // Calculate the radius of the little circle
+        double circleRadius = 50.0; // Adjust the radius as needed
+
+        // Calculate the squared distance between the mouse click and the center of the circle
+        double distanceSquared = Math.pow(mouseClick.x - center.x, 2) + Math.pow(mouseClick.y - center.y, 2);
+
+        // Calculate the squared distance threshold for considering a click next to the circle
+        double thresholdSquared = Math.pow(circleRadius + 5.0, 2); // Adjust the threshold as needed
+
+        // Check if the squared distance is within the threshold
+        return distanceSquared <= thresholdSquared;
+    }
+
+    /**
+     * @param startPoint
+     * @param endPoint
+     * @param radius
+     * @param mouseClick
+     * @return
+     */
+    public boolean isMouseClickInsideCircle(Point startPoint, Point endPoint, int radius, Point mouseClick)
+    {
+        // Calculate the center point of the line
+        Point centerPoint = new Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2);
+
+        // Calculate the squared distance between the mouse click position and the center of the circle
+        double distanceSquared = Math.pow(mouseClick.x - centerPoint.x, 2) + Math.pow(mouseClick.y - centerPoint.y, 2);
+
+        // Calculate the squared radius
+        int radiusSquared = radius * radius;
+
+        // Check if the squared distance is less than or equal to the squared radius
+        return distanceSquared <= radiusSquared;
+    }
+
+    /**
+     * @param pointA
+     * @param pointB
+     * @param mousePosition
+     * @param tolerance
+     * @return
+     */
+    public boolean isMouseNearLine(Point pointA, Point pointB, Point mousePosition, double tolerance) 
+    {
+        // Calculate the center point of the line
+        Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
+
+        // Calculate the distance between the mouse position and the center of the circle
+        double distance = mousePosition.distance(center);
+
+        // Check if the distance is within the tolerance
+        return distance <= tolerance;
+    }
+
+    /**
+     * @param mapView
+     * @param point
+     * @return
+     */
+    public boolean contains(ElementView mapView, Point point)
+    {
+        int x1 = mapView.getPosX();
+        int y1 = mapView.getPosY();
+        int x2 = mapView.getPosX() + mapView.getWidth();
+        int y2 = mapView.getPosY() + mapView.getHeight();
+
+        return point.getX() >= x1 && point.getX() <= x2 && point.getY() >= y1 && point.getY() <= y2;
+    }
 }

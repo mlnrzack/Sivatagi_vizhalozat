@@ -16,6 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import game.*;
+import graphics.*;
 import graphics.elements.*;
 
 public class MenuFrame extends JFrame 
@@ -278,13 +279,8 @@ public class MenuFrame extends JFrame
 		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0) 
 		{
 			//GameManager.StartGame();
-<<<<<<< HEAD
-			
-			//GameFrame gFrame = new GameFrame(new MapView());
-			Controller controller = new Controller(new GameFrame(new MapView()));
-=======
+			//Controller controller = new Controller(new GameFrame(new MapView()));
 			GameFrame gFrame = new GameFrame(new MapView());
->>>>>>> 44580ac452c8b8bce906796d6c069ac989bb9e1f
 			setVisible(false);
 			dispose();
 		} 

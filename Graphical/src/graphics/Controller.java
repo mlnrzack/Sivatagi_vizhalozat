@@ -10,18 +10,21 @@ import javax.swing.JButton;
 
 import graphics.GameFrame;
 
-public class Controller {
+public class Controller 
+{
 	
 	protected GameFrame gf;
 	protected ArrayList<JButton> buttons;
 	
-	public Controller(GameFrame gf) {
+	public Controller(GameFrame gf)
+	{
 		this.gf = gf;
 		buttons = gf.getActionButtons();
 		initController();
 	}
 	
-	private void initController() {
+	private void initController() 
+	{
 		buttons.get(0).addActionListener(new MoveButtonListener());
 		buttons.get(1).addActionListener(new RepairButtonListener());
 		buttons.get(2).addActionListener(new PickfreepipeButtonListener());
@@ -36,90 +39,111 @@ public class Controller {
 		buttons.get(11).addActionListener(new PassButtonListener());
 	}
 	
-	
-	private class MoveButtonListener implements ActionListener {
+	private class MoveButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("move X");
-			
 		}
 	}
 	
-	private class RepairButtonListener implements ActionListener {
+	private class RepairButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("repair");
 		}
 	}
 	
-	private class PickfreepipeButtonListener implements ActionListener {
+	private class PickfreepipeButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("pickfreepipe");
 		}
 	}
 	
-	private class PicknewpumpButtonListener implements ActionListener {
+	private class PicknewpumpButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("picknewpump");
 		}
 	}
 	
-	private class DroppumpButtonListener implements ActionListener {
+	private class DroppumpButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("droppump");
 		}
 	}
 	
-	private class ConnectpipeButtonListener implements ActionListener {
+	private class ConnectpipeButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("connectpipe");
 		}
 	}
 	
-	private class PickneighbourButtonListener implements ActionListener {
+	private class PickneighbourButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("pickneighbour");
 		}
 	}
 	
-	private class SetpumpButtonListener implements ActionListener {
+	private class SetpumpButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("setpump");
 		}
 	}
 	
-	private class LeakpipeButtonListener implements ActionListener {
+	private class LeakpipeButtonListener implements ActionListener
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("leakpipe");
 		}
 	}
 	
-	private class StickypipeButtonListener implements ActionListener {
+	private class StickypipeButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("stickypipe");
 		}
 	}
 	
-	private class SlipperypipeButtonListener implements ActionListener {
+	private class SlipperypipeButtonListener implements ActionListener
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("slipperypipe");
 		}
 	}
 	
-	private class PassButtonListener implements ActionListener {
+	private class PassButtonListener implements ActionListener 
+	{
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) 
+		{
 			System.out.println("pass");
 		}
 	}
-	
 }
