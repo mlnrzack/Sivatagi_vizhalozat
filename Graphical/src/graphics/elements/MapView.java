@@ -38,9 +38,9 @@ public class MapView extends JPanel
     private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();                  //a szerelők megjelenítésére szolgáló lista
     private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();                  //a szabotőrök megjelenítésére szolgáló lista
 
-    private int x, y, imX, imY;																		//
-    private boolean dragging;																		//
-    public boolean isPlayerMoving = false;															//
+    private int x, y, imX, imY;																		//koordináta komponensek
+    private boolean dragging;																		//pumpa húzása
+    public boolean isPlayerMoving = false;															//játékos lépésének vizsgálására
 
     /**Osztály konstruktor
      */
@@ -86,21 +86,18 @@ public class MapView extends JPanel
             if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) 
             {
                 // Draw the line between the two elements
-                g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
-                        pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
+                g2.drawLine(pipesView.get(i).GetNeighbours()[0].GetCenterX(), pipesView.get(i).GetNeighbours()[0].GetCenterY(),
+                        pipesView.get(i).GetNeighbours()[1].GetCenterX(), pipesView.get(i).GetNeighbours()[1].GetCenterY());
 
                 // Set the dimensions of the pipe
                 pipesView.get(i).SetDimensions();
 
                 // Determine the angle of the line
-                double x = Math.abs(pipesView.get(i).GetNeighbours()[0].posX - pipesView.get(i).GetNeighbours()[1].posX);
-                double y = Math.abs(pipesView.get(i).GetNeighbours()[0].posY - pipesView.get(i).GetNeighbours()[1].posY);
-                double angle = Math.atan2(pipesView.get(i).GetNeighbours()[1].getCenterY() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
-                        pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterX());
+                double angle = pipesView.get(i).GetAngle();
 
                 // Calculate the center point of the line
-                Point center = calculateCenter(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
-                        pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
+                Point center = calculateCenter(pipesView.get(i).GetNeighbours()[0].GetCenterX(), pipesView.get(i).GetNeighbours()[0].GetCenterY(),
+                        pipesView.get(i).GetNeighbours()[1].GetCenterX(), pipesView.get(i).GetNeighbours()[1].GetCenterY());
 
                 // Save the current transform
                 AffineTransform oldTransform = g2.getTransform();
@@ -109,21 +106,20 @@ public class MapView extends JPanel
                 g2.rotate(angle, center.x, center.y);
 
                 // Calculate the new position for drawing the image
-                int imageX = (int) (center.x - pipesView.get(i).getWidth() / 2);
-                int imageY = (int) (center.y - pipesView.get(i).getHeight() / 2);
+                int imageX = (int) (center.x - pipesView.get(i).GetWidth() / 2);
+                int imageY = (int) (center.y - pipesView.get(i).GetHeight() / 2);
 
                 // Draw the image on top of the line
-                g2.drawImage(pipesView.get(i).LoadImage(), imageX, imageY,
-                        pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null);
+                g2.drawImage(pipesView.get(i).LoadImage(), imageX, imageY, pipesView.get(i).GetWidth(), pipesView.get(i).GetHeight(), null);
 
-                stringX = imageX + pipesView.get(i).getWidth() / 2;
-                stringY = imageY + pipesView.get(i).getHeight() / 2;
+                stringX = imageX + pipesView.get(i).GetWidth() / 2;
+                stringY = imageY + pipesView.get(i).GetHeight() / 2;
 
                 // Set the font and color for the string
                 g2.setFont(new Font("Arial", Font.PLAIN, 18));
 
                 // Draw the string in the middle of the image
-                g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX+40, stringY + 8);
+                g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX - 50, stringY + 8);
 
                 // Draw a small circle next to the center
                 int circleSize = 45; // Adjust the size as needed
@@ -140,47 +136,47 @@ public class MapView extends JPanel
         for(int i = 0; i < pumpsView.size(); i++)
         {
             g2.setColor(color);
-            g2.fillOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
+            g2.fillOval(pumpsView.get(i).GetPosX() - 7, pumpsView.get(i).GetPosY(), 100, 100);
             
             g2.setColor(circleColor);
-            g2.drawOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
+            g2.drawOval(pumpsView.get(i).GetPosX() - 7, pumpsView.get(i).GetPosY(), 100, 100);
             
-            g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(),
-                    pumpsView.get(i).getWidth(), pumpsView.get(i).getHeight(), null, null );
+            g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).GetPosX(), pumpsView.get(i).GetPosY(),
+                    pumpsView.get(i).GetWidth(), pumpsView.get(i).GetHeight(), null, null );
             
             g2.setColor(Color.BLACK);
-            g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).getPosX() + 22, pumpsView.get(i).getPosY() + 85);
+            g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).GetPosX() + 22, pumpsView.get(i).GetPosY() + 85);
 
         }
 
         for (int i = 0 ; i < cisternsView.size(); i++)
         {
             g2.setColor(color);
-            g2.fillOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
+            g2.fillOval(cisternsView.get(i).GetPosX() + 3, cisternsView.get(i).GetPosY() + 10, 100, 100);
             
             g2.setColor(circleColor);
-            g2.drawOval(cisternsView.get(i).getPosX() + 3, cisternsView.get(i).getPosY() + 10, 100, 100);
+            g2.drawOval(cisternsView.get(i).GetPosX() + 3, cisternsView.get(i).GetPosY() + 10, 100, 100);
             
-            g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).getPosX() ,cisternsView.get(i).getPosY(),
-                    cisternsView.get(i).getWidth(), cisternsView.get(i).getHeight(), null, null );
+            g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).GetPosX() ,cisternsView.get(i).GetPosY(),
+                    cisternsView.get(i).GetWidth(), cisternsView.get(i).GetHeight(), null, null );
             
             g2.setColor(Color.BLACK);
-            g2.drawString(cisternsView.get(i).GetCistern().GetId(), cisternsView.get(i).getPosX() + 30, cisternsView.get(i).getPosY() + 100);
+            g2.drawString(cisternsView.get(i).GetCistern().GetId(), cisternsView.get(i).GetPosX() + 30, cisternsView.get(i).GetPosY() + 100);
         }
         
         for (int i = 0; i < springsView.size();i++)
         {
             g2.setColor(color);
-            g2.fillOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
+            g2.fillOval(springsView.get(i).GetPosX() + 25, springsView.get(i).GetPosY() + 20, 100, 100);
             
             g2.setColor(circleColor);
-            g2.drawOval(springsView.get(i).getPosX() + 25, springsView.get(i).getPosY() + 20, 100, 100);
+            g2.drawOval(springsView.get(i).GetPosX() + 25, springsView.get(i).GetPosY() + 20, 100, 100);
             
-            g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).getPosX(), springsView.get(i).getPosY(),
-                    springsView.get(i).getWidth(), springsView.get(i).getHeight(), null, null);
+            g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).GetPosX(), springsView.get(i).GetPosY(),
+                    springsView.get(i).GetWidth(), springsView.get(i).GetHeight(), null, null);
             
             g2.setColor(Color.BLACK);
-            g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).getPosX() + 55, springsView.get(i).getPosY() + 115);
+            g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).GetPosX() + 55, springsView.get(i).GetPosY() + 115);
         }
 
         for(int i = 0; i < mechanicsView.size(); i++)
@@ -192,14 +188,14 @@ public class MapView extends JPanel
                 g2.setColor(currentColor);
             
             //player surrounding circle draw
-            g2.drawOval(mechanicsView.get(i).getPos().getCenterX() + 3, mechanicsView.get(i).getPos().getCenterY() + 10, 80, 80);
+            g2.drawOval(mechanicsView.get(i).GetPos().GetCenterX() + 3, mechanicsView.get(i).GetPos().GetCenterY() + 10, 80, 80);
 
             //load the image of the player
-            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).getPos().getCenterX() + 20 ,mechanicsView.get(i).getPos().getCenterY() + 20,
-                    mechanicsView.get(i).getWidth(), mechanicsView.get(i).getHeight(), null, null );
+            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).GetPos().GetCenterX() + 20 ,mechanicsView.get(i).GetPos().GetCenterY() + 20,
+                    mechanicsView.get(i).GetWidth(), mechanicsView.get(i).GetHeight(), null, null );
             //set the drawing color for the name writing
             g2.setColor(Color.BLACK);
-            g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).getPos().getCenterX() + 10, mechanicsView.get(i).getPos().getCenterY()  + 100);
+            g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).GetPos().GetCenterX() + 10, mechanicsView.get(i).GetPos().GetCenterY()  + 100);
 
         }
 
@@ -212,14 +208,14 @@ public class MapView extends JPanel
                 g2.setColor(currentColor);
             
             //player surrounding circle draw
-            g2.drawOval(saboteursView.get(i).getPos().getCenterX() + 3, saboteursView.get(i).getPos().getCenterY() + 10, 80, 80);
+            g2.drawOval(saboteursView.get(i).GetPos().GetCenterX() + 3, saboteursView.get(i).GetPos().GetCenterY() + 10, 80, 80);
             
             //load the image of the player
-            g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).getPos().getCenterX() + 10, saboteursView.get(i).getPos().getCenterY() + 15,
-                    saboteursView.get(i).getWidth(), saboteursView.get(i).getHeight(), null, null );
+            g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).GetPos().GetCenterX() + 10, saboteursView.get(i).GetPos().GetCenterY() + 15,
+                    saboteursView.get(i).GetWidth(), saboteursView.get(i).GetHeight(), null, null );
             //set the drawing color for the name writing
             g2.setColor(Color.BLACK);
-            g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).getPos().getCenterX() + 5, saboteursView.get(i).getPos().getCenterY()  + 100);
+            g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).GetPos().GetCenterX() + 5, saboteursView.get(i).GetPos().GetCenterY()  + 100);
 
         }
 
@@ -228,7 +224,7 @@ public class MapView extends JPanel
             if (contains(mapView.get(i), getMousePosition())) 
             {
                 g.setColor(Color.RED);
-                g.drawRect(mapView.get(i).getPosX(), mapView.get(i).getPosY(), mapView.get(i).getWidth(), mapView.get(i).getHeight());
+                g.drawRect(mapView.get(i).GetPosX(), mapView.get(i).GetPosY(), mapView.get(i).GetWidth(), mapView.get(i).GetHeight());
             }
         }
         
@@ -236,12 +232,12 @@ public class MapView extends JPanel
         {
             PipeView pipeView = pipesView.get(k);
             Point pointA = new Point();
-            pointA.x = pipeView.GetNeighbours()[0].getCenterX();
-            pointA.y = pipeView.GetNeighbours()[0].getCenterY();
+            pointA.x = pipeView.GetNeighbours()[0].GetCenterX();
+            pointA.y = pipeView.GetNeighbours()[0].GetCenterY();
 
             Point pointB = new Point();
-            pointB.x = pipeView.GetNeighbours()[1].getCenterX();
-            pointB.y = pipeView.GetNeighbours()[1].getCenterY();
+            pointB.x = pipeView.GetNeighbours()[1].GetCenterX();
+            pointB.y = pipeView.GetNeighbours()[1].GetCenterY();
 
             Point mousePosition = getMousePosition();
             double tolerance = 2.0;
@@ -286,19 +282,19 @@ public class MapView extends JPanel
             activesView.add(puV);
             mapView.add(puV);
             DebugLog.WriteDebugLog(puV.GetPump().GetId());
-            DebugLog.WriteDebugLog("CenterX  " + Integer.toString(puV.getCenterX()));
-            DebugLog.WriteDebugLog("CenterY  " + Integer.toString(puV.getCenterY()));
-            DebugLog.WriteDebugLog("PosX " + Integer.toString(puV.getPosX()));
-            DebugLog.WriteDebugLog("PosY " + Integer.toString(puV.getPosY()));
+            DebugLog.WriteDebugLog("CenterX  " + Integer.toString(puV.GetCenterX()));
+            DebugLog.WriteDebugLog("CenterY  " + Integer.toString(puV.GetCenterY()));
+            DebugLog.WriteDebugLog("PosX " + Integer.toString(puV.GetPosX()));
+            DebugLog.WriteDebugLog("PosY " + Integer.toString(puV.GetPosY()));
             if (i == 10) break;
             i++;
 
             puV = new PumpView((int)(screenWidth * 0.3) + (i % 4 * 45), 195 + ((i - 1) * 70), 90, 90, i);
             DebugLog.WriteDebugLog(GameManager.GetPumps().get(i).GetId());
             DebugLog.WriteDebugLog(puV.GetPump().GetId());
-            DebugLog.WriteDebugLog("CenterY  " +Integer.toString(puV.getCenterY()));
-            DebugLog.WriteDebugLog("PosX " + Integer.toString(puV.getPosX()));
-            DebugLog.WriteDebugLog("PosY " + Integer.toString(puV.getPosY()));
+            DebugLog.WriteDebugLog("CenterY  " +Integer.toString(puV.GetCenterY()));
+            DebugLog.WriteDebugLog("PosX " + Integer.toString(puV.GetPosX()));
+            DebugLog.WriteDebugLog("PosY " + Integer.toString(puV.GetPosY()));
             pumpsView.add(puV);
             activesView.add(puV);
             mapView.add(puV);
@@ -406,8 +402,8 @@ public class MapView extends JPanel
                 {
                     for (int i = 0 ; i < pumpsView.size(); i++)
                     {
-                        if (me.getX() >= pumpsView.get(i).getPosX() && me.getX() < pumpsView.get(i).getPosX() + pumpsView.get(i).getWidth()
-                         && me.getY() >= pumpsView.get(i).getPosY() && me.getY() < pumpsView.get(i).getPosY() + pumpsView.get(i).getHeight())
+                        if (me.getX() >= pumpsView.get(i).GetPosX() && me.getX() < pumpsView.get(i).GetPosX() + pumpsView.get(i).GetWidth()
+                         && me.getY() >= pumpsView.get(i).GetPosY() && me.getY() < pumpsView.get(i).GetPosY() + pumpsView.get(i).GetHeight())
                         {
                             dragging = true;
                             pm[0] = pumpsView.get(i);
@@ -422,8 +418,8 @@ public class MapView extends JPanel
                     for (int k = 0; k < pipesView.size(); k++) 
                     {
                         PipeView pipeView = pipesView.get(k);
-                        Point pointA = new Point(pipeView.GetNeighbours()[0].getCenterX(), pipeView.GetNeighbours()[0].getCenterY());
-                        Point pointB = new Point(pipeView.GetNeighbours()[1].getCenterX(), pipeView.GetNeighbours()[1].getCenterY());
+                        Point pointA = new Point(pipeView.GetNeighbours()[0].GetCenterX(), pipeView.GetNeighbours()[0].GetCenterY());
+                        Point pointB = new Point(pipeView.GetNeighbours()[1].GetCenterX(), pipeView.GetNeighbours()[1].GetCenterY());
                         Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
 
                         if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
@@ -438,8 +434,8 @@ public class MapView extends JPanel
 
                     for (int i = 0; i < activesView.size(); i++)
                     {
-                        if (me.getX() >= activesView.get(i).getPosX() && me.getX() < activesView.get(i).getPosX() + activesView.get(i).getWidth()
-                                && me.getY() >= activesView.get(i).getPosY() && me.getY() < activesView.get(i).getPosY() + activesView.get(i).getHeight())
+                        if (me.getX() >= activesView.get(i).GetPosX() && me.getX() < activesView.get(i).GetPosX() + activesView.get(i).GetWidth()
+                                && me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
                         {
                             mv[0] = activesView.get(i);
                                 //isPlayerMoving= false;
@@ -473,8 +469,8 @@ public class MapView extends JPanel
                     nx = e.getX();
                     ny = e.getY();
 
-                    pumpsView.get(selectedPump[0]).setCenterX(nx);
-                    pumpsView.get(selectedPump[0]).setCenterY(ny);
+                    pumpsView.get(selectedPump[0]).SetCenterX(nx);
+                    pumpsView.get(selectedPump[0]).SetCenterY(ny);
                     
                     repaint();
                 }
@@ -498,10 +494,10 @@ public class MapView extends JPanel
 
         Point p = new Point();
         p = calculateCenter(
-        pipeV.GetNeighbours()[0].getCenterX(), pipeV.GetNeighbours()[0].getCenterY(),
-                pipeV.GetNeighbours()[1].getCenterX(), pipeV.GetNeighbours()[1].getCenterY());
+        pipeV.GetNeighbours()[0].GetCenterX(), pipeV.GetNeighbours()[0].GetCenterY(),
+                pipeV.GetNeighbours()[1].GetCenterX(), pipeV.GetNeighbours()[1].GetCenterY());
 
-        pipeV.getWidth();
+        pipeV.GetWidth();
         return false;
     }
 
@@ -577,10 +573,10 @@ public class MapView extends JPanel
      */
     public boolean contains(ElementView mapView, Point point)
     {
-        int x1 = mapView.getPosX();
-        int y1 = mapView.getPosY();
-        int x2 = mapView.getPosX() + mapView.getWidth();
-        int y2 = mapView.getPosY() + mapView.getHeight();
+        int x1 = mapView.GetPosX();
+        int y1 = mapView.GetPosY();
+        int x2 = mapView.GetPosX() + mapView.GetWidth();
+        int y2 = mapView.GetPosY() + mapView.GetHeight();
 
         return point.getX() >= x1 && point.getX() <= x2 && point.getY() >= y1 && point.getY() <= y2;
     }

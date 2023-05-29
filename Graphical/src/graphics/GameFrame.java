@@ -38,10 +38,10 @@ public class GameFrame extends JFrame
 	
 	private JPanel interfacePanel;																	//a kezelőfelület panelja
 	
-	private ArrayList<String> damagedPipes;															//
-	private ArrayList<String> damagedPumps;															//
+	private ArrayList<String> damagedPipes;															//lyukas csövek nevének listája
+	private ArrayList<String> damagedPumps;															//elromlott pumpák nevének listája
 
-	private ArrayList<JButton> actionButtons;														//
+	private ArrayList<JButton> actionButtons;														//akciógombok listája
 	
 	private JLabel displayCurrentPlayerName;														//
 	private JLabel displayRound;																	//

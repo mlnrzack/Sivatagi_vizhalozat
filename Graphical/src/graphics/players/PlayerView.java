@@ -15,14 +15,17 @@ public abstract class PlayerView
 	protected int height;
 	protected int width;
 	
-	//itt kell egy position változó, ami a grafika helyét tárolja...
-	//valahogy összekötni a modellből egy objemktummal...
-	
+	/**
+	 */
 	public PlayerView()
 	{
 		//TODO
 	}
-	public ElementView getPos()
+	
+	/**
+	 * @return
+	 */
+	public ElementView GetPos()
 	{
 		return pos;
 	}
@@ -39,11 +42,20 @@ public abstract class PlayerView
 		String midhelp = helper.substring(0, helper.length() - 2);
 		return midhelp.concat("\\bin\\");
 	}
-	public int getHeight() {
+	
+	/**
+	 * @return
+	 */
+	public int GetHeight()
+	{
 		return height;
 	}
 
-	public int getWidth() {
+	/**
+	 * @return
+	 */
+	public int GetWidth()
+	{
 		return width;
 	}
 

@@ -1,9 +1,6 @@
 package graphics.elements;
 
-import javax.swing.*;
-
 import game.elements.*;
-import game.interfaces.*;
 
 import java.awt.*;
 import java.io.File;
@@ -18,7 +15,7 @@ public abstract class ElementView //extends JPanel
 	/**
 	 * @return
 	 */
-	public int getWidth()
+	public int GetWidth()
 	{
 		return width;
 	}
@@ -26,7 +23,7 @@ public abstract class ElementView //extends JPanel
 	/**
 	 * @return
 	 */
-	public int getHeight()
+	public int GetHeight()
 	{
 		return height;
 	}
@@ -53,23 +50,23 @@ public abstract class ElementView //extends JPanel
 	/**
 	 * @return
 	 */
-	public int getCenterX()
+	public int GetCenterX()
 	{
-		return (posX+getWidth()/2);
+		return (posX + GetWidth()/2);
 	}
 	
 	/**
 	 * @return
 	 */
-	public int getCenterY()
+	public int GetCenterY()
 	{
-		return (posY+getHeight()/2);
+		return (posY + GetHeight()/2);
 	}
 	
 	/**
 	 * @return
 	 */
-	public int getPosX()
+	public int GetPosX()
 	{
 		return posX;
 	}
@@ -77,7 +74,7 @@ public abstract class ElementView //extends JPanel
 	/**
 	 * @return
 	 */
-	public int getPosY()
+	public int GetPosY()
 	{
 		return posY;
 	}
@@ -85,23 +82,23 @@ public abstract class ElementView //extends JPanel
 	/**
 	 * @param i
 	 */
-	public void setCenterX(int i)
+	public void SetCenterX(int i)
 	{
-		posX = i - getWidth()/2;
+		posX = i - GetWidth()/2;
 	}
 
 	/**
 	 * @param i
 	 */
-	public void setCenterY(int i)
+	public void SetCenterY(int i)
 	{
-		posY = i - getHeight()/2;
+		posY = i - GetHeight()/2;
 	}
 	
 	/**
 	 * @param i
 	 */
-	public void setPosX(int i)
+	public void SetPosX(int i)
 	{
 		posX = i;
 	}
@@ -109,7 +106,7 @@ public abstract class ElementView //extends JPanel
 	/**
 	 * @param i
 	 */
-	public void setPosY(int i)
+	public void SetPosY(int i)
 	{
 		posY = i;
 	}
