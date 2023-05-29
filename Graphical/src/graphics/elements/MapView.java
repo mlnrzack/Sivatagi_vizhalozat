@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import game.*;
-import game.IO.DebugLog;
+import game.IO.*;
+import graphics.*;
 import graphics.players.*;
 
 
@@ -119,7 +120,7 @@ public class MapView extends JPanel
                 g2.setFont(new Font("Arial", Font.PLAIN, 18));
 
                 // Draw the string in the middle of the image
-                g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX - 50, stringY + 8);
+                g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX + 40, stringY + 8);
 
                 // Draw a small circle next to the center
                 int circleSize = 45; // Adjust the size as needed
@@ -424,10 +425,12 @@ public class MapView extends JPanel
 
                         if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
                         {
-                            System.out.println("ismouseclick true");
                             mv[0] = pipeView;
                             
                             JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));
+                            
+                            GameFrame.SetElement(mv[0]);
+                            
                             break;
                         }
                     }
@@ -435,11 +438,15 @@ public class MapView extends JPanel
                     for (int i = 0; i < activesView.size(); i++)
                     {
                         if (me.getX() >= activesView.get(i).GetPosX() && me.getX() < activesView.get(i).GetPosX() + activesView.get(i).GetWidth()
-                                && me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
+                         && me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
                         {
                             mv[0] = activesView.get(i);
                                 //isPlayerMoving= false;
                             JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId());
+                            
+                            GameFrame.SetElement(mv[0]);
+                            
+                            break;
                         }
                     }
                 }

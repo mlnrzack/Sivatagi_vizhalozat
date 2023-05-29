@@ -2,8 +2,6 @@ package game;
 
 import java.util.*;
 
-import game.IO.DebugLog;
-import game.IO.InfoLog;
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
@@ -24,6 +22,18 @@ public class GameManager
     private static Mechanic currentMechanicPlayer = null;											//Az aktuális játékos.
     private static Saboteur currentSaboteurPlayer = null;											//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
+    private static String nextMove = "";																	//
+    
+    public static void AddToMap(IElement e)
+    {
+    	map.add(e);
+    	System.out.println(e.GetId() + " hozzáadva a pályához.");
+    }
+    
+    public static ArrayList<Pipe> GetPipes()
+    {
+    	return pipes;
+    }
     
     /**Az aktuális körszám visszaadása.
      * @return az aktuális körszám.
@@ -97,14 +107,6 @@ public class GameManager
     	return mechanics;
     }
     
-    /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
-     * @param mechanics a kapott érték.
-     */
-    public static void SetMechanics(ArrayList<Mechanic> mechanics)
-    {
-    	GameManager.mechanics = mechanics;
-    }
-    
     /**Adott szerelő karakter hozzáfűzése a szerelők listához.
      * @param mechanic a hozzáfűzendő szerelő.
      * @return a hozzáfűzés sikeressége.
@@ -114,6 +116,14 @@ public class GameManager
     	return mechanics.add(mechanic);
     }
 
+    /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
+     * @param mechanics a kapott érték.
+     */
+    public static void SetMechanics(ArrayList<Mechanic> mechanics)
+    {
+    	GameManager.mechanics = mechanics;
+    }
+    
     /**A szabotőrök listájának visszaadása.
      * @return a szabotőrök listája.
      */
@@ -122,14 +132,6 @@ public class GameManager
     	return saboteurs;
     }
 
-    /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
-     * @param saboteurs a kapott érték.
-     */
-    public static void SetSaboteurs(ArrayList<Saboteur> saboteurs)
-    {
-    	GameManager.saboteurs = saboteurs;
-    }
-    
     /**Egy szabotőr felvétele a szabotőrök listájához.
      * @param saboteur az adott szabotőr.
      * @return a felvétel sikeressége.
@@ -137,6 +139,14 @@ public class GameManager
     public static boolean AddSaboteur(Saboteur saboteur)
     {
     	return saboteurs.add(saboteur);
+    }
+    
+    /**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
+     * @param saboteurs a kapott érték.
+     */
+    public static void SetSaboteurs(ArrayList<Saboteur> saboteurs)
+    {
+    	GameManager.saboteurs = saboteurs;
     }
     
     /**A léptethetők listájának átadása más osztályok felé.
@@ -203,11 +213,6 @@ public class GameManager
     public static ArrayList<Cistern> GetCisterns()
     {
     	return cisterns;
-    }
-    
-    public static ArrayList<Pipe> GetPipes()
-    {
-    	return pipes;
     }
     
     public static ArrayList<Pump> GetPumps()
@@ -303,66 +308,6 @@ public class GameManager
     	playerActionCountInCurrentRound++;
     }
     
-    /**Megkersi a legkisebb, még nem használt id-t a csövekből.
-     * @return az adott id szám értéke.
-     */
-    public static int TryPipeIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < pipes.size(); i++)
-    	{
-    		String piid = "pipe" + id;
-    		if(pipes.get(i).GetId().compareTo(piid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a pumpákból.
-     * @return az adott id szám értéke.
-     */
-    public static int TryPumpIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < pumps.size(); i++)
-    	{
-    		String puid = "pump" + id;
-    		if(pumps.get(i).GetId().compareTo(puid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a ciszternákból.
-     * @return az adott id szám értéke.
-     */
-    public static int TryCisternIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < cisterns.size(); i++)
-    	{
-    		String cid = "cistern" + id;
-    		if(cisterns.get(i).GetId().compareTo(cid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
-    /**Megkersi a legkisebb, még nem használt id-t a vízforrásokból.
-     * @return az adott id szám értéke.
-     */
-    public static int TryWaterSpringIdSet()
-    {
-    	int id = 1;
-    	for(int i = 0; i < waterSprings.size(); i++)
-    	{
-    		String spid = "spring" + id;
-    		if(waterSprings.get(i).GetId().compareTo(spid) == 0)
-    			id++;
-    	}
-    	return id;
-    }
-    
     /**A játékot menetéért felelős függvény.
      * A modell adott lejátszott körszámig játszatja a játékot.
      * Ha minden karakter meglépte adott körre vonatkozó lépéseit, akkor növelődik.
@@ -401,9 +346,7 @@ public class GameManager
     	
     	if(round == Constants.RoundNumber)
     	{
-            InfoLog.WriteOutInfoLog();
-            DebugLog.WriteOutDebugLog();
-    		System.out.print("Gratulálunk a ");
+    		System.out.print("Gratulálunk a");
     		System.out.println(saboteursPoints < mechanicsPoints ? "Szerelők nyertek!" : "Szabotőrök nyertek!");
     		System.out.println("A nyertes csapat tagjai:");
     		if(saboteursPoints < mechanicsPoints)
@@ -427,7 +370,6 @@ public class GameManager
     	IncreasePlayerAction();
         StepSteppables();
         FireSourceActions();
-        //TODO: Logoló függvény,
     }
     
     /**A forrásokból a szomszédos elemekbe folyatja a vizet.
@@ -445,11 +387,21 @@ public class GameManager
      */
     public static void StepSteppables()
     {
-    	for(int i = steppables.size() - 1; i >= 0; i--)
-    	{
-        	steppables.get(i).Step();
-            InfoLog.WriteInfoLog(steppables.get(i).GetId());
-    	}
+    	boolean[] actionDone = new boolean[steppables.size()];
+    	
+    	boolean actionDoneInLoop = false;
+    	
+    	do {
+    		actionDoneInLoop = false;
+    		
+    		for(int i = steppables.size() - 1; i >= 0; i--)
+        	{
+            	if (actionDone[i] == false) {
+            		actionDone[i] = steppables.get(i).Step();
+            		actionDoneInLoop = actionDone[i] || actionDoneInLoop;
+            	}            			
+        	}
+    	} while (actionDoneInLoop);
     }
     
     /**A szerelő játékos karakterek lépéseinek menüje.
@@ -459,12 +411,12 @@ public class GameManager
     	for(int i = 0; i < mechanics.size(); i++)
     	{
     		playerActionCountInCurrentRound = 0;
-			SetCurrentMechanic(mechanics.get(i));
+    		SetCurrentMechanic(mechanics.get(i));
     		SetCurrentSaboteur(null);
     		
     		while (playerActionCountInCurrentRound < Constants.ActionInRoundPerUser)
     		{
-
+    			/*
             	System.out.println("\tMechanics' points: " + mechanicsPoints + "\t\tSaboteurs' points: " + saboteursPoints);
             	
             	System.out.println("\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
@@ -490,11 +442,11 @@ public class GameManager
                	System.out.println("\tleakpipe - Cső lyukasztás");
                	System.out.println("\tstickypipe - Cső ragacsossá tétele");
                	System.out.println("\tpass - A kör kihagyása");
-               	
+               	*/
                	try
                	{
-               		Scanner reader = new Scanner(System.in);
-                   	String userinput = reader.nextLine();
+               		//Scanner reader = new Scanner(System.in);
+                   	String userinput = nextMove;
                    	
                    	switch (userinput.split(" ")[0])
                    	{
@@ -544,7 +496,7 @@ public class GameManager
                	}
                	catch(Exception e)
                	{
-               		System.err.println("Hibás menü bemenet!\n" + e);
+               		System.out.println("Hibás menü bemenet!\n");
                	}
     		}
     	}
@@ -585,34 +537,34 @@ public class GameManager
                 
                 try
                	{
-                	Scanner reader = new Scanner(System.in);
-                   	String userinput = reader.nextLine();
+                	//Scanner reader = new Scanner(System.in);
+                   	String userinput = nextMove;//reader.nextLine();
                    	
                    	switch (userinput.split(" ")[0])
                     {
                     	case "move":
                     		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
-                   			saboteurs.get(i).Move(neighbourIdx);
+                    		currentSaboteurPlayer.Move(neighbourIdx);
                     		break;
                         case "leakpipe":
-                        	saboteurs.get(i).Damage();
+                        	currentSaboteurPlayer.Damage();
                             break;
                         case "setpump":
                         	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
                             int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-                            saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                            currentSaboteurPlayer.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
                         case "stickypipe":
-                        	saboteurs.get(i).SetStickyPipe();
+                        	currentSaboteurPlayer.SetStickyPipe();
                         	break;
                         case "slipperypipe":
-                        	saboteurs.get(i).SetSlipperyPipe();
+                        	currentSaboteurPlayer.SetSlipperyPipe();
                         	break;
                         case "pass":
-                        	saboteurs.get(i).Pass();
+                        	currentSaboteurPlayer.Pass();
                         	break;
                         case "exit":
-                        	saboteurs.get(i).Exit();
+                        	currentSaboteurPlayer.Exit();
                         	break;
                         default:
                         	break;
@@ -620,9 +572,11 @@ public class GameManager
                	}
                 catch(Exception e)
                 {
-                	System.err.println("Hibás menü bemenet!\n" + e);
+                	System.out.println("Hibás menü bemenet!\n" + e);
                 }
             }
         }
     }
+    
+    
 }

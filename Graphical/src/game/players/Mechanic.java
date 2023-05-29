@@ -53,14 +53,17 @@ public class Mechanic extends Player
         {
             if (GetCurrentPosition().TryConnectPipe(pipeInInventory))
             {
+            	Pipe pipe = pipeInInventory;
                 pipeInInventory = null;
 
                 GameManager.ActionExecuted();
+                
+                // System.out.println("Cső csatlakoztatása sikeres. Cső csatlakoztatva: " + pipe.GetId() + " Ide: " + this.GetCurrentPosition().GetId());
                 return true;
             }
         }
 
-        System.out.println("Nem sikerül az akció. Próbálkozz úgy, aktív elemen állsz és van nálad csővég.");
+        System.out.println("Nem sikerül a cső csatakoztatása ide: " + this.GetCurrentPosition().GetId());
         return false;
     }
     
@@ -76,9 +79,12 @@ public class Mechanic extends Player
         if (pipeInInventory != null)
         {
             GameManager.ActionExecuted();
+            
+            System.out.println("Cső lecsatlakoztatása sikeres neki: " + this.GetName() + " Innen: " + this.GetCurrentPosition().GetId() +  " Cső lecsatlakoztatva: " + pipeInInventory.GetId());
             return true;
         }
 
+        System.out.println("Cső lecsatlakoztatása sikertelen neki: " + this.GetName() + " Innen: " + this.GetCurrentPosition().GetId());
         return false;
     }
 
@@ -96,11 +102,13 @@ public class Mechanic extends Player
                 pipeInInventory = pickedUpPipe;
 
                 GameManager.ActionExecuted();
+                
+   				System.out.println("Szabad csővég felvétele sikeres. Cső felvéve: " + pipeInInventory.GetId());
                 return true;
             }
         }
 
-        System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
+        System.out.println("Nem sikerül a szabad csővég felvétele itt: " + this.GetCurrentPosition().GetId());
         return false;
     }
 
@@ -118,11 +126,13 @@ public class Mechanic extends Player
                 pumpInInventory = pickedUpPump;
 
                 GameManager.ActionExecuted();
+                
+                System.out.println("Pumpa felvétele sikeres. Pumpa felvéve: " + pumpInInventory.GetId());
                 return true;
             }
         }
 
-        System.out.println("Nem sikerül a felvétel. Próbálkozz ciszternán állva.");
+        System.out.println("Nem sikerül a pumpa felvétele itt: " + this.GetCurrentPosition().GetId());
         return false;
     }
     
@@ -134,9 +144,12 @@ public class Mechanic extends Player
         if (GetCurrentPosition().TryRepair())
         {
             GameManager.ActionExecuted();
+            
+    		System.out.println(this.GetName() + " szerelő javítása sikeres itt: " + this.GetCurrentPosition().GetId());
             return true;
         }
 
+        System.out.println(this.GetName() + " szerelő javítása sikertelen itt: " + this.GetCurrentPosition().GetId());
         return false;
     }
     

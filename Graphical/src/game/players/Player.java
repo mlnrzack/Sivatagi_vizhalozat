@@ -48,17 +48,20 @@ public abstract class Player
      */
     public boolean Move(int neighbourIdx)
     {
+    	IElement currPos = currentPosition;
         if (currentPosition.GetNeighbours().size() > neighbourIdx && neighbourIdx >= 0)
         {
             IElement toNeighbour = GetCurrentPosition().GetNeighbours().get(neighbourIdx);
             if (toNeighbour.AcceptPlayer(this))
             {
-            	currentPosition.RemovePlayer(this);
-                currentPosition = toNeighbour;
+            	currPos.RemovePlayer(this);
             	GameManager.ActionExecuted();
+            	System.out.println(this.name + " sikeresen mozgott innen: " + currPos.GetId() + " ide: " + toNeighbour.GetId());
             	return true;
             }
         }
+        
+        System.out.println(this.name + " mozgása nem sikerült");
         return false;
     }
 
@@ -72,9 +75,12 @@ public abstract class Player
         if (currentPosition.TrySetInputOutput(neighbourIdxFrom, neighbourIdxTo))
         {
             GameManager.ActionExecuted();
+            
+            System.out.println(this.GetName() + " átállította a csövet: " + this.currentPosition.GetId() + " Input: " + this.GetCurrentPosition().GetNeighbours().get(neighbourIdxFrom).GetId() + " Output: " + this.GetCurrentPosition().GetNeighbours().get(neighbourIdxTo).GetId());
             return true;
         }
 
+        System.out.println(this.GetName() + " nem tudott csövet átállítani.");
         return false;
     }
     
@@ -86,9 +92,12 @@ public abstract class Player
         if (currentPosition.TryDamage())
         {
             GameManager.ActionExecuted();
+            
+            System.out.println(this.GetName() + " megrongálta a csövet: " + this.currentPosition.GetId());
             return true;
         }
         
+        System.out.println(this.GetName() + " nem tudott csövet rongálni.");
         return false;
     }
     
@@ -100,9 +109,12 @@ public abstract class Player
     	if(currentPosition.TrySetSticky())
     	{
     		GameManager.ActionExecuted();
+    		
+    		System.out.println(this.GetName() + " ragacsossá tette a csövet: " + this.currentPosition.GetId());
     		return true;
     	}
     	
+    	System.out.println(this.GetName() + " nem tudott csövet ragacsossá tenni.");
     	return false;
     }
     
@@ -111,7 +123,7 @@ public abstract class Player
     public void Stuck()
     {
     	//Itt csak az adott köréből zárja ki a játékost, ha kell még további körökből is kizárni, akkor azt valahogy le kellene tárolni kb
-    	System.out.println("A " + this.GetName() + " játékos rálépett egy ragacsos csőre. Kimarad a köréből.");
+    	// System.out.println("A " + this.GetName() + " játékos rálépett egy ragacsos csőre. Kimarad a köréből.");
     	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
     }
 
@@ -136,6 +148,20 @@ public abstract class Player
     	System.exit(0);
     }
     
+    /**
+     * @param neighbourId
+     * @return
+     */
+    public int TryFindNeighbourId(String neighbourId)
+    {
+    	for(int i = 0; i < currentPosition.GetNeighbours().size(); i++)
+    	{
+    		if(currentPosition.GetNeighbours().get(i).GetId().equals(neighbourId))
+    			return i;
+    	}
+    	return Constants.MaxNeighboursOfActiveElements + 1;
+    }
+
     /**
      */    
     public abstract String GetType();

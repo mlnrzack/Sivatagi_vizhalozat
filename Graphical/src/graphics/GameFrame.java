@@ -17,14 +17,12 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import game.GameManager;
-import game.elements.Pipe;
-import game.elements.Pump;
-import game.interfaces.IElement;
-import game.players.Mechanic;
-import game.players.Saboteur;
-import graphics.elements.*;
+import game.*;
+import game.elements.*;
+import game.interfaces.*;
 import game.IO.*;
+import game.players.*;
+import graphics.elements.*;
 
 /**Ez az osztály felel a játéktér Frame-jéért.
  */
@@ -57,6 +55,8 @@ public class GameFrame extends JFrame
 	private JPanel damagedPartsPanel;																//
 	
     private MapView map_G;																			//
+    private static String currentMove;																//
+    private static ElementView element = null;														//
 
     /**
      * @param map
@@ -292,12 +292,12 @@ public class GameFrame extends JFrame
                 @Override
                 public void actionPerformed(ActionEvent e) 
                 {
+                	
                     JFrame frame;
                     String output;
                     switch(action) 
                     {
                     case "move X":
-
                         /*
                          * mert akkor a gomb nyomására kellene gondolom egy event listener, 
                          * ami az egér kattintást figyeli, ott megkap egy koordinátát, 
@@ -309,29 +309,24 @@ public class GameFrame extends JFrame
 
                         //Ez a flag jöhetne a MapViewból
                         map_G.isPlayerMoving = false;
-
+                        
                         int answer;
                         answer = JOptionPane.showConfirmDialog(null, "Klikkelj a kiválasztott mezőre, ahova lépni szeretnél.","", JOptionPane.OK_CANCEL_OPTION);
                         
                         if(answer == JOptionPane.OK_OPTION)
                         {
-                            map_G.isPlayerMoving = true;
-                            System.out.println(map_G.isPlayerMoving);
+                        	map_G.isPlayerMoving = true;
                         }
                         else
-                        {
                             map_G.isPlayerMoving = false;
-                            System.out.println(map_G.isPlayerMoving);
-                        }
 
                         ResetActionButtons();
                         UpdateHud();
-
                         break;
 
                     case "repair":
                         frame = new JFrame();
-                        if(m!= null) 
+                        if(m != null) 
                         {
                             if(m.Repair() == true) 
                                 JOptionPane.showMessageDialog(frame, "Sikeresen megjavítottad a csövet!");
@@ -613,5 +608,19 @@ public class GameFrame extends JFrame
     {
     	for(JButton button: actionButtons)
         button.setEnabled(true);
+    }
+	/**
+     * @param elementview
+     */
+    public static void SetElement(ElementView elementview)
+    {
+    	element = elementview;
+    }
+    /**
+     * @return
+     */
+    public static String GetCurrentMove()
+    {
+    	return currentMove;
     }
 }

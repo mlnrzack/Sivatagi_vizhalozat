@@ -1,7 +1,6 @@
 package graphics.elements;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -10,14 +9,13 @@ import javax.imageio.ImageIO;
 import game.*;
 import game.IO.InfoLog;
 import game.elements.*;
-import game.interfaces.IElement;
 
 public class PipeView extends ElementView
 {
-	private Pipe pipe;														//
-	private ElementView[] neighbours = new ElementView[2];					//
-	private int centerX, centerY;											//
-	private double angle;													//
+	private Pipe pipe;														//modellel összekötésben álló elem
+	private ElementView[] neighbours = new ElementView[2];					//az elem szomszédjai
+	private int centerX, centerY;											//az elem közepének koordinátái
+	private double angle;													//az elem szöge az x tengelyhez képes radiánban
 	
 	/**
 	 * @param index
@@ -28,6 +26,7 @@ public class PipeView extends ElementView
 		pipe = GameManager.GetPipes().get(index);
 		neighbours[0] = null;
 		neighbours[1] = null;
+		
 		LoadImage();
 	}
 

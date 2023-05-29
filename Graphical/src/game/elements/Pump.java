@@ -10,7 +10,7 @@ public class Pump extends ActiveElement implements ISteppable
     private Pipe input = null;			//a pumpa bemeneti csöve
     private Pipe output = null;			//a pumpa kimeneti csöve
     private boolean broken = false;		//elromlott pumpa tulajdonság
-    private int age = 0;
+    private int age = 0;				//pumpa életkora
     
     /**Pump osztály konstruktora,
      * amely meghívja a GameManager osztály AddSteppables függvényét, ezzel hozzáadva magát a léptethető elemekhez.
@@ -19,14 +19,9 @@ public class Pump extends ActiveElement implements ISteppable
     {
         GameManager.AddSteppable(this);
         GameManager.AddPump(this);
-        this.SetId("pump" + GameManager.TryPumpIdSet());
+        this.TryIdSet();
     }
-    
-    public String GetType()
-    {
-    	return "pump";
-    }
-    
+
     public boolean GetBroken()
     {
     	return broken;
@@ -36,7 +31,6 @@ public class Pump extends ActiveElement implements ISteppable
     {
     	return input;
     }
-
 
     public Pipe GetOutput()
     {
@@ -51,21 +45,19 @@ public class Pump extends ActiveElement implements ISteppable
     {
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
-        var isBroken = false;
         
         if(!broken)
         {
-            if (GetWaterInside() == Constants.PumpWaterCapacity )
-            {
-                pumpWaterToOutputDone = PumpWaterToOutput();
-                pumpWaterFromInputDone = PumpWaterFromInput();
-            }
-        	if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
+        	pumpWaterFromInputDone = PumpWaterFromInput();
         	
-            isBroken = GettingOlder();
+        	if (!pumpWaterFromInputDone)
+        		pumpWaterToOutputDone = PumpWaterToOutput();
         }
+        
+        if (pumpWaterToOutputDone || pumpWaterFromInputDone)
+            GettingOlder();
 
-        return broken || isBroken || pumpWaterToOutputDone || pumpWaterFromInputDone;
+        return pumpWaterToOutputDone || pumpWaterFromInputDone;
     }
 
     /**Ha megfelelő indexeket kap a függvény,
@@ -95,11 +87,12 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public boolean PumpWaterFromInput()
     {
-        if (input != null && input.GetWaterInside() > 0)
+        if (input != null && input.GetWaterInside() > 0 && GetWaterInside() < Constants.PumpWaterCapacity)
         {
             input.SetWaterInside(input.GetWaterInside() - 1);
             SetWaterInside(GetWaterInside() + 1);
-
+            
+            System.out.println(this.GetId() + " vizet pumpált az átmeneti tárolójába.");
             return true;
         }
 
@@ -111,10 +104,12 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public boolean PumpWaterToOutput()
     {
-        if (output != null)
+        if (output != null && output.GetWaterInside() < Constants.PipeCapacity && GetWaterInside() > 0)
         {
         	output.FillWaterTo();
         	SetWaterInside(GetWaterInside() - 1);
+        	
+        	System.out.println(this.GetId() + " vizet pumpált a szomszédjába: " + output.GetId());
             return true;
         }
 
@@ -180,13 +175,24 @@ public class Pump extends ActiveElement implements ISteppable
      */
     public Pipe DisconnectNeighbourPipe(int neighbourIdx)
     {
-    	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) return null;
+    	if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size())
+        {
+    		System.out.println("Szomszéd lecsatlakoztatása sikertelen, mert érvénytelen a szomszéd azonosítója.");
+    		return null;
+    	}
     	
-        if (neighbourIdx < 0 || neighbourIdx >= GetNeighbours().size()) return null;
-        
+    	if(GetNeighbours().get(neighbourIdx).GetPlayers().size() > 0) 
+    	{
+    		System.out.println(GetNeighbours().get(neighbourIdx).GetId() + " lecsatlakoztatása sikertelen, mert állnak rajta.");
+    		return null;
+    	}
         Pipe neighbourtoDisconnect = this.neighbours.get(neighbourIdx);
 
-        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect) return null;
+        if (input == neighbourtoDisconnect || output == neighbourtoDisconnect)
+        {
+    		System.out.println(GetNeighbours().get(neighbourIdx).GetId() + " lecsatlakoztatása sikertelen, mert a pumpa egy bemeneti, vagy kimeneti ága.");
+    		return null;
+    	}
 
         RemovePipe(neighbourtoDisconnect);
         neighbourtoDisconnect.WaterToDesert();
@@ -200,26 +206,57 @@ public class Pump extends ActiveElement implements ISteppable
      * @return a létrehozás sikeressége
      */
     public boolean GetBuildedInto(Pipe pipe)
-    {
-        // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
-    	String pipeId = "pipe" + GameManager.TryPipeIdSet();
-    	
-        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
-        //egyik oladli szomszéd elem letárolási
+    {    	
+    	//egyik oladli szomszéd elem letárolási
         ActiveElement neighbour = pipe.GetNeighbours().get(0);
+        Pump p = this;
         //az új cső szomszédjainak beállítása
-        newPipe.AddNeighbour(neighbour);
-        newPipe.AddNeighbour(this);
+        ArrayList<ActiveElement> newPipeNeighbours = new ArrayList<ActiveElement>() {
+        	{ 
+        		add(neighbour); 
+        		add(p);
+        	}
+        };
+        
+        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), newPipeNeighbours, "");
+        newPipe.TryIdSet();
+        
         //a szomszéd elem értesítése a szomszéd változásról
         neighbour.AddPipe(newPipe);
         neighbour.RemovePipe(pipe);
         //az eredeti cső szomszédjainak kezelése
         pipe.RemoveNeighbour(neighbour);
-        pipe.AddNeighbour(this);
+        ArrayList<ActiveElement> oldPipeNeighbours = new ArrayList<ActiveElement>(pipe.GetNeighbours());
+        oldPipeNeighbours.add(this);
+        pipe.SetNeighbours(oldPipeNeighbours);
+        
+        System.out.println("Pumpa beépítve a cső közepére: " + pipe.GetId());
+        
         //az új pumpa szomszédjainak beállítása
         this.AddPipe(newPipe);
         this.AddPipe(pipe);
 
         return true;
+    }
+    
+    public void TryIdSet() {
+    	if (!this.GetId().equals(""))
+    		return;
+    	
+    	String name = "pump";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String newName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName) {
+    			this.SetId(newName);
+    		}
+    	}
     }
 }

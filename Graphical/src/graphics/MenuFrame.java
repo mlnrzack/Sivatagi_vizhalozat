@@ -278,9 +278,10 @@ public class MenuFrame extends JFrame
 		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0) 
 		{
 			//Controller controller = new Controller(new GameFrame(new MapView()));
-			new GameFrame(new MapView());
+			//new GameFrame(new MapView());
 			setVisible(false);
 			dispose();
+			GameManager.StartGame();
 		} 
 		else
 			JOptionPane.showMessageDialog(this, "Kérlek előbb hozd létre a csapatokat");

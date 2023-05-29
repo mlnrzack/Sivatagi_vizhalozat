@@ -1,5 +1,9 @@
 package game.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import game.*;
 import game.interfaces.*;
 
@@ -13,26 +17,63 @@ public class Cistern extends ActiveElement implements ISteppable
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddCistern(this);
-    	this.SetId("cistern" + GameManager.TryCisternIdSet());
+    	this.TryIdSet();
     }
-    
-    public String GetType()
-    {
-    	return "cistern";
-    }
-    
+
     /**Visszaad egy új csövet.
      */
     public Pipe PickUpFreePipeEnd()
     {
-        return new Pipe();
+    	String name = "pipe";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String pipeName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (pipeName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName) {
+    			ArrayList<ActiveElement> pipeNeighbours = new ArrayList<ActiveElement>();
+    			pipeNeighbours.add(this);
+    			Pipe pipe = new Pipe(0, false, 0, 0, 0, pipeNeighbours, pipeName);
+    			
+    			this.AddPipe(pipe);
+    	    	
+    	        return pipe;
+    		}
+    	}
+    	
+    	// Elvileg ide nem fog eljutni
+    	return null;
     }
     
     /**Visszaad egy új pumpát.
      */
     public Pump PickUpPump()
     {
-        return new Pump();
+    	Pump pump = new Pump();
+        
+        String name = "pump";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String pumpName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (pumpName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName)
+    			pump.SetId(pumpName);
+    	}
+        
+        GameManager.AddToMap(pump);
+        
+        return pump;
     }
     
     /**A szomszédos csőből a ciszternába pumpálja a vizet
@@ -62,5 +103,26 @@ public class Cistern extends ActiveElement implements ISteppable
         }
         
         return actionDone;
+    }
+    
+    public void TryIdSet() {
+    	if (!this.GetId().equals(""))
+    		return;
+    	
+    	String name = "cistern";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String newName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName) {
+    			this.SetId(newName);
+    		}
+    	}
     }
 }

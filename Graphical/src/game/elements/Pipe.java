@@ -1,6 +1,7 @@
 package game.elements;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import game.*;
 import game.IO.*;
@@ -16,20 +17,24 @@ public class Pipe extends Element implements ISteppable
     
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
+    public int GetNeighbourIndex(String name) {
+		for (IElement e : neighbours) {
+			if (e.GetId().equals(name))
+				return neighbours.indexOf(e);
+		}
+		
+		return -1;
+	}
+    
     /**A Pipe osztály konstruktora.
      */
     public Pipe()
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddPipe(this);
-    	this.SetId("pipe" + GameManager.TryPipeIdSet());
+    	this.TryIdSet();
     }
     
-    public String GetType()
-    {
-    	return "pipe";
-    }
-
     /**Az osztály paraméteres konstruktora.
      * @param leaks lyukas tulajdonsága
      * @param timer nem lyukaszthatóság ideje
@@ -67,14 +72,6 @@ public class Pipe extends Element implements ISteppable
     	return leaking;
     }
     
-    /**Beállítja a leaking értékét adott értékre.
-     * @param leaks az adott érték.
-     */
-    public void SetLeaking(boolean leaks)
-    {
-    	leaking = leaks;
-    }
-
     /**Visszaadja a noLeakageTimer értékét.
      * @return meddig nem lyukasztható.
      */
@@ -132,11 +129,10 @@ public class Pipe extends Element implements ISteppable
         	//itt állítódik be, hogy mennyi ideig nem lehet lyukasztani foltozás után
         	noLeakageTimer = new Random().nextInt(Constants.LeakageTimerBound, Constants.LeakageTimerBound + 1);
         	leaking = false;
-        	System.out.println("Cső javítása sikeres volt." + noLeakageTimer + " ennyi ideig nem lyukasztható újra.\n");
+
             return true;
         }
 
-        System.out.println("Cső javítása nem sikerül. Nincs elromolva ez az elem.\n");
         return false;
     }
 
@@ -150,13 +146,13 @@ public class Pipe extends Element implements ISteppable
         	leaking = true;
         	DebugLog.WriteDebugLog("Cső rongálása sikeres volt. Lyukas lett.\n");
         	InfoLog.WriteInfoLog("Cső rongálása sikeres volt. Lyukas lett.\n");
-        	System.out.println(this.GetId() + " rongálása sikeres volt. Lyukas lett.\n");
+        	
+        	// System.out.println(this.GetId() + " rongálása sikeres volt. Lyukas lett.\n");
             return true;
         }
-        
         DebugLog.WriteDebugLog("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
         InfoLog.WriteInfoLog("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
-        System.out.println(this.GetId() + " rongálása nem sikerül. Már lyukas ez az elem.\n");
+        // System.out.println(this.GetId() + " rongálása nem sikerül. Már lyukas ez az elem.\n");
         return false;
     }
 
@@ -200,6 +196,7 @@ public class Pipe extends Element implements ISteppable
      */
     public void AddNeighbour(ActiveElement newNeighbour)
     {
+    	System.out.println(GetId() + " és " + newNeighbour.GetId() + " szomszédok lettek.");
     	neighbours.add(newNeighbour);
     }
 
@@ -230,19 +227,21 @@ public class Pipe extends Element implements ISteppable
     {
         if (GetPlayers().size() < Constants.AcceptedPlayersInPipe)
         {
-        	if(SlipperyPipe(player))
+        	if(this.slipperyTimer > 0)
         	{
-        		return false;
+        		IElement randomNeighbour = this.GetNeighbours().get(new Random().nextInt(this.neighbours.size()));
+        		System.out.println(player.GetName() + " csúszós csőre érkezett: " + this.GetId() + " Random szomszédra kerül: " + randomNeighbour.GetId());
+        		return randomNeighbour.AcceptPlayer(player);
         	}
 
-            StickyPipe(player);
-
+    		StickyPipe(player);
+    		
+    		player.SetCurrentPosition(this);
             AddPlayer(player);
 
-           	return true;
+           	return true; 
         }
 
-        System.out.println("Cső nem tud fogadni, mert tele van. Válassz más műveletet.");
         return false;
     }
 
@@ -277,12 +276,12 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TrySetSlippery()
     {
-    	if(slipperyTimer == 0 && stickyTimer == 0)
+    	if(slipperyTimer == 0)
     	{
     		SetSlippery();
-    		System.out.println("A cső csúszós lett.");
+
     		return true;
-    	}
+    	}    		
     	System.out.println("Nem sikerült csúszóssá tenni a csövet.");
     	return false;
     }
@@ -292,35 +291,15 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TrySetSticky()
     {
-    	if(stickyTimer == 0 && slipperyTimer == 0)
+    	if(stickyTimer == 0)
     	{
     		SetSticky();
-    		System.out.println("A cső ragacsos lett.");
+
     		return true;
     	}
-
+    		
     	System.out.println("Nem sikerült ragadóssá tenni a csövet.");
     	return false;
-    }
-    
-    /**Csúszós cső általi műveletek.
-     * Ha a cső csúszós, tehát a slipperyTimer nagyobb, mint nulla,
-     * akkor a csőre csatlakoztatott elemek közül random segítségével a játékos elléptetése adott szomszédra
-     * @param player a játékos.
-     * @return a slipperyTimer nullához képesti vizsgálata.
-     */
-    public boolean SlipperyPipe(Player player)
-    {
-    	if(slipperyTimer > 0)
-    	{
-    		player.GetCurrentPosition().RemovePlayer(player);
-    		this.GetNeighbours().get(new Random().nextInt(this.neighbours.size())).AcceptPlayer(player);
-    		GameManager.ActionExecuted();
-
-    		System.out.println(player.GetCurrentPosition().GetId() + "-re került a " + player.GetName() + " játékos.");
-    		System.out.println("Még ennyi ideig csúszós a cső: " + this.GetSlippery());
-    	}
-    	return slipperyTimer > 0;
     }
     
     /**Ragacsos cső általi műveletek.
@@ -333,6 +312,7 @@ public class Pipe extends Element implements ISteppable
     {
     	if(stickyTimer > 0)
     	{
+    		System.out.println(player.GetName() + " ragadós csőre érkezett: " + this.GetId());
     		player.Stuck();
         	stickyTimer = 0;
         	return true;
@@ -358,5 +338,34 @@ public class Pipe extends Element implements ISteppable
         }
 
         return false;
+    }
+    
+    public void SetLeaking(boolean leaks) {
+    	leaking = leaks;
+    }
+    
+    public void TryIdSet() {
+    	if (!this.GetId().equals(""))
+    		return;
+    	
+    	String name = "pipe";
+    	boolean foundUniqueName = false;
+    	int i = 1;
+    	while (!foundUniqueName) {
+    		String newName = name + i++; 
+    		foundUniqueName = true;
+    		for (IElement e : GameManager.GetMap()) {
+        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
+        			foundUniqueName = false;
+        	}
+    		
+    		if (foundUniqueName) {
+    			this.SetId(newName);
+    		}
+    	}
+    }
+    
+    public void SetNeighbours(ArrayList<ActiveElement> neighbourList) {
+    	neighbours = neighbourList;
     }
 }

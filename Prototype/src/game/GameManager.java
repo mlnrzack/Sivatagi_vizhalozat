@@ -540,26 +540,28 @@ public class GameManager
                     {
                     	case "move":
                     		int neighbourIdx = Integer.parseInt(userinput.split(" ")[1]);
-                   			saboteurs.get(i).Move(neighbourIdx);
+                    		currentSaboteurPlayer.Move(neighbourIdx);
                     		break;
                         case "leakpipe":
-                        	saboteurs.get(i).Damage();
+                        	currentSaboteurPlayer.Damage();
                             break;
                         case "setpump":
                         	int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
                             int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-                            saboteurs.get(i).TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+                            currentSaboteurPlayer.TrySetPump(neighbourIdxFrom, neighbourIdxTo);
                             break;
                         case "stickypipe":
-                        	saboteurs.get(i).SetStickyPipe();
+                        	currentSaboteurPlayer.SetStickyPipe();
                         	break;
                         case "slipperypipe":
-                        	saboteurs.get(i).SetSlipperyPipe();
+                        	currentSaboteurPlayer.SetSlipperyPipe();
                         	break;
                         case "pass":
-                        	mechanics.get(i).Pass();
+                        	currentSaboteurPlayer.Pass();
+                        	break;
                         case "exit":
-                        	mechanics.get(i).Exit();
+                        	currentSaboteurPlayer.Exit();
+                        	break;
                         default:
                         	break;
                     }
