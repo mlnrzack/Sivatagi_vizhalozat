@@ -27,7 +27,7 @@ public class MenuFrame extends JFrame
 	private JButton settingsButton;
 	private JButton setButton;
 
-	private static JLabel westLabel;
+	private JLabel westLabel;
 	private JLabel northLabel;
 
 	private static JPanel eastPanel;
@@ -35,14 +35,14 @@ public class MenuFrame extends JFrame
 	private JPanel northPanel;
 	private JPanel southPanel;
 
-	JTextField actionsPerUserSet;
-	JTextField gameRoundsSet;
-	JTextField leakageTimerSet;
-	JTextField maxNeighboursSet;
-	JTextField playerCapacitySet;
-	JTextField pipeCapacitySet;
-	JTextField pumpCapacitySet;
-	JTextField pumpErrorSet;
+	private JTextField actionsPerUserSet;
+	private JTextField gameRoundsSet;
+	private JTextField leakageTimerSet;
+	private JTextField maxNeighboursSet;
+	private JTextField playerCapacitySet;
+	private JTextField pipeCapacitySet;
+	private JTextField pumpCapacitySet;
+	private JTextField pumpErrorSet;
 
 	private Font f = new Font(Font.DIALOG, Font.PLAIN, 28);
 	private Font fi = new Font(Font.DIALOG, Font.ITALIC, 48);
@@ -79,7 +79,8 @@ public class MenuFrame extends JFrame
 		return westPanel;
 	}
 
-	public static void SetWestPanel(JPanel panel) {
+	public static void SetWestPanel(JPanel panel) 
+	{
 		westPanel = panel;
 	}
 
@@ -277,11 +278,9 @@ public class MenuFrame extends JFrame
 	{
 		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0) 
 		{
-			//Controller controller = new Controller(new GameFrame(new MapView()));
-			//new GameFrame(new MapView());
+			new Controller(new GameFrame(new MapView()));
 			setVisible(false);
 			dispose();
-			GameManager.StartGame();
 		} 
 		else
 			JOptionPane.showMessageDialog(this, "Kérlek előbb hozd létre a csapatokat");

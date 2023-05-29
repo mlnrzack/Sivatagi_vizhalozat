@@ -14,8 +14,12 @@ public class MechanicView extends PlayerView
 {
 	private Mechanic mechanic;
 
-
-
+	/**
+	 * @param pos
+	 * @param width
+	 * @param height
+	 * @param index
+	 */
 	public MechanicView(ElementView pos, int width , int height, int index )
 	{
 		this.pos = pos;
@@ -24,10 +28,17 @@ public class MechanicView extends PlayerView
 		mechanic = GameManager.GetMechanics().get(index);
 		LoadImage();
 	}
-	public Mechanic getMechanic() {
+	
+	/**
+	 * @return
+	 */
+	public Mechanic getMechanic() 
+	{
 		return mechanic;
 	}
 	
+	/**
+	 */
 	public Image LoadImage()
 	{
 		try

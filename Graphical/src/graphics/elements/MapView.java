@@ -117,7 +117,7 @@ public class MapView extends JPanel
                 stringY = imageY + pipesView.get(i).GetHeight() / 2;
 
                 // Set the font and color for the string
-                g2.setFont(new Font("Arial", Font.PLAIN, 18));
+                g2.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
 
                 // Draw the string in the middle of the image
                 g2.drawString(pipesView.get(i).GetPipe().GetId(), stringX + 40, stringY + 8);
@@ -132,8 +132,10 @@ public class MapView extends JPanel
                 g2.setTransform(oldTransform);
             }
         }
-
+        
+        //rajzolási font visszaállítása kisebb méretre
         g2.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
+        
         for(int i = 0; i < pumpsView.size(); i++)
         {
             g2.setColor(color);
@@ -209,15 +211,14 @@ public class MapView extends JPanel
                 g2.setColor(currentColor);
             
             //player surrounding circle draw
-            g2.drawOval(saboteursView.get(i).GetPos().GetCenterX() + 3, saboteursView.get(i).GetPos().GetCenterY() + 10, 80, 80);
+            g2.drawOval(saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30), saboteursView.get(i).GetPos().GetCenterY() - 70, 80, 80);
             
             //load the image of the player
-            g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).GetPos().GetCenterX() + 10, saboteursView.get(i).GetPos().GetCenterY() + 15,
+            g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30) + 10, saboteursView.get(i).GetPos().GetCenterY() - 60,
                     saboteursView.get(i).GetWidth(), saboteursView.get(i).GetHeight(), null, null );
             //set the drawing color for the name writing
             g2.setColor(Color.BLACK);
-            g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).GetPos().GetCenterX() + 5, saboteursView.get(i).GetPos().GetCenterY()  + 100);
-
+            g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30) + 10, saboteursView.get(i).GetPos().GetCenterY() - 70);
         }
 
         for(int i = 0 ; i < mapView.size(); i++)
@@ -346,7 +347,7 @@ public class MapView extends JPanel
             {
                 if(ie.equals(mapView.get(k).GetElement().GetId()))
                 {
-                    MechanicView meV = new MechanicView(mapView.get(k),60,60, i);
+                    MechanicView meV = new MechanicView(mapView.get(k), 60, 60, i);
                     mechanicsView.add(meV);
                     
                   //if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
@@ -362,7 +363,7 @@ public class MapView extends JPanel
             {
                 if(ie.equals(mapView.get(k).GetElement().GetId()))
                 {
-                    SaboteurView saV = new SaboteurView(mapView.get(k), 60,60, i);
+                    SaboteurView saV = new SaboteurView(mapView.get(k), 60, 60, i);
                     saboteursView.add(saV);
                     
                   //if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
@@ -408,7 +409,7 @@ public class MapView extends JPanel
                         {
                             dragging = true;
                             pm[0] = pumpsView.get(i);
-                            selectedPump[0] = i ;
+                            selectedPump[0] = i;
                         }
                     }
                 }
