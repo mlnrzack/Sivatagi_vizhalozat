@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Toolkit;
@@ -25,7 +24,6 @@ import game.interfaces.IElement;
 import game.players.Mechanic;
 import game.players.Saboteur;
 import graphics.elements.*;
-import graphics.*;
 import game.IO.*;
 
 /**Ez az osztály felel a játéktér Frame-jéért.
@@ -76,6 +74,9 @@ public class GameFrame extends JFrame
         this.setIconImage(icon.getImage());
         //map összekötése a kezelőfeülettel
         map_G = map;
+        
+        //modell hívása
+    	//GameManager.StartGame();
         
         //A panelek feltöltése adatokkal
         InitializeInterfacePanel();

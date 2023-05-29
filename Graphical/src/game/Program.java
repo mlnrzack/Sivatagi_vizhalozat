@@ -25,9 +25,7 @@ public class Program
 {
     public static void main(String[] args)
     {
-        MenuFrame mFrame = new MenuFrame();
-    	//CreateMap();
-    	//GameManager.StartGame();
+        new MenuFrame();
     }
     
     /**Egy statikus térképet létrehozó függvény.
@@ -262,12 +260,12 @@ public class Program
         map.add(pump11);
         
         spring1.SetId("spring1");
-        spring1.AddPipe(pipe2);
+        spring1.AddPipe(pipe1);
+        spring1.AddPipe(pipe3);
         map.add(spring1);
         
         spring2.SetId("spring2");
-        spring2.AddPipe(pipe1);
-        spring2.AddPipe(pipe3);
+        spring2.AddPipe(pipe2);
         map.add(spring2);
 
         GameManager.SetMap(map);

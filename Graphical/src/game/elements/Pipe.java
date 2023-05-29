@@ -1,7 +1,6 @@
 package game.elements;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import game.*;
 import game.IO.*;
@@ -154,6 +153,7 @@ public class Pipe extends Element implements ISteppable
         	System.out.println(this.GetId() + " rongálása sikeres volt. Lyukas lett.\n");
             return true;
         }
+        
         DebugLog.WriteDebugLog("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
         InfoLog.WriteInfoLog("Cső rongálása nem sikerül. Már lyukas ez az elem.\n");
         System.out.println(this.GetId() + " rongálása nem sikerül. Már lyukas ez az elem.\n");
@@ -277,7 +277,7 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TrySetSlippery()
     {
-    	if(slipperyTimer == 0)
+    	if(slipperyTimer == 0 && stickyTimer == 0)
     	{
     		SetSlippery();
     		System.out.println("A cső csúszós lett.");
@@ -292,7 +292,7 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TrySetSticky()
     {
-    	if(stickyTimer == 0)
+    	if(stickyTimer == 0 && slipperyTimer == 0)
     	{
     		SetSticky();
     		System.out.println("A cső ragacsos lett.");
