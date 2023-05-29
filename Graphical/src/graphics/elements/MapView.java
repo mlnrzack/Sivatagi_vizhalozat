@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 //import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 //import java.util.HashMap;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import game.*;
+import game.IO.DebugLog;
 import graphics.players.*;
 
 /**Ez az osztály felel a játéktér megjelenítéséért.
@@ -95,9 +97,58 @@ public class MapView extends JPanel
 		imX = 200;
 		imY = 633;
 		dragging = false;
-		
-		
-		
+		g2.setColor(color.BLACK);
+		for (int i = 0; i < pipesView.size(); i++) {
+		if (pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null) {
+			// Draw the line between the two elements
+			g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
+					pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
+
+			// Set the dimensions of the pipe
+			pipesView.get(i).SetDimensions();
+
+			// Determine the angle of the line
+			double x = Math.abs(pipesView.get(i).GetNeighbours()[0].posX - pipesView.get(i).GetNeighbours()[1].posX);
+			double y = Math.abs(pipesView.get(i).GetNeighbours()[0].posY - pipesView.get(i).GetNeighbours()[1].posY);
+			double angle = Math.atan2(pipesView.get(i).GetNeighbours()[1].getCenterY() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
+					pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterX());
+
+			// Calculate the center point of the line
+			Point center = calculateCenter(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
+					pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
+
+			// Save the current transform
+			AffineTransform oldTransform = g2.getTransform();
+
+			// Apply the rotation transformation
+			g2.rotate(angle, center.x, center.y);
+
+			// Calculate the new position for drawing the image
+			int imageX = (int) (center.x - pipesView.get(i).getWidth() / 2);
+			int imageY = (int) (center.y - pipesView.get(i).getHeight() / 2);
+
+			// Draw the image on top of the line
+			g2.drawImage(pipesView.get(i).LoadImage(), imageX, imageY,
+					pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null);
+
+			// Restore the original transform
+			g2.setTransform(oldTransform);
+		}
+	}
+
+		for(int i = 0; i < pumpsView.size(); i++)
+		{
+			g2.setColor(color);
+			g2.fillOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
+			g2.setColor(circleColor);
+			g2.drawOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
+			g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(),
+					pumpsView.get(i).getWidth(), pumpsView.get(i).getHeight(), null, null );
+			g2.setColor(Color.BLACK);
+			g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).getPosX() + 22, pumpsView.get(i).getPosY() + 85);
+
+		}
+
 		for (int i = 0 ; i < cisternsView.size(); i++)
 		{
 			g2.setColor(color);
@@ -122,58 +173,18 @@ public class MapView extends JPanel
 			g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).getPosX() + 55, springsView.get(i).getPosY() + 115);
 		}
 
-		for(int i = 0; i < pumpsView.size(); i++)
-		{
-			g2.setColor(color);
-			g2.fillOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
-			g2.setColor(circleColor);
-			g2.drawOval(pumpsView.get(i).getPosX() - 7, pumpsView.get(i).getPosY(), 100, 100);
-			g2.drawImage(pumpsView.get(i).LoadImage(), pumpsView.get(i).getPosX(), pumpsView.get(i).getPosY(),
-					pumpsView.get(i).getWidth(), pumpsView.get(i).getHeight(), null, null );
-			g2.setColor(Color.BLACK);
-			g2.drawString(pumpsView.get(i).GetPump().GetId(), pumpsView.get(i).getPosX() + 22, pumpsView.get(i).getPosY() + 85);
-		}
-		
-		g2.setColor(color.BLACK);
-		for(int i = 0; i < pipesView.size(); i++)
-		{
-			if(pipesView.get(i).GetNeighbours()[0] != null && pipesView.get(i).GetNeighbours()[1] != null)
-			{
-				//vonal felrajzolása a két elem között
-				g2.drawLine(pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(),
-							pipesView.get(i).GetNeighbours()[1].getCenterX(), pipesView.get(i).GetNeighbours()[1].getCenterY());
-				//cső hosszáak változtatása
-				pipesView.get(i).SetDimensions();
-				//a vonal szögének meghatározása
-				double a = Math.abs(pipesView.get(i).GetNeighbours()[0].posX - pipesView.get(i).GetNeighbours()[1].posX);
-				double b = Math.abs(pipesView.get(i).GetNeighbours()[0].posY - pipesView.get(i).GetNeighbours()[1].posY);
-				double c = pipesView.get(i).getWidth();
-				//double angle = Math.cos(a / c);
-				double angle = (Math.atan2(pipesView.get(i).GetNeighbours()[1].getCenterY() - pipesView.get(i).GetNeighbours()[0].getCenterY(),
-										pipesView.get(i).GetNeighbours()[1].getCenterX() - pipesView.get(i).GetNeighbours()[0].getCenterX()));
-				double angleD = Math.toDegrees(angle)*-1;
-				//elforgatás a szöggel
-				g2.rotate(angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2,
-								pipesView.get(i).GetNeighbours()[0].getCenterY() + (double) pipesView.get(i).getHeight() / 2);
-				//a kép betöltése
-				g2.drawImage(pipesView.get(i).LoadImage(), pipesView.get(i).GetNeighbours()[0].getCenterX(), pipesView.get(i).GetNeighbours()[0].getCenterY(), pipesView.get(i).getWidth(), pipesView.get(i).getHeight(), null, null );
-				//visszaforgatás a szöggel
-				g2.rotate(-angle, pipesView.get(i).GetNeighbours()[0].getCenterX() + (double) pipesView.get(i).getWidth() / 2,
-						pipesView.get(i).GetNeighbours()[0].getCenterY() + (double) pipesView.get(i).getHeight() / 2);
-			}
-		}
 
 		//TODO
 		for(int i = 0; i < mechanicsView.size(); i++)
 		{
 			//TODO
 		}
-		
+
 		for(int i = 0; i < saboteursView.size(); i++)
 		{
 			//TODO
 		}
-		
+
 		g2.dispose();
 	}
 
@@ -253,6 +264,11 @@ public class MapView extends JPanel
 			SaboteurView sV = new SaboteurView(null, i);
 			saboteursView.add(sV);
 		}
+	}
+	public static Point calculateCenter(int x1, int y1, int x2, int y2) {
+		int centerX = (x1 + x2) / 2;
+		int centerY = (y1 + y2) / 2;
+		return new Point(centerX, centerY);
 	}
 
 	private void MouseListener() 
