@@ -132,11 +132,7 @@ public abstract class Player
     public void Pass()
     {
     	System.out.println(this.GetName() + " játékos passzolt.");
-    	for(int i = GameManager.GetPlayerAction(); i < Constants.ActionInRoundPerUser; i++)
-    	{
-    		GameManager.ActionExecuted();
-    	}
-    	GameManager.SetPlayerAction(Constants.ActionInRoundPerUser);
+		GameManager.ActionExecuted();
     }
     
     /**A játék bezárása
