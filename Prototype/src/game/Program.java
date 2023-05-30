@@ -16,11 +16,6 @@ public class Program
 {
     public static void main(String[] args)
     {
-    	Test.ListAllTests();
-    	Test.Execute("MoveTest");
-    	System.out.println("MoveTest futtatva");
-    	Test.ExecuteAllTests();
-    	System.out.println("Tesztek futtatva");
     	Test.TestMenu();
 
     	CreateMap();

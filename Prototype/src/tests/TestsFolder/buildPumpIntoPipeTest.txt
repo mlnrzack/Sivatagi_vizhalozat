@@ -6,4 +6,4 @@ picknewpump mechanic1
 playerMove mechanic1 pipe1
 droppump mechanic1
 -- Expected Pattern --
-Pumpa beépítve a cső közepére: pipe1
+Pumpa csatlakoztatása sikeres neki: mechanic1

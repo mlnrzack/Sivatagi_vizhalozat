@@ -4,4 +4,4 @@ setneighbours pipe1 pump1
 spawnMechanic mechanic1 pump1
 pickneighbour mechanic1 pipe1
 -- Expected Pattern --
-Cső lecsatlakoztatása sikeres neki: mechanic1 Innen: pump1 Cső lecsatlakoztatva: pipe1
+pipe1 felvétele sikeres neki: mechanic1

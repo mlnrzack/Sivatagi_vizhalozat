@@ -1,0 +1,9 @@
+addSource s1
+addPipe pipe1
+setneighbours pipe1 s1
+spawnMechanic mech1 pipe1
+pass mech1
+pass mech1
+endGame
+-- Expected Pattern --
+Szabotőrök nyertek

@@ -4,4 +4,4 @@ pipe2 hozzáadva a pályához.
 pipe1 és pump1 szomszédok lettek.
 pipe2 és pump1 szomszédok lettek.
 mechanic1 szerelő hozzáadva a játékhoz ide: pump1
-mechanic1 átállította a csövet: pump1 Input: pipe1 Output: pipe2
+mechanic1 átállította a pumpát. Input: pipe1 Output: pipe2

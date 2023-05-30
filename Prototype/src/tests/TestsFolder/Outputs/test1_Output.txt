@@ -1,0 +1,22 @@
+pipe1 hozzáadva a pályához.
+pipe2 hozzáadva a pályához.
+ws1 hozzáadva a pályához.
+cist1 hozzáadva a pályához.
+pump1 hozzáadva a pályához.
+pipe1 és ws1 szomszédok lettek.
+pipe1 és pump1 szomszédok lettek.
+pipe2 és pump1 szomszédok lettek.
+pipe2 és cist1 szomszédok lettek.
+mech1 szerelő hozzáadva a játékhoz ide: cist1
+pump2 hozzáadva a pályához.
+Pumpa felvétele sikeres. Pumpa felvéve: pump2
+Szabad csővég felvétele sikeres neki: mech1
+mech1 sikeresen mozgott ide: pipe2
+mech1 sikeresen mozgott ide: pump1
+pipe3 és pump1 szomszédok lettek.
+mech1 sikeresen mozgott ide: pipe2
+Pumpa beépítve a cső közepére
+Nem sikerül a cső csatakoztatása neki: mech1
+Nem létező szomszéd: pump1
+mech1 mozgása nem sikerült
+Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.

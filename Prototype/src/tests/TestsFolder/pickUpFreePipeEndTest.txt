@@ -2,4 +2,4 @@ addCistern cistern1
 spawnMechanic mechanic1 cistern1
 pickfreepipe mechanic1
 -- Expected Pattern --
-Szabad csővég felvétele sikeres. Cső felvéve: pipe1
+Szabad csővég felvétele sikeres neki: mechanic1

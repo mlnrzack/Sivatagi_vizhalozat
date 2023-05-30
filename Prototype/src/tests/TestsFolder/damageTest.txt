@@ -2,4 +2,4 @@ addPipe pipe1
 spawnMechanic mechanic1 pipe1
 leakpipe mechanic1
 -- Expected Pattern --
-mechanic1 megrongálta a csövet: pipe1
+Cső lyukasztás sikeres neki: mechanic1

@@ -1,0 +1,7 @@
+s1 hozzáadva a pályához.
+pipe1 hozzáadva a pályához.
+pipe1 és s1 szomszédok lettek.
+mech1 szerelő hozzáadva a játékhoz ide: pipe1
+mech1 játékos passzolt.
+mech1 játékos passzolt.
+Szabotőrök nyertek

@@ -2,4 +2,4 @@ addCistern cistern1
 spawnMechanic mechanic1 cistern1
 picknewpump mechanic1
 -- Expected Pattern --
-Pumpa felvétele sikeres. Pumpa felvéve: pump1
+Pumpa felvétele sikeres

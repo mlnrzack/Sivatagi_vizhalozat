@@ -4,4 +4,4 @@ spawnMechanic mechanic1 pipe1
 setneighbours pipe1 pump1
 playerMove mechanic1 pump1
 -- Expected Pattern --
-mechanic1 sikeresen mozgott innen: pipe1 ide: pump1
+mechanic1 sikeresen mozgott ide: pump1

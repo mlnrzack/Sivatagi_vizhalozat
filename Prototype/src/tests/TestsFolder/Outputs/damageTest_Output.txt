@@ -1,3 +1,4 @@
 pipe1 hozzáadva a pályához.
 mechanic1 szerelő hozzáadva a játékhoz ide: pipe1
 mechanic1 megrongálta a csövet: pipe1
+Cső lyukasztás sikeres neki: mechanic1

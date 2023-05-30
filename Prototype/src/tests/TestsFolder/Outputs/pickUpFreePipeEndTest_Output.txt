@@ -1,3 +1,3 @@
 cistern1 hozzáadva a pályához.
 mechanic1 szerelő hozzáadva a játékhoz ide: cistern1
-Szabad csővég felvétele sikeres. Cső felvéve: pipe1
+Szabad csővég felvétele sikeres neki: mechanic1

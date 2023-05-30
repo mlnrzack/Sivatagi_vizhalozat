@@ -6,4 +6,4 @@ setneighbours pipe2 pump1
 spawnMechanic mechanic1 pump1
 playerSetIO mechanic1 pipe1 pipe2
 -- Expected Pattern --
-mechanic1 átállította a csövet: pump1 Input: pipe1 Output: pipe2
+mechanic1 átállította a pumpát. Input: pipe1 Output: pipe2
