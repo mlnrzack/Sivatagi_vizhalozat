@@ -168,7 +168,7 @@ public class GameFrame extends JFrame
 
         gameStatisticsPanel.setBackground(color);
         gameStatisticsPanel.setLayout(new GridLayout(9,1));
-        gameStatisticsPanel.setSize((int)(screenWidth * 0.3), this.getBounds().height);
+        gameStatisticsPanel.setSize((int)(screenWidth * 0.3), (int)(screenHeight * 0.1));
 
         //Játékos akcióinak összeszedése:
         actionButtons = new ArrayList<JButton>();
@@ -192,7 +192,7 @@ public class GameFrame extends JFrame
         {
             butt.setBackground(color);
             butt.setFont(f);
-            butt.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 2, false));
+            butt.setBorder(BorderFactory.createDashedBorder(Color.DARK_GRAY, 5, 5, 0, false));
             playerActionPanel.add(butt);
         }
 
@@ -200,16 +200,18 @@ public class GameFrame extends JFrame
 
         playerActionPanel.setBackground(color);
         playerActionPanel.setVisible(true);
-
+        
+        /*
         interfacePanel.add(displayCurrentPlayerName);
         interfacePanel.add(displayRound);
         interfacePanel.add(playerRemainingActionCount);
         interfacePanel.add(mechPoints);
         interfacePanel.add(sabPoints);
+        */
+        interfacePanel.add(gameStatisticsPanel);
         interfacePanel.add(damagedPipesLabel);
         interfacePanel.add(damagedPumpsLabel);
         interfacePanel.add(playerActionPanel);
-        interfacePanel.add(gameStatisticsPanel);
 
         interfacePanel.setLayout(new BoxLayout(interfacePanel, BoxLayout.Y_AXIS));
 
@@ -238,15 +240,19 @@ public class GameFrame extends JFrame
         for (Pipe entity: GameManager.GetPipes())
         {
             if (entity.GetLeaking())
-                damagedPipes.add(entity.GetId());
-            damagedPipesLabel.setText(String.format(entity.GetId()+ "\n"));
+            {    
+            	damagedPipes.add(entity.GetId());
+            	damagedPipesLabel.setText(String.format(entity.GetId()+ "\n"));
+            }
         }
 
         for (Pump entity: GameManager.GetPumps())
         {
             if (entity.GetBroken())
+            {
                 damagedPumps.add(entity.GetId());
-            damagedPumpsLabel.setText(String.format(entity.GetId() + "\n"));
+                damagedPumpsLabel.setText(String.format(entity.GetId() + "\n"));
+            }
         }
 
         //Szabotőr köre van

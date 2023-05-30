@@ -19,17 +19,19 @@ public class Controller
 	protected static GameFrame gf;
 	protected ArrayList<JButton> buttons;
 	private static String _nextMove = "";
-	private static String _currentMove ="";
+	private static String _currentMove = "";
+	private static boolean mechanicStep = false;
+	private static boolean saboteurStep = false;
 	
 	public Controller(GameFrame gf)
 	{
 		this.gf = gf;
 		buttons = gf.getActionButtons();
-		initController();
+		InitController();
 		AttachActionToButtons();
 	}
 	
-	private void initController() 
+	private void InitController() 
 	{
 		buttons.get(0).addActionListener(new MoveButtonListener());
 		buttons.get(1).addActionListener(new RepairButtonListener());
@@ -193,12 +195,8 @@ public class Controller
 		}
 	}
 
-	//private boolean isActionButtonPressed() {
-		//gf.GetActionButtons();
-		//return false;
-		
-	//}
-	
+	/**A szerelő játékos karakter lépéseinek menüje.
+	 */
 	public static void MechanicActions()
 	{
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
@@ -207,8 +205,6 @@ public class Controller
 			
 			GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(i));
 			GameManager.SetCurrentSaboteur(null);
-			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
-			gf.GetMap_G().SetCurrentSaboteur(null);
 			
 			System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
 
@@ -216,6 +212,9 @@ public class Controller
 			{
 				try
 				{
+					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
+					gf.GetMap_G().SetCurrentSaboteur(null);
+					
 					//Scanner reader = new Scanner(System.in);
 					String userinput = _nextMove;
 
@@ -308,7 +307,7 @@ public class Controller
 			}
 		}
 	}
-
+	
 	/**A szabotőr játékos karakter lépéseinek menüje.
 	 */
 	public static void SaboteurActions()
@@ -389,12 +388,13 @@ public class Controller
 	{
 		_nextMove = nextMove;
 		System.out.println("4. Controller SetNextMove "+nextMove);
-		if (GameManager.GetCurrentMechanic()==null)
+		if (GameManager.GetCurrentMechanic() == null)
 		{
 			System.out.println("4.5 Szabotőr Action");
 			Controller.SaboteurActions();
 		}
-		else{
+		else
+		{
 			System.out.println("4.5 Mechanic Action");
 			Controller.MechanicActions();
 		}
@@ -402,15 +402,19 @@ public class Controller
 	
 	public static void AttachActionToButtons()
 	{
-		//Az akciógombokhoz hozzá rendelünk a gameManagerből megfelelő akciókat
+		//Az akciógombokhoz hozzá rendelünk a GameManagerből megfelelő akciókat
 		
-
+		for(int i = 0; i < gf.GetMap_G().GetMechanicsView().size(); i++)
+		{
+			mechanicStep = true;
+		}
+			
 		for(JButton butt: gf.GetActionButtons())
 		{
 			String action = butt.getText();
 
 			//GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(0));
-			GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(0));
+			//GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(0));
 
 
 			//======================================================
@@ -421,7 +425,7 @@ public class Controller
 			//======================================================
 			Mechanic m = GameManager.GetCurrentMechanic();
 			//System.out.println(m.GetCurrentPosition().GetId());
-			Saboteur s= GameManager.GetCurrentSaboteur();
+			Saboteur s = GameManager.GetCurrentSaboteur();
 			//System.out.println("Current player:" + (m != null? m.GetName(): s.GetName()));
 			butt.addActionListener(new ActionListener()
 			{
@@ -443,7 +447,6 @@ public class Controller
 							 * hogy utána meg összevesse a játékos mezejének a szomszédjaival
 							 * */
 
-							//Ez a flag jöhetne a MapViewból
 							gf.GetMap_G().isPlayerMoving = false;
 
 							int answer;
@@ -459,9 +462,6 @@ public class Controller
 
 							gf.ResetActionButtons();
 							gf.UpdateHud();
-							
-							
-							//buttonPressed = true;
 							
 							break;
 							
@@ -508,7 +508,7 @@ public class Controller
 
 						case "pickfreepipe":
 							frame = new JFrame();
-							if(m!= null)
+							if(m != null)
 							{
 								if(m.PickUpFreePipeEnd() == true)
 									JOptionPane.showMessageDialog(frame, "Sikeresen felvettél egy csővéget!");
@@ -528,7 +528,7 @@ public class Controller
 
 						case"picknewpump":
 							frame = new JFrame();
-							if(m!= null)
+							if(m != null)
 							{
 								if(m.PickUpPump() == true)
 									JOptionPane.showMessageDialog(frame, "Sikeresen felvettél egy új pumpát!");
@@ -568,7 +568,7 @@ public class Controller
 
 						case "connectpipe":
 							frame = new JFrame();
-							if(m!= null)
+							if(m != null)
 							{
 								if(m.ConnectPipe() == true)
 									JOptionPane.showMessageDialog(frame, "Sikeresen beépítetted a pumpát egy csőbe!");
@@ -617,7 +617,7 @@ public class Controller
 
 						case "setpump X Y X":
 							avaliableFields = new ArrayList<String>();
-							indicesString ="";
+							indicesString = "";
 
 							if(m != null)
 							{

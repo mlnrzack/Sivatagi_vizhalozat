@@ -10,7 +10,7 @@ import javax.swing.*;
 
 import game.*;
 import game.IO.*;
-import game.players.Mechanic;
+import game.players.*;
 import graphics.*;
 import graphics.players.*;
 
@@ -64,6 +64,22 @@ public class MapView extends JPanel
 		MouseListener();
 	}
 
+	/**
+	 * @return
+	 */
+	public ArrayList<MechanicView> GetMechanicsView()
+	{
+		return mechanicsView;
+	}
+	
+	/**
+	 * @return
+	 */
+	public ArrayList<SaboteurView> GetSaboteursView()
+	{
+		return saboteursView;
+	}
+	
 	/**A térkép felrajzolása a JPanelra, majd annak frissítése
 	 */
 	@Override
@@ -401,6 +417,18 @@ public class MapView extends JPanel
 		currentSaboteur = newCurrent;
 	}
 	
+	public SaboteurView GetCurrentSaboteurByModell(Saboteur saboteur)
+	{
+		for(int i = 0; i < saboteursView.size(); i++)
+		{
+			if(saboteursView.get(i).GetSaboteur().GetName().equals(saboteur.GetName()))
+			{
+				return saboteursView.get(i);
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * @param x1
 	 * @param y1
@@ -434,7 +462,7 @@ public class MapView extends JPanel
 					for (int i = 0 ; i < pumpsView.size(); i++)
 					{
 						if (me.getX() >= pumpsView.get(i).GetPosX() && me.getX() < pumpsView.get(i).GetPosX() + pumpsView.get(i).GetWidth()
-								&& me.getY() >= pumpsView.get(i).GetPosY() && me.getY() < pumpsView.get(i).GetPosY() + pumpsView.get(i).GetHeight())
+						 && me.getY() >= pumpsView.get(i).GetPosY() && me.getY() < pumpsView.get(i).GetPosY() + pumpsView.get(i).GetHeight())
 						{
 							dragging = true;
 							pm[0] = pumpsView.get(i);
@@ -442,7 +470,6 @@ public class MapView extends JPanel
 						}
 					}
 				}
-
 				else if (isPlayerMoving)
 				{
 					JFrame jf = new JFrame();
@@ -458,7 +485,7 @@ public class MapView extends JPanel
 							mv[0] = pipeView;
 
 							JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));
-							System.out.println("1. MapView kiválasztott "+mv[0].GetElement().GetId());
+							
 							if (checkNeighbour(mv[0]))
 							{
 								GameFrame.SetElement(mv[0]);
@@ -476,7 +503,7 @@ public class MapView extends JPanel
 					for (int i = 0; i < activesView.size(); i++)
 					{
 						if (me.getX() >= activesView.get(i).GetPosX() && me.getX() < activesView.get(i).GetPosX() + activesView.get(i).GetWidth()
-								&& me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
+						 && me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
 						{
 							mv[0] = activesView.get(i);
 
@@ -554,6 +581,11 @@ public class MapView extends JPanel
 		return false;
 	}
 
+	
+	/**
+	 * @param elementView
+	 * @return
+	 */
 	private boolean checkNeighbour(ElementView elementView) 
 	{
 		if (currentMechanic == null)
@@ -566,8 +598,8 @@ public class MapView extends JPanel
 					return true;
 			}
 		}
-		else {
-
+		else
+		{
 			System.out.println(currentMechanic.GetMechanic().GetName());
 			for (int i = 0;i<currentMechanic.GetMechanic().GetCurrentPosition().GetNeighbours().size();i++)
 			{
@@ -576,6 +608,7 @@ public class MapView extends JPanel
 					return true;
 			}
 		}
+		
 		return false;
 	}
 
@@ -604,6 +637,7 @@ public class MapView extends JPanel
 		return distanceSquared <= thresholdSquared;
 	}
 
+	
 	/**
 	 * @param startPoint
 	 * @param endPoint
@@ -626,23 +660,30 @@ public class MapView extends JPanel
 		return distanceSquared <= radiusSquared;
 	}
 
-	public void UpdateMapDetails() {
-
-		if(GameManager.GetCurrentMechanic() != null) {
-			for(ElementView element: mapView) {
-				if(element.GetElement() == GameManager.GetCurrentMechanic().GetCurrentPosition()) {
+	
+	/**Updates the map, according to the modell's state.
+	 */
+	public void UpdateMapDetails() 
+	{
+		if(GameManager.GetCurrentMechanic() != null) 
+		{
+			for(ElementView element: mapView)
+			{
+				if(element.GetElement() == GameManager.GetCurrentMechanic().GetCurrentPosition())
 					currentMechanic.UpdatePos(element);
-				}
 			}
 		}
-		if(GameManager.GetCurrentSaboteur() != null) {
-			for(ElementView element: mapView) {
-				if(element.GetElement() == GameManager.GetCurrentSaboteur().GetCurrentPosition()) {
+		
+		if(GameManager.GetCurrentSaboteur() != null) 
+		{
+			for(ElementView element: mapView) 
+			{
+				if(element.GetElement() == GameManager.GetCurrentSaboteur().GetCurrentPosition())
 					currentSaboteur.UpdatePos(element);
-				}
 			}
 		}
 	}
+	
 
 	/**
 	 * @param pointA
@@ -668,6 +709,7 @@ public class MapView extends JPanel
 		// Check if the distance is within the tolerance
 	}
 
+	
 	/**
 	 * @param mapView
 	 * @param point

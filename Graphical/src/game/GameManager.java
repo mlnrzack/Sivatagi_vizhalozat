@@ -385,6 +385,12 @@ public class GameManager
     public static void ActionExecuted()
     {
         IncreasePlayerAction();
+        
+        for(int i = 0; i < cisterns.size(); i++)
+        {
+        	cisterns.get(i).Step();
+        }
+        
         StepSteppables();
         FireSourceActions();
     }
@@ -404,7 +410,6 @@ public class GameManager
      */
     public static void StepSteppables()
     {
-
     	for(int i = steppables.size() - 1; i >= 0; i--)
     	{
         	steppables.get(i).Step();

@@ -13,7 +13,6 @@ public class Cistern extends ActiveElement implements ISteppable
 	 */
     public Cistern()
     {
-    	GameManager.AddSteppable(this);
     	GameManager.AddCistern(this);
     	this.SetId("cistern" + GameManager.TryCisternIdSet());
     }
@@ -77,7 +76,7 @@ public class Cistern extends ActiveElement implements ISteppable
     /**A szomszédos csőből a ciszternába pumpálja a vizet
      * @param neighbourPipe a szomszéd cső
      */
-    private void PumpWaterToCisternFromNeighbour(Pipe neighbourPipe)
+    public void PumpWaterToCisternFromNeighbour(Pipe neighbourPipe)
     {
     	neighbourPipe.SetWaterInside(neighbourPipe.GetWaterInside() - 1);
         SetWaterInside(GetWaterInside() + 1); 

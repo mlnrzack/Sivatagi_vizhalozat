@@ -118,7 +118,7 @@ public class MenuFrame extends JFrame
 		newGameButton = new JButton("New Game");
 		newGameButton.setFont(f);
 		newGameButton.setBackground(color);
-		newGameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+		newGameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 0, false));
 		newGameButton.addActionListener
 		(
 			new ActionListener() 
@@ -134,7 +134,7 @@ public class MenuFrame extends JFrame
 		settingsButton = new JButton("Settings");
 		settingsButton.setFont(f);
 		settingsButton.setBackground(color);
-		settingsButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+		settingsButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 0, false));
 		settingsButton.addActionListener
 		(
 			new ActionListener() 
@@ -192,7 +192,7 @@ public class MenuFrame extends JFrame
 		backButton = new JButton("Back");
 		backButton.setFont(f);
 		backButton.setBackground(color);
-		backButton.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 2, false));
+		backButton.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 0, false));
 		backButton.addActionListener
 		(
 			new ActionListener() 
@@ -208,7 +208,7 @@ public class MenuFrame extends JFrame
 		startGameButton = new JButton("Start Game");
 		startGameButton.setFont(f);
 		startGameButton.setBackground(color);
-		startGameButton.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 2, false));
+		startGameButton.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 0, false));
 		startGameButton.addActionListener
 		(
 			new ActionListener() 
@@ -224,7 +224,7 @@ public class MenuFrame extends JFrame
 		setButton = new JButton("Set");
 		setButton.setFont(f);
 		setButton.setBackground(color);
-		setButton.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 2, false));
+		setButton.setBorder(BorderFactory.createDashedBorder(color, 2, 2, 0, false));
 		setButton.addActionListener
 		(
 			new ActionListener() 
