@@ -39,9 +39,9 @@ public class MapView extends JPanel
     private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();                  //a szerelők megjelenítésére szolgáló lista
     private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();                  //a szabotőrök megjelenítésére szolgáló lista
 
-    private int x, y, imX, imY;																		//koordináta komponensek
-    private boolean dragging;																		//pumpa húzása
-    public boolean isPlayerMoving = false;															//játékos lépésének vizsgálására
+    private int x, y, imX, imY;                                                                     //koordináta komponensek
+    private boolean dragging;                                                                       //pumpa húzása
+    public boolean isPlayerMoving = false;                                                          //játékos lépésének vizsgálására
 
     /**Osztály konstruktor
      */
@@ -132,10 +132,10 @@ public class MapView extends JPanel
                 g2.setTransform(oldTransform);
             }
         }
-        
+
         //rajzolási font visszaállítása kisebb méretre
         g2.setFont(new Font(Font.DIALOG, Font.PLAIN, 12));
-        
+
         for(int i = 0; i < pumpsView.size(); i++)
         {
             g2.setColor(color);
@@ -159,42 +159,42 @@ public class MapView extends JPanel
             
             g2.setColor(circleColor);
             g2.drawOval(cisternsView.get(i).GetPosX() + 3, cisternsView.get(i).GetPosY() + 10, 100, 100);
-            
+
             g2.drawImage(cisternsView.get(i).LoadImage(), cisternsView.get(i).GetPosX() ,cisternsView.get(i).GetPosY(),
                     cisternsView.get(i).GetWidth(), cisternsView.get(i).GetHeight(), null, null );
-            
+
             g2.setColor(Color.BLACK);
             g2.drawString(cisternsView.get(i).GetCistern().GetId(), cisternsView.get(i).GetPosX() + 30, cisternsView.get(i).GetPosY() + 100);
         }
-        
+
         for (int i = 0; i < springsView.size();i++)
         {
             g2.setColor(color);
             g2.fillOval(springsView.get(i).GetPosX() + 25, springsView.get(i).GetPosY() + 20, 100, 100);
-            
+
             g2.setColor(circleColor);
             g2.drawOval(springsView.get(i).GetPosX() + 25, springsView.get(i).GetPosY() + 20, 100, 100);
-            
+
             g2.drawImage(springsView.get(i).LoadImage(), springsView.get(i).GetPosX(), springsView.get(i).GetPosY(),
                     springsView.get(i).GetWidth(), springsView.get(i).GetHeight(), null, null);
-            
+
             g2.setColor(Color.BLACK);
             g2.drawString(springsView.get(i).GetSpring().GetId(), springsView.get(i).GetPosX() + 55, springsView.get(i).GetPosY() + 115);
         }
 
         for(int i = 0; i < mechanicsView.size(); i++)
         {
-        	//player surrounding circle color set
+            //player surrounding circle color set
             g2.setColor(circleColor);
-        	//current player surrounding circle color set
+            //current player surrounding circle color set
             if (mechanicsView.get(i) == currentMechanic)
                 g2.setColor(currentColor);
-            
+
             //player surrounding circle draw
             g2.drawOval(mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10), mechanicsView.get(i).GetPos().GetCenterY() + 10, 80, 80);
 
             //load the image of the player
-            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10) + 20, 
+            g2.drawImage(mechanicsView.get(i).LoadImage(), mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10) + 20,
             		mechanicsView.get(i).GetPos().GetCenterY() + 20, mechanicsView.get(i).GetWidth(), mechanicsView.get(i).GetHeight(), null, null );
             //set the drawing color for the name writing
             g2.setColor(Color.BLACK);
@@ -204,15 +204,14 @@ public class MapView extends JPanel
 
         for(int i = 0; i < saboteursView.size(); i++)
         {
-        	//player surrounding circle color set
+            //player surrounding circle color set
             g2.setColor(circleColor);
-        	//current player surrounding circle color set
+            //current player surrounding circle color set
             if (saboteursView.get(i) == currentSaboteur)
                 g2.setColor(currentColor);
-            
+
             //player surrounding circle draw
             g2.drawOval(saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30), saboteursView.get(i).GetPos().GetCenterY() - 70, 80, 80);
-            
             //load the image of the player
             g2.drawImage(saboteursView.get(i).LoadImage(), saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30) + 10, saboteursView.get(i).GetPos().GetCenterY() - 60,
                     saboteursView.get(i).GetWidth(), saboteursView.get(i).GetHeight(), null, null );
@@ -223,7 +222,7 @@ public class MapView extends JPanel
 
         for(int i = 0 ; i < mapView.size(); i++)
         {
-            if (contains(mapView.get(i), getMousePosition())) 
+            if (contains(mapView.get(i), getMousePosition()))
             {
                 g.setColor(Color.RED);
                 g.drawRect(mapView.get(i).GetPosX(), mapView.get(i).GetPosY(), mapView.get(i).GetWidth(), mapView.get(i).GetHeight());
@@ -244,7 +243,7 @@ public class MapView extends JPanel
             Point mousePosition = getMousePosition();
             double tolerance = 2.0;
 
-            if (isMouseNearLine(pointA, pointB, mousePosition, tolerance)) 
+            if (isMouseNearLine(pointA, pointB, mousePosition, tolerance))
             {
                 // Mouse is near the line, display the green circle
                 int centerX = (pointA.x + pointB.x) / 2;
@@ -302,11 +301,11 @@ public class MapView extends JPanel
             mapView.add(puV);
 
         }
-        
+
         for(int i = GameManager.GetCisterns().size() - 1; i >= 0; i--)
         {
             CisternView cV = new CisternView((int)(screenWidth * 0.35) + (i * (int)(screenWidth * 0.10)),
-            		(int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
+                    (int)(screenHeight * 0.85) - (4 % (i + 1)  * (int)(screenHeight * 0.15)), 100, 100,  i);
             cisternsView.add(cV);
             activesView.add(cV);
             mapView.add(cV);
@@ -349,9 +348,9 @@ public class MapView extends JPanel
                 {
                     MechanicView meV = new MechanicView(mapView.get(k), 60, 60, i);
                     mechanicsView.add(meV);
-                    
-                  //if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
-					currentMechanic = meV;
+
+                    //if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
+                    currentMechanic = meV;
                 }
             }
         }
@@ -365,9 +364,9 @@ public class MapView extends JPanel
                 {
                     SaboteurView saV = new SaboteurView(mapView.get(k), 60, 60, i);
                     saboteursView.add(saV);
-                    
-                  //if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
-					currentSaboteur = saV;
+
+                    //if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
+                    currentSaboteur = saV;
                 }
             }
         }
@@ -380,7 +379,7 @@ public class MapView extends JPanel
      * @param y2
      * @return
      */
-    public static Point calculateCenter(int x1, int y1, int x2, int y2) 
+    public static Point calculateCenter(int x1, int y1, int x2, int y2)
     {
         int centerX = (x1 + x2) / 2;
         int centerY = (y1 + y2) / 2;
@@ -389,7 +388,7 @@ public class MapView extends JPanel
 
     /**
      */
-    private void MouseListener() 
+    private void MouseListener()
     {
         final PumpView[] pm = new PumpView[1];
         final int[] selectedPump = new int[1];
@@ -405,7 +404,7 @@ public class MapView extends JPanel
                     for (int i = 0 ; i < pumpsView.size(); i++)
                     {
                         if (me.getX() >= pumpsView.get(i).GetPosX() && me.getX() < pumpsView.get(i).GetPosX() + pumpsView.get(i).GetWidth()
-                         && me.getY() >= pumpsView.get(i).GetPosY() && me.getY() < pumpsView.get(i).GetPosY() + pumpsView.get(i).GetHeight())
+                                && me.getY() >= pumpsView.get(i).GetPosY() && me.getY() < pumpsView.get(i).GetPosY() + pumpsView.get(i).GetHeight())
                         {
                             dragging = true;
                             pm[0] = pumpsView.get(i);
@@ -413,11 +412,11 @@ public class MapView extends JPanel
                         }
                     }
                 }
-                
+
                 else if (isPlayerMoving)
                 {
                     JFrame jf = new JFrame();
-                    for (int k = 0; k < pipesView.size(); k++) 
+                    for (int k = 0; k < pipesView.size(); k++)
                     {
                         PipeView pipeView = pipesView.get(k);
                         Point pointA = new Point(pipeView.GetNeighbours()[0].GetCenterX(), pipeView.GetNeighbours()[0].GetCenterY());
@@ -427,11 +426,12 @@ public class MapView extends JPanel
                         if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
                         {
                             mv[0] = pipeView;
-                            
+
                             JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));
-                            
+                            System.out.println("1. MapView kiválasztott "+mv[0].GetElement().GetId());
                             GameFrame.SetElement(mv[0]);
-                            
+                            isPlayerMoving = false;
+
                             break;
                         }
                     }
@@ -442,35 +442,35 @@ public class MapView extends JPanel
                          && me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
                         {
                             mv[0] = activesView.get(i);
-                                //isPlayerMoving= false;
+                            //isPlayerMoving= false;
                             JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId());
-                            
                             GameFrame.SetElement(mv[0]);
-                            
+                            isPlayerMoving = false;
+
                             break;
                         }
                     }
                 }
             }
-             
+
             @Override
-            public void mouseReleased(MouseEvent e) 
+            public void mouseReleased(MouseEvent e)
             {
                 dragging = false;
                 pm[0] = null;
                 repaint();
             }
-             
+
             @Override
             public void mouseDragged(MouseEvent e) { }
-        }); 
+        });
 
         this.addMouseMotionListener(new MouseMotionListener()
         {
             int nx;
             int ny;
             @Override
-            public void mouseDragged(MouseEvent e) 
+            public void mouseDragged(MouseEvent e)
             {
                 if (pm[0] != null)
                 {
@@ -479,19 +479,19 @@ public class MapView extends JPanel
 
                     pumpsView.get(selectedPump[0]).SetCenterX(nx);
                     pumpsView.get(selectedPump[0]).SetCenterY(ny);
-                    
+
                     repaint();
                 }
             }
 
             @Override
-            public void mouseMoved(MouseEvent me) 
+            public void mouseMoved(MouseEvent me)
             {
-                 repaint();
+                repaint();
             }
         });
     }
-    
+
     /**
      * @param pipeV
      * @param point
@@ -502,7 +502,7 @@ public class MapView extends JPanel
 
         Point p = new Point();
         p = calculateCenter(
-        pipeV.GetNeighbours()[0].GetCenterX(), pipeV.GetNeighbours()[0].GetCenterY(),
+                pipeV.GetNeighbours()[0].GetCenterX(), pipeV.GetNeighbours()[0].GetCenterY(),
                 pipeV.GetNeighbours()[1].GetCenterX(), pipeV.GetNeighbours()[1].GetCenterY());
 
         pipeV.GetWidth();
@@ -562,16 +562,21 @@ public class MapView extends JPanel
      * @param tolerance
      * @return
      */
-    public boolean isMouseNearLine(Point pointA, Point pointB, Point mousePosition, double tolerance) 
+    public boolean isMouseNearLine(Point pointA, Point pointB, Point mousePosition, double tolerance)
     {
         // Calculate the center point of the line
         Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
 
         // Calculate the distance between the mouse position and the center of the circle
-        double distance = mousePosition.distance(center);
+        if (mousePosition!= null)
+        {
+            double distance = mousePosition.distance(center);
 
+            return distance <= tolerance;
+        }else{
+            return false;
+        }
         // Check if the distance is within the tolerance
-        return distance <= tolerance;
     }
 
     /**
@@ -585,7 +590,8 @@ public class MapView extends JPanel
         int y1 = mapView.GetPosY();
         int x2 = mapView.GetPosX() + mapView.GetWidth();
         int y2 = mapView.GetPosY() + mapView.GetHeight();
-
-        return point.getX() >= x1 && point.getX() <= x2 && point.getY() >= y1 && point.getY() <= y2;
+        if (point!= null)
+            return point.getX() >= x1 && point.getX() <= x2 && point.getY() >= y1 && point.getY() <= y2;
+        return false;
     }
 }

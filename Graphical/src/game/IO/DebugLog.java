@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-public class DebugLog 
+public class DebugLog
 {
-static String debugLog = "Aktuális futáshoz tartozó logszintű infók";
+static String debugLog = "Aktuális futáshoz tartozó logszintű infók\n";
 	
 	//Itt csak a debugoláshoz szükséges infók kerülnek kiírásra
 	public static void WriteDebugLog(String newDebugInfo)

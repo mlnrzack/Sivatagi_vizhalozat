@@ -2,6 +2,7 @@ package game.IO;
 
 import game.*;
 import game.players.*;
+import graphics.Controller;
 import tests.*;
 import java.util.Scanner;
 
@@ -193,7 +194,7 @@ public class Commands
     {
     	if(GameManager.GetMap().size() == 0) 
     		Program.CreateMap();
-    	GameManager.StartGame();
+    	Controller.StartGame();
     }
     /*
     public void In(String path)

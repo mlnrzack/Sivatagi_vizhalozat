@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import game.*;
 import game.IO.*;
+import game.elements.ActiveElement;
+import game.elements.Element;
 import game.interfaces.*;
 import game.players.*;
 
@@ -239,7 +241,7 @@ public class Pipe extends Element implements ISteppable
     		player.SetCurrentPosition(this);
             AddPlayer(player);
 
-           	return true; 
+           	return true;
         }
 
         return false;
@@ -281,7 +283,7 @@ public class Pipe extends Element implements ISteppable
     		SetSlippery();
 
     		return true;
-    	}    		
+    	}
     	System.out.println("Nem sikerült csúszóssá tenni a csövet.");
     	return false;
     }
@@ -297,11 +299,11 @@ public class Pipe extends Element implements ISteppable
 
     		return true;
     	}
-    		
+
     	System.out.println("Nem sikerült ragadóssá tenni a csövet.");
     	return false;
     }
-    
+
     /**Ragacsos cső általi műveletek.
      * Ha ragacsos a cső, akkor a rálépő játékos kizárása a játékkörből,
      * majd a ragacsosság megszüntetése a csövön.
@@ -339,32 +341,32 @@ public class Pipe extends Element implements ISteppable
 
         return false;
     }
-    
+
     public void SetLeaking(boolean leaks) {
     	leaking = leaks;
     }
-    
+
     public void TryIdSet() {
     	if (!this.GetId().equals(""))
     		return;
-    	
+
     	String name = "pipe";
     	boolean foundUniqueName = false;
     	int i = 1;
     	while (!foundUniqueName) {
-    		String newName = name + i++; 
+    		String newName = name + i++;
     		foundUniqueName = true;
     		for (IElement e : GameManager.GetMap()) {
         		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
         			foundUniqueName = false;
         	}
-    		
+
     		if (foundUniqueName) {
     			this.SetId(newName);
     		}
     	}
     }
-    
+
     public void SetNeighbours(ArrayList<ActiveElement> neighbourList) {
     	neighbours = neighbourList;
     }

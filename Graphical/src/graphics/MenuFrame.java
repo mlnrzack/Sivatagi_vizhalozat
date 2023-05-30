@@ -79,7 +79,7 @@ public class MenuFrame extends JFrame
 		return westPanel;
 	}
 
-	public static void SetWestPanel(JPanel panel) 
+	public static void SetWestPanel(JPanel panel)
 	{
 		westPanel = panel;
 	}
@@ -158,14 +158,14 @@ public class MenuFrame extends JFrame
 
 	public void InitializeWestPanel() 
 	{
-		try 
+		try
 		{
 			File currentDirFile = new File(".");
 			String helper = currentDirFile.getAbsolutePath();
 			String midhelp = helper.substring(0, helper.length() - 2).concat("\\bin\\");
-			
+
 			ImageIcon logo = new ImageIcon(midhelp.concat("/logo.png"));
-			
+
 			westLabel = new JLabel();
 			westLabel.setIcon(logo);
 
@@ -280,14 +280,15 @@ public class MenuFrame extends JFrame
 		westPanel.repaint();
 	}
 
-	public void StartGameTrigger() 
+	public void StartGameTrigger()
 	{
-		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0) 
+		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0)
 		{
-			new Controller(new GameFrame(new MapView()));
+
+			Controller c = new Controller(new GameFrame(new MapView()));
 			setVisible(false);
 			dispose();
-		} 
+		}
 		else
 			JOptionPane.showMessageDialog(this, "Kérlek előbb hozd létre a csapatokat");
 	}
