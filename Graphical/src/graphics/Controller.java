@@ -200,13 +200,7 @@ public class Controller
 	/**A szerelő játékos karakter lépéseinek menüje.
 	 */
 	public static void MechanicActions(String input)
-	{
-		//GameManager.SetPlayerAction(0);
-			System.out.println(GameManager.GetCurrentMechanic().GetName());
-			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
-			System.out.println(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
-			gf.GetMap_G().SetCurrentSaboteur(null);
-		
+	{		
 		System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
 		
 		try
