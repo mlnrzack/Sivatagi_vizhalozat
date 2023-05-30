@@ -32,6 +32,14 @@ public class Pump extends ActiveElement implements ISteppable
     {
     	return output;
     }
+    
+    public void SetInput(Pipe p) {
+    	input = p;
+    }
+    
+    public void SetOutput(Pipe p) {
+    	output = p;
+    }
 
     /**Víz pumpálása adott irányba.
      * Ha a pumpában van elegendő víz, akkor kifele vagy befele pumpálja a vizet.

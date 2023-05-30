@@ -1,0 +1,17 @@
+addPump pump1
+addPipe pipe1 withWater
+addPipe pipe2
+addCistern cistern1
+addPump pump2 pipe1 pipe2
+setneighbours pipe1 pump2
+setneighbours pipe1 pump1
+setneighbours pipe2 pump1
+setneighbours pipe2 cistern1
+spawnMechanic mechanic1 pump2
+pass mechanic1
+pass mechanic1
+pass mechanic1
+-- Expected Pattern --
+pump2 vizet pumpált az átmeneti tárolójába.
+mechanic1 játékos passzolt.
+pump2 vizet pumpált a szomszédjába: pipe2

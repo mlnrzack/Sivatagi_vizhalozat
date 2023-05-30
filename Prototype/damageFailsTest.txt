@@ -1,3 +1,0 @@
-addpump pump1
-addsaboteur saboteur1 pump1
-leakpipe saboteur1
