@@ -250,6 +250,7 @@ public class MenuFrame extends JFrame
 		southPanel.add(backButton);
 		southPanel.add(startGameButton);
 		this.add(southPanel, BorderLayout.SOUTH);
+		
 		eastPanel.removeAll();
 		eastPanel.setPreferredSize(new Dimension(500, 500));
 		eastPanel.revalidate();
@@ -284,8 +285,8 @@ public class MenuFrame extends JFrame
 	{
 		if (GameManager.GetMechanics().size() != 0 && GameManager.GetSaboteurs().size() != 0)
 		{
-
-			Controller c = new Controller(new GameFrame(new MapView()));
+			GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(0));
+			new Controller(new GameFrame(new MapView()));
 			setVisible(false);
 			dispose();
 		}

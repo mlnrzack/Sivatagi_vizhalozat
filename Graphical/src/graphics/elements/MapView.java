@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import game.*;
 import game.IO.*;
+import game.players.Mechanic;
 import graphics.*;
 import graphics.players.*;
 
@@ -29,8 +30,6 @@ public class MapView extends JPanel
 	private final Color currentColor = Color.decode("#ffffff");                                     //az aktuális játékost jelölő szín
 
 	private ArrayList<ElementView> mapView = new ArrayList<ElementView>();                          //térkép megjelnítéseére szolgáló lista
-	private MechanicView currentMechanic;                                                           //az aktuális szerelő megjelenítése
-	private SaboteurView currentSaboteur;                                                           //az aktuális szabotőr megjenenítése
 	private ArrayList<PipeView> pipesView = new ArrayList<PipeView>();                              //a csövek megjelenítésére szolgáló lista
 	private ArrayList<ElementView> activesView = new ArrayList<ElementView>();                      //
 	private ArrayList<CisternView> cisternsView = new ArrayList<CisternView>();                     //a ciszternák megjelenítésere szolgáló lista
@@ -38,6 +37,8 @@ public class MapView extends JPanel
 	private ArrayList<WaterSpringView> springsView = new ArrayList<WaterSpringView>();              //a vízforrások megjelenítésére szolgáló lista
 	private ArrayList<MechanicView> mechanicsView = new ArrayList<MechanicView>();                  //a szerelők megjelenítésére szolgáló lista
 	private ArrayList<SaboteurView> saboteursView = new ArrayList<SaboteurView>();                  //a szabotőrök megjelenítésére szolgáló lista
+	private MechanicView currentMechanic;                                                  		    //az aktuális szerelő megjelenítése
+	private SaboteurView currentSaboteur;                                                    		//az aktuális szabotőr megjenenítése
 
 	private int x, y, imX, imY;                                                                     //koordináta komponensek
 	private boolean dragging;                                                                       //pumpa húzása
@@ -348,9 +349,9 @@ public class MapView extends JPanel
 				{
 					MechanicView meV = new MechanicView(mapView.get(k), 60, 60, i);
 					mechanicsView.add(meV);
-
-					//if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
-					currentMechanic = meV;
+					
+					if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
+						currentMechanic = meV;
 				}
 			}
 		}
@@ -364,14 +365,39 @@ public class MapView extends JPanel
 				{
 					SaboteurView saV = new SaboteurView(mapView.get(k), 60, 60, i);
 					saboteursView.add(saV);
-
-					//if(GameManager.GetCurrentSaboteur().GetName() == GameManager.GetSaboteurs().get(i).GetName())
-					currentSaboteur = saV;
 				}
 			}
 		}
 	}
 
+	/**
+	 * @param newCurrent
+	 */
+	public void SetCurrentMechanic(MechanicView newCurrent)
+	{
+		currentMechanic = newCurrent;
+	}
+	
+	public MechanicView GetCurrentMechanicByModell(Mechanic mechanic)
+	{
+		for(int i = 0; i < mechanicsView.size(); i++)
+		{
+			if(mechanicsView.get(i).getMechanic().GetName().equals(mechanic.GetName()))
+			{
+				return mechanicsView.get(i);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param newCurrent
+	 */
+	public void SetCurrentSaboteur(SaboteurView newCurrent)
+	{
+		currentSaboteur = newCurrent;
+	}
+	
 	/**
 	 * @param x1
 	 * @param y1
@@ -521,7 +547,6 @@ public class MapView extends JPanel
 		pipeV.GetWidth();
 		return false;
 	}
-
 
 	private boolean checkNighbour(ElementView elementView) {
 		if (currentMechanic == null)

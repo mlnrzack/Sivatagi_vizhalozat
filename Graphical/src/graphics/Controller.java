@@ -27,7 +27,6 @@ public class Controller
 		buttons = gf.getActionButtons();
 		initController();
 		AttachActionToButtons();
-
 	}
 	
 	private void initController() 
@@ -160,7 +159,6 @@ public class Controller
 		{
 			//Történt-e akció gomb nyomás
 			
-			
 			MechanicActions();
 			//lépett e mindkét játékos
 			
@@ -206,16 +204,16 @@ public class Controller
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
 		{
 			GameManager.SetPlayerAction(0) ;
+			
 			GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(i));
 			GameManager.SetCurrentSaboteur(null);
-			//történ e gomb nyomás
+			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
+			gf.GetMap_G().SetCurrentSaboteur(null);
 			
-			
-			
-			
-			while (GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser)
+			System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
+
+			while ((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
 			{
-             
 				try
 				{
 					//Scanner reader = new Scanner(System.in);
@@ -225,21 +223,22 @@ public class Controller
 					{
 						case "move":
 							String neighbourIdx = (userinput.split(" ")[1]);
-							System.out.println("5. GameM neighbourIdx Mechanic "+neighbourIdx);
-							int k = 0;
-							for (IElement ei : GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours())
+							System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
+							
+							int k = GameManager.GetCurrentMechanic().TryFindNeighbourId(neighbourIdx);
+							
+							if (k < GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours().size())
 							{
-								k++;
-								if (ei.GetId().equals(neighbourIdx))
-								{
-									GameManager.GetCurrentMechanic().Move(k);
-									System.out.println("moved "+ GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
-									break;
-								}
+								System.out.println("6. move k mechanic: "+k);
+								GameManager.GetCurrentMechanic().Move(k);
+								System.out.println("6.5 move done by " + GameManager.GetCurrentMechanic().GetName()+" to " + GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
+								gf.GetMap_G().UpdateMapDetails();
+								System.out.println("7. moved "+ GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
+								_nextMove="";
+								gf.UpdateHud();
 							}
-
 							break;
-
+							
 						case "repair":
 							GameManager.GetCurrentMechanic().Repair();
 							break;
@@ -321,31 +320,31 @@ public class Controller
 
 			while ((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
 			{
-                
 				try
 				{
 					//Scanner reader = new Scanner(System.in);
 					String userinput = _nextMove;//reader.nextLine();
-					System.out.println("5. GameManager userinput = "+userinput);
+					System.out.println("5. GameManager userinput = " + userinput);
 
 					switch (userinput.split(" ")[0])
 					{
 						case "move":
 							String neighbourIdx = (userinput.split(" ")[1]);
-							System.out.println("5.5 GameM neighbourIdx Szabotőr "+neighbourIdx);
-							int k = 0;
-							k= GameManager.GetCurrentSaboteur().TryFindNeighbourId(neighbourIdx);
+							System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
+							
+							int k = GameManager.GetCurrentSaboteur().TryFindNeighbourId(neighbourIdx);
+							
 							if (k < GameManager.GetCurrentSaboteur().GetCurrentPosition().GetNeighbours().size())
 							{
-								System.out.println("6. move k szabotőr: "+k+"");
+								System.out.println("6. move k mechanic: "+k);
 								GameManager.GetCurrentSaboteur().Move(k);
+								System.out.println("6.5 move done by " + GameManager.GetCurrentSaboteur().GetName()+" to " + GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
 								gf.GetMap_G().UpdateMapDetails();
 								System.out.println("7. moved "+ GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
-								_nextMove= "" ;
-								
-								break;
+								_nextMove="";
 							}
 							break;
+							
 						case "leakpipe":
 							GameManager.GetCurrentSaboteur().Damage();
 							break;
@@ -379,13 +378,10 @@ public class Controller
 			}
 		}
 	}
+	
 	public static String GetNextMove() {
 		return _nextMove;
 	}
-
-	/**A szerelő játékos karakterek lépéseinek menüje.
-	 */
-
 
 	public static void SetNextMove(String nextMove)
 	{
@@ -401,6 +397,7 @@ public class Controller
 			Controller.MechanicActions();
 		}
 	}
+	
 	public static void AttachActionToButtons()
 	{
 		//Az akciógombokhoz hozzá rendelünk a gameManagerből megfelelő akciókat
@@ -744,6 +741,7 @@ public class Controller
 			});
 		}
 	}
+	
 	public static void createString() {
 
         _currentMove = new String();

@@ -468,6 +468,5 @@ public class Program
        	eastPanel.add(sOkButton);
        	
        	MenuFrame.SetEastPanel(eastPanel);
-       	//*/
     }
 }
