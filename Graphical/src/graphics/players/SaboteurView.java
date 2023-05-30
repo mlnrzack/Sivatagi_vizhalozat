@@ -24,7 +24,8 @@ public class SaboteurView extends PlayerView
 		saboteur = GameManager.GetSaboteurs().get(index);
 		LoadImage();
 	}
-	public Saboteur getSaboteur() {
+	public Saboteur GetSaboteur()
+	{
 		return saboteur;
 	}
 	

@@ -227,7 +227,7 @@ public class GameFrame extends JFrame
             displayCurrentPlayerName.setText("Jelenlegi játékos: " + GameManager.GetCurrentMechanic().GetName());
 
         else if(GameManager.GetCurrentSaboteur() != null)
-            displayCurrentPlayerName.setText("Jelenlegi játékos: " +GameManager.GetCurrentSaboteur().GetName());
+            displayCurrentPlayerName.setText("Jelenlegi játékos: " + GameManager.GetCurrentSaboteur().GetName());
 
         displayRound.setText(String.valueOf("Kör: " + GameManager.GetRound()));
         playerRemainingActionCount.setText("Műveletek: " + String.valueOf(GameManager.GetPlayerAction()));
@@ -301,6 +301,7 @@ public class GameFrame extends JFrame
         System.out.println("2. GameFrame SetElement "+element.GetElement().GetId());
         createString();
         System.out.println("8. SetElemnt vége. "+element.GetElement().GetId());
+        System.out.println(GameManager.GetCurrentMechanic() != null ? GameManager.GetCurrentMechanic().GetName() : GameManager.GetCurrentSaboteur().GetName());
     }
     /**
      * @return

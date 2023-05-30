@@ -32,7 +32,7 @@ public class MechanicView extends PlayerView
 	/**
 	 * @return
 	 */
-	public Mechanic getMechanic() 
+	public Mechanic GetMechanic() 
 	{
 		return mechanic;
 	}

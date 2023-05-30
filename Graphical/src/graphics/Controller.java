@@ -212,7 +212,7 @@ public class Controller
 			
 			System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
 
-			while ((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
+			while((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
 			{
 				try
 				{
@@ -224,6 +224,7 @@ public class Controller
 						case "move":
 							String neighbourIdx = (userinput.split(" ")[1]);
 							System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
+							System.out.println(GameManager.GetCurrentMechanic().GetName()+": "+GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
 							
 							int k = GameManager.GetCurrentMechanic().TryFindNeighbourId(neighbourIdx);
 							
@@ -235,6 +236,7 @@ public class Controller
 								gf.GetMap_G().UpdateMapDetails();
 								System.out.println("7. moved "+ GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
 								_nextMove="";
+								k = Constants.MaxNeighboursOfActiveElements + 1;
 								gf.UpdateHud();
 							}
 							break;

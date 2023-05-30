@@ -199,7 +199,7 @@ public class MapView extends JPanel
 					mechanicsView.get(i).GetPos().GetCenterY() + 20, mechanicsView.get(i).GetWidth(), mechanicsView.get(i).GetHeight(), null, null );
 			//set the drawing color for the name writing
 			g2.setColor(Color.BLACK);
-			g2.drawString(mechanicsView.get(i).getMechanic().GetName(), mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10) + 10, mechanicsView.get(i).GetPos().GetCenterY()  + 100);
+			g2.drawString(mechanicsView.get(i).GetMechanic().GetName(), mechanicsView.get(i).GetPos().GetCenterX() + ((i % mechanicsView.size()) * 10) + 10, mechanicsView.get(i).GetPos().GetCenterY()  + 100);
 
 		}
 
@@ -218,7 +218,7 @@ public class MapView extends JPanel
 					saboteursView.get(i).GetWidth(), saboteursView.get(i).GetHeight(), null, null );
 			//set the drawing color for the name writing
 			g2.setColor(Color.BLACK);
-			g2.drawString(saboteursView.get(i).getSaboteur().GetName(), saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30) + 10, saboteursView.get(i).GetPos().GetCenterY() - 70);
+			g2.drawString(saboteursView.get(i).GetSaboteur().GetName(), saboteursView.get(i).GetPos().GetCenterX() - ((i % saboteursView.size()) * 30) + 10, saboteursView.get(i).GetPos().GetCenterY() - 70);
 		}
 
 		for(int i = 0 ; i < mapView.size(); i++)
@@ -350,7 +350,7 @@ public class MapView extends JPanel
 					MechanicView meV = new MechanicView(mapView.get(k), 60, 60, i);
 					mechanicsView.add(meV);
 					
-					if(GameManager.GetCurrentMechanic().GetName() == GameManager.GetMechanics().get(i).GetName())
+					if(GameManager.GetCurrentMechanic().GetName() != null && GameManager.GetCurrentMechanic().GetName().equals(mechanicsView.get(i).GetMechanic().GetName()))
 						currentMechanic = meV;
 				}
 			}
@@ -365,6 +365,9 @@ public class MapView extends JPanel
 				{
 					SaboteurView saV = new SaboteurView(mapView.get(k), 60, 60, i);
 					saboteursView.add(saV);
+					
+					if(GameManager.GetCurrentSaboteur() != null && GameManager.GetCurrentSaboteur().GetName().equals(saboteursView.get(i).GetSaboteur().GetName()))
+						currentSaboteur = saV;
 				}
 			}
 		}
@@ -382,7 +385,7 @@ public class MapView extends JPanel
 	{
 		for(int i = 0; i < mechanicsView.size(); i++)
 		{
-			if(mechanicsView.get(i).getMechanic().GetName().equals(mechanic.GetName()))
+			if(mechanicsView.get(i).GetMechanic().GetName().equals(mechanic.GetName()))
 			{
 				return mechanicsView.get(i);
 			}
@@ -412,6 +415,7 @@ public class MapView extends JPanel
 		return new Point(centerX, centerY);
 	}
 
+	
 	/**
 	 */
 	private void MouseListener()
@@ -455,10 +459,11 @@ public class MapView extends JPanel
 
 							JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));
 							System.out.println("1. MapView kiválasztott "+mv[0].GetElement().GetId());
-							if (checkNighbour(mv[0])){
+							if (checkNeighbour(mv[0]))
+							{
 								GameFrame.SetElement(mv[0]);
 								isPlayerMoving = false;
-								}
+							}
 							else
 							{
 								JOptionPane.showMessageDialog(jf,"Nem szomszédot sikerült választani, nem történt mozgás");
@@ -474,12 +479,13 @@ public class MapView extends JPanel
 								&& me.getY() >= activesView.get(i).GetPosY() && me.getY() < activesView.get(i).GetPosY() + activesView.get(i).GetHeight())
 						{
 							mv[0] = activesView.get(i);
-							//isPlayerMoving= false;
+
 							JOptionPane.showMessageDialog(jf, mv[0].GetElement().GetId());
-							if (checkNighbour(mv[0])){
+							if (checkNeighbour(mv[0]))
+							{
 								GameFrame.SetElement(mv[0]);
 								isPlayerMoving = false;
-								}
+							}
 							else
 							{
 								JOptionPane.showMessageDialog(jf,"Nem szomszédot sikerült választani, nem történt mozgás");
@@ -548,23 +554,24 @@ public class MapView extends JPanel
 		return false;
 	}
 
-	private boolean checkNighbour(ElementView elementView) {
+	private boolean checkNeighbour(ElementView elementView) 
+	{
 		if (currentMechanic == null)
 		{
-			System.out.println(currentSaboteur.getSaboteur().GetName());
-			for (int i = 0 ; i < currentSaboteur.getSaboteur().GetCurrentPosition().GetNeighbours().size(); i++)
+			System.out.println(currentSaboteur.GetSaboteur().GetName());
+			for (int i = 0 ; i < currentSaboteur.GetSaboteur().GetCurrentPosition().GetNeighbours().size(); i++)
 			{
-				String ie = currentSaboteur.getSaboteur().GetCurrentPosition().GetNeighbours().get(i).GetId();
+				String ie = currentSaboteur.GetSaboteur().GetCurrentPosition().GetNeighbours().get(i).GetId();
 				if(ie.equals(elementView.GetElement().GetId()))
 					return true;
 			}
 		}
 		else {
 
-			System.out.println(currentMechanic.getMechanic().GetName());
-			for (int i = 0;i<currentMechanic.getMechanic().GetCurrentPosition().GetNeighbours().size();i++)
+			System.out.println(currentMechanic.GetMechanic().GetName());
+			for (int i = 0;i<currentMechanic.GetMechanic().GetCurrentPosition().GetNeighbours().size();i++)
 			{
-				String ie = currentMechanic.getMechanic().GetCurrentPosition().GetNeighbours().get(i).GetId();
+				String ie = currentMechanic.GetMechanic().GetCurrentPosition().GetNeighbours().get(i).GetId();
 				if(ie.equals(elementView.GetElement().GetId()))
 					return true;
 			}
@@ -572,6 +579,7 @@ public class MapView extends JPanel
 		return false;
 	}
 
+	
 	/**
 	 * @param pointA
 	 * @param pointB
