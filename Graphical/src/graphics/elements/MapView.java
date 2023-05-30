@@ -43,10 +43,11 @@ public class MapView extends JPanel
 	private int x, y, imX, imY;                                                                     //koordináta komponensek
 	private boolean dragging;                                                                       //pumpa húzása
 	public boolean isPlayerMoving = false;                                                          //játékos lépésének vizsgálására
+	public boolean isSettingPump = false;															//játékos pumpa beállítása
 
 	/**Osztály konstruktor
 	 */
-	public MapView()
+ 	public MapView()
 	{
 		//térkép képének létrehozása
 		mapImage = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -523,7 +524,7 @@ public class MapView extends JPanel
 						}
 					}
 				}
-				else if(true)
+				else if(isSettingPump)
 				{
 					//pumpa beállítása
 				}
