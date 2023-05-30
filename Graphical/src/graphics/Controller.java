@@ -201,114 +201,107 @@ public class Controller
 	 */
 	public static void MechanicActions(String input)
 	{
-		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
-		{
-			GameManager.SetPlayerAction(0) ;
-			
-			GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(i));
+		//GameManager.SetPlayerAction(0);
 			System.out.println(GameManager.GetCurrentMechanic().GetName());
-			GameManager.SetCurrentSaboteur(null);
 			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
 			System.out.println(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
 			gf.GetMap_G().SetCurrentSaboteur(null);
+		
+		System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
+		
+		try
+		{
+			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
+			gf.GetMap_G().SetCurrentSaboteur(null);
 			
-			System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
-			
-			while((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
+			//Scanner reader = new Scanner(System.in);
+			String userinput = _nextMove;
+
+			switch (userinput.split(" ")[0])
 			{
-				try
-				{
-
-					//itt kellene várjon még egy akciót
-					String userinput = _nextMove;
-
-					switch (userinput.split(" ")[0])
+				case "move":
+					String neighbourIdx = (userinput.split(" ")[1]);
+					System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
+					System.out.println(GameManager.GetCurrentMechanic().GetName()+": "+GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
+					
+					int k = GameManager.GetCurrentMechanic().TryFindNeighbourId(neighbourIdx);
+					
+					if (k < GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours().size())
 					{
-						case "move":
-							String neighbourIdx = (userinput.split(" ")[1]);
-							System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
-							System.out.println(GameManager.GetCurrentMechanic().GetName()+": "+GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
-							
-							int k = GameManager.GetCurrentMechanic().TryFindNeighbourId(neighbourIdx);
-							
-							if (k < GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours().size())
-							{
-								System.out.println("6. move k mechanic: "+k);
-								GameManager.GetCurrentMechanic().Move(k);
-								System.out.println("6.5 move done by " + GameManager.GetCurrentMechanic().GetName()+" to " + GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
-								gf.GetMap_G().UpdateMapDetails();
-								System.out.println("7. moved "+ GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
-								_nextMove="";
-								k = Constants.MaxNeighboursOfActiveElements + 1;
-								gf.UpdateHud();
-							}
-							break;
-							
-						case "repair":
-							GameManager.GetCurrentMechanic().Repair();
-							break;
-
-						case "pickfreepipe":
-							GameManager.GetCurrentMechanic().PickUpFreePipeEnd();
-							break;
-
-						case "picknewpump":
-							GameManager.GetCurrentMechanic().PickUpPump();
-							break;
-
-						case "droppump":
-							GameManager.GetCurrentMechanic().BuildPumpIntoPipe();
-							break;
-
-						case "connectpipe":
-							GameManager.GetCurrentMechanic().ConnectPipe();
-							break;
-
-						case "pickneighbour":
-							neighbourIdx = (userinput.split(" ")[1]);
-							k = 0;
-							for (IElement ei : GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours())
-							{
-								k++;
-								if (ei.GetId().equals(neighbourIdx))
-								{
-									GameManager.GetCurrentMechanic().DisconnectNeighbourPipe(k);
-									break;
-								}
-							}
-							break;
-
-						case "setpump":
-							int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
-							int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-							GameManager.GetCurrentMechanic().TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-							break;
-
-						case "leakpipe":
-							GameManager.GetCurrentMechanic().Damage();
-							break;
-
-						case "stickypipe":
-							GameManager.GetCurrentMechanic().SetStickyPipe();
-							break;
-
-						case "pass":
-							GameManager.GetCurrentMechanic().Pass();
-							break;
-
-						case "exit":
-							GameManager.GetCurrentMechanic().Exit();
-							break;
-
-						default:
-							break;
+						System.out.println("6. move k mechanic: "+k);
+						GameManager.GetCurrentMechanic().Move(k);
+						System.out.println("6.5 move done by " + GameManager.GetCurrentMechanic().GetName()+" to " + GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
+						gf.GetMap_G().UpdateMapDetails();
+						System.out.println("7. moved "+ GameManager.GetCurrentMechanic().GetCurrentPosition().GetId());
+						_nextMove="";
+						k = Constants.MaxNeighboursOfActiveElements + 1;
+						gf.UpdateHud();
 					}
-				}
-				catch(Exception e)
-				{
-					System.out.println("Hibás menü bemenet!\n");
-				}
+					break;
+					
+				case "repair":
+					GameManager.GetCurrentMechanic().Repair();
+					break;
+
+				case "pickfreepipe":
+					GameManager.GetCurrentMechanic().PickUpFreePipeEnd();
+					break;
+
+				case "picknewpump":
+					GameManager.GetCurrentMechanic().PickUpPump();
+					break;
+
+				case "droppump":
+					GameManager.GetCurrentMechanic().BuildPumpIntoPipe();
+					break;
+
+				case "connectpipe":
+					GameManager.GetCurrentMechanic().ConnectPipe();
+					break;
+
+				case "pickneighbour":
+					neighbourIdx = (userinput.split(" ")[1]);
+					k = 0;
+					for (IElement ei : GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours())
+					{
+						k++;
+						if (ei.GetId().equals(neighbourIdx))
+						{
+							GameManager.GetCurrentMechanic().DisconnectNeighbourPipe(k);
+							break;
+						}
+					}
+					break;
+
+				case "setpump":
+					int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+					int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+					GameManager.GetCurrentMechanic().TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+					break;
+
+				case "leakpipe":
+					GameManager.GetCurrentMechanic().Damage();
+					break;
+
+				case "stickypipe":
+					GameManager.GetCurrentMechanic().SetStickyPipe();
+					break;
+
+				case "pass":
+					GameManager.GetCurrentMechanic().Pass();
+					break;
+
+				case "exit":
+					GameManager.GetCurrentMechanic().Exit();
+					break;
+
+				default:
+					break;
 			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Hibás menü bemenet!\n");
 		}
 	}
 	
@@ -316,71 +309,62 @@ public class Controller
 	 */
 	public static void SaboteurActions(String input)
 	{
-		for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
+		System.out.println("A jelenlegi szabotőr: "+ GameManager.GetCurrentSaboteur().GetName());
+			
+		try
 		{
-			GameManager.SetPlayerAction(0);
-			GameManager.SetCurrentMechanic(null);
-			GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(i));
-			System.out.println("A jelenlegi szabotőr: "+ GameManager.GetCurrentSaboteur().GetName());
+			//Scanner reader = new Scanner(System.in);
+			String userinput = _nextMove;//reader.nextLine();
+			System.out.println("5. GameManager userinput = " + userinput);
 
-			while ((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
+			switch (userinput.split(" ")[0])
 			{
-				try
-				{
-					//Scanner reader = new Scanner(System.in);
-					String userinput = _nextMove;//reader.nextLine();
-					System.out.println("5. GameManager userinput = " + userinput);
-
-					switch (userinput.split(" ")[0])
+				case "move":
+					String neighbourIdx = (userinput.split(" ")[1]);
+					System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
+					
+					int k = GameManager.GetCurrentSaboteur().TryFindNeighbourId(neighbourIdx);
+					
+					if (k < GameManager.GetCurrentSaboteur().GetCurrentPosition().GetNeighbours().size())
 					{
-						case "move":
-							String neighbourIdx = (userinput.split(" ")[1]);
-							System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
-							
-							int k = GameManager.GetCurrentSaboteur().TryFindNeighbourId(neighbourIdx);
-							
-							if (k < GameManager.GetCurrentSaboteur().GetCurrentPosition().GetNeighbours().size())
-							{
-								System.out.println("6. move k mechanic: "+k);
-								GameManager.GetCurrentSaboteur().Move(k);
-								System.out.println("6.5 move done by " + GameManager.GetCurrentSaboteur().GetName()+" to " + GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
-								gf.GetMap_G().UpdateMapDetails();
-								System.out.println("7. moved "+ GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
-								_nextMove="";
-							}
-							break;
-							
-						case "leakpipe":
-							GameManager.GetCurrentSaboteur().Damage();
-							break;
-
-						case "setpump":
-							int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
-							int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-							GameManager.GetCurrentSaboteur().TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-							break;
-
-						case "stickypipe":
-							GameManager.GetCurrentSaboteur().SetStickyPipe();
-							break;
-						case "slipperypipe":
-							GameManager.GetCurrentSaboteur().SetSlipperyPipe();
-							break;
-						case "pass":
-							GameManager.GetCurrentSaboteur().Pass();
-							break;
-						case "exit":
-							GameManager.GetCurrentSaboteur().Exit();
-							break;
-						default:
-							break;
+						System.out.println("6. move k mechanic: "+k);
+						GameManager.GetCurrentSaboteur().Move(k);
+						System.out.println("6.5 move done by " + GameManager.GetCurrentSaboteur().GetName()+" to " + GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
+						gf.GetMap_G().UpdateMapDetails();
+						System.out.println("7. moved "+ GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
+						_nextMove="";
 					}
-				}
-				catch(Exception e)
-				{
-					System.out.println("Hibás menü bemenet!\n" + e);
-				}
+					break;
+					
+				case "leakpipe":
+					GameManager.GetCurrentSaboteur().Damage();
+					break;
+
+				case "setpump":
+					int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+					int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+					GameManager.GetCurrentSaboteur().TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+					break;
+
+				case "stickypipe":
+					GameManager.GetCurrentSaboteur().SetStickyPipe();
+					break;
+				case "slipperypipe":
+					GameManager.GetCurrentSaboteur().SetSlipperyPipe();
+					break;
+				case "pass":
+					GameManager.GetCurrentSaboteur().Pass();
+					break;
+				case "exit":
+					GameManager.GetCurrentSaboteur().Exit();
+					break;
+				default:
+					break;
 			}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Hibás menü bemenet!\n" + e);
 		}
 	}
 	
@@ -390,8 +374,10 @@ public class Controller
 	}
 
 	public static void SetNextMove(String nextMove)
-	{
+	{		
 		_nextMove = nextMove;
+				
+				
 		System.out.println("4. Controller SetNextMove " + nextMove);
 		
 		if (GameManager.GetCurrentMechanic() == null)
@@ -404,6 +390,41 @@ public class Controller
 			System.out.println("4.5 Mechanic Action");
 			Controller.MechanicActions(_nextMove);
 		}
+		
+		int a = GameManager.GetPlayerAction();
+		if (a == Constants.ActionInRoundPerUser) {
+			if (GameManager.GetCurrentMechanic() != null) {
+				int currentMechanicIndex = GameManager.GetMechanics().indexOf(GameManager.GetCurrentMechanic());
+				if (GameManager.GetMechanics().size() > (currentMechanicIndex + 1)) {
+					GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(currentMechanicIndex + 1));
+					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
+				}					
+				else {
+					GameManager.SetCurrentMechanic(null);
+					GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(0));
+					
+					gf.GetMap_G().SetCurrentMechanic(null);
+					gf.GetMap_G().SetCurrentSaboteur(gf.GetMap_G().GetCurrentSaboteurByModell(GameManager.GetCurrentSaboteur()));
+				}					
+			} else {
+				int currentSaboteurIndex = GameManager.GetSaboteurs().indexOf(GameManager.GetCurrentSaboteur());
+				if (GameManager.GetSaboteurs().size() > (currentSaboteurIndex + 1)) {
+					GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(currentSaboteurIndex + 1));
+					gf.GetMap_G().SetCurrentSaboteur(gf.GetMap_G().GetCurrentSaboteurByModell(GameManager.GetCurrentSaboteur()));
+				}					
+				else {
+					GameManager.SetCurrentSaboteur(null);
+					GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(0));
+					
+					gf.GetMap_G().SetCurrentSaboteur(null);
+					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
+				}
+			}
+			
+			GameManager.SetPlayerAction(0);
+		}
+		
+		gf.UpdateHud();
 	}
 	
 	public static void AttachActionToButtons()
