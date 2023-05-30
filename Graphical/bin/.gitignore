@@ -1,2 +1,4 @@
 /game/
-*.class
+/graphics/
+/module-info.class
+/tests/

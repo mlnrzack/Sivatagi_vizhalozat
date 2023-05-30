@@ -527,6 +527,29 @@ public class MapView extends JPanel
 				else if(isSettingPump)
 				{
 					//pumpa beállítása
+					/*JFrame jf = new JFrame();
+					for (int k = 0; k < pipesView.size(); k++)
+					{
+						PipeView pipeView = pipesView.get(k);
+						Point pointA = new Point(pipeView.GetNeighbours()[0].GetCenterX(), pipeView.GetNeighbours()[0].GetCenterY());
+						Point pointB = new Point(pipeView.GetNeighbours()[1].GetCenterX(), pipeView.GetNeighbours()[1].GetCenterY());
+						Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
+						if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
+						{
+							mv[0] = pipeView;
+							JOptionPane.showMessageDialog(null, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));//a null jf volt
+							if (checkNeighbour(mv[0]))
+							{
+								GameFrame.SetElement(mv[0]);
+								isPlayerMoving = false;
+							}
+							else {
+								JOptionPane.showMessageDialog(null,"Nem szomszédot sikerült választani, nem történt mozgás");//a null jf volt.
+								isPlayerMoving = false;
+							}
+							break;
+						}
+					}*/
 				}
 			}
 
