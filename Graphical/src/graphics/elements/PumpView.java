@@ -58,20 +58,30 @@ public class PumpView extends ElementView
 	 */
 	public Image LoadImage()
 	{
-		String pathPump = StringMagic().concat("pump.png");
-		String pathBrokenPump = StringMagic().concat("pump_broken.png");
-
-		BufferedImage  iPump;
+		String pathPump;
+		BufferedImage iPump;
+		
 		try
 		{
 			if(!pump.GetBroken())
 			{
-				iPump = ImageIO.read(new File(pathPump));
-				return iPump;
+				if(pump.GetWaterInside() == 0)
+				{
+					pathPump = StringMagic().concat("pump.png");
+					iPump = ImageIO.read(new File(pathPump));
+					return iPump;
+				}
+				else
+				{
+					pathPump = StringMagic().concat("pump_full.png");
+					iPump = ImageIO.read(new File(pathPump));
+					return iPump;
+				}
 			}
 			else if(pump.GetBroken())
 			{
-				iPump = ImageIO.read(new File(pathBrokenPump));
+				pathPump = StringMagic().concat("pump_broken.png");
+				iPump = ImageIO.read(new File(pathPump));
 				return iPump;
 			}
 			return null;
