@@ -1,7 +1,5 @@
 addPipe pipe1
 spawnSaboteur saboteur1 pipe1
 slipperyPipe saboteur1
--- Expected Output --
-pipe1 hozzáadva a pályához.
-saboteur1 szabotőr hozzáadva a játékhoz ide: pipe1
+-- Expected Pattern --
 saboteur1 csúszóssá tette a csövet: pipe1

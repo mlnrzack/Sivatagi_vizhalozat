@@ -1,8 +1,0 @@
-pipe1: {
-	neighbours: [],
-	waterInside: 0,
-	playersHere: [mechanic1],
-	leaking: false,
-	slippery:false,
-	sticky:false,
-}

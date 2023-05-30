@@ -366,8 +366,6 @@ public class GameManager
         StepSteppables();
         FireSourceActions();
         
-        Commands.WriteMapStateToFile("lastMapState.txt");
-        
         //TODO: Logoló függvény,
     }
     

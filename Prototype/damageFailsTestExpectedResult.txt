@@ -1,8 +1,0 @@
-pump1: {
-	neighbours: [],
-	waterInside: 0,
-	playersHere: [saboteur1],
-	input: null,
-	output: null,
-	broken:false,
-}

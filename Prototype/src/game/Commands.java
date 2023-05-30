@@ -18,21 +18,7 @@ import game.players.Mechanic;
 import game.players.Player;
 import game.players.Saboteur;
 
-public class Commands {
-	
-	public static void WriteMapStateToFile(String fileName) {
-    	try {
-        	BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-            
-            for (IElement e : GameManager.GetMap()) {
-            	writer.append(e.toString());
-            }
-            writer.close();
-        } catch(Exception e) {
-        	System.out.println(e);
-        }
-    }
-	
+public class Commands {	
 	public static long filesCompareByLine(Path path1, Path path2) throws IOException {
         try (BufferedReader bf1 = Files.newBufferedReader(path1);
                 BufferedReader bf2 = Files.newBufferedReader(path2)) {
@@ -95,17 +81,22 @@ public class Commands {
                 
                 break;
             }
-         // Command: addPump name
+         // Command: addPump name <optionally inputName outputName>
             case "addPump":{
             	if (IsElementNameUnique(parameters[0])) {
             		Pump p = new Pump();
             		p.SetId(parameters[0]);
             		GameManager.AddToMap(p);
+            		
+            		if (parameters.length == 3 && GetPipe(parameters[1]) != null && GetPipe(parameters[1]) != null){
+                		p.SetInput(GetPipe(parameters[1]));
+                		p.SetOutput(GetPipe(parameters[2]));
+                	}
             	}
-                
+            	
                 break;
             }
-         // Command: addPipe name <optionally broken sticky slippery withWater>
+         // Command: addPipe name <optionally broken || sticky || slippery || withWater>
             case "addPipe":{
             	if (IsElementNameUnique(parameters[0])) {
             		Pipe p = new Pipe();
