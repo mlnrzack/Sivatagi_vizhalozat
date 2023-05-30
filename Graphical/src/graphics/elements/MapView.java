@@ -444,7 +444,6 @@ public class MapView extends JPanel
 		return new Point(centerX, centerY);
 	}
 
-	
 	/**
 	 */
 	private void MouseListener()
@@ -494,7 +493,7 @@ public class MapView extends JPanel
 							}
 							else
 							{
-								JOptionPane.showMessageDialog(jf,"Nem szomszédot sikerült választani, nem történt mozgás");
+								JOptionPane.showMessageDialog(jf,"Nem szomszédot sikerült választani, nem történt mozgás");
 								isPlayerMoving = false;
 							}
 							break;
@@ -516,7 +515,7 @@ public class MapView extends JPanel
 							}
 							else
 							{
-								JOptionPane.showMessageDialog(jf,"Nem szomszédot sikerült választani, nem történt mozgás");
+								JOptionPane.showMessageDialog(jf,"Nem szomszédot sikerült választani, nem történt mozgás");
 								isPlayerMoving = false;
 							}
 
@@ -524,32 +523,34 @@ public class MapView extends JPanel
 						}
 					}
 				}
+				
 				else if(isSettingPump)
 				{
 					//pumpa beállítása
-					/*JFrame jf = new JFrame();
-					for (int k = 0; k < pipesView.size(); k++)
+					//JFrame jf = new JFrame();
+					for(int k = 0; k < pipesView.size(); k++)
 					{
-						PipeView pipeView = pipesView.get(k);
-						Point pointA = new Point(pipeView.GetNeighbours()[0].GetCenterX(), pipeView.GetNeighbours()[0].GetCenterY());
-						Point pointB = new Point(pipeView.GetNeighbours()[1].GetCenterX(), pipeView.GetNeighbours()[1].GetCenterY());
-						Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
-						if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
+						PipeView pipeView = pipesView.get(k);
+						Point pointA = new Point(pipeView.GetNeighbours()[0].GetCenterX(), pipeView.GetNeighbours()[0].GetCenterY());
+						Point pointB = new Point(pipeView.GetNeighbours()[1].GetCenterX(), pipeView.GetNeighbours()[1].GetCenterY());
+						Point center = calculateCenter(pointA.x, pointA.y, pointB.x, pointB.y);
+						
+						if (isMouseClickInsideCircle(pointA,pointB, 50, me.getPoint()))
 						{
-							mv[0] = pipeView;
-							JOptionPane.showMessageDialog(null, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));//a null jf volt
-							if (checkNeighbour(mv[0]))
+							mv[0] = pipeView;
+							JOptionPane.showMessageDialog(null, mv[0].GetElement().GetId() + " " + isMouseClickOnLine(pointA, pointB, me.getPoint()));//a null jf volt
+							if (checkNeighbour(mv[0]))
 							{
 								GameFrame.SetElement(mv[0]);
-								isPlayerMoving = false;
+								isPlayerMoving = false;
 							}
 							else {
-								JOptionPane.showMessageDialog(null,"Nem szomszédot sikerült választani, nem történt mozgás");//a null jf volt.
-								isPlayerMoving = false;
+								JOptionPane.showMessageDialog(null,"Nem szomszédot sikerült választani, nem történt mozgás");//a null jf volt.
+								isPlayerMoving = false;
 							}
 							break;
 						}
-					}*/
+					}
 				}
 			}
 
@@ -592,7 +593,6 @@ public class MapView extends JPanel
 		});
 	}
 
-	
 	/**
 	 * @param pipeV
 	 * @param point
@@ -609,7 +609,6 @@ public class MapView extends JPanel
 		pipeV.GetWidth();
 		return false;
 	}
-
 	
 	/**
 	 * @param elementView
@@ -640,7 +639,6 @@ public class MapView extends JPanel
 		
 		return false;
 	}
-
 	
 	/**
 	 * @param pointA
@@ -665,7 +663,6 @@ public class MapView extends JPanel
 		// Check if the squared distance is within the threshold
 		return distanceSquared <= thresholdSquared;
 	}
-
 	
 	/**
 	 * @param startPoint
@@ -688,7 +685,6 @@ public class MapView extends JPanel
 		// Check if the squared distance is less than or equal to the squared radius
 		return distanceSquared <= radiusSquared;
 	}
-
 	
 	/**Updates the map, according to the modell's state.
 	 */
@@ -712,7 +708,6 @@ public class MapView extends JPanel
 			}
 		}
 	}
-	
 
 	/**
 	 * @param pointA

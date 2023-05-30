@@ -14,7 +14,6 @@ import javax.swing.*;
 
 public class Controller 
 {
-	
 	protected static GameFrame gf;
 	protected ArrayList<JButton> buttons;
 	private static String _nextMove = "";
@@ -155,44 +154,30 @@ public class Controller
 	
 	/**
 	 */
-	public static void StartGame()
+	public static void EndGame()
 	{
-		while (GameManager.GetRound() < Constants.RoundNumber)
+		String text = "";
+		if(GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints())
 		{
-			//Történt-e akció gomb nyomás
-			
-			//MechanicActions();
-			//lépett e mindkét játékos
-			
-			//SaboteurActions();
-			//lépett e mindkét játékos
-			
-			
-			//lépett mindenki, akkor
-			GameManager.SetRound(GameManager.GetRound() + 1);
+			text = text.concat("Szerelők nyertek!");
+			text = text.concat("A nyertes csapat tagjai:");
+			for(int i = 0; i < GameManager.GetMechanics().size(); i++)
+				text = text.concat(GameManager.GetMechanics().get(i).GetName() + " ");
 		}
-
-		if(GameManager.GetRound() == Constants.RoundNumber)
+		else if(GameManager.GetSaboteurPoints() > GameManager.GetMechanincsPoints())
 		{
-
-			System.out.print("Gratulálunk a ");
-			if(GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints())
-			{
-				System.out.println("Szerelők nyertek!");
-				System.out.println("A nyertes csapat tagjai:");
-				for(int i = 0; i < GameManager.GetMechanics().size(); i++)
-					System.out.println(GameManager.GetMechanics().get(i).GetName());
-			}
-			else if(GameManager.GetSaboteurPoints() > GameManager.GetMechanincsPoints())
-			{
-				System.out.println("Szabotőrök nyertek!");
-				System.out.println("A nyertes csapat tagjai:");
-				for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
-					System.out.println(GameManager.GetSaboteurs().get(i).GetName());
-			}
-			else
-				System.out.println("Döntetlen!\nGratulálunk mindkét csapatnak!");
+			text = text.concat("Szabotőrök nyertek!\n");
+			text = text.concat("A nyertes csapat tagjai:\n");
+			for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
+				text = text.concat(GameManager.GetSaboteurs().get(i).GetName() + " ");
 		}
+		else
+			text = text.concat("Döntetlen!\nGratulálunk mindkét csapatnak!");
+		
+		JOptionPane.showMessageDialog(null, text);
+		new MenuFrame();
+		gf.setVisible(false);
+		gf.dispose();
 	}
 
 	/**A szerelő játékos karakter lépéseinek menüje.
@@ -451,6 +436,8 @@ public class Controller
 					gf.GetMap_G().SetCurrentSaboteur(null);
 					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
 					GameManager.SetRound(GameManager.GetRound() + 1);
+					if(GameManager.GetRound() >= Constants.RoundNumber)
+						EndGame();
 				}
 			}
 			
