@@ -194,7 +194,7 @@ public class Commands
     {
     	if(GameManager.GetMap().size() == 0) 
     		Program.CreateMap();
-    	Controller.StartGame();
+    	//Controller.StartGame();
     }
     /*
     public void In(String path)

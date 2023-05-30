@@ -65,6 +65,8 @@ public class PipeView extends ElementView
 		SetDimensions();
 	}
 
+	/**
+	 */
 	public void SetDimensions()
 	{
 		if (neighbours[0] != null && neighbours[1] != null) 
@@ -94,11 +96,16 @@ public class PipeView extends ElementView
 		}
 	}
 
+	/**
+	 * @return
+	 */
 	public double GetAngle()
 	{
 		return angle;
 	}
 	
+	/**
+	 */
 	@Override
 	public int GetCenterX()
 	{
@@ -109,6 +116,8 @@ public class PipeView extends ElementView
 		return centerX;
 	}
 
+	/**
+	 */
 	@Override
 	public int GetCenterY()
 	{

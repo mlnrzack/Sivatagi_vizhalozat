@@ -375,11 +375,11 @@ public class MenuFrame extends JFrame
 
 	public void SetTrigger() 
 	{
-		if(Constants.MaxNeighboursOfActiveElements < Integer.parseInt(maxNeighboursSet.getText()) ) {
-			
+		if(Constants.MaxNeighboursOfActiveElements <= Integer.parseInt(maxNeighboursSet.getText()) ) 
+		{
 			this.remove(southPanel);
 			eastPanel.removeAll();
-			eastPanel.setPreferredSize(new Dimension(200, 500));
+			eastPanel.setPreferredSize(new Dimension(250, 500));
 			eastPanel.add(newGameButton);
 			eastPanel.add(settingsButton);
 			eastPanel.revalidate();
@@ -396,12 +396,14 @@ public class MenuFrame extends JFrame
 			Constants.RoundNumber = Integer.parseInt(gameRoundsSet.getText());
 
 			westPanel.removeAll();
-			westPanel.setPreferredSize(new Dimension(800, 500));
+			westPanel.setPreferredSize(new Dimension(750, 500));
 			westPanel.add(westLabel);
 			westPanel.revalidate();
 			westPanel.repaint();
 		}
-		else {
+		
+		else 
+		{
 			JOptionPane.showMessageDialog(this, "Kérlek helyesen állítsd a maximum szomsédok méretét legalább 4-re.");
 			SettingsTrigger();
 			return;

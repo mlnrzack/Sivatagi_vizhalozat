@@ -14,13 +14,10 @@ import javax.swing.*;
 
 public class Controller 
 {
-	
 	protected static GameFrame gf;
 	protected ArrayList<JButton> buttons;
 	private static String _nextMove = "";
 	private static String _currentMove = "";
-	private static boolean mechanicStep = false;
-	private static boolean saboteurStep = false;
 	
 	public Controller(GameFrame gf)
 	{
@@ -157,60 +154,40 @@ public class Controller
 	
 	/**
 	 */
-	public static void StartGame()
+	public static void EndGame()
 	{
-		while (GameManager.GetRound() < Constants.RoundNumber)
+		String text = "";
+		if(GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints())
 		{
-			//Történt-e akció gomb nyomás
-			
-			//MechanicActions();
-			//lépett e mindkét játékos
-			
-			//SaboteurActions();
-			//lépett e mindkét játékos
-			
-			
-			//lépett mindenki, akkor
-			GameManager.SetRound(GameManager.GetRound() + 1);
+			text = text.concat("Szerelők nyertek!");
+			text = text.concat("A nyertes csapat tagjai:");
+			for(int i = 0; i < GameManager.GetMechanics().size(); i++)
+				text = text.concat(GameManager.GetMechanics().get(i).GetName() + " ");
 		}
-
-		if(GameManager.GetRound() == Constants.RoundNumber)
+		else if(GameManager.GetSaboteurPoints() > GameManager.GetMechanincsPoints())
 		{
-
-			System.out.print("Gratulálunk a ");
-			if(GameManager.GetSaboteurPoints() < GameManager.GetMechanincsPoints())
-			{
-				System.out.println("Szerelők nyertek!");
-				System.out.println("A nyertes csapat tagjai:");
-				for(int i = 0; i < GameManager.GetMechanics().size(); i++)
-					System.out.println(GameManager.GetMechanics().get(i).GetName());
-			}
-			else if(GameManager.GetSaboteurPoints() > GameManager.GetMechanincsPoints())
-			{
-				System.out.println("Szabotőrök nyertek!");
-				System.out.println("A nyertes csapat tagjai:");
-				for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
-					System.out.println(GameManager.GetSaboteurs().get(i).GetName());
-			}
-			else
-				System.out.println("Döntetlen!\nGratulálunk mindkét csapatnak!");
+			text = text.concat("Szabotőrök nyertek!\n");
+			text = text.concat("A nyertes csapat tagjai:\n");
+			for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
+				text = text.concat(GameManager.GetSaboteurs().get(i).GetName() + " ");
 		}
+		else
+			text = text.concat("Döntetlen!\nGratulálunk mindkét csapatnak!");
+		
+		JOptionPane.showMessageDialog(null, text);
+		new MenuFrame();
+		gf.setVisible(false);
+		gf.dispose();
 	}
 
 	/**A szerelő játékos karakter lépéseinek menüje.
 	 */
 	public static void MechanicActions(String input)
 	{		
-		System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
-		
 		try
 		{
-			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
-			gf.GetMap_G().SetCurrentSaboteur(null);
-			
-			//Scanner reader = new Scanner(System.in);
 			String userinput = _nextMove;
-
+			
 			switch (userinput.split(" ")[0])
 			{
 				case "move":
@@ -234,23 +211,42 @@ public class Controller
 					break;
 					
 				case "repair":
-					GameManager.GetCurrentMechanic().Repair();
+					if(GameManager.GetCurrentMechanic().Repair())
+						JOptionPane.showMessageDialog(null, "Sikeresen megjavítottad az elemet!");
+					else
+						JOptionPane.showMessageDialog(null, "Az elemet nem kellett megjavítani!");
 					break;
-
+					
 				case "pickfreepipe":
-					GameManager.GetCurrentMechanic().PickUpFreePipeEnd();
+					if(GameManager.GetCurrentMechanic().PickUpFreePipeEnd())
+						JOptionPane.showMessageDialog(null, "Sikeresen felvettél egy csővéget!");
+
+					else
+						JOptionPane.showMessageDialog(null, "Ez a csővég nem felvehető!");
 					break;
 
 				case "picknewpump":
-					GameManager.GetCurrentMechanic().PickUpPump();
+					if(GameManager.GetCurrentMechanic().PickUpPump())
+						JOptionPane.showMessageDialog(null, "Sikeresen felvettél egy új pumpát!");
+
+					else
+						JOptionPane.showMessageDialog(null, "Nem tudtad felvenni a pumpát!");
 					break;
 
 				case "droppump":
-					GameManager.GetCurrentMechanic().BuildPumpIntoPipe();
+					if(GameManager.GetCurrentMechanic().BuildPumpIntoPipe())
+						JOptionPane.showMessageDialog(null, "Sikeresen beépítetted a pumpát egy csőbe!");
+
+					else
+						JOptionPane.showMessageDialog(null, "A pumpa nem került beszerelésre!");
 					break;
 
 				case "connectpipe":
-					GameManager.GetCurrentMechanic().ConnectPipe();
+					if(GameManager.GetCurrentMechanic().ConnectPipe())
+						JOptionPane.showMessageDialog(null, "Sikeresen beépítetted a pumpát egy csőbe!");
+
+					else
+						JOptionPane.showMessageDialog(null, "A pumpa nem került beszerelésre!");
 					break;
 
 				case "pickneighbour":
@@ -274,15 +270,23 @@ public class Controller
 					break;
 
 				case "leakpipe":
-					GameManager.GetCurrentMechanic().Damage();
+					if(GameManager.GetCurrentMechanic().Damage())
+						JOptionPane.showMessageDialog(null, "Sikeresen megrongáltad a csövet!");
+					else
+						JOptionPane.showMessageDialog(null, "Cső megrongálása sikertelen volt!");
 					break;
 
 				case "stickypipe":
-					GameManager.GetCurrentMechanic().SetStickyPipe();
+					if(GameManager.GetCurrentMechanic().SetStickyPipe())
+						JOptionPane.showMessageDialog(null, "Sikeresen beragasztóztad az elemet!");
+
+					else
+						JOptionPane.showMessageDialog(null, "Az elem nem lett ragacsosabb!");
 					break;
 
 				case "pass":
 					GameManager.GetCurrentMechanic().Pass();
+					JOptionPane.showMessageDialog(null, GameManager.GetCurrentMechanic().GetName()+ " passzolt");
 					break;
 
 				case "exit":
@@ -331,7 +335,11 @@ public class Controller
 					break;
 					
 				case "leakpipe":
-					GameManager.GetCurrentSaboteur().Damage();
+					if(GameManager.GetCurrentSaboteur().Damage())
+						JOptionPane.showMessageDialog(null, "Sikeresen megrongáltad a csövet!");
+
+					else
+						JOptionPane.showMessageDialog(null, "A cső már meg volt rongálva!");
 					break;
 
 				case "setpump":
@@ -341,13 +349,22 @@ public class Controller
 					break;
 
 				case "stickypipe":
-					GameManager.GetCurrentSaboteur().SetStickyPipe();
+					if(GameManager.GetCurrentSaboteur().SetStickyPipe())
+						JOptionPane.showMessageDialog(null, "Sikeresen beragasztóztad az elemet!");
+
+					else
+						JOptionPane.showMessageDialog(null, "Az elem nem lett ragacsosabb!");
 					break;
 				case "slipperypipe":
-					GameManager.GetCurrentSaboteur().SetSlipperyPipe();
+					if(GameManager.GetCurrentSaboteur().SetSlipperyPipe())
+						JOptionPane.showMessageDialog(null, "Sikeresen csúszóssá tetted az elemet!");
+
+					else
+						JOptionPane.showMessageDialog(null, "Nem lett csúszósabb az elem!");
 					break;
 				case "pass":
 					GameManager.GetCurrentSaboteur().Pass();
+					JOptionPane.showMessageDialog(null, GameManager.GetCurrentSaboteur().GetName()+ " passzolt");
 					break;
 				case "exit":
 					GameManager.GetCurrentSaboteur().Exit();
@@ -419,6 +436,8 @@ public class Controller
 					gf.GetMap_G().SetCurrentSaboteur(null);
 					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
 					GameManager.SetRound(GameManager.GetRound() + 1);
+					if(GameManager.GetRound() >= Constants.RoundNumber)
+						EndGame();
 				}
 			}
 			
@@ -431,30 +450,12 @@ public class Controller
 	public static void AttachActionToButtons()
 	{
 		//Az akciógombokhoz hozzá rendelünk a GameManagerből megfelelő akciókat
-		
-		for(int i = 0; i < gf.GetMap_G().GetMechanicsView().size(); i++)
-		{
-			mechanicStep = true;
-		}
-			
 		for(JButton butt: gf.GetActionButtons())
 		{
 			String action = butt.getText();
 
-			//GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(0));
-			//GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(0));
-
-
-			//======================================================
-			/*
-			 * Paraszt debug sarok
-			 *  System.out.println("MEchanics count: "+ GameManager.GetMechanics().size());
-			 */
-			//======================================================
 			Mechanic m = GameManager.GetCurrentMechanic();
-			//System.out.println(m.GetCurrentPosition().GetId());
 			Saboteur s = GameManager.GetCurrentSaboteur();
-			//System.out.println("Current player:" + (m != null? m.GetName(): s.GetName()));
 			butt.addActionListener(new ActionListener()
 			{
 				@Override
@@ -496,132 +497,41 @@ public class Controller
 
 						case "repair":
 							SetNextMove("repair");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								if(m.Repair() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen megjavítottad a csövet!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "A csövet nem kellett megjavítani!");
-							}
-							else
-								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
-							 */
 							gf.UpdateHud();
 							gf.ResetActionButtons();
+							
 							break;
 
 						case "leakpipe":
 							SetNextMove("leakpipe");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								if(m.Damage() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen megrongáltad a csövet!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "A cső már meg volt rongálva!");
-							}
-							else if(s != null)
-							{
-								if(s.Damage() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen megrongáltad a csövet!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "A cső már meg volt rongálva!");
-							}
-							 */
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "pickfreepipe":
 							SetNextMove("pickfreepipe");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								if(m.PickUpFreePipeEnd() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen felvettél egy csővéget!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "Ez a csővég nem felvehető!");
-							}
-							else
-							{
-								frame = new JFrame();
-								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
-							}
-							 */
+					
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case"picknewpump":
 							SetNextMove("picknewpump");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								if(m.PickUpPump() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen felvettél egy új pumpát!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "Nem tudtad felvenni a pumpát!");
-							}
-							else
-							{
-								frame = new JFrame();
-								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
-							}
-							 */
+							
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "droppump":
 							SetNextMove("droppump");
-							/*
-							frame = new JFrame();
-							if(m!= null)
-							{
-								if(m.BuildPumpIntoPipe() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen beépítetted a pumpát egy csőbe!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "A pumpa nem került beszerelésre!");
-							}
-							else
-							{
-								frame = new JFrame();
-								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
-							}
-							 */
+							
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "connectpipe":
 							SetNextMove("connectpipe");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								if(m.ConnectPipe() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen beépítetted a pumpát egy csőbe!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "A pumpa nem került beszerelésre!");
-							}
-							else
-							{
-								frame = new JFrame();
-								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
-							}
-							*/
+							
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
@@ -725,65 +635,21 @@ public class Controller
 
 						case "stickypipe":
 							SetNextMove("stickypipe");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								if(m.SetStickyPipe() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen beragasztóztad az elemet!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "Az elem nem lett ragacsosabb!");
-							}
-							else if(s != null)
-							{
-								if(s.SetStickyPipe() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen beragasztóztad az elemet!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "Az elem nem lett ragacsosabb!");
-							}
-							 */
+							
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "slipperypipe":
 							SetNextMove("slipperypipe");
-							/*
-							frame = new JFrame();
-							if(s != null)
-							{
-								if(s.SetSlipperyPipe() == true)
-									JOptionPane.showMessageDialog(frame, "Sikeresen csúszóssá tetted az elemet!");
-
-								else
-									JOptionPane.showMessageDialog(frame, "Nem lett csúszósabb az elem!");
-							}
-							else
-								JOptionPane.showMessageDialog(frame, "Nem a szabotőr köre van!");
-
-							*/
+							
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "pass":
 							SetNextMove("pass");
-							/*
-							frame = new JFrame();
-							if(m != null)
-							{
-								m.Pass();
-								JOptionPane.showMessageDialog(frame, GameManager.GetCurrentMechanic().GetName()+ " passzolt");
-							}
-
-							else if(s != null)
-							{
-								s.Pass();
-								JOptionPane.showMessageDialog(frame, GameManager.GetCurrentSaboteur().GetName()+ " passzolt");
-							}
-							*/
+							
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
