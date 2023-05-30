@@ -1,0 +1,5 @@
+pump1 hozzáadva a pályához.
+pipe1 hozzáadva a pályához.
+mechanic1 szerelő hozzáadva a játékhoz ide: pipe1
+pipe1 és pump1 szomszédok lettek.
+mechanic1 sikeresen mozgott innen: pipe1 ide: pump1

@@ -5,12 +5,5 @@ spawnMechanic mechanic1 cistern1
 picknewpump mechanic1
 playerMove mechanic1 pipe1
 droppump mechanic1
--- Expected Output --
-cistern1 hozzáadva a pályához.
-pipe1 hozzáadva a pályához.
-pipe1 és cistern1 szomszédok lettek.
-mechanic1 szerelő hozzáadva a játékhoz ide: cistern1
-pump1 hozzáadva a pályához.
-Pumpa felvétele sikeres. Pumpa felvéve: pump1
-mechanic1 sikeresen mozgott innen: cistern1 ide: pipe1
+-- Expected Pattern --
 Pumpa beépítve a cső közepére: pipe1

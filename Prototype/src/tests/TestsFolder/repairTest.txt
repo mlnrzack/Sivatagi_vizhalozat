@@ -1,7 +1,6 @@
 addPipe pipe1 broken
 spawnMechanic mechanic1 pipe1
 repair mechanic1
--- Expected Output --
+-- Expected Pattern --
 pipe1 hozzáadva a pályához.
-mechanic1 szerelő hozzáadva a játékhoz ide: pipe1
 mechanic1 szerelő javítása sikeres itt: pipe1

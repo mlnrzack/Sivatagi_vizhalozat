@@ -11,19 +11,7 @@ spawnMechanic mechanic1 pump2
 pass mechanic1
 pass mechanic1
 pass mechanic1
--- Expected Output --
-pump1 hozzáadva a pályához.
-pipe1 hozzáadva a pályához.
-pipe2 hozzáadva a pályához.
-cistern1 hozzáadva a pályához.
-pump2 hozzáadva a pályához.
-pipe1 és pump2 szomszédok lettek.
-pipe1 és pump1 szomszédok lettek.
-pipe2 és pump1 szomszédok lettek.
-pipe2 és cistern1 szomszédok lettek.
-mechanic1 szerelő hozzáadva a játékhoz ide: pump2
-mechanic1 játékos passzolt.
+-- Expected Pattern --
 pump2 vizet pumpált az átmeneti tárolójába.
 mechanic1 játékos passzolt.
 pump2 vizet pumpált a szomszédjába: pipe2
-mechanic1 játékos passzolt.

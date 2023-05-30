@@ -1,0 +1,3 @@
+pipe1 hozzáadva a pályához.
+saboteur1 szabotőr hozzáadva a játékhoz ide: pipe1
+saboteur1 ragacsossá tette a csövet: pipe1
