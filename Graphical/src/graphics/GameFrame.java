@@ -39,7 +39,7 @@ public class GameFrame extends JFrame
 	
 	private JLabel displayCurrentPlayerName;														//
 	private JLabel displayRound;																	//
-	private JLabel playerRemainingActionCount;														//
+	private JLabel playerActionCount;																//
 	private JLabel mechPoints;																		//
 	private JLabel sabPoints;																		//
 	private JLabel damagedPartsText;																//
@@ -158,7 +158,7 @@ public class GameFrame extends JFrame
         //Esetlegesen itt a nem működő pumpák nevét, vagy akár a lyukas csövek nevét is ki lehetne írni
         displayCurrentPlayerName = new JLabel();
         displayRound = new JLabel();
-        playerRemainingActionCount = new JLabel();
+        playerActionCount = new JLabel();
         mechPoints = new JLabel();
         sabPoints = new JLabel();
         pipeText = new JLabel();
@@ -183,6 +183,7 @@ public class GameFrame extends JFrame
 
         gameStatisticsPanel.add(displayCurrentPlayerName);
         gameStatisticsPanel.add(displayRound);
+        gameStatisticsPanel.add(playerActionCount);
         gameStatisticsPanel.add(mechPoints);
         gameStatisticsPanel.add(sabPoints);
         gameStatisticsPanel.add(damagedPartsPanel);
@@ -248,12 +249,12 @@ public class GameFrame extends JFrame
         setInventory();
         if(GameManager.GetCurrentMechanic() != null)
             displayCurrentPlayerName.setText("Jelenlegi játékos: " + GameManager.GetCurrentMechanic().GetName());
-
+            
         else if(GameManager.GetCurrentSaboteur() != null)
             displayCurrentPlayerName.setText("Jelenlegi játékos: " + GameManager.GetCurrentSaboteur().GetName());
 
         displayRound.setText(String.valueOf("Kör: " + GameManager.GetRound()));
-        playerRemainingActionCount.setText("Műveletek: " + String.valueOf(GameManager.GetPlayerAction()));
+        playerActionCount.setText("Műveletek: " + String.valueOf(GameManager.GetPlayerAction()));
         mechPoints.setText(String.valueOf("Szerelők pontjai: " + GameManager.GetMechanincsPoints()));
         sabPoints.setText(String.valueOf("Szabotőrök pontjai: " + GameManager.GetSaboteurPoints()));
         damagedPartsText.setText("Tönkrement elemek: ");
@@ -293,6 +294,7 @@ public class GameFrame extends JFrame
                     butt.setEnabled(false);
             }
         }
+        
     }
 
     /**
@@ -341,12 +343,13 @@ public class GameFrame extends JFrame
         for(JButton button: actionButtons)
             button.setEnabled(true);
     }
+    
     public static void SetElement(ElementView elementview)
     {
         element = elementview;
-        System.out.println("2. GameFrame SetElement "+element.GetElement().GetId());
+        System.out.println("2. GameFrame SetElement " + element.GetElement().GetId());
         createString();
-        System.out.println("8. SetElemnt vége. "+element.GetElement().GetId());
+        System.out.println("8. SetElemnt vége. " + element.GetElement().GetId());
         System.out.println(GameManager.GetCurrentMechanic() != null ? GameManager.GetCurrentMechanic().GetName() : GameManager.GetCurrentSaboteur().GetName());
     }
     /**

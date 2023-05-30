@@ -523,6 +523,10 @@ public class MapView extends JPanel
 						}
 					}
 				}
+				else if(true)
+				{
+					//pumpa beállítása
+				}
 			}
 
 			@Override

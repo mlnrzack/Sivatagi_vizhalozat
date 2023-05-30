@@ -8,7 +8,7 @@ import game.players.*;
 
 public class GameManager
 {
-	private static int round = 0;																	//A kör száma.
+	private static int round = 1;																	//A kör száma.
 	private static int mechanicsPoints = 0;															//A szerelők pontszáma.
 	private static int saboteursPoints = 0;															//A szabotőrök pontszáma.
 	private static ArrayList<IElement> map = new ArrayList<IElement>();								//A térképen lévő összes elem.

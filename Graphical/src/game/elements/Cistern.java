@@ -21,56 +21,17 @@ public class Cistern extends ActiveElement implements ISteppable
      */
     public Pipe PickUpFreePipeEnd()
     {
-    	String name = "pipe";
-    	boolean foundUniqueName = false;
-    	int i = 1;
-    	while (!foundUniqueName) {
-    		String pipeName = name + i++; 
-    		foundUniqueName = true;
-    		for (IElement e : GameManager.GetMap()) {
-        		if (pipeName.toUpperCase().equals(e.GetId().toUpperCase()))
-        			foundUniqueName = false;
-        	}
-    		
-    		if (foundUniqueName) {
-    			ArrayList<ActiveElement> pipeNeighbours = new ArrayList<ActiveElement>();
-    			pipeNeighbours.add(this);
-    			Pipe pipe = new Pipe(0, false, 0, 0, 0, pipeNeighbours, pipeName);
-    			
-    			this.AddPipe(pipe);
-    	    	
-    	        return pipe;
-    		}
-    	}
-    	
-    	// Elvileg ide nem fog eljutni
-    	return null;
+    	Pipe newPipe = new Pipe();
+    	this.AddPipe(newPipe);
+    	newPipe.AddNeighbour(this);
+        return newPipe;
     }
     
     /**Visszaad egy új pumpát.
      */
     public Pump PickUpPump()
     {
-    	Pump pump = new Pump();
-        
-        String name = "pump";
-    	boolean foundUniqueName = false;
-    	int i = 1;
-    	while (!foundUniqueName) {
-    		String pumpName = name + i++; 
-    		foundUniqueName = true;
-    		for (IElement e : GameManager.GetMap()) {
-        		if (pumpName.toUpperCase().equals(e.GetId().toUpperCase()))
-        			foundUniqueName = false;
-        	}
-    		
-    		if (foundUniqueName)
-    			pump.SetId(pumpName);
-    	}
-        
-        GameManager.AddToMap(pump);
-        
-        return pump;
+    	return new Pump();
     }
     
     /**A szomszédos csőből a ciszternába pumpálja a vizet

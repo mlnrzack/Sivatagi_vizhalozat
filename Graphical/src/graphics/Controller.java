@@ -386,8 +386,10 @@ public class Controller
 		}
 		
 		int a = GameManager.GetPlayerAction();
-		if (a == Constants.ActionInRoundPerUser) {
-			if (GameManager.GetCurrentMechanic() != null) {
+		if (a == Constants.ActionInRoundPerUser)
+		{
+			if (GameManager.GetCurrentMechanic() != null) 
+			{
 				int currentMechanicIndex = GameManager.GetMechanics().indexOf(GameManager.GetCurrentMechanic());
 				if (GameManager.GetMechanics().size() > (currentMechanicIndex + 1)) {
 					GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(currentMechanicIndex + 1));
@@ -400,24 +402,29 @@ public class Controller
 					gf.GetMap_G().SetCurrentMechanic(null);
 					gf.GetMap_G().SetCurrentSaboteur(gf.GetMap_G().GetCurrentSaboteurByModell(GameManager.GetCurrentSaboteur()));
 				}					
-			} else {
+			}
+			else 
+			{
 				int currentSaboteurIndex = GameManager.GetSaboteurs().indexOf(GameManager.GetCurrentSaboteur());
-				if (GameManager.GetSaboteurs().size() > (currentSaboteurIndex + 1)) {
+				if (GameManager.GetSaboteurs().size() > (currentSaboteurIndex + 1)) 
+				{
 					GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(currentSaboteurIndex + 1));
 					gf.GetMap_G().SetCurrentSaboteur(gf.GetMap_G().GetCurrentSaboteurByModell(GameManager.GetCurrentSaboteur()));
 				}					
-				else {
+				else
+				{
 					GameManager.SetCurrentSaboteur(null);
 					GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(0));
 					
 					gf.GetMap_G().SetCurrentSaboteur(null);
 					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetCurrentMechanic()));
+					GameManager.SetRound(GameManager.GetRound() + 1);
 				}
 			}
 			
 			GameManager.SetPlayerAction(0);
 		}
-		
+
 		gf.UpdateHud();
 	}
 	
@@ -488,6 +495,8 @@ public class Controller
 							
 
 						case "repair":
+							SetNextMove("repair");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -499,12 +508,14 @@ public class Controller
 							}
 							else
 								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
-
+							 */
 							gf.UpdateHud();
 							gf.ResetActionButtons();
 							break;
 
 						case "leakpipe":
+							SetNextMove("leakpipe");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -522,12 +533,14 @@ public class Controller
 								else
 									JOptionPane.showMessageDialog(frame, "A cső már meg volt rongálva!");
 							}
-
+							 */
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "pickfreepipe":
+							SetNextMove("pickfreepipe");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -542,12 +555,14 @@ public class Controller
 								frame = new JFrame();
 								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
 							}
-
+							 */
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case"picknewpump":
+							SetNextMove("picknewpump");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -562,12 +577,14 @@ public class Controller
 								frame = new JFrame();
 								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
 							}
-
+							 */
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "droppump":
+							SetNextMove("droppump");
+							/*
 							frame = new JFrame();
 							if(m!= null)
 							{
@@ -582,12 +599,14 @@ public class Controller
 								frame = new JFrame();
 								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
 							}
-
+							 */
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "connectpipe":
+							SetNextMove("connectpipe");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -602,12 +621,13 @@ public class Controller
 								frame = new JFrame();
 								JOptionPane.showMessageDialog(frame, "Nem a szerelő köre van most!");
 							}
-
+							*/
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "pickneighbour X":
+							//TODO
 							ArrayList<String>avaliableFields = new ArrayList<String>();
 							String indicesString = "";
 
@@ -637,6 +657,7 @@ public class Controller
 							break;
 
 						case "setpump X Y X":
+							//TODO
 							avaliableFields = new ArrayList<String>();
 							indicesString = "";
 
@@ -703,6 +724,8 @@ public class Controller
 							break;
 
 						case "stickypipe":
+							SetNextMove("stickypipe");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -720,12 +743,14 @@ public class Controller
 								else
 									JOptionPane.showMessageDialog(frame, "Az elem nem lett ragacsosabb!");
 							}
-
+							 */
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "slipperypipe":
+							SetNextMove("slipperypipe");
+							/*
 							frame = new JFrame();
 							if(s != null)
 							{
@@ -738,11 +763,14 @@ public class Controller
 							else
 								JOptionPane.showMessageDialog(frame, "Nem a szabotőr köre van!");
 
+							*/
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
 
 						case "pass":
+							SetNextMove("pass");
+							/*
 							frame = new JFrame();
 							if(m != null)
 							{
@@ -755,7 +783,7 @@ public class Controller
 								s.Pass();
 								JOptionPane.showMessageDialog(frame, GameManager.GetCurrentSaboteur().GetName()+ " passzolt");
 							}
-
+							*/
 							gf.ResetActionButtons();
 							gf.UpdateHud();
 							break;
