@@ -6,7 +6,6 @@ import game.interfaces.IElement;
 import game.players.Mechanic;
 import game.players.Saboteur;
 import graphics.elements.*;
-import graphics.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,10 +26,10 @@ public class Controller
 	{
 		this.gf = gf;
 		buttons = gf.getActionButtons();
-		InitController();
+		//InitController();
 		AttachActionToButtons();
 	}
-	
+	/*
 	private void InitController() 
 	{
 		buttons.get(0).addActionListener(new MoveButtonListener());
@@ -136,7 +135,7 @@ public class Controller
 			System.out.println("stickypipe");
 		}
 	}
-	
+
 	private class SlipperypipeButtonListener implements ActionListener
 	{
 		@Override
@@ -154,17 +153,20 @@ public class Controller
 			System.out.println("pass");
 		}
 	}
-
+	*/
+	
+	/**
+	 */
 	public static void StartGame()
 	{
 		while (GameManager.GetRound() < Constants.RoundNumber)
 		{
 			//Történt-e akció gomb nyomás
 			
-			MechanicActions();
+			//MechanicActions();
 			//lépett e mindkét játékos
 			
-			SaboteurActions();
+			//SaboteurActions();
 			//lépett e mindkét játékos
 			
 			
@@ -197,25 +199,27 @@ public class Controller
 
 	/**A szerelő játékos karakter lépéseinek menüje.
 	 */
-	public static void MechanicActions()
+	public static void MechanicActions(String input)
 	{
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
 		{
 			GameManager.SetPlayerAction(0) ;
 			
 			GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(i));
+			System.out.println(GameManager.GetCurrentMechanic().GetName());
 			GameManager.SetCurrentSaboteur(null);
+			gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
+			System.out.println(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
+			gf.GetMap_G().SetCurrentSaboteur(null);
 			
 			System.out.println("A jelenlegi szabotőr: " + GameManager.GetCurrentMechanic().GetName());
-
+			
 			while((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
 			{
 				try
 				{
-					gf.GetMap_G().SetCurrentMechanic(gf.GetMap_G().GetCurrentMechanicByModell(GameManager.GetMechanics().get(i)));
-					gf.GetMap_G().SetCurrentSaboteur(null);
-					
-					//Scanner reader = new Scanner(System.in);
+
+					//itt kellene várjon még egy akciót
 					String userinput = _nextMove;
 
 					switch (userinput.split(" ")[0])
@@ -310,7 +314,7 @@ public class Controller
 	
 	/**A szabotőr játékos karakter lépéseinek menüje.
 	 */
-	public static void SaboteurActions()
+	public static void SaboteurActions(String input)
 	{
 		for(int i = 0; i < GameManager.GetSaboteurs().size(); i++)
 		{
@@ -380,23 +384,25 @@ public class Controller
 		}
 	}
 	
-	public static String GetNextMove() {
+	public static String GetNextMove()
+	{
 		return _nextMove;
 	}
 
 	public static void SetNextMove(String nextMove)
 	{
 		_nextMove = nextMove;
-		System.out.println("4. Controller SetNextMove "+nextMove);
+		System.out.println("4. Controller SetNextMove " + nextMove);
+		
 		if (GameManager.GetCurrentMechanic() == null)
 		{
 			System.out.println("4.5 Szabotőr Action");
-			Controller.SaboteurActions();
+			Controller.SaboteurActions(_nextMove);
 		}
 		else
 		{
 			System.out.println("4.5 Mechanic Action");
-			Controller.MechanicActions();
+			Controller.MechanicActions(_nextMove);
 		}
 	}
 	
@@ -744,12 +750,12 @@ public class Controller
 		}
 	}
 	
-	public static void createString() {
-
+	public static void createString() 
+	{
         _currentMove = new String();
         _currentMove = "move ";
         _currentMove = _currentMove.concat(gf.GetSelectedElement().GetElement().GetId());
-        System.out.println("3. Controller currentMove createStringben "+_currentMove);
+        System.out.println("3. Controller currentMove createStringben " + _currentMove);
         Controller.SetNextMove(_currentMove);
     }
 }

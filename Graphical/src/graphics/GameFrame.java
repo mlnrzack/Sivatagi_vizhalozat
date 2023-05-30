@@ -7,8 +7,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.Toolkit;
 
 import java.io.File;
@@ -19,9 +17,7 @@ import javax.swing.*;
 
 import game.*;
 import game.elements.*;
-import game.interfaces.*;
 import game.IO.*;
-import game.players.*;
 import graphics.elements.*;
 
 /**Ez az osztály felel a játéktér Frame-jéért.
@@ -49,10 +45,14 @@ public class GameFrame extends JFrame
 	private JLabel damagedPartsText;																//
 	private JLabel damagedPipesLabel;																//
 	private JLabel damagedPumpsLabel;																//
+    private JLabel inv;																				//
+    private JLabel pipeText;																		//
+    private JLabel pumpText;																		//
 	
 	private JPanel playerActionPanel;																//
 	private JPanel gameStatisticsPanel;																//
 	private JPanel damagedPartsPanel;																//
+	private JPanel inventoryPanel;																	//
 
     private MapView map_G;																			//
     private static String currentMove;																//
@@ -117,7 +117,6 @@ public class GameFrame extends JFrame
         return map_G;
     }
 
-    
     /**
      * @return
      */
@@ -162,16 +161,20 @@ public class GameFrame extends JFrame
         playerRemainingActionCount = new JLabel();
         mechPoints = new JLabel();
         sabPoints = new JLabel();
+        pipeText = new JLabel();
+        pumpText = new JLabel();
+        inv = new JLabel();
         damagedPartsText = new JLabel();
         damagedPipesLabel = new JLabel();
         damagedPumpsLabel = new JLabel();
         playerActionPanel = new JPanel();
         damagedPartsPanel = new JPanel();
         gameStatisticsPanel = new JPanel();
+        inventoryPanel = new JPanel();
         playerActionPanel.setLayout(new GridLayout(0,2));
         damagedPipes = new ArrayList<>();
         damagedPumps = new ArrayList<>();
-
+        
         damagedPartsPanel.add(damagedPartsText);
         damagedPartsPanel.add(damagedPipesLabel);
         damagedPartsPanel.add(damagedPumpsLabel);
@@ -183,7 +186,15 @@ public class GameFrame extends JFrame
         gameStatisticsPanel.add(mechPoints);
         gameStatisticsPanel.add(sabPoints);
         gameStatisticsPanel.add(damagedPartsPanel);
+        gameStatisticsPanel.add(inventoryPanel);
+        
+        inventoryPanel.add(inv);
+        inventoryPanel.add(pipeText);
+        inventoryPanel.add(pumpText);
 
+        inventoryPanel.setBackground(color);
+        inventoryPanel.setLayout(new BoxLayout(inventoryPanel, BoxLayout.Y_AXIS));
+        
         gameStatisticsPanel.setBackground(color);
         gameStatisticsPanel.setLayout(new GridLayout(9,1));
         gameStatisticsPanel.setSize((int)(screenWidth * 0.3), (int)(screenHeight * 0.1));
@@ -204,8 +215,6 @@ public class GameFrame extends JFrame
         actionButtons.add(new JButton("slipperypipe"));
         actionButtons.add(new JButton("pass"));
 
-        //playerActionPanel.setLayout(new GridLayout(12,1,2,2));
-
         //az actionButtons gombjainak beállítása
         for(JButton butt: actionButtons)
         {
@@ -224,9 +233,8 @@ public class GameFrame extends JFrame
         interfacePanel.add(damagedPipesLabel);
         interfacePanel.add(damagedPumpsLabel);
         interfacePanel.add(playerActionPanel);
-
         interfacePanel.setLayout(new BoxLayout(interfacePanel, BoxLayout.Y_AXIS));
-
+        
         UpdateHud();
 
         interfacePanel.revalidate();
@@ -237,6 +245,7 @@ public class GameFrame extends JFrame
      */
     public void UpdateHud()
     {
+        setInventory();
         if(GameManager.GetCurrentMechanic() != null)
             displayCurrentPlayerName.setText("Jelenlegi játékos: " + GameManager.GetCurrentMechanic().GetName());
 
@@ -252,19 +261,15 @@ public class GameFrame extends JFrame
         for (Pipe entity: GameManager.GetPipes())
         {
             if (entity.GetLeaking())
-            {    
-            	damagedPipes.add(entity.GetId());
-            	damagedPipesLabel.setText(String.format(entity.GetId()+ "\n"));
-            }
+                damagedPipes.add(entity.GetId());
+            damagedPipesLabel.setText(String.format(entity.GetId()+ "\n"));
         }
 
         for (Pump entity: GameManager.GetPumps())
         {
             if (entity.GetBroken())
-            {
                 damagedPumps.add(entity.GetId());
-                damagedPumpsLabel.setText(String.format(entity.GetId() + "\n"));
-            }
+            damagedPumpsLabel.setText(String.format(entity.GetId() + "\n"));
         }
 
         //Szabotőr köre van
@@ -273,11 +278,12 @@ public class GameFrame extends JFrame
             for(JButton butt: actionButtons)
             {
                 if(butt.getText().equals("repair") || butt.getText().equals("droppump")
-                        || butt.getText().equals("connectpipe") || butt.getText().equals("pickneighbour")
-                        || butt.getText().equals("pickfreepipe") || butt.getText().equals("picknewpump"))
+                || butt.getText().equals("connectpipe") || butt.getText().equals("pickneighbour")
+                || butt.getText().equals("pickfreepipe") || butt.getText().equals("picknewpump"))
                     butt.setEnabled(false);
             }
         }
+        
         //Szerelő köre van
         else if(GameManager.GetCurrentSaboteur() == null && GameManager.GetCurrentMechanic() != null)
         {
@@ -289,6 +295,29 @@ public class GameFrame extends JFrame
         }
     }
 
+    /**
+     */
+    public void setInventory()
+    {
+        if(GameManager.GetCurrentMechanic() != null) 
+        {
+            inv.setText(GameManager.GetCurrentMechanic().GetName() + " Inventory:");
+            
+            if(GameManager.GetCurrentMechanic().GetPipeInInventory() != null)
+                pipeText.setText("Van cső a játékosnál");
+            else
+                pipeText.setText("Nincs cső a játékosnál");
+            
+            if(GameManager.GetCurrentMechanic().GetPumpInInventory() != null)
+                pumpText.setText("Van pumpa a játékosnál");
+            else
+                pumpText.setText("Nincs pumpa a játékosnál");
+        }
+        
+        if(GameManager.GetCurrentSaboteur() != null)
+            inv.setText("");
+    }
+    
     public ArrayList<JButton> getActionButtons()
     {
         return actionButtons;
@@ -296,9 +325,8 @@ public class GameFrame extends JFrame
 
     /**
      */
-
-    public static void createString() {
-
+    public static void createString() 
+    {
         currentMove = new String();
         currentMove = "move ";
         currentMove = currentMove.concat(element.GetElement().GetId());
