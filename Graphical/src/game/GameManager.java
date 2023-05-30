@@ -1,28 +1,10 @@
 package game;
 
-import game.*; import game.elements.*;
-
-import game.*;
-
-import game.elements.*;
-
-import game.interfaces.*;
-
-import game.IO.*;
-
-import game.players.*;
-
-import graphics.elements.*;
-
-
-
-
 import java.util.*;
 
 import game.elements.*;
 import game.interfaces.*;
 import game.players.*;
-import graphics.*;
 
 public class GameManager
 {
@@ -40,14 +22,19 @@ public class GameManager
     private static Mechanic currentMechanicPlayer = null;											//Az aktuális játékos.
     private static Saboteur currentSaboteurPlayer = null;											//Az aktuális játékos.
     private static int playerActionCountInCurrentRound = 0;											//Az aktuális játékos körben tett lépéseinek száma.
-   																	//
 
+    /**
+     * @param e
+     */
     public static void AddToMap(IElement e)
     {
     	map.add(e);
     	System.out.println(e.GetId() + " hozzáadva a pályához.");
     }
 
+    /**
+     * @return
+     */
     public static ArrayList<Pipe> GetPipes()
     {
     	return pipes;
@@ -124,7 +111,6 @@ public class GameManager
     {
         return mechanics;
     }
-
     
     /**Adott szerelő karakter hozzáfűzése a szerelők listához.
      * @param mechanic a hozzáfűzendő szerelő.
@@ -167,10 +153,6 @@ public class GameManager
     {
         return saboteurs.add(saboteur);
     }
-/**Beállítja a külső osztálytól kapott értékre a szerelők listáját.
-     * @param saboteurs a kapott érték.
-     */
-
 
     /**A léptethetők listájának átadása más osztályok felé.
      * @return a léptethetők listája.
@@ -233,12 +215,17 @@ public class GameManager
         return cisterns.add(cistern);
     }
 
+    /**A térképen lévő ciszternák listájának átadása más osztályok felé.
+     * @return a ciszternák listája.
+     */
     public static ArrayList<Cistern> GetCisterns()
     {
         return cisterns;
     }
 
-    
+    /**A térképen lévő pumpák listájának átadása más osztályok felé.
+     * @return a pumpák listája.
+     */
     public static ArrayList<Pump> GetPumps()
     {
         return pumps;
@@ -332,13 +319,66 @@ public class GameManager
         playerActionCountInCurrentRound++;
     }
 
-    
-    /**A játékot menetéért felelős függvény.
-     * A modell adott lejátszott körszámig játszatja a játékot.
-     * Ha minden karakter meglépte adott körre vonatkozó lépéseit, akkor növelődik.
+    /**Megkersi a legkisebb, még nem használt id-t a csövekből.
+     * @return az adott id szám értéke.
      */
-
-
+    public static int TryPipeIdSet()
+    {
+    	int id = 1;
+    	for(int i = 0; i < pipes.size(); i++)
+    	{
+    		String piid = "pipe" + id;
+    		if(pipes.get(i).GetId().compareTo(piid) == 0)
+    			id++;
+    	}
+    	return id;
+    }
+    
+    /**Megkersi a legkisebb, még nem használt id-t a pumpákból.
+     * @return az adott id szám értéke.
+     */
+    public static int TryPumpIdSet()
+    {
+    	int id = 1;
+    	for(int i = 0; i < pumps.size(); i++)
+    	{
+    		String puid = "pump" + id;
+    		if(pumps.get(i).GetId().compareTo(puid) == 0)
+    			id++;
+    	}
+    	return id;
+    }
+    
+    /**Megkersi a legkisebb, még nem használt id-t a ciszternákból.
+     * @return az adott id szám értéke.
+     */
+    public static int TryCisternIdSet()
+    {
+    	int id = 1;
+    	for(int i = 0; i < cisterns.size(); i++)
+    	{
+    		String cid = "cistern" + id;
+    		if(cisterns.get(i).GetId().compareTo(cid) == 0)
+    			id++;
+    	}
+    	return id;
+    }
+    
+    /**Megkersi a legkisebb, még nem használt id-t a vízforrásokból.
+     * @return az adott id szám értéke.
+     */
+    public static int TryWaterSpringIdSet()
+    {
+    	int id = 1;
+    	for(int i = 0; i < waterSprings.size(); i++)
+    	{
+    		String spid = "spring" + id;
+    		if(waterSprings.get(i).GetId().compareTo(spid) == 0)
+    			id++;
+    	}
+    	return id;
+    }
+    
     /**Ha sikesen végrehajt egy játékos egy elemi akciót, akkor ez a függvény hívódik meg.
      * Növeli az adott játékos lépésszámát, valamint lépteti a vizet a rendszerben.
      */
@@ -354,31 +394,22 @@ public class GameManager
      */
     public static void FireSourceActions()
     {
-        for(int i = 0; i < waterSprings.size(); i++)
-        {
-            waterSprings.get(i).FillNeighourPipes();
-        }
+    	for(int i = 0; i < waterSprings.size(); i++)
+    	{
+    		waterSprings.get(i).FillNeighourPipes();
+    	}
     }
 
     /**A térkép összes - kivéve vízforrás - elemében történő vízfolyatás.
      */
     public static void StepSteppables()
     {
-        boolean[] actionDone = new boolean[steppables.size()];
 
-    	boolean actionDoneInLoop = false;
-
-    	do {
-    		actionDoneInLoop = false;for(int i = steppables.size() - 1; i >= 0; i--)
-        {
-            if (actionDone[i] == false) {
-            		actionDone[i] = steppables.get(i).Step();
-            		actionDoneInLoop = actionDone[i] || actionDoneInLoop;
-            	}
-        }} while (actionDoneInLoop);
+    	for(int i = steppables.size() - 1; i >= 0; i--)
+    	{
+        	steppables.get(i).Step();
+    	}
     }
-
-
 }
 
 

@@ -121,6 +121,9 @@ public class GameFrame extends JFrame
         });
     }
 
+    public ElementView GetSelectedElement() {
+    	return element;
+    }
     /**
      */
     public void InitializeInterfacePanel()
@@ -282,7 +285,7 @@ public class GameFrame extends JFrame
         currentMove = "move ";
         currentMove = currentMove.concat(element.GetElement().GetId());
         System.out.println("3. GameFrame currentMOve createStringben "+currentMove);
-        Controller.SetNextMove();
+        Controller.SetNextMove(currentMove);
     }
 
     /**

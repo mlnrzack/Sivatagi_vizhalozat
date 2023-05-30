@@ -19,19 +19,28 @@ public class Pump extends ActiveElement implements ISteppable
     {
         GameManager.AddSteppable(this);
         GameManager.AddPump(this);
-        this.TryIdSet();
+        this.SetId("pump" + GameManager.TryPumpIdSet());
     }
 
+    /**Visszaadja a pumpa működési állapotát
+     * @return
+     */
     public boolean GetBroken()
     {
     	return broken;
     }
     
+    /**Visszaadja a pumpa bemeneti csövét
+     * @return
+     */
     public Pipe GetInput()
     {
     	return input;
     }
 
+    /**Visszaadja a pumpa kimeneti csövét
+     * @return
+     */
     public Pipe GetOutput()
     {
     	return output;
@@ -45,19 +54,21 @@ public class Pump extends ActiveElement implements ISteppable
     {
         var pumpWaterToOutputDone = false;
         var pumpWaterFromInputDone = false;
+        var isBroken = false;
         
         if(!broken)
         {
-        	pumpWaterFromInputDone = PumpWaterFromInput();
+            if (GetWaterInside() == Constants.PumpWaterCapacity )
+            {
+                pumpWaterToOutputDone = PumpWaterToOutput();
+                pumpWaterFromInputDone = PumpWaterFromInput();
+            }
+        	if (GetWaterInside() < Constants.PumpWaterCapacity) pumpWaterFromInputDone = PumpWaterFromInput();
         	
-        	if (!pumpWaterFromInputDone)
-        		pumpWaterToOutputDone = PumpWaterToOutput();
+            isBroken = GettingOlder();
         }
-        
-        if (pumpWaterToOutputDone || pumpWaterFromInputDone)
-            GettingOlder();
 
-        return pumpWaterToOutputDone || pumpWaterFromInputDone;
+        return broken || isBroken || pumpWaterToOutputDone || pumpWaterFromInputDone;
     }
 
     /**Ha megfelelő indexeket kap a függvény,
@@ -211,15 +222,18 @@ public class Pump extends ActiveElement implements ISteppable
         ActiveElement neighbour = pipe.GetNeighbours().get(0);
         Pump p = this;
         //az új cső szomszédjainak beállítása
-        ArrayList<ActiveElement> newPipeNeighbours = new ArrayList<ActiveElement>() {
+        ArrayList<ActiveElement> newPipeNeighbours = new ArrayList<ActiveElement>() 
+        {
         	{ 
         		add(neighbour); 
         		add(p);
         	}
         };
         
-        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), newPipeNeighbours, "");
-        newPipe.TryIdSet();
+     // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
+    	String pipeId = "pipe" + GameManager.TryPipeIdSet();
+    	
+        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
         
         //a szomszéd elem értesítése a szomszéd változásról
         neighbour.AddPipe(newPipe);
@@ -238,25 +252,5 @@ public class Pump extends ActiveElement implements ISteppable
 
         return true;
     }
-    
-    public void TryIdSet() {
-    	if (!this.GetId().equals(""))
-    		return;
-    	
-    	String name = "pump";
-    	boolean foundUniqueName = false;
-    	int i = 1;
-    	while (!foundUniqueName) {
-    		String newName = name + i++; 
-    		foundUniqueName = true;
-    		for (IElement e : GameManager.GetMap()) {
-        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
-        			foundUniqueName = false;
-        	}
-    		
-    		if (foundUniqueName) {
-    			this.SetId(newName);
-    		}
-    	}
-    }
+
 }

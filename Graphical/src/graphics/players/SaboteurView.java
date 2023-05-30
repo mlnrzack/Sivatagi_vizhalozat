@@ -42,4 +42,8 @@ public class SaboteurView extends PlayerView
 			return null;
 		}
 	}
+	public void UpdatePos(ElementView pos) {
+		this.pos = pos;
+		//LoadImage();
+	}
 }

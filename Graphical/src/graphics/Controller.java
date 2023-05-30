@@ -13,14 +13,13 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import graphics.GameFrame;
-
 public class Controller 
 {
 	
 	protected static GameFrame gf;
 	protected ArrayList<JButton> buttons;
-	private static String nextMove = "";
+	private static String _nextMove = "";
+	private static String _currentMove ="";
 	
 	public Controller(GameFrame gf)
 	{
@@ -159,9 +158,17 @@ public class Controller
 	{
 		while (GameManager.GetRound() < Constants.RoundNumber)
 		{
-			//MechanicActions();
+			//Történt-e akció gomb nyomás
+			
+			
+			MechanicActions();
+			//lépett e mindkét játékos
+			
 			SaboteurActions();
-
+			//lépett e mindkét játékos
+			
+			
+			//lépett mindenki, akkor
 			GameManager.SetRound(GameManager.GetRound() + 1);
 		}
 
@@ -188,7 +195,12 @@ public class Controller
 		}
 	}
 
-
+	//private boolean isActionButtonPressed() {
+		//gf.GetActionButtons();
+		//return false;
+		
+	//}
+	
 	public static void MechanicActions()
 	{
 		for(int i = 0; i < GameManager.GetMechanics().size(); i++)
@@ -196,40 +208,18 @@ public class Controller
 			GameManager.SetPlayerAction(0) ;
 			GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(i));
 			GameManager.SetCurrentSaboteur(null);
-
+			//történ e gomb nyomás
+			
+			
+			
+			
 			while (GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser)
 			{
-                /*
-                System.out.println("\tMechanics' points: " + mechanicsPoints + "\t\tSaboteurs' points: " + saboteursPoints);
-
-                System.out.println("\n" + mechanics.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-                System.out.println("Position: " + mechanics.get(i).GetCurrentPosition().GetId() + "\n");
-                System.out.println("Neighbors: \n ** - index name: players standing on it **");
-
-                for(int j = 0; j < mechanics.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
-                {
-                    int onTop = mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
-                    System.out.print("    - " + j + " " + mechanics.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
-                    System.out.print(onTop == 0 ? "No one stands on this element.\n" : onTop + " player stand(s) on this element.\n");
-                }
-
-    			System.out.println("\nLehetőségek:");
-    			System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-    			System.out.println("\trepair - Javítás");
-    			System.out.println("\tpickfreepipe - Szabad csővég felvétele");
-               	System.out.println("\tpicknewpump - Pumpa felvétele");
-               	System.out.println("\tdroppump - Pumpa beépítése a csőbe");
-               	System.out.println("\tconnectpipe - Csővég csatlakoztatása");
-               	System.out.println("\tpickneighbour X - Szomszédos csővég felvétele. Az X a szomszéd indexe.");
-               	System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-               	System.out.println("\tleakpipe - Cső lyukasztás");
-               	System.out.println("\tstickypipe - Cső ragacsossá tétele");
-               	System.out.println("\tpass - A kör kihagyása");
-               	*/
+             
 				try
 				{
 					//Scanner reader = new Scanner(System.in);
-					String userinput = nextMove;
+					String userinput = _nextMove;
 
 					switch (userinput.split(" ")[0])
 					{
@@ -327,36 +317,15 @@ public class Controller
 			GameManager.SetPlayerAction(0);
 			GameManager.SetCurrentMechanic(null);
 			GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(i));
+			System.out.println("A jelenlegi szabotőr: "+ GameManager.GetCurrentSaboteur().GetName());
 
-
-			while ((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(nextMove.equals("")))
+			while ((GameManager.GetPlayerAction() < Constants.ActionInRoundPerUser ) && !(_nextMove.equals("")))
 			{
-                /*
-                System.out.println("\tMechanics' points: " + mechanicsPoints + "\t\tSaboteurs' points: " + saboteursPoints);
-
-                System.out.println("\n" + saboteurs.get(i).GetName() + " játékos köre, " + (playerActionCountInCurrentRound + 1) + ". akció");
-                System.out.println("Position: " + saboteurs.get(i).GetCurrentPosition().GetId() + "\n");
-                System.out.println("Neighbors: \n ** - index name: players standing on it **");
-
-                for(int j = 0; j < saboteurs.get(i).GetCurrentPosition().GetNeighbours().size(); j++)
-                {
-                    int onTop = saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetPlayers().size();
-                    System.out.print("    - " + j + " " + saboteurs.get(i).GetCurrentPosition().GetNeighbours().get(j).GetId() + ": ");
-                    System.out.print(onTop == 0 ? "No one stands on this element.\n" : onTop + " player stand(s) on this element.\n");
-                }
-
-                System.out.println("\nLehetőségek:");
-                System.out.println("\tmove X - Mozgás, X szomszéd indexe, ahova mozogni szeretnél");
-                System.out.println("\tleakpipe - Maga alatt lévő cső lyukasztása");
-                System.out.println("\tsetpump X Y - Pumpa beállítása. Az X a kívánt input szomszéd indexe, Y a kívánt output szomszéd indexe.");
-                System.out.println("\tstickypipe - A cső ragacsossá tétele maga alatt");
-                System.out.println("\tslipperypipe - A cső csúszóssá tétele");
-                System.out.println("\tpass - A kör kihagyása");
-                */
+                
 				try
 				{
 					//Scanner reader = new Scanner(System.in);
-					String userinput = nextMove;//reader.nextLine();
+					String userinput = _nextMove;//reader.nextLine();
 					System.out.println("5. GameManager userinput = "+userinput);
 
 					switch (userinput.split(" ")[0])
@@ -370,9 +339,10 @@ public class Controller
 							{
 								System.out.println("6. move k szabotőr: "+k+"");
 								GameManager.GetCurrentSaboteur().Move(k);
+								gf.GetMap_G().UpdateMapDetails();
 								System.out.println("7. moved "+ GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
-								nextMove= "" ;
-
+								_nextMove= "" ;
+								
 								break;
 							}
 							break;
@@ -410,17 +380,17 @@ public class Controller
 		}
 	}
 	public static String GetNextMove() {
-		return nextMove;
+		return _nextMove;
 	}
 
 	/**A szerelő játékos karakterek lépéseinek menüje.
 	 */
 
 
-	public static void SetNextMove()
+	public static void SetNextMove(String nextMove)
 	{
-		nextMove = GameFrame.GetCurrentMove();
-		System.out.println("4. GameM SetNextMove "+nextMove);
+		_nextMove = nextMove;
+		System.out.println("4. Controller SetNextMove "+nextMove);
 		if (GameManager.GetCurrentMechanic()==null)
 		{
 			System.out.println("4.5 Szabotőr Action");
@@ -434,13 +404,14 @@ public class Controller
 	public static void AttachActionToButtons()
 	{
 		//Az akciógombokhoz hozzá rendelünk a gameManagerből megfelelő akciókat
+		
 
 		for(JButton butt: gf.GetActionButtons())
 		{
 			String action = butt.getText();
 
 			//GameManager.SetCurrentMechanic(GameManager.GetMechanics().get(0));
-			//GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(0));
+			GameManager.SetCurrentSaboteur(GameManager.GetSaboteurs().get(0));
 
 
 			//======================================================
@@ -458,7 +429,7 @@ public class Controller
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-
+					//boolean buttonPressed = false;
 					JFrame frame;
 					String output;
 					switch(action)
@@ -489,8 +460,12 @@ public class Controller
 
 							gf.ResetActionButtons();
 							gf.UpdateHud();
-
+							
+							
+							//buttonPressed = true;
+							
 							break;
+							
 
 						case "repair":
 							frame = new JFrame();
@@ -769,4 +744,12 @@ public class Controller
 			});
 		}
 	}
+	public static void createString() {
+
+        _currentMove = new String();
+        _currentMove = "move ";
+        _currentMove = _currentMove.concat(gf.GetSelectedElement().GetElement().GetId());
+        System.out.println("3. Controller currentMove createStringben "+_currentMove);
+        Controller.SetNextMove(_currentMove);
+    }
 }

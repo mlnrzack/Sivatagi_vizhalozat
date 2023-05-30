@@ -58,6 +58,6 @@ public abstract class PlayerView
 	{
 		return width;
 	}
-
+	protected abstract void UpdatePos(ElementView pos);
 
 }

@@ -1,8 +1,6 @@
 package game.elements;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import game.*;
 import game.interfaces.*;
@@ -17,7 +15,7 @@ public class Cistern extends ActiveElement implements ISteppable
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddCistern(this);
-    	this.TryIdSet();
+    	this.SetId("cistern" + GameManager.TryCisternIdSet());
     }
 
     /**Visszaad egy új csövet.
@@ -103,26 +101,5 @@ public class Cistern extends ActiveElement implements ISteppable
         }
         
         return actionDone;
-    }
-    
-    public void TryIdSet() {
-    	if (!this.GetId().equals(""))
-    		return;
-    	
-    	String name = "cistern";
-    	boolean foundUniqueName = false;
-    	int i = 1;
-    	while (!foundUniqueName) {
-    		String newName = name + i++; 
-    		foundUniqueName = true;
-    		for (IElement e : GameManager.GetMap()) {
-        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
-        			foundUniqueName = false;
-        	}
-    		
-    		if (foundUniqueName) {
-    			this.SetId(newName);
-    		}
-    	}
     }
 }

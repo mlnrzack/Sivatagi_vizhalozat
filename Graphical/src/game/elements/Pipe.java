@@ -1,40 +1,28 @@
 package game.elements;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import game.*;
 import game.IO.*;
-import game.elements.ActiveElement;
-import game.elements.Element;
 import game.interfaces.*;
 import game.players.*;
 
 public class Pipe extends Element implements ISteppable
 {
-    private boolean leaking = false;		//megadja, hogy a cső jelenleg ki van-e lyukasztva
-    private int noLeakageTimer = 0;			//megadja, hogy a cső mennyi ideig nem lyukasztható
-    private int slipperyTimer = 0;			//megadja, hogy a cső jelenleg csúszós-e
-    private int stickyTimer = 0;			//megadja, hogy a cső jelenleg ragadós-e
+    private boolean leaking = false;										//megadja, hogy a cső jelenleg ki van-e lyukasztva
+    private int noLeakageTimer = 0;											//megadja, hogy a cső mennyi ideig nem lyukasztható
+    private int slipperyTimer = 0;											//megadja, hogy a cső jelenleg csúszós-e
+    private int stickyTimer = 0;											//megadja, hogy a cső jelenleg ragadós-e
     
     private ArrayList<ActiveElement> neighbours = new ArrayList<ActiveElement>();
 
-    public int GetNeighbourIndex(String name) {
-		for (IElement e : neighbours) {
-			if (e.GetId().equals(name))
-				return neighbours.indexOf(e);
-		}
-		
-		return -1;
-	}
-    
     /**A Pipe osztály konstruktora.
      */
     public Pipe()
     {
     	GameManager.AddSteppable(this);
     	GameManager.AddPipe(this);
-    	this.TryIdSet();
+    	this.SetId("pipe" + GameManager.TryPipeIdSet());
     }
     
     /**Az osztály paraméteres konstruktora.
@@ -51,13 +39,27 @@ public class Pipe extends Element implements ISteppable
     	noLeakageTimer = timer;
     	slipperyTimer = slippery;
     	stickyTimer = sticky;
+    	this.SetId(id);
     	if(neighbours != null)
     		this.neighbours = neighbours;
-    	this.SetId(id);
+    	
     	GameManager.AddSteppable(this);
     	GameManager.AddPipe(this);
     }
 
+    /**
+     */
+    public int GetNeighbourIndex(String name) 
+    {
+		for (IElement e : neighbours)
+		{
+			if (e.GetId().equals(name))
+				return neighbours.indexOf(e);
+		}
+		
+		return -1;
+	}
+    
     /**Visszaadja a neighbours.
      * @return aktív elem szomszédok.
      */
@@ -342,31 +344,11 @@ public class Pipe extends Element implements ISteppable
         return false;
     }
 
-    public void SetLeaking(boolean leaks) {
+    public void SetLeaking(boolean leaks) 
+    {
     	leaking = leaks;
     }
-
-    public void TryIdSet() {
-    	if (!this.GetId().equals(""))
-    		return;
-
-    	String name = "pipe";
-    	boolean foundUniqueName = false;
-    	int i = 1;
-    	while (!foundUniqueName) {
-    		String newName = name + i++;
-    		foundUniqueName = true;
-    		for (IElement e : GameManager.GetMap()) {
-        		if (newName.toUpperCase().equals(e.GetId().toUpperCase()))
-        			foundUniqueName = false;
-        	}
-
-    		if (foundUniqueName) {
-    			this.SetId(newName);
-    		}
-    	}
-    }
-
+    
     public void SetNeighbours(ArrayList<ActiveElement> neighbourList) {
     	neighbours = neighbourList;
     }

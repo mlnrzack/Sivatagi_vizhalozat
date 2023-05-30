@@ -374,28 +374,36 @@ public class MenuFrame extends JFrame
 
 	public void SetTrigger() 
 	{
-		this.remove(southPanel);
-		eastPanel.removeAll();
-		eastPanel.setPreferredSize(new Dimension(200, 500));
-		eastPanel.add(newGameButton);
-		eastPanel.add(settingsButton);
-		eastPanel.revalidate();
-		eastPanel.repaint();
+		if(Constants.MaxNeighboursOfActiveElements < Integer.parseInt(maxNeighboursSet.getText()) ) {
+			
+			this.remove(southPanel);
+			eastPanel.removeAll();
+			eastPanel.setPreferredSize(new Dimension(200, 500));
+			eastPanel.add(newGameButton);
+			eastPanel.add(settingsButton);
+			eastPanel.revalidate();
+			eastPanel.repaint();
 
-		//értékek beállítása
-		Constants.AcceptedPlayersInPipe = Integer.parseInt(playerCapacitySet.getText());
-		Constants.ActionInRoundPerUser = Integer.parseInt(actionsPerUserSet.getText());
-		Constants.LeakageTimerBound = Integer.parseInt(leakageTimerSet.getText());
-		Constants.MaxNeighboursOfActiveElements = Integer.parseInt(maxNeighboursSet.getText());
-		Constants.PipeCapacity = Integer.parseInt(pipeCapacitySet.getText());
-		Constants.PumpErrorProbability = Integer.parseInt(pumpErrorSet.getText());
-		Constants.PumpWaterCapacity = Integer.parseInt(pumpCapacitySet.getText());
-		Constants.RoundNumber = Integer.parseInt(gameRoundsSet.getText());
+			//értékek beállítása
+			Constants.AcceptedPlayersInPipe = Integer.parseInt(playerCapacitySet.getText());
+			Constants.ActionInRoundPerUser = Integer.parseInt(actionsPerUserSet.getText());
+			Constants.LeakageTimerBound = Integer.parseInt(leakageTimerSet.getText());
+			Constants.MaxNeighboursOfActiveElements = Integer.parseInt(maxNeighboursSet.getText());
+			Constants.PipeCapacity = Integer.parseInt(pipeCapacitySet.getText());
+			Constants.PumpErrorProbability = Integer.parseInt(pumpErrorSet.getText());
+			Constants.PumpWaterCapacity = Integer.parseInt(pumpCapacitySet.getText());
+			Constants.RoundNumber = Integer.parseInt(gameRoundsSet.getText());
 
-		westPanel.removeAll();
-		westPanel.setPreferredSize(new Dimension(800, 500));
-		westPanel.add(westLabel);
-		westPanel.revalidate();
-		westPanel.repaint();
+			westPanel.removeAll();
+			westPanel.setPreferredSize(new Dimension(800, 500));
+			westPanel.add(westLabel);
+			westPanel.revalidate();
+			westPanel.repaint();
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Kérlek helyesen állítsd a maximum szomsédok méretét legalább 4-re.");
+			SettingsTrigger();
+			return;
+		}
 	}
 }

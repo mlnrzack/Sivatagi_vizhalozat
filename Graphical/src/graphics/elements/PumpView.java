@@ -13,7 +13,7 @@ import game.elements.*;
 public class PumpView extends ElementView
 {
 	Pump pump;																//
-	
+
 	/**
 	 * @param x
 	 * @param y
@@ -37,7 +37,7 @@ public class PumpView extends ElementView
 	{
 		return pump;
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public class PumpView extends ElementView
 	{
 		return pump;
 	}
-	
+
 	/**
 	 * @param i
 	 */
@@ -53,9 +53,7 @@ public class PumpView extends ElementView
 	{
 		pump = GameManager.GetPumps().get(i);
 	}
-	
-	/**
-	 */
+
 	public Image LoadImage()
 	{
 		String pathPump;
