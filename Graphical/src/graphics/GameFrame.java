@@ -39,14 +39,6 @@ public class GameFrame extends JFrame
     private ArrayList<String> damagedPipes;                                                         //lyukas csövek nevének listája
     private ArrayList<String> damagedPumps;                                                         //elromlott pumpák nevének listája
 
-    public ArrayList<JButton> GetActionButtons() {
-        return actionButtons;
-    }
-
-    public void SetActionButtons(ArrayList<JButton> actionButtons) {
-        this.actionButtons = actionButtons;
-    }
-
     private ArrayList<JButton> actionButtons;														//akciógombok listája
 	
 	private JLabel displayCurrentPlayerName;														//
@@ -61,10 +53,6 @@ public class GameFrame extends JFrame
 	private JPanel playerActionPanel;																//
 	private JPanel gameStatisticsPanel;																//
 	private JPanel damagedPartsPanel;																//
-
-    public MapView GetMap_G() {
-        return map_G;
-    }
 
     private MapView map_G;																			//
     private static String currentMove;																//
@@ -120,10 +108,40 @@ public class GameFrame extends JFrame
             }
         });
     }
+    
+    /**
+     * @return
+     */
+    public MapView GetMap_G()
+    {
+        return map_G;
+    }
 
-    public ElementView GetSelectedElement() {
+    
+    /**
+     * @return
+     */
+    public ArrayList<JButton> GetActionButtons()
+    {
+        return actionButtons;
+    }
+
+    /**
+     * @param actionButtons
+     */
+    public void SetActionButtons(ArrayList<JButton> actionButtons)
+    {
+        this.actionButtons = actionButtons;
+    }
+
+    /**
+     * @return
+     */
+    public ElementView GetSelectedElement()
+    {
     	return element;
     }
+    
     /**
      */
     public void InitializeInterfacePanel()
@@ -169,6 +187,7 @@ public class GameFrame extends JFrame
         gameStatisticsPanel.setBackground(color);
         gameStatisticsPanel.setLayout(new GridLayout(9,1));
         gameStatisticsPanel.setSize((int)(screenWidth * 0.3), (int)(screenHeight * 0.1));
+        gameStatisticsPanel.setFont(f);
 
         //Játékos akcióinak összeszedése:
         actionButtons = new ArrayList<JButton>();
@@ -192,7 +211,7 @@ public class GameFrame extends JFrame
         {
             butt.setBackground(color);
             butt.setFont(f);
-            butt.setBorder(BorderFactory.createDashedBorder(Color.DARK_GRAY, 5, 5, 0, false));
+            butt.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 0, false));
             playerActionPanel.add(butt);
         }
 
@@ -201,13 +220,6 @@ public class GameFrame extends JFrame
         playerActionPanel.setBackground(color);
         playerActionPanel.setVisible(true);
         
-        /*
-        interfacePanel.add(displayCurrentPlayerName);
-        interfacePanel.add(displayRound);
-        interfacePanel.add(playerRemainingActionCount);
-        interfacePanel.add(mechPoints);
-        interfacePanel.add(sabPoints);
-        */
         interfacePanel.add(gameStatisticsPanel);
         interfacePanel.add(damagedPipesLabel);
         interfacePanel.add(damagedPumpsLabel);
