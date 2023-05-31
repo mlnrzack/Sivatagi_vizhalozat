@@ -46,6 +46,11 @@ public class PumpView extends ElementView
 		return pump;
 	}
 
+	public void SetPump(Pump newP)
+	{
+		pump = newP;
+	}
+	
 	/**
 	 * @param i
 	 */

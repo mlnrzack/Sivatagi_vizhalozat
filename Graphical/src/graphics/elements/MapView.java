@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import game.*;
+import game.elements.*;
 import game.IO.*;
 import game.players.*;
 import graphics.*;
@@ -690,6 +691,9 @@ public class MapView extends JPanel
 	 */
 	public void UpdateMapDetails() 
 	{
+		if (GameManager.GetPumps().size() > pumpsView.size() && Controller.GetdropNewPump())
+			newPumpInSystem();
+
 		if(GameManager.GetCurrentMechanic() != null) 
 		{
 			for(ElementView element: mapView)
@@ -748,5 +752,138 @@ public class MapView extends JPanel
 		if (point!= null)
 			return point.getX() >= x1 && point.getX() <= x2 && point.getY() >= y1 && point.getY() <= y2;
 			return false;
+	}
+	
+	/**
+	 */
+	public void newPumpInSystem()
+	{
+		/*
+		int k = pumpsView.size();
+		PumpView p;
+		Point poi = null;
+		ElementView[] e_old = new ElementView[2];
+		PipeView temp = null;
+		
+		for (int i = 0; i < pipesView.size(); i++)
+		{
+			if (pipesView.get(i).GetElement().GetId().equals(currentMechanic.GetPos().GetElement().GetId()))
+			{
+				temp = pipesView.get(i);
+				e_old = temp.GetNeighbours();
+				pipesView.remove(temp);
+			}
+		}
+
+		poi = new Point(temp.GetCenterX(),temp.GetCenterY());
+		p = new PumpView(poi.x, poi.y, 90, 90, k);
+		pumpsView.add(p);
+		activesView.add(p);
+		mapView.add(p);
+		
+		PipeView pw = new PipeView(GameManager.GetPipes().size()-1);
+		ElementView[] e = new ElementView[2];
+		
+		ElementView pm = (ElementView) e_old[1];
+		ElementView[] temp_e = new ElementView[2];
+		
+		temp_e[0] = p;
+		temp_e[1] = e_old[0];
+		temp.SetNeighbours(temp_e);
+		
+		pipesView.add(temp);
+		mapView.add(temp);
+		e[0] = pm;
+		e[1] = p;
+		pw.SetNeighbours(e);
+		pipesView.add(pw);
+		mapView.add(pw);
+		
+		int inputIdx = p.GetPump().GetNeighbourIndex(temp.GetElement().GetId());
+		int outputIdx = p.GetPump().GetNeighbourIndex(pw.GetElement().GetId());
+		
+		p.GetPump().TrySetInputOutput(inputIdx, outputIdx);
+		
+		ArrayList<Pump> pumps = GameManager.GetPumps();
+		ArrayList<Pipe> pipes = GameManager.GetPipes();
+		
+		int length = pumps.size();
+		*/
+		
+		PumpView newPuV;		
+		Pump newPu = GameManager.GetPumps().get(GameManager.GetPumps().size() - 1);
+		
+		PipeView oldPiV = null;
+		for (int i = 0; i < pipesView.size(); i++)
+		{
+			if(pipesView.get(i).GetElement().GetId().equals(currentMechanic.GetPos().GetElement().GetId()))
+			{
+				System.out.println(pipesView.get(i).GetElement().GetId());
+				oldPiV = pipesView.get(i);
+			}
+		}
+		
+		Pipe oldPi = oldPiV.GetPipe();
+		
+		Point poi = null;
+		poi = new Point(oldPiV.GetCenterX(),oldPiV.GetCenterY());
+		newPuV = new PumpView(poi.x, poi.y, 90, 90, pumpsView.size());
+		pumpsView.add(newPuV);
+		activesView.add(newPuV);
+		mapView.add(newPuV);
+		
+		Pipe newPi = GameManager.GetPipes().get(GameManager.GetPipes().size() - 1);
+		PipeView newPiV = new PipeView(GameManager.GetPipes().indexOf(newPi));
+		
+		//modell összekötése a grafikával
+		newPuV.SetPump(newPu);
+		oldPiV.SetPipe(oldPi);
+		newPiV.SetPipe(newPi);
+		
+		int k;
+		//szomszédbeállítások
+		for(int i = 0; i < mapView.size(); i++)
+		{
+			//új pumpa
+			//if(mapView.get(i).GetElement().GetId().equals(newPu.GetId()))
+			//{
+			//	mapView.get(i).
+			//}
+			for(int j = 0; j < mapView.get(i).GetElement().GetNeighbours().size(); j++)
+			{
+				//régi cső
+				if(mapView.get(i).GetElement().GetNeighbours().get(j).GetId().equals(oldPi.GetId()))
+				{
+					k = oldPi.GetNeighbourIndex(mapView.get(i).GetElement().GetNeighbours().get(j).GetId());
+					oldPiV.AddNeighbour(mapView.get(i), k);
+				}
+				//új cső
+				if(mapView.get(i).GetElement().GetNeighbours().get(j).GetId().equals(newPi.GetId()))
+				{
+					System.out.println(newPi.GetNeighbours().size());
+					k = newPi.GetNeighbours().indexOf(mapView.get(i).GetElement().GetNeighbours().get(j));
+					newPiV.AddNeighbour(mapView.get(i), k);
+				}
+			}
+		}
+		/*
+		ElementView[] temp = oldPiV.GetNeighbours();
+		ElementView t = null;
+		t = temp[0];
+		temp[0] = temp[1];
+		temp[1] = t;
+		oldPiV.SetNeighbours(temp);
+		
+		temp = newPiV.GetNeighbours();
+		t = null;
+		t = temp[0];
+		temp[0] = temp[1];
+		temp[1] = t;
+		newPiV.SetNeighbours(temp);
+		*/
+		pipesView.add(oldPiV);
+		mapView.add(oldPiV);
+		pipesView.add(newPiV);
+		mapView.add(newPiV);
 	}
 }

@@ -262,15 +262,19 @@ public class GameFrame extends JFrame
         for (Pipe entity: GameManager.GetPipes())
         {
             if (entity.GetLeaking())
-                damagedPipes.add(entity.GetId());
-            damagedPipesLabel.setText(String.format(entity.GetId()+ "\n"));
+            {
+            	damagedPipes.add(entity.GetId());
+                damagedPipesLabel.setText(String.format(entity.GetId()+ "\n"));
+            }
         }
 
         for (Pump entity: GameManager.GetPumps())
         {
             if (entity.GetBroken())
-                damagedPumps.add(entity.GetId());
-            damagedPumpsLabel.setText(String.format(entity.GetId() + "\n"));
+            {
+            	damagedPumps.add(entity.GetId());
+            	damagedPumpsLabel.setText(String.format(entity.GetId() + "\n"));
+            }
         }
 
         //Szabotőr köre van

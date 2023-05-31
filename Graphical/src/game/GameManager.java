@@ -103,6 +103,14 @@ public class GameManager
     {
         GameManager.map = map;
     }
+    
+    /**Törli a létrehozott térképet.
+     */
+    public static void EreaseMap()
+    {
+    	System.out.println("A térkép törölve.");
+    	GameManager.map.clear();
+    }
 
     /**A szerelők listájának visszaadása.
      * @return a szerelők listája.

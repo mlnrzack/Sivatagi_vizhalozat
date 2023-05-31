@@ -46,6 +46,11 @@ public class PipeView extends ElementView
 		return pipe;
 	}
 	
+	public void SetPipe(Pipe newP)
+	{
+		pipe = newP;
+	}
+	
 	/**cső szomszédjainak átadása
 	 * @return
 	 */
@@ -64,7 +69,18 @@ public class PipeView extends ElementView
 		
 		SetDimensions();
 	}
-
+	
+	public void AddNeighbour(ElementView neighbour, int index)
+	{
+		this.neighbours[index] = neighbour;
+	}
+	
+	/*
+	public void AddNeighbour(ElementView neighbour, int index)
+	{
+		neighbours[index] = neighbour;
+	}
+	*/
 	/**
 	 */
 	public void SetDimensions()

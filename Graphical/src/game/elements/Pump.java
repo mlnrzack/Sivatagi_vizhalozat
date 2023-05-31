@@ -218,40 +218,45 @@ public class Pump extends ActiveElement implements ISteppable
      * @return a létrehozás sikeressége
      */
     public boolean GetBuildedInto(Pipe pipe)
-    {    	
+    { 
     	//egyik oladli szomszéd elem letárolási
-        ActiveElement neighbour = pipe.GetNeighbours().get(0);
-        Pump p = this;
-        //az új cső szomszédjainak beállítása
-        ArrayList<ActiveElement> newPipeNeighbours = new ArrayList<ActiveElement>() 
-        {
-        	{ 
-        		add(neighbour); 
-        		add(p);
-        	}
-        };
-        
-     // Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
-    	String pipeId = "pipe" + GameManager.TryPipeIdSet();
-    	
-        Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
-        
-        //a szomszéd elem értesítése a szomszéd változásról
-        neighbour.AddPipe(newPipe);
-        neighbour.RemovePipe(pipe);
-        //az eredeti cső szomszédjainak kezelése
-        pipe.RemoveNeighbour(neighbour);
-        ArrayList<ActiveElement> oldPipeNeighbours = new ArrayList<ActiveElement>(pipe.GetNeighbours());
-        oldPipeNeighbours.add(this);
-        pipe.SetNeighbours(oldPipeNeighbours);
-        
-        System.out.println("Pumpa beépítve a cső közepére: " + pipe.GetId());
-        
-        //az új pumpa szomszédjainak beállítása
-        this.AddPipe(newPipe);
-        this.AddPipe(pipe);
+    	ActiveElement neighbour = pipe.GetNeighbours().get(0);
+    	Pump p = this;
+    	//az új cső szomszédjainak beállítása
+    	ArrayList<ActiveElement> newPipeNeighbours = new ArrayList<ActiveElement>() 
+    	{
+    		{ 
+    			add(neighbour); 
+    			add(p);
+    		}
+    	};
 
-        return true;
+    	// Beépítésnél input/output beállítása nélkül kerül a pályára a pumpa, ezt állítani külön elemi művelet, itt nincs rá lehetőség.
+    	String pipeId = "pipe" + GameManager.TryPipeIdSet();
+
+    	Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
+    	newPipe.SetNeighbours(newPipeNeighbours);
+    	GameManager.GetPipes().add(newPipe);
+    	
+    	//a szomszéd elem értesítése a szomszéd változásról
+    	neighbour.RemovePipe(pipe);
+    	neighbour.AddPipe(newPipe);
+    	System.out.println("\n"+neighbour.GetId()+"\n");
+    	//az eredeti cső szomszédjainak kezelése
+    	pipe.RemoveNeighbour(neighbour);
+    	ArrayList<ActiveElement> oldPipeNeighbours = new ArrayList<ActiveElement>(pipe.GetNeighbours());
+    	oldPipeNeighbours.add(this);
+    	pipe.SetNeighbours(oldPipeNeighbours);
+
+    	System.out.println("Pumpa beépítve a cső közepére: " + pipe.GetId());
+    	
+    	this.age = 0;
+    	//az új pumpa szomszédjainak beállítása
+    	this.AddPipe(newPipe);
+    	this.AddPipe(pipe);
+    	this.TrySetInputOutput(0, 1);
+
+    	return true;
     }
 
 }

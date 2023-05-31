@@ -273,7 +273,12 @@ public class MenuFrame extends JFrame
 		eastPanel.add(settingsButton);
 		eastPanel.revalidate();
 		eastPanel.repaint();
-
+		
+		if(GameManager.GetMap().size() != 0)
+		{
+			GameManager.EreaseMap();
+		}
+		
 		westPanel.removeAll();
 		westPanel.setPreferredSize(new Dimension(750, 500));
 		westPanel.add(westLabel);
