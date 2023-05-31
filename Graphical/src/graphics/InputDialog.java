@@ -1,8 +1,9 @@
 package graphics;
 
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,35 +12,45 @@ import javax.swing.*;
 
 public class InputDialog extends JPanel
 {
-	JLabel inptMsg;
-	String _msg;
-	public static final String[] LABEL_TEXTS = { "Bemenet"};
+	String[] _msg;
+	ArrayList<JLabel> textLabels;
+	JPanel labelPanel;
+	JPanel textPanel;
+	public static final String[] LABEL_TEXTS = { "Bemenet", "Kimenet"};
 	public static int COLS = 2;
 	private String _title;
 	private Map<String, JTextField> labelFieldMap = new HashMap<>();
 	
-	InputDialog(int inputSize,String msg, String title)
+	InputDialog(int inputSize,String[] msg, String title)
 	{
 		COLS = inputSize;
 		_title = title;
 		_msg = msg;
-		inptMsg = new JLabel();
+		textLabels = new ArrayList<JLabel>();
+		labelPanel = new JPanel();
+		textPanel = new JPanel();
+		setLayout(new GridLayout(3,0));
+		for(String s: _msg) 
+		{
+			textLabels.add(new JLabel(s));
+		}
+		for(JLabel l: textLabels)
+		{
+			labelPanel.add(l);
+		}
+		this.add(labelPanel);
 		
-		
-		inptMsg.setText(msg);
-		add(inptMsg, createGbc(0, 1));
-		setLayout(new GridBagLayout());
-		for (int i = 0; i < COLS; i++) {
-			String labelTxt = (i + 1) + ". " + LABEL_TEXTS[0];
-			add(new JLabel(labelTxt), createGbc(0, i));
-
+		for (int i = 0; i < COLS; i++) 
+		{
+			String labelTxt = LABEL_TEXTS[i];
 			JTextField textField = new JTextField(COLS);
 			labelFieldMap.put(labelTxt, textField);
-			add(textField, createGbc(1, i));
-
-
-			setBorder(BorderFactory.createTitledBorder(_title));
+			
+			textPanel.add(new JLabel(labelTxt));
+			textPanel.add(textField);
+			//setBorder(BorderFactory.createTitledBorder(_title));
 		}	
+		this.add(textPanel);
 	}
 	
 	public static GridBagConstraints createGbc(int x, int y) 
@@ -83,7 +94,7 @@ public class InputDialog extends JPanel
 		String[] options = { "Ok", "Mégse" };
 		Object initialValue = options[0];
 		int reply = JOptionPane.showOptionDialog(null, this,
-				_msg, optionType, messageType, icon, options,
+				"Add meg a be- és kimeneti indexeket", optionType, messageType, icon, options,
 				initialValue);
 		String[] res = new String[COLS];
 		if (reply == 0) 
@@ -93,7 +104,7 @@ public class InputDialog extends JPanel
 			int i = 0;
 			for (String labelText : LABEL_TEXTS)
 			{
-				res[i++] = this.getText(labelText);
+				res[i++] = labelFieldMap.get(labelText).getText();
 
 				System.out.printf("%12s: %s%n", labelText,
 						this.getText(labelText));

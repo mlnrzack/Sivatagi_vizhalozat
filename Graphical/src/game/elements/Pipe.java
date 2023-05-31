@@ -120,6 +120,27 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TryBuildPumpInto(Pump pump)
     {
+    	/*
+    	boolean in = false;
+    	boolean out = false;
+    	for(int i = 0; i < this.GetNeighbours().size(); i++)
+    	{
+    		if(GetNeighbours().get(i).GetInput() == this)
+    		{
+    			in = true;
+    		}
+    		else if(GetNeighbours().get(i).GetOutput() == this)
+    		{
+    			out = true;
+    		}
+    	}
+    	if(in)
+    		return pump.GetBuildedInto(this, "in");
+    	if(out)
+    		return pump.GetBuildedInto(this, "out");
+    	else
+    		return pump.GetBuildedInto(this, "none");
+    		*/
     	return pump.GetBuildedInto(this);
     }
 

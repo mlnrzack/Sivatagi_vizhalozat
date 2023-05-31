@@ -464,7 +464,6 @@ public class Controller
 				public void actionPerformed(ActionEvent e)
 				{
 					//boolean buttonPressed = false;
-					JFrame frame;
 					String output;
 					switch(action)
 					{
@@ -555,8 +554,7 @@ public class Controller
 								}
 							}
 
-							frame = new JFrame();
-							output = JOptionPane.showInputDialog(frame, "Add meg az indexét a kívánt mezőnek!", indicesString);
+							output = JOptionPane.showInputDialog(null, "Add meg az indexét a kívánt mezőnek!", indicesString);
 							int index = Integer.parseInt(output);
 							if(index <= avaliableFields.size() && index >= 0)
 							{
@@ -569,12 +567,13 @@ public class Controller
 							break;
 
 						case "setpump X Y X":
-							//TODO
+						{
+							/*
 							avaliableFields = new ArrayList<String>();
-							indicesString = "";
 
 							if(m != null)
 							{
+								String indicesString[] = new String[m.GetCurrentPosition().GetNeighbours().size()];
 								int i = 0;
 								avaliableFields.clear();
 
@@ -583,58 +582,92 @@ public class Controller
 									for(IElement element : m.GetCurrentPosition().GetNeighbours())
 									{
 										avaliableFields.add(element.GetId());
-										indicesString.concat(i +": "+ element.GetId()+ "\n");
+										indicesString[i] = (i +": "+ element.GetId());
 										i++;
 									}
+									i = 0;
 								}
+
 								else
 								{
-									frame = new JFrame();
-									JOptionPane.showMessageDialog(frame, "A "+  m.GetName()  + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
+									JOptionPane.showMessageDialog(null, "A "+  m.GetName()  + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
 									break;
 								}
+
+								InputDialog pumpIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
+								String[] asd = pumpIODialog.createAndShowGui();
+								if(!asd[0].equals("") && !asd[1].equals(""))
+								{
+									int PumpIn = Integer.parseInt(asd[0]);
+									int PumpOut = Integer.parseInt(asd[1]);
+
+									if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
+									&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
+									{
+										SetNextMove("setpump " + asd[0]+ " "+ asd[1]);
+										//m.TrySetPump(PumpIn, PumpOut);
+									}
+									else 
+									{
+										JOptionPane.showMessageDialog(null, "Hibás indexelés");
+									}
+									
+									gf.ResetActionButtons();
+									gf.UpdateHud();
+								}
+								else 
+									JOptionPane.showMessageDialog(null, "Nem sikerült átállítani a pumpát");
 							}
 
 							else if(s != null)
 							{
+								String indicesString[] = new String[s.GetCurrentPosition().GetNeighbours().size()];
 								int i = 0;
 								avaliableFields.clear();
 								if(s.GetCurrentPosition().GetId().contains("pump"))
 								{
-									for(IElement element : m.GetCurrentPosition().GetNeighbours())
+									for(IElement element : s.GetCurrentPosition().GetNeighbours())
 									{
 										avaliableFields.add(element.GetId());
-										indicesString.concat(i +": "+ element.GetId()+ "\n");
+										indicesString[i] = i +": "+ element.GetId()+ "\n";
 										i++;
 									}
+									i = 0;
 								}
 								else
 								{
-									frame = new JFrame();
-									JOptionPane.showMessageDialog(frame, "A "+ s.GetName() + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
+									JOptionPane.showMessageDialog(null, "A "+ s.GetName() + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
 									break;
 								}
+
+								InputDialog pumpIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
+								String[] asd = pumpIODialog.createAndShowGui();
+
+								if(!asd[0].equals("") && !asd[1].equals("")) 
+								{
+									int PumpIn = Integer.parseInt(asd[0]);
+									int PumpOut = Integer.parseInt(asd[1]);
+
+									if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
+											&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
+									{
+
+										SetNextMove("setpump " + asd[0]+ " "+ asd[1]);
+										//s.TrySetPump(PumpIn, PumpOut);                            
+									}
+									else
+										JOptionPane.showMessageDialog(null, "Hibás indexelés");
+
+									gf.ResetActionButtons();
+									gf.UpdateHud();
+								}
+								else
+									JOptionPane.showMessageDialog(null, "Nem sikerült átállítani a pumpát");
 							}
-
-							InputDialog pumpIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
-							String[] asd = pumpIODialog.createAndShowGui();
-
-							int PumpIn = Integer.parseInt(asd[0]);
-							int PumpOut = Integer.parseInt(asd[1]);
-
-							if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
-									&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
-							{
-								if(m != null)
-									m.TrySetPump(PumpIn, PumpOut);
-							}
-							else if (s!= null)
-								s.TrySetPump(PumpIn, PumpOut);
-
-							gf.ResetActionButtons();
-							gf.UpdateHud();
 							break;
-
+							*/
+						}
+							 
 						case "stickypipe":
 							SetNextMove("stickypipe");
 							

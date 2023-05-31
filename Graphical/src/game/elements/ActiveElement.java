@@ -179,4 +179,19 @@ public abstract class ActiveElement extends Element
     	System.out.println("Nem sikerült ragadóssá tenni a csövet.");
     	return false;
     }
+    
+    public void TrySetInputOutputByPipe(Pipe input, Pipe output)
+    {
+    	return;
+    }
+    
+    public Pipe GetInput()
+    {
+    	return null;
+    }
+    
+    public Pipe GetOutput()
+    {
+    	return null;
+    }
 }

@@ -758,58 +758,6 @@ public class MapView extends JPanel
 	 */
 	public void newPumpInSystem()
 	{
-		/*
-		int k = pumpsView.size();
-		PumpView p;
-		Point poi = null;
-		ElementView[] e_old = new ElementView[2];
-		PipeView temp = null;
-		
-		for (int i = 0; i < pipesView.size(); i++)
-		{
-			if (pipesView.get(i).GetElement().GetId().equals(currentMechanic.GetPos().GetElement().GetId()))
-			{
-				temp = pipesView.get(i);
-				e_old = temp.GetNeighbours();
-				pipesView.remove(temp);
-			}
-		}
-
-		poi = new Point(temp.GetCenterX(),temp.GetCenterY());
-		p = new PumpView(poi.x, poi.y, 90, 90, k);
-		pumpsView.add(p);
-		activesView.add(p);
-		mapView.add(p);
-		
-		PipeView pw = new PipeView(GameManager.GetPipes().size()-1);
-		ElementView[] e = new ElementView[2];
-		
-		ElementView pm = (ElementView) e_old[1];
-		ElementView[] temp_e = new ElementView[2];
-		
-		temp_e[0] = p;
-		temp_e[1] = e_old[0];
-		temp.SetNeighbours(temp_e);
-		
-		pipesView.add(temp);
-		mapView.add(temp);
-		e[0] = pm;
-		e[1] = p;
-		pw.SetNeighbours(e);
-		pipesView.add(pw);
-		mapView.add(pw);
-		
-		int inputIdx = p.GetPump().GetNeighbourIndex(temp.GetElement().GetId());
-		int outputIdx = p.GetPump().GetNeighbourIndex(pw.GetElement().GetId());
-		
-		p.GetPump().TrySetInputOutput(inputIdx, outputIdx);
-		
-		ArrayList<Pump> pumps = GameManager.GetPumps();
-		ArrayList<Pipe> pipes = GameManager.GetPipes();
-		
-		int length = pumps.size();
-		*/
-		
 		PumpView newPuV;		
 		Pump newPu = GameManager.GetPumps().get(GameManager.GetPumps().size() - 1);
 		
@@ -840,50 +788,66 @@ public class MapView extends JPanel
 		oldPiV.SetPipe(oldPi);
 		newPiV.SetPipe(newPi);
 		
+		/*
 		int k;
 		//szomszédbeállítások
 		for(int i = 0; i < mapView.size(); i++)
 		{
-			//új pumpa
-			//if(mapView.get(i).GetElement().GetId().equals(newPu.GetId()))
-			//{
-			//	mapView.get(i).
-			//}
 			for(int j = 0; j < mapView.get(i).GetElement().GetNeighbours().size(); j++)
 			{
 				//régi cső
 				if(mapView.get(i).GetElement().GetNeighbours().get(j).GetId().equals(oldPi.GetId()))
 				{
 					k = oldPi.GetNeighbourIndex(mapView.get(i).GetElement().GetNeighbours().get(j).GetId());
-					oldPiV.AddNeighbour(mapView.get(i), k);
+					oldPiV.AddNeighbour(mapView.get(i), j);
 				}
 				//új cső
 				if(mapView.get(i).GetElement().GetNeighbours().get(j).GetId().equals(newPi.GetId()))
 				{
-					System.out.println(newPi.GetNeighbours().size());
 					k = newPi.GetNeighbours().indexOf(mapView.get(i).GetElement().GetNeighbours().get(j));
-					newPiV.AddNeighbour(mapView.get(i), k);
+					newPiV.AddNeighbour(mapView.get(i), j);
 				}
 			}
 		}
-		/*
-		ElementView[] temp = oldPiV.GetNeighbours();
-		ElementView t = null;
-		t = temp[0];
-		temp[0] = temp[1];
-		temp[1] = t;
-		oldPiV.SetNeighbours(temp);
+		*/
 		
-		temp = newPiV.GetNeighbours();
-		t = null;
+		ElementView pm0 = getViewByElement(oldPi.GetNeighbours().get(0));
+        ElementView pm1 = getViewByElement(oldPi.GetNeighbours().get(1));
+        PumpView oldPuV;        
+        Element oldPu =  oldPi.GetNeighbours().get(0);
+        Pump oldPump = (Pump)newPi.GetNeighbours().get(0);
+        System.out.println("oldPu: " + oldPu.GetId());
+        Pipe oldPi2 = (Pipe)currentMechanic.GetMechanic().GetCurrentPosition();
+        System.out.println("oldPi2: " + oldPi2.GetId());
+        ElementView[] a = new ElementView[2];
+        a[0] = pm1;
+        a[1] = getViewByElement(oldPu);        
+        oldPiV.SetNeighbours(a);
+        a[0] = newPuV;
+        a[1] = getViewByElement(oldPump);
+        newPiV.SetNeighbours(a);
+
+        ElementView[] temp = newPiV.GetNeighbours();
+        ElementView t = null;
 		t = temp[0];
 		temp[0] = temp[1];
 		temp[1] = t;
 		newPiV.SetNeighbours(temp);
-		*/
+		
 		pipesView.add(oldPiV);
 		mapView.add(oldPiV);
 		pipesView.add(newPiV);
 		mapView.add(newPiV);
 	}
+	
+	private ElementView getViewByElement(Element e) 
+	{
+        for (ElementView el : mapView)
+        {
+            if (el.GetElement() == e)
+                return el;
+        }
+
+        return null;
+    }
 }

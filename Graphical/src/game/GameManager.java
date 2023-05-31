@@ -418,10 +418,24 @@ public class GameManager
      */
     public static void StepSteppables()
     {
+    	/**
     	for(int i = steppables.size() - 1; i >= 0; i--)
     	{
-        	steppables.get(i).Step();
+    		System.out.println(steppables.get(i).GetId());
+    		steppables.get(i).Step();	
     	}
+    	*/
+    	for(int i = pumps.size() - 1; i >= 0; i--)
+    	{
+    		System.out.println(pumps.get(i).GetId());
+    		pumps.get(i).Step();
+    	}
+    	for(int i = pipes.size() - 1; i >= 0; i--)
+    	{
+    		System.out.println(pipes.get(i).GetId());
+    		pipes.get(i).Step();
+    	}
+        	
     }
 }
 

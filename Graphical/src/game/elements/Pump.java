@@ -91,7 +91,16 @@ public class Pump extends ActiveElement implements ISteppable
         System.out.println("Pumpa átállítása sikertelen.");
         return false;
     }
-
+    
+    /**Ha megfelelő indexeket kap a függvény,
+     * akkor beállítja az indexeknek megfelelően a be-, és kimeneti értékeket.
+     */
+    public void TrySetInputOutputByPipe(Pipe input, Pipe output)
+    {
+        this.input = input;
+        this.output = output;
+    }
+    
     /**Ha van szabad kapacitása a tartálynak.
      * Ha a bejövő mennyiség nem nulla, akkor a bejövőn a vízmennyiséget csökkentjük annyival,
      * amennyivel amennyivel a puffertartály tartalmát növeltük. 
@@ -236,12 +245,36 @@ public class Pump extends ActiveElement implements ISteppable
 
     	Pipe newPipe = new Pipe(pipe.GetWaterInside(), pipe.GetLeaking(), pipe.GetTimer(), pipe.GetSlippery(), pipe.GetSticky(), new ArrayList<ActiveElement>(), pipeId);
     	newPipe.SetNeighbours(newPipeNeighbours);
-    	GameManager.GetPipes().add(newPipe);
+    	
+    	//frissíti a be és kimenetet
+    	if(neighbour.GetInput() == pipe)
+    	{
+    		Pipe out = neighbour.GetOutput();
+    		neighbour.TrySetInputOutputByPipe(newPipe, out);
+    	}
+    	else if(neighbour.GetOutput() == pipe)
+    	{
+    		Pipe in = neighbour.GetInput();
+    		neighbour.TrySetInputOutputByPipe(in, newPipe);
+    	}
     	
     	//a szomszéd elem értesítése a szomszéd változásról
     	neighbour.RemovePipe(pipe);
     	neighbour.AddPipe(newPipe);
-    	System.out.println("\n"+neighbour.GetId()+"\n");
+
+    	
+    	/*
+    	if(inout.equals("out"))
+    	{
+    		Pipe in = neighbour.GetInput();
+    		neighbour.TrySetInputOutputByPipe(in, newPipe);
+    	}
+    	if(inout.equals("in"))
+    	{
+    		Pipe out = neighbour.GetOutput();
+    		neighbour.TrySetInputOutputByPipe(newPipe, out);
+    	}
+    	 */
     	//az eredeti cső szomszédjainak kezelése
     	pipe.RemoveNeighbour(neighbour);
     	ArrayList<ActiveElement> oldPipeNeighbours = new ArrayList<ActiveElement>(pipe.GetNeighbours());
