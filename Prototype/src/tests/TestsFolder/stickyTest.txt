@@ -2,4 +2,4 @@ addPipe pipe1
 spawnSaboteur saboteur1 pipe1
 stickypipe saboteur1
 -- Expected Pattern --
-saboteur1 ragacsossá tette a csövet: pipe1
+Cső ragacsossá tétele sikeres neki: saboteur1

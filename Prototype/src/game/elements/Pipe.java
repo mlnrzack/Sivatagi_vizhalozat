@@ -187,7 +187,7 @@ public class Pipe extends Element implements ISteppable
      */
     public boolean TryConnectPipe(Pipe pipeInInventory)
     {
-        System.out.println("Jelenleg nem lehet csövet csőhöz csatlakoztatni.");
+        //System.out.println("Jelenleg nem lehet csövet csőhöz csatlakoztatni.");
         return false;
     }
 
@@ -205,7 +205,7 @@ public class Pipe extends Element implements ISteppable
      */
     public Pipe PickUpFreePipeEnd()
     {
-        System.out.println("Jelenleg nem lehet szabad csővég a csövön.");
+        // System.out.println("Jelenleg nem lehet szabad csővég a csövön.");
         return null;
     }
 
@@ -230,7 +230,7 @@ public class Pipe extends Element implements ISteppable
         	if(this.slipperyTimer > 0)
         	{
         		IElement randomNeighbour = this.GetNeighbours().get(new Random().nextInt(this.neighbours.size()));
-        		System.out.println(player.GetName() + " csúszós csőre érkezett: " + this.GetId() + " Random szomszédra kerül: " + randomNeighbour.GetId());
+        		System.out.println(player.GetName() + " csúszós csőre érkezett: " + this.GetId() + " Random szomszédra kerül"/* + randomNeighbour.GetId()*/);
         		return randomNeighbour.AcceptPlayer(player);
         	}
 

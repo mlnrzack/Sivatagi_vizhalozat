@@ -40,7 +40,7 @@ public class Mechanic extends Player
             }
         }
 
-        System.out.println("Nem sikerül az akció. Próbálkozz úgy, hogy csövön állsz és van nálad pumpa.");
+        System.out.println("Pumpa beépítése sikertelen neki: " + this.GetName());
         return false;
     }
     
@@ -63,7 +63,7 @@ public class Mechanic extends Player
             }
         }
 
-        System.out.println("Nem sikerül a cső csatakoztatása ide: " + this.GetCurrentPosition().GetId());
+        System.out.println("Nem sikerül a cső csatakoztatása neki: " + this.GetName());
         return false;
     }
     
@@ -103,12 +103,12 @@ public class Mechanic extends Player
 
                 GameManager.ActionExecuted();
                 
-   				System.out.println("Szabad csővég felvétele sikeres. Cső felvéve: " + pipeInInventory.GetId());
+   				System.out.println("Szabad csővég felvétele sikeres neki: " + this.GetName());
                 return true;
             }
         }
 
-        System.out.println("Nem sikerül a szabad csővég felvétele itt: " + this.GetCurrentPosition().GetId());
+        System.out.println("Nem sikerül a szabad csővég felvétele neki: " + this.GetName());
         return false;
     }
 
@@ -127,12 +127,12 @@ public class Mechanic extends Player
 
                 GameManager.ActionExecuted();
                 
-                System.out.println("Pumpa felvétele sikeres. Pumpa felvéve: " + pumpInInventory.GetId());
+                System.out.println("Pumpa felvétele sikeres");
                 return true;
             }
         }
 
-        System.out.println("Nem sikerül a pumpa felvétele itt: " + this.GetCurrentPosition().GetId());
+        System.out.println("Nem sikerül a pumpa felvétele neki: " + this.GetName());
         return false;
     }
     
@@ -145,11 +145,11 @@ public class Mechanic extends Player
         {
             GameManager.ActionExecuted();
             
-    		System.out.println(this.GetName() + " szerelő javítása sikeres itt: " + this.GetCurrentPosition().GetId());
+    		System.out.println(this.GetName() + " szerelő javítása sikeres");
             return true;
         }
 
-        System.out.println(this.GetName() + " szerelő javítása sikertelen itt: " + this.GetCurrentPosition().GetId());
+        System.out.println(this.GetName() + " szerelő javítása sikertelen");
         return false;
     }
     

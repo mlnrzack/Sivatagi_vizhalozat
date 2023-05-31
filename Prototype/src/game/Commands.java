@@ -71,7 +71,7 @@ public class Commands {
            			
            			int neighbourIndexOfOutput = player.GetCurrentPosition().GetNeighbourIndex(parameters[2]);
            			if (neighbourIndexOfOutput == -1)
-           				System.out.println("Nem létező szomszéd: " + parameters[1]);
+           				System.out.println("Nem létező szomszéd: " + parameters[2]);
                     
                     if (neighbourIndexOfOutput != -1 && neighbourIndexOfInput != -1)
                     	player.TrySetPump(neighbourIndexOfInput, neighbourIndexOfOutput);
@@ -148,6 +148,7 @@ public class Commands {
             		Mechanic m = new Mechanic();
             		m.SetName(parameters[0]);         			
             		m.SetCurrentPosition(e);
+            		e.AcceptPlayer(m);
             		System.out.println(parameters[0] + " szerelő hozzáadva a játékhoz ide: " + e.GetId());
             	} else {
             		System.out.println(parameters[0] + " szerelő hozzáadása sikertelen. Foglalt név vagy nem létező elem.");
@@ -164,6 +165,7 @@ public class Commands {
             		Saboteur s = new Saboteur();
             		s.SetName(parameters[0]);
             		s.SetCurrentPosition(e);
+            		e.AcceptPlayer(s);
             		System.out.println(parameters[0] + " szabotőr hozzáadva a játékhoz ide: " + e.GetId());
             	} else {
             		System.out.println(parameters[0] + " szabotőr hozzáadása sikertelen. Foglalt név vagy nem létező elem.");
@@ -208,37 +210,45 @@ public class Commands {
             case "droppump":{
     			Mechanic player = GetMechanic(parameters[0]);
        			
-       			if (player != null)
-       				player.BuildPumpIntoPipe();
-       			
+       			if (player != null && player.BuildPumpIntoPipe())
+       				System.out.println("Pumpa csatlakoztatása sikeres neki: " + player.GetName());
+       			else
+       				System.out.println("Pumpa csatlakoztatása sikertelen neki: " + player.GetName());
+       				
                 break;
             }
          // Command: connectpipe playerName
             case "connectpipe":{
     			Mechanic player = GetMechanic(parameters[0]);
        			
-       			if (player != null)
-       				player.ConnectPipe();
+       			if (player != null && player.ConnectPipe())
+       				System.out.println("Cső csatlakoztatása sikeres neki: " + player.GetName());
        			else
-       				System.out.println("Pumpa felvétele sikertelen. Nincs ilyen nevű szerelő: " + parameters[0]);
+       				System.out.println("Cső csatlakoztatása sikertelen neki: " + player.GetName());
        			
                 break;
             }
             // Command: pickneighbour playerName neighbourName
             case "pickneighbour":{
     			Mechanic player = GetMechanic(parameters[0]);
-    			
+    			if (parameters.length != 2)
+    				System.out.println("Hibás bemenet");
+    				
        			if (player != null) {
        				int neighbourIndex = player.GetCurrentPosition().GetNeighbourIndex(parameters[1]);
        				
-       				if (neighbourIndex != -1)
-       					player.DisconnectNeighbourPipe(neighbourIndex);
+       				if (neighbourIndex != -1) {
+       					if (player.DisconnectNeighbourPipe(neighbourIndex))
+       						System.out.println(parameters[1] + " felvétele sikeres neki: " + player.GetName());
+       				}       					
        				else {
-       					System.out.println(parameters[1] + " szomszéd nem létezik");
+       					System.out.println(parameters[1] + " felvétele sikertelen neki: " + parameters[0]);
+       					
        				}
        			}       				
-       			else
-       				System.out.println(parameters[0] + " játékos nem létezik");
+       			else {
+       				System.out.println(parameters[1] + " felvétele sikertelen neki: " + parameters[0]);
+       			}
        			
                 break;
             }            
@@ -246,10 +256,10 @@ public class Commands {
             case "leakpipe":{
             	Player player = GetPlayer(parameters[0]);
             	
-                if (player != null)
-                	player.Damage();
+                if (player != null && player.Damage())
+                	System.out.println("Cső lyukasztás sikeres neki: " + player.GetName());
                 else
-       				System.out.println(parameters[0] + " játékos nem létezik");
+                	System.out.println("Cső lyukasztás sikertelen neki: " + player.GetName());
                 
                 break;
             }
@@ -257,21 +267,21 @@ public class Commands {
             case "stickypipe":{
             	Player player = GetPlayer(parameters[0]);
             	
-                if (player != null)
-                	player.SetStickyPipe();
+                if (player != null && player.SetStickyPipe())
+                	System.out.println("Cső ragacsossá tétele sikeres neki: " + player.GetName());
                 else
-                	System.out.println(parameters[0] + " játékos nem létezik");
+                	System.out.println("Cső ragacsossá tétele sikeres neki: " + parameters[0]);
                 
                 break;
             }
-         // Command: stickypipe playerName
+         // Command: slipperyPipe playerName
             case "slipperyPipe":{
             	Saboteur saboteur = GetSaboteur(parameters[0]);
             	
-                if (saboteur != null)
-                	saboteur.SetSlipperyPipe();
+                if (saboteur != null && saboteur.SetSlipperyPipe())
+                	System.out.println("Cső csúszóssá tétele sikeres neki: " + saboteur.GetName());
                 else
-                	System.out.println(parameters[0] + " szabotőr nem létezik");
+                	System.out.println("Cső csúszóssá tétele sikertelen neki: " + parameters[0]);
                 
                 break;
             }
@@ -297,6 +307,15 @@ public class Commands {
             	} else {
             		System.out.println(parameters[0] + " cső vagy " +  parameters[1] + " aktív elem nem létezik");
             	}
+                
+                break;
+            }
+         // Command: endGame
+            case "endGame":{
+            	if (GameManager.GetMechanincsPoints() > GameManager.GetSaboteurPoints())
+            		System.out.println("Szerelők nyertek");
+            	else
+            		System.out.println("Szabotőrök nyertek");
                 
                 break;
             }

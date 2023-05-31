@@ -9,4 +9,4 @@ playerMove mechanic1 pipe1
 playerMove mechanic1 pump1
 connectpipe mechanic1
 -- Expected Pattern --
-pipe2 és pump1 szomszédok lettek.
+Cső csatlakoztatása sikeres neki: mechanic1

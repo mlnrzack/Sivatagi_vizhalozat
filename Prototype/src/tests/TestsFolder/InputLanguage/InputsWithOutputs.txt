@@ -1,0 +1,58 @@
+playerMove playerName nameOfTheNeighbour
+	playerName csúszós csőre érkezett: nameOfTheNeighbour Random szomszédra kerül
+	playerName sikeresen mozgott ide: nameOfTheNeighbour
+	playerName mozgása nem sikerült
+playerSetIO playerName neighbourNameOfInput neighbourNameOfOutput
+	Nem létező szomszéd: neighbourNameOfInput
+	Nem létező szomszéd: neighbourNameOfOutput
+	playerName átállította a pumpát. Input: neighbourNameOfInput Output: neighbourNameOfOutput
+	playerName nem tudott pumpát átállítani.
+spawnMechanic playerName elementName
+	playerName szerelő hozzáadása sikertelen. Foglalt név vagy nem létező elem.
+	playerName szerelő hozzáadva a játékhoz ide: elementName
+spawnSaboteur playerName elementName
+	playerName szabotőr hozzáadása sikertelen. Foglalt név vagy nem létező elem.
+	playerName szabotőr hozzáadva a játékhoz ide: elementName
+setneighbours pipeName activeElementName
+	pipeName és activeElementName szomszédok lettek.
+	pipe2 cső vagy pipe1 aktív elem nem létezik
+addSource name
+	name hozzáadva a pályához.
+addCistern name
+	name hozzáadva a pályához.
+addPump name <optionally inputName outputName>
+	name hozzáadva a pályához.
+addPipe name <optionally broken || sticky || slippery || withWater>
+	name hozzáadva a pályához.
+repair playerName
+	mechanic1 szerelő javítása sikertelen
+	Javítás sikertelen. Nincs ilyen nevű szerelő: playerName
+pickfreepipe playerName
+	Szabad csővég felvétele sikeres neki: playerName
+	Nem sikerül a szabad csővég felvétele neki: playerName
+picknewpump playerName
+	Pumpa felvétele sikeres
+	Nem sikerül a pumpa felvétele neki: playerName
+droppump playerName
+	Pumpa csatlakoztatása sikeres neki: playerName
+	Pumpa csatlakoztatása sikertelen neki: playerName
+connectpipe playerName
+	Cső csatlakoztatása sikeres neki: playerName
+	Cső csatlakoztatása sikertelen neki: playerName
+pickneighbour playerName neighbourName
+	neighbourName felvétele sikeres neki: playerName
+	neighbourName felvétele sikertelen neki: playerName 
+leakpipe playerName
+	Cső lyukasztás sikeres neki: playerName
+	Cső lyukasztás sikertelen neki: playerName
+stickypipe playerName
+	Cső ragacsossá tétele sikeres neki: playerName
+	Cső ragacsossá tétele sikertelen neki: playerName
+slipperyPipe playerName
+	Cső csúszóssá tétele sikeres neki: playerName
+	Cső csúszóssá tétele sikertelen neki: playerName
+pass playerName
+	playerName játékos passzolt.
+endGame
+	Szabotőrök nyertek
+	Szerelők nyertek

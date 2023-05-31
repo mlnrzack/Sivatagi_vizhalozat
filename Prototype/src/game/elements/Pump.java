@@ -234,7 +234,7 @@ public class Pump extends ActiveElement implements ISteppable
         oldPipeNeighbours.add(this);
         pipe.SetNeighbours(oldPipeNeighbours);
         
-        System.out.println("Pumpa beépítve a cső közepére: " + pipe.GetId());
+        System.out.println("Pumpa beépítve a cső közepére");
         
         //az új pumpa szomszédjainak beállítása
         this.AddPipe(newPipe);

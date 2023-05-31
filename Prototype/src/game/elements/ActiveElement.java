@@ -87,7 +87,7 @@ public abstract class ActiveElement extends Element
 	{
 		// override-olni leszármazottakban, ott megvalósítani ha felvehető az adott
 		// típuson szabad csővég.
-		System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
+		//System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
 		return null;
 	}
 
@@ -98,7 +98,7 @@ public abstract class ActiveElement extends Element
 	{
 		// override-olni leszármazottakban, ott megvalósítani ha felvehető az adott
 		// típuson pumpa.
-		System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
+		//System.out.println("Nem csinálunk semmit, szabad csővég nem felvehető.");
 		return null;
 	}
 

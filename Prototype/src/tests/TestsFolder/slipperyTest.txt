@@ -2,4 +2,4 @@ addPipe pipe1
 spawnSaboteur saboteur1 pipe1
 slipperyPipe saboteur1
 -- Expected Pattern --
-saboteur1 csúszóssá tette a csövet: pipe1
+Cső csúszóssá tétele sikeres neki: saboteur1

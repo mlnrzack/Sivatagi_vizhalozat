@@ -1,0 +1,27 @@
+pipe1 hozzáadva a pályához.
+pipe2 hozzáadva a pályához.
+pipe3 hozzáadva a pályához.
+pipe4 hozzáadva a pályához.
+ws1 hozzáadva a pályához.
+cist1 hozzáadva a pályához.
+pump1 hozzáadva a pályához.
+pump2 hozzáadva a pályához.
+pipe1 és ws1 szomszédok lettek.
+pipe1 és pump1 szomszédok lettek.
+pipe2 és pump1 szomszédok lettek.
+pipe2 és cist1 szomszédok lettek.
+pipe2 cső vagy pipe1 aktív elem nem létezik
+mech1 szerelő hozzáadása sikertelen. Foglalt név vagy nem létező elem.
+mech2 csúszós csőre érkezett: pipe1 Random szomszédra kerül
+mech2 szerelő hozzáadva a játékhoz ide: pipe1
+sab1 szabotőr hozzáadva a játékhoz ide: pump1
+sab1 csúszós csőre érkezett: pipe1 Random szomszédra kerül
+sab1 sikeresen mozgott ide: pipe1
+Nem létező szomszéd: pump1
+mech2 mozgása nem sikerült
+Nem létező szomszéd: pipe3
+Nem létező szomszéd: pipe4
+mech2 átállította a pumpát. Input: pipe1 Output: pipe2
+Nem létező szomszéd: pipe4
+mech3 szerelő hozzáadva a játékhoz ide: pipe4
+mech3 szerelő javítása sikertelen itt: pipe4

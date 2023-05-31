@@ -56,7 +56,7 @@ public abstract class Player
             {
             	currPos.RemovePlayer(this);
             	GameManager.ActionExecuted();
-            	System.out.println(this.name + " sikeresen mozgott innen: " + currPos.GetId() + " ide: " + toNeighbour.GetId());
+            	System.out.println(this.name + " sikeresen mozgott ide: " + toNeighbour.GetId());
             	return true;
             }
         }
@@ -76,11 +76,11 @@ public abstract class Player
         {
             GameManager.ActionExecuted();
             
-            System.out.println(this.GetName() + " átállította a csövet: " + this.currentPosition.GetId() + " Input: " + this.GetCurrentPosition().GetNeighbours().get(neighbourIdxFrom).GetId() + " Output: " + this.GetCurrentPosition().GetNeighbours().get(neighbourIdxTo).GetId());
+            System.out.println(this.GetName() + " átállította a pumpát. Input: " + this.GetCurrentPosition().GetNeighbours().get(neighbourIdxFrom).GetId() + " Output: " + this.GetCurrentPosition().GetNeighbours().get(neighbourIdxTo).GetId());
             return true;
         }
 
-        System.out.println(this.GetName() + " nem tudott csövet átállítani.");
+        System.out.println(this.GetName() + " nem tudott pumpát átállítani.");
         return false;
     }
     
