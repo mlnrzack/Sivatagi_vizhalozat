@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 import game.*;
 import game.IO.InfoLog;
 import game.elements.*;
+import graphics.players.PlayerView;
 
 public class PipeView extends ElementView
 {
@@ -28,6 +29,12 @@ public class PipeView extends ElementView
 		neighbours[1] = null;
 		
 		LoadImage();
+	}
+	public PipeView(int index, PlayerView p)
+	{
+		this(index);
+		neighbours[0] = null;
+		neighbours[1] = p.GetPos();
 	}
 
 	/**modellbeli elem visszaadása elemként
@@ -70,17 +77,15 @@ public class PipeView extends ElementView
 		SetDimensions();
 	}
 	
+	/**
+	 * @param neighbour
+	 * @param index
+	 */
 	public void AddNeighbour(ElementView neighbour, int index)
 	{
 		this.neighbours[index] = neighbour;
 	}
 	
-	/*
-	public void AddNeighbour(ElementView neighbour, int index)
-	{
-		neighbours[index] = neighbour;
-	}
-	*/
 	/**
 	 */
 	public void SetDimensions()
@@ -94,7 +99,7 @@ public class PipeView extends ElementView
 			height = 20;
 
 			int pposX = 0;
-			int pposY= 0 ;
+			int pposY = 0 ;
 
 			pposX = this.neighbours[0].GetCenterX();
 			pposY = this.neighbours[0].GetCenterY();

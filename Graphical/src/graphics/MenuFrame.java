@@ -4,10 +4,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,6 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 
 import game.*;
+import game.interfaces.*;
+import game.players.*;
 import graphics.elements.*;
 
 public class MenuFrame extends JFrame 
@@ -47,6 +52,8 @@ public class MenuFrame extends JFrame
 	private Font f = new Font(Font.DIALOG, Font.PLAIN, 28);
 	private Font fi = new Font(Font.DIALOG, Font.ITALIC, 48);
 	private Font fs = new Font(Font.DIALOG, Font.ITALIC, 19);
+	
+	private boolean firstTrigger = true;
 
 	public MenuFrame() 
 	{
@@ -84,7 +91,8 @@ public class MenuFrame extends JFrame
 		westPanel = panel;
 	}
 
-	public void LoadInterface() {
+	public void LoadInterface()
+	{
 		InitializeNorthPanel();
 		InitializeEastPanel();
 		InitializeWestPanel();
@@ -261,7 +269,208 @@ public class MenuFrame extends JFrame
 		westPanel.revalidate();
 		westPanel.repaint();
 
-		Program.CreateMap();
+		if(firstTrigger) 
+		{
+            Program.InitializeMap();
+            firstTrigger = false;
+        }
+		
+		ArrayList<IElement> map = GameManager.GetMap();
+		
+		String[] counts = {"2", "3", "4", "5"};
+		
+		westPanel.setBackground(color);
+		JLabel mechanicLabel = new JLabel("Mechanics' team");
+		mechanicLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+
+		JLabel mechanicsCountQ = new JLabel("Hányan vannak a szerelők csapatában?");
+		mechanicsCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+
+		var mechanicsCountA = new JComboBox(counts);
+		mechanicsCountA.setSelectedIndex(0);
+		mechanicsCountA.setEditable(true);
+		mechanicsCountA.setBackground(color);
+		mechanicsCountA.setPreferredSize(new Dimension(50, 25));
+
+		JButton mOkButton = new JButton("Ok");
+		mOkButton.setBackground(color);
+		mOkButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+		mOkButton.addActionListener
+		(
+				new ActionListener() 
+				{
+					int mCount = 0;
+					@Override
+					public void actionPerformed(ActionEvent e) 
+					{
+						String[] names = new String[5];
+
+						if(mCount != 0) 
+						{
+							westPanel.removeAll();
+							westPanel.add(mechanicLabel);
+							westPanel.add(mechanicsCountQ);
+							westPanel.add(mechanicsCountA);
+							westPanel.add(mOkButton);
+
+							ArrayList<Mechanic> temp = GameManager.GetMechanics();
+
+							for(int i = 0; i < temp.size(); i++)
+								names[i] = temp.get(i).GetName();
+
+							temp.clear();
+							GameManager.SetMechanics(temp);
+
+							westPanel.revalidate();
+							westPanel.repaint();
+						}
+
+						mCount = mechanicsCountA.getSelectedIndex() + 2;
+
+						for(int i = 0; i < mCount; i++)
+						{
+							var mechanic = new Mechanic();
+
+							JLabel mechanicNameLabel = new JLabel("Add meg a karakter nevét!");
+							mechanicNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+
+							JTextField mechanicNameText = new JTextField();
+							mechanicNameText.setPreferredSize(new Dimension(100, 20));
+							mechanicNameText.setText(names[i] == null ? "Mechanic_" + (i + 1) : names[i]);
+							mechanicNameText.setPreferredSize(new Dimension(100, 20));
+
+							JButton setNameButton = new JButton("Set");
+							setNameButton.setBackground(color);
+							setNameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+							setNameButton.addActionListener
+							(
+									new ActionListener() 
+									{
+										@Override
+										public void actionPerformed(ActionEvent e) 
+										{
+											mechanic.SetName(mechanicNameText.getText());
+										}
+									}
+									);
+							mechanic.SetName(mechanicNameText.getText());
+
+							int pos = new Random().nextInt(map.size() - 1);
+							while(map.get(pos).AcceptPlayer(mechanic) == false)
+								pos = new Random().nextInt(map.size() - 1);
+							mechanic.SetCurrentPosition(map.get(pos));
+
+							westPanel.revalidate();
+							westPanel.repaint();
+
+							westPanel.add(mechanicNameLabel);
+							westPanel.add(mechanicNameText);
+							westPanel.add(setNameButton);
+						}
+					}
+				}
+				);
+
+		westPanel.add(mechanicLabel);
+		westPanel.add(mechanicsCountQ);
+		westPanel.add(mechanicsCountA);
+		westPanel.add(mOkButton);
+
+		JLabel saboteurLabel = new JLabel("Saboteurs' team");
+		saboteurLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 32));
+
+		JLabel saboteursCountQ = new JLabel("Hányan vannak a szerelők csapatában?");
+		saboteursCountQ.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+
+		var saboteursCountA = new JComboBox(counts);
+		saboteursCountA.setSelectedIndex(0);
+		saboteursCountA.setEditable(true);
+		saboteursCountA.setBackground(color);
+		saboteursCountA.setPreferredSize(new Dimension(50, 25));
+
+		JButton sOkButton = new JButton("Ok");
+		sOkButton.setBackground(color);
+		sOkButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+		sOkButton.addActionListener
+		(
+			new ActionListener() 
+			{
+				int sCount = 0;
+
+				@Override
+				public void actionPerformed(ActionEvent e) 
+				{
+					String[] names = new String[5];
+
+					if(sCount != 0) 
+					{
+						eastPanel.removeAll();
+						eastPanel.add(saboteurLabel);
+						eastPanel.add(saboteursCountQ);
+						eastPanel.add(saboteursCountA);
+						eastPanel.add(sOkButton);
+
+						ArrayList<Saboteur> temp = GameManager.GetSaboteurs();
+
+						for(int i = 0; i < temp.size(); i++)
+							names[i] = temp.get(i).GetName();
+						
+						temp.clear();
+						GameManager.SetSaboteurs(temp);
+
+						eastPanel.revalidate();
+						eastPanel.repaint();
+					}
+
+					sCount = saboteursCountA.getSelectedIndex() + 2;
+
+					for(int i = 0; i < sCount; i++)
+					{
+						var saboteur = new Saboteur();
+						JLabel saboteurNameLabel = new JLabel("Add meg a karakter nevét!");
+						saboteurNameLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 18));
+
+						JTextField saboteurNameText = new JTextField();
+						saboteurNameText.setText("Saboteur_" + (i + 1));
+						saboteurNameText.setPreferredSize(new Dimension(100, 20));
+
+						JButton setNameButton = new JButton("Set");
+						setNameButton.setBackground(color);
+						setNameButton.setBorder(BorderFactory.createDashedBorder(color, 5, 5, 5, false));
+						setNameButton.addActionListener
+						(
+							new ActionListener() 
+							{
+								@Override
+								public void actionPerformed(ActionEvent e) 
+								{
+									saboteur.SetName(saboteurNameText.getText());
+								}
+							}
+						);
+						
+						saboteur.SetName(saboteurNameText.getText());
+
+						int pos = new Random().nextInt(map.size() - 1);
+						while(map.get(pos).AcceptPlayer(saboteur) == false)
+						pos = new Random().nextInt(map.size() - 1);
+						saboteur.SetCurrentPosition(map.get(pos));
+
+						eastPanel.revalidate();
+						eastPanel.repaint();
+
+						eastPanel.add(saboteurNameLabel);
+						eastPanel.add(saboteurNameText);
+						eastPanel.add(setNameButton);
+					}
+				}
+			}
+		);
+
+		eastPanel.add(saboteurLabel);
+		eastPanel.add(saboteursCountQ);
+		eastPanel.add(saboteursCountA);
+		eastPanel.add(sOkButton);
 	}
 
 	public void BackTrigger()

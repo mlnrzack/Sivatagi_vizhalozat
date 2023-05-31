@@ -19,6 +19,8 @@ public class Controller
 	private static String _nextMove = "";
 	private static String _currentMove = "";
 	static boolean dropNewPump = false;
+	static boolean dropNewPipe = false;
+	static boolean disconnectedPipeEnd = false;
 	
 	public Controller(GameFrame gf)
 	{
@@ -27,132 +29,10 @@ public class Controller
 		//InitController();
 		AttachActionToButtons();
 	}
-	/*
-	private void InitController() 
-	{
-		buttons.get(0).addActionListener(new MoveButtonListener());
-		buttons.get(1).addActionListener(new RepairButtonListener());
-		buttons.get(2).addActionListener(new PickfreepipeButtonListener());
-		buttons.get(3).addActionListener(new PicknewpumpButtonListener());
-		buttons.get(4).addActionListener(new DroppumpButtonListener());
-		buttons.get(5).addActionListener(new ConnectpipeButtonListener());
-		buttons.get(6).addActionListener(new PickneighbourButtonListener());
-		buttons.get(7).addActionListener(new SetpumpButtonListener());
-		buttons.get(8).addActionListener(new LeakpipeButtonListener());
-		buttons.get(9).addActionListener(new StickypipeButtonListener());
-		buttons.get(10).addActionListener(new SlipperypipeButtonListener());
-		buttons.get(11).addActionListener(new PassButtonListener());
-	}
 	
-	private class MoveButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("move X");
-		}
-	}
-	
-	private class RepairButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("repair");
-		}
-	}
-	
-	private class PickfreepipeButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("pickfreepipe");
-		}
-	}
-	
-	private class PicknewpumpButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("picknewpump");
-		}
-	}
-	
-	private class DroppumpButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("droppump");
-		}
-	}
-	
-	private class ConnectpipeButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("connectpipe");
-		}
-	}
-	
-	private class PickneighbourButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("pickneighbour");
-		}
-	}
-	
-	private class SetpumpButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("setpump");
-		}
-	}
-	
-	private class LeakpipeButtonListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("leakpipe");
-		}
-	}
-	
-	private class StickypipeButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("stickypipe");
-		}
-	}
-
-	private class SlipperypipeButtonListener implements ActionListener
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("slipperypipe");
-		}
-	}
-	
-	private class PassButtonListener implements ActionListener 
-	{
-		@Override
-		public void actionPerformed(ActionEvent e) 
-		{
-			System.out.println("pass");
-		}
-	}
-	*/
-	
+	/**
+	 * @return
+	 */
 	public static boolean GetdropNewPump()
 	{
 		return dropNewPump;
@@ -222,9 +102,12 @@ public class Controller
 			break;
 
 		case "pickfreepipe":
-			if(GameManager.GetCurrentMechanic().PickUpFreePipeEnd())
+			if(GameManager.GetCurrentMechanic().PickUpFreePipeEnd()) {
+				dropNewPipe = true;
 				JOptionPane.showMessageDialog(null, "Sikeresen felvettél egy csővéget!");
-
+				gf.GetMap_G().UpdateMapDetails();
+				dropNewPipe = false;
+			}
 			else
 				JOptionPane.showMessageDialog(null, "Ez a csővég nem felvehető!");
 			break;
@@ -258,18 +141,21 @@ public class Controller
 				JOptionPane.showMessageDialog(null, "A pumpa nem került beszerelésre!");
 			break;
 
-		case "pickneighbour":
-			neighbourIdx = (userinput.split(" ")[1]);
-			k = 0;
-			for (IElement ei : GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours())
-			{
-				k++;
-				if (ei.GetId().equals(neighbourIdx))
-				{
-					GameManager.GetCurrentMechanic().DisconnectNeighbourPipe(k);
-					break;
-				}
+		case "pickneighbourtodisconnect":
+			k = Integer.parseInt(userinput.split(" ")[1]);	
+			if(GameManager.GetCurrentMechanic().DisconnectNeighbourPipe(k)) {
+				disconnectedPipeEnd = true;
+				JOptionPane.showMessageDialog(null, "Sikeresen lecsatlakoztattad a csövet a "+GameManager.GetCurrentMechanic().GetCurrentPosition().GetId()  +"-ról");
+				gf.GetMap_G().UpdateMapDetails();
+				disconnectedPipeEnd = false;
 			}
+			else if(GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours().get(k).GetPlayers().size() > 0){
+				JOptionPane.showMessageDialog(null, "A csövön állnak, ezért nem lecsatlakoztatható");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "A cső a pumpa be vagy ki menete, ezért nem leválasztható");
+			}
+			
 			break;
 
 		case "setpump":
@@ -311,75 +197,66 @@ public class Controller
 	 */
 	public static void SaboteurActions(String input)
 	{
-		System.out.println("A jelenlegi szabotőr: "+ GameManager.GetCurrentSaboteur().GetName());
-			
-		try
-		{
-			//Scanner reader = new Scanner(System.in);
-			String userinput = _nextMove;//reader.nextLine();
-			System.out.println("5. GameManager userinput = " + userinput);
+		String userinput = _nextMove;
 
-			switch (userinput.split(" ")[0])
+		switch (userinput.split(" ")[0])
+		{
+		case "move":
+			String neighbourIdx = (userinput.split(" ")[1]);
+			System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
+
+			int k = GameManager.GetCurrentSaboteur().TryFindNeighbourId(neighbourIdx);
+
+			if (k < GameManager.GetCurrentSaboteur().GetCurrentPosition().GetNeighbours().size())
 			{
-				case "move":
-					String neighbourIdx = (userinput.split(" ")[1]);
-					System.out.println("5.5 GameM neighbourIdx Mechanic "+neighbourIdx);
-					
-					int k = GameManager.GetCurrentSaboteur().TryFindNeighbourId(neighbourIdx);
-					
-					if (k < GameManager.GetCurrentSaboteur().GetCurrentPosition().GetNeighbours().size())
-					{
-						System.out.println("6. move k mechanic: "+k);
-						GameManager.GetCurrentSaboteur().Move(k);
-						System.out.println("6.5 move done by " + GameManager.GetCurrentSaboteur().GetName()+" to " + GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
-						gf.GetMap_G().UpdateMapDetails();
-						System.out.println("7. moved "+ GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
-						_nextMove="";
-					}
-					break;
-					
-				case "leakpipe":
-					if(GameManager.GetCurrentSaboteur().Damage())
-						JOptionPane.showMessageDialog(null, "Sikeresen megrongáltad a csövet!");
-
-					else
-						JOptionPane.showMessageDialog(null, "A cső már meg volt rongálva!");
-					break;
-
-				case "setpump":
-					int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
-					int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
-					GameManager.GetCurrentSaboteur().TrySetPump(neighbourIdxFrom, neighbourIdxTo);
-					break;
-
-				case "stickypipe":
-					if(GameManager.GetCurrentSaboteur().SetStickyPipe())
-						JOptionPane.showMessageDialog(null, "Sikeresen beragasztóztad az elemet!");
-
-					else
-						JOptionPane.showMessageDialog(null, "Az elem nem lett ragacsosabb!");
-					break;
-				case "slipperypipe":
-					if(GameManager.GetCurrentSaboteur().SetSlipperyPipe())
-						JOptionPane.showMessageDialog(null, "Sikeresen csúszóssá tetted az elemet!");
-
-					else
-						JOptionPane.showMessageDialog(null, "Nem lett csúszósabb az elem!");
-					break;
-				case "pass":
-					GameManager.GetCurrentSaboteur().Pass();
-					JOptionPane.showMessageDialog(null, GameManager.GetCurrentSaboteur().GetName()+ " passzolt");
-					break;
-				case "exit":
-					GameManager.GetCurrentSaboteur().Exit();
-					break;
-				default:
-					break;
+				System.out.println("6. move k mechanic: "+k);
+				GameManager.GetCurrentSaboteur().Move(k);
+				System.out.println("6.5 move done by " + GameManager.GetCurrentSaboteur().GetName()+" to " + GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
+				gf.GetMap_G().UpdateMapDetails();
+				System.out.println("7. moved "+ GameManager.GetCurrentSaboteur().GetCurrentPosition().GetId());
+				_nextMove="";
 			}
-		}
-		catch(Exception e)
-		{
-			System.out.println("Hibás menü bemenet!\n" + e);
+			break;
+
+		case "leakpipe":
+			if(GameManager.GetCurrentSaboteur().Damage())
+				JOptionPane.showMessageDialog(null, "Sikeresen megrongáltad a csövet!");
+			else
+				JOptionPane.showMessageDialog(null, "A cső már meg volt rongálva!");
+			break;
+
+		case "setpump":
+			int neighbourIdxFrom = Integer.parseInt(userinput.split(" ")[1]);
+			int neighbourIdxTo = Integer.parseInt(userinput.split(" ")[2]);
+			GameManager.GetCurrentSaboteur().TrySetPump(neighbourIdxFrom, neighbourIdxTo);
+			break;
+
+		case "stickypipe":
+			if(GameManager.GetCurrentSaboteur().SetStickyPipe())
+				JOptionPane.showMessageDialog(null, "Sikeresen beragasztóztad az elemet!");
+
+			else
+				JOptionPane.showMessageDialog(null, "Az elem nem lett ragacsosabb!");
+			break;
+			
+		case "slipperypipe":
+			if(GameManager.GetCurrentSaboteur().SetSlipperyPipe())
+				JOptionPane.showMessageDialog(null, "Sikeresen csúszóssá tetted az elemet!");
+			else
+				JOptionPane.showMessageDialog(null, "Nem lett csúszósabb az elem!");
+			break;
+			
+		case "pass":
+			GameManager.GetCurrentSaboteur().Pass();
+			JOptionPane.showMessageDialog(null, GameManager.GetCurrentSaboteur().GetName()+ " passzolt");
+			break;
+			
+		case "exit":
+			GameManager.GetCurrentSaboteur().Exit();
+			break;
+			
+		default:
+			break;
 		}
 	}
 	
@@ -464,230 +341,266 @@ public class Controller
 				public void actionPerformed(ActionEvent e)
 				{
 					//boolean buttonPressed = false;
+					JFrame frame;
 					String output;
 					switch(action)
 					{
-						case "move X":
-							/*
-							 * mert akkor a gomb nyomására kellene gondolom egy event listener,
-							 * ami az egér kattintást figyeli, ott megkap egy koordinátát,
-							 * végig kell menni a mapview elemein, és mindegyiknek ellenőrizni,
-							 * hogy az ő területére kattintottak-e, majd ha igen,
-							 * akkor térjen vissza mondjuk az ID-jával a dolog,
-							 * hogy utána meg összevesse a játékos mezejének a szomszédjaival
-							 * */
+					case "move X":
+						/*
+						 * mert akkor a gomb nyomására kellene gondolom egy event listener,
+						 * ami az egér kattintást figyeli, ott megkap egy koordinátát,
+						 * végig kell menni a mapview elemein, és mindegyiknek ellenőrizni,
+						 * hogy az ő területére kattintottak-e, majd ha igen,
+						 * akkor térjen vissza mondjuk az ID-jával a dolog,
+						 * hogy utána meg összevesse a játékos mezejének a szomszédjaival
+						 * */
 
+						gf.GetMap_G().isPlayerMoving = false;
+
+						int answer;
+						answer = JOptionPane.showConfirmDialog(null, "Klikkelj a kiválasztott mezőre, ahova lépni szeretnél.","", JOptionPane.OK_CANCEL_OPTION);
+
+						if(answer == JOptionPane.OK_OPTION)
+						{
+							gf.GetMap_G().isPlayerMoving = true;
+						}
+
+						else
 							gf.GetMap_G().isPlayerMoving = false;
 
-							int answer;
-							answer = JOptionPane.showConfirmDialog(null, "Klikkelj a kiválasztott mezőre, ahova lépni szeretnél.","", JOptionPane.OK_CANCEL_OPTION);
+						gf.ResetActionButtons();
+						gf.UpdateHud();
 
-							if(answer == JOptionPane.OK_OPTION)
+						break;
+
+
+					case "repair":
+						SetNextMove("repair");
+						gf.UpdateHud();
+						gf.ResetActionButtons();
+
+						break;
+
+					case "leakpipe":
+						SetNextMove("leakpipe");
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "pickfreepipe":
+						SetNextMove("pickfreepipe");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case"picknewpump":
+						SetNextMove("picknewpump");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "droppump":
+						SetNextMove("droppump");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "connectpipe":
+						SetNextMove("connectpipe");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "pickneighbour X":
+						//TODO
+						ArrayList<String>avaliableFields = new ArrayList<String>();
+
+						String[] indexString = null;
+						if(m != null)
+						{
+							indexString = new String[GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours().size()];
+							int i = 0;
+							avaliableFields.clear();
+							for(IElement element : GameManager.GetCurrentMechanic().GetCurrentPosition().GetNeighbours())
 							{
-								gf.GetMap_G().isPlayerMoving = true;
+								avaliableFields.add(element.GetId());
+								indexString[i] = i +": "+ element.GetId()+ "\n";
+								i++;
 							}
+							i = 0;
+						}
 
-							else
-								gf.GetMap_G().isPlayerMoving = false;
 
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							
-							break;
-							
+						/*
+						 * Ha pumpán áll, akkor úgyan úgy mint ami ahogy Set X Y X van, 
 
-						case "repair":
-							SetNextMove("repair");
-							gf.UpdateHud();
-							gf.ResetActionButtons();
-							
-							break;
+									Kapja meg milyen szomszédai vannak. 
 
-						case "leakpipe":
-							SetNextMove("leakpipe");
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+									Abból válasszon 1 csövet. 
 
-						case "pickfreepipe":
-							SetNextMove("pickfreepipe");
-					
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+									Ha olyat választott amin , 
 
-						case"picknewpump":
-							SetNextMove("picknewpump");
-							
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+									Nem áll senki és nincs benne víz. a csőben, 
 
-						case "droppump":
-							SetNextMove("droppump");
-							
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+									Akkor. 
 
-						case "connectpipe":
-							SetNextMove("connectpipe");
-							
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+									Vegye vegye fel az adott csövet az inventoryaba, ahol, 
 
-						case "pickneighbour X":
-							//TODO
-							ArrayList<String>avaliableFields = new ArrayList<String>();
-							String indicesString = "";
+									A neighbor [0] legyem az ami eddig is volt, 
 
+									A neighbor [1] legyen null.*/
+
+
+						frame = new JFrame();
+						InputDialog pumpIODialog = new InputDialog(1, indexString, "Add meg a leválasztani kívánt elem indexét!");
+						String[] asd = pumpIODialog.createAndShowGui();
+
+						int index = Integer.parseInt(asd[0]);
+						if(index < avaliableFields.size() && index >= 0)
+						{
 							if(m != null)
+								SetNextMove("pickneighbourtodisconnect "+ asd[0]);
+						}
+						else {
+							frame = new JFrame();
+							JOptionPane.showMessageDialog(frame, "Hibás indexelés!");
+						}
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "setpump X Y X":
+						//TODO
+						avaliableFields = new ArrayList<String>();
+
+
+						if(m != null)
+						{
+							String indicesString[] = new String[m.GetCurrentPosition().GetNeighbours().size()];
+							int i = 0;
+							avaliableFields.clear();
+
+							if(m.GetCurrentPosition().GetId().contains("pump"))
 							{
-								int i = 0;
-								avaliableFields.clear();
 								for(IElement element : m.GetCurrentPosition().GetNeighbours())
 								{
 									avaliableFields.add(element.GetId());
-									indicesString.concat(i +": "+ element.GetId()+ "\n");
+									indicesString[i] = (i +": "+ element.GetId());
 									i++;
 								}
+								i = 0;
 							}
 
-							output = JOptionPane.showInputDialog(null, "Add meg az indexét a kívánt mezőnek!", indicesString);
-							int index = Integer.parseInt(output);
-							if(index <= avaliableFields.size() && index >= 0)
+							else
 							{
-								if(m != null)
-									m.Move(index);
+								frame = new JFrame();
+								JOptionPane.showMessageDialog(frame, "A "+  m.GetName()  + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
+								break;
 							}
 
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+							InputDialog pumpMIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
+							String[] masd = pumpMIODialog.createAndShowGui();
+							if(!masd[0].equals("") && !masd[1].equals("")) {
+								int PumpIn = Integer.parseInt(masd[0]);
+								int PumpOut = Integer.parseInt(masd[1]);
 
-						case "setpump X Y X":
-						{
-							/*
-							avaliableFields = new ArrayList<String>();
-
-							if(m != null)
-							{
-								String indicesString[] = new String[m.GetCurrentPosition().GetNeighbours().size()];
-								int i = 0;
-								avaliableFields.clear();
-
-								if(m.GetCurrentPosition().GetId().contains("pump"))
+								if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
+										&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
 								{
-									for(IElement element : m.GetCurrentPosition().GetNeighbours())
-									{
-										avaliableFields.add(element.GetId());
-										indicesString[i] = (i +": "+ element.GetId());
-										i++;
-									}
-									i = 0;
+									SetNextMove("setpump " + masd[0]+ " "+ masd[1]);
+									//m.TrySetPump(PumpIn, PumpOut);
 								}
-
-								else
-								{
-									JOptionPane.showMessageDialog(null, "A "+  m.GetName()  + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
-									break;
+								else {
+									frame = new JFrame();
+									JOptionPane.showMessageDialog(frame, "Hibás indexelés");
 								}
-
-								InputDialog pumpIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
-								String[] asd = pumpIODialog.createAndShowGui();
-								if(!asd[0].equals("") && !asd[1].equals(""))
-								{
-									int PumpIn = Integer.parseInt(asd[0]);
-									int PumpOut = Integer.parseInt(asd[1]);
-
-									if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
-									&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
-									{
-										SetNextMove("setpump " + asd[0]+ " "+ asd[1]);
-										//m.TrySetPump(PumpIn, PumpOut);
-									}
-									else 
-									{
-										JOptionPane.showMessageDialog(null, "Hibás indexelés");
-									}
-									
-									gf.ResetActionButtons();
-									gf.UpdateHud();
-								}
-								else 
-									JOptionPane.showMessageDialog(null, "Nem sikerült átállítani a pumpát");
+								gf.ResetActionButtons();
+								gf.UpdateHud();
 							}
-
-							else if(s != null)
-							{
-								String indicesString[] = new String[s.GetCurrentPosition().GetNeighbours().size()];
-								int i = 0;
-								avaliableFields.clear();
-								if(s.GetCurrentPosition().GetId().contains("pump"))
-								{
-									for(IElement element : s.GetCurrentPosition().GetNeighbours())
-									{
-										avaliableFields.add(element.GetId());
-										indicesString[i] = i +": "+ element.GetId()+ "\n";
-										i++;
-									}
-									i = 0;
-								}
-								else
-								{
-									JOptionPane.showMessageDialog(null, "A "+ s.GetName() + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
-									break;
-								}
-
-								InputDialog pumpIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
-								String[] asd = pumpIODialog.createAndShowGui();
-
-								if(!asd[0].equals("") && !asd[1].equals("")) 
-								{
-									int PumpIn = Integer.parseInt(asd[0]);
-									int PumpOut = Integer.parseInt(asd[1]);
-
-									if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
-											&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
-									{
-
-										SetNextMove("setpump " + asd[0]+ " "+ asd[1]);
-										//s.TrySetPump(PumpIn, PumpOut);                            
-									}
-									else
-										JOptionPane.showMessageDialog(null, "Hibás indexelés");
-
-									gf.ResetActionButtons();
-									gf.UpdateHud();
-								}
-								else
-									JOptionPane.showMessageDialog(null, "Nem sikerült átállítani a pumpát");
+							else {
+								frame = new JFrame();
+								JOptionPane.showMessageDialog(frame, "Nem sikerült átállítani a pumpát");
 							}
-							break;
-							*/
 						}
-							 
-						case "stickypipe":
-							SetNextMove("stickypipe");
-							
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
 
-						case "slipperypipe":
-							SetNextMove("slipperypipe");
-							
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+						else if(s != null)
+						{
+							String indicesString[] = new String[s.GetCurrentPosition().GetNeighbours().size()];
+							int i = 0;
+							avaliableFields.clear();
+							if(s.GetCurrentPosition().GetId().contains("pump"))
+							{
+								for(IElement element : s.GetCurrentPosition().GetNeighbours())
+								{
+									avaliableFields.add(element.GetId());
+									indicesString[i] = i +": "+ element.GetId()+ "\n";
+									i++;
+								}
+								i = 0;
+							}
+							else
+							{
+								frame = new JFrame();
+								JOptionPane.showMessageDialog(frame, "A "+ s.GetName() + " játékos nem áll pumpán, ezért nem tudja végrehajtani a műveletet!");
+								break;
+							}
 
-						case "pass":
-							SetNextMove("pass");
-							
-							gf.ResetActionButtons();
-							gf.UpdateHud();
-							break;
+							InputDialog pumpSIODialog = new InputDialog(2, indicesString, "A pumpa ki és bemenetének beállítása");
+							String[] sasd = pumpSIODialog.createAndShowGui();
+
+							if(!sasd[0].equals("") && !sasd[1].equals("")) {
+								int PumpIn = Integer.parseInt(sasd[0]);
+								int PumpOut = Integer.parseInt(sasd[1]);
+
+								if((PumpIn <= avaliableFields.size() && PumpIn >= 0)
+										&& (PumpOut <= avaliableFields.size() && PumpOut >= 0))
+								{
+
+									SetNextMove("setpump " + sasd[0]+ " "+ sasd[1]);
+									//s.TrySetPump(PumpIn, PumpOut);							
+								}
+								else {
+									frame = new JFrame();
+									JOptionPane.showMessageDialog(frame, "Hibás indexelés");
+								}
+
+								gf.ResetActionButtons();
+								gf.UpdateHud();
+							}
+							else {
+								frame = new JFrame();
+								JOptionPane.showMessageDialog(frame, "Nem sikerült átállítani a pumpát");
+							}
+						}
+
+
+						break;
+
+					case "stickypipe":
+						SetNextMove("stickypipe");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "slipperypipe":
+						SetNextMove("slipperypipe");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
+
+					case "pass":
+						SetNextMove("pass");
+
+						gf.ResetActionButtons();
+						gf.UpdateHud();
+						break;
 					}
 				}
 			});
@@ -702,4 +615,22 @@ public class Controller
         System.out.println("3. Controller currentMove createStringben " + _currentMove);
         Controller.SetNextMove(_currentMove);
     }
+	
+	/**
+	 * @return
+	 */
+	public static boolean GetdropNewPipe()
+	{
+		// TODO Auto-generated method stub
+		return dropNewPipe;
+	}
+
+	/**
+	 * @return
+	 */
+	public static boolean GetDisconnectedPipeEnd()
+	{
+		// TODO Auto-generated method stub
+		return disconnectedPipeEnd;
+	}
 }

@@ -9,9 +9,9 @@ import java.util.Map;
 
 import javax.swing.*;
 
-
 public class InputDialog extends JPanel
 {
+	
 	String[] _msg;
 	ArrayList<JLabel> textLabels;
 	JPanel labelPanel;
@@ -30,9 +30,9 @@ public class InputDialog extends JPanel
 		labelPanel = new JPanel();
 		textPanel = new JPanel();
 		setLayout(new GridLayout(3,0));
-		for(String s: _msg) 
-		{
+		for(String s: _msg) {
 			textLabels.add(new JLabel(s));
+			
 		}
 		for(JLabel l: textLabels)
 		{
@@ -40,8 +40,7 @@ public class InputDialog extends JPanel
 		}
 		this.add(labelPanel);
 		
-		for (int i = 0; i < COLS; i++) 
-		{
+		for (int i = 0; i < COLS; i++) {
 			String labelTxt = LABEL_TEXTS[i];
 			JTextField textField = new JTextField(COLS);
 			labelFieldMap.put(labelTxt, textField);
@@ -102,13 +101,23 @@ public class InputDialog extends JPanel
 			System.out.println("Választék:");
 
 			int i = 0;
-			for (String labelText : LABEL_TEXTS)
-			{
-				res[i++] = labelFieldMap.get(labelText).getText();
-
-				System.out.printf("%12s: %s%n", labelText,
-						this.getText(labelText));
+			if(COLS > 1) {
+				for (String labelText : LABEL_TEXTS)
+				{
+					if(!labelFieldMap.get(labelText).getText().equals(""))
+					res[i] = labelFieldMap.get(labelText).getText();
+					else {
+						res[i] = "";
+					}
+					System.out.printf("%12s: %s%n", labelText,
+							this.getText(labelText));
+					i++;
+				}
 			}
+			else {
+				res[0] = labelFieldMap.get(LABEL_TEXTS[0]).getText();
+			}
+			
 		}
 		else
 		{
@@ -119,4 +128,3 @@ public class InputDialog extends JPanel
 		return res;
 	}
 }
-

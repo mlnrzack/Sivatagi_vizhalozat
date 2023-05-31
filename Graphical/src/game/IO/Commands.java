@@ -192,8 +192,8 @@ public class Commands
 
     public void Start()
     {
-    	if(GameManager.GetMap().size() == 0) 
-    		Program.CreateMap();
+    	//if(GameManager.GetMap().size() == 0) 
+    		//Program.CreateMap();
     	//Controller.StartGame();
     }
     /*
@@ -278,7 +278,7 @@ public class Commands
 
     public void CreateMap()
     {
-        Program.CreateMap();
+        //Program.CreateMap();
     }
     
    /* public void SpawnMechanic(String[] param)

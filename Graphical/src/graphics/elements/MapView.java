@@ -787,44 +787,21 @@ public class MapView extends JPanel
 		newPuV.SetPump(newPu);
 		oldPiV.SetPipe(oldPi);
 		newPiV.SetPipe(newPi);
-		
-		/*
-		int k;
-		//szomszédbeállítások
-		for(int i = 0; i < mapView.size(); i++)
-		{
-			for(int j = 0; j < mapView.get(i).GetElement().GetNeighbours().size(); j++)
-			{
-				//régi cső
-				if(mapView.get(i).GetElement().GetNeighbours().get(j).GetId().equals(oldPi.GetId()))
-				{
-					k = oldPi.GetNeighbourIndex(mapView.get(i).GetElement().GetNeighbours().get(j).GetId());
-					oldPiV.AddNeighbour(mapView.get(i), j);
-				}
-				//új cső
-				if(mapView.get(i).GetElement().GetNeighbours().get(j).GetId().equals(newPi.GetId()))
-				{
-					k = newPi.GetNeighbours().indexOf(mapView.get(i).GetElement().GetNeighbours().get(j));
-					newPiV.AddNeighbour(mapView.get(i), j);
-				}
-			}
-		}
-		*/
-		
-		ElementView pm0 = getViewByElement(oldPi.GetNeighbours().get(0));
-        ElementView pm1 = getViewByElement(oldPi.GetNeighbours().get(1));
-        PumpView oldPuV;        
+
+		ElementView pm0 = GetViewByElement(oldPi.GetNeighbours().get(0));
+        ElementView pm1 = GetViewByElement(oldPi.GetNeighbours().get(1));
+        PumpView oldPuV;
         Element oldPu =  oldPi.GetNeighbours().get(0);
         Pump oldPump = (Pump)newPi.GetNeighbours().get(0);
-        System.out.println("oldPu: " + oldPu.GetId());
+
         Pipe oldPi2 = (Pipe)currentMechanic.GetMechanic().GetCurrentPosition();
-        System.out.println("oldPi2: " + oldPi2.GetId());
+        
         ElementView[] a = new ElementView[2];
         a[0] = pm1;
-        a[1] = getViewByElement(oldPu);        
+        a[1] = GetViewByElement(oldPu);        
         oldPiV.SetNeighbours(a);
         a[0] = newPuV;
-        a[1] = getViewByElement(oldPump);
+        a[1] = GetViewByElement(oldPump);
         newPiV.SetNeighbours(a);
 
         ElementView[] temp = newPiV.GetNeighbours();
@@ -840,7 +817,7 @@ public class MapView extends JPanel
 		mapView.add(newPiV);
 	}
 	
-	private ElementView getViewByElement(Element e) 
+	private ElementView GetViewByElement(Element e) 
 	{
         for (ElementView el : mapView)
         {
@@ -850,4 +827,71 @@ public class MapView extends JPanel
 
         return null;
     }
+	
+
+	private void newPipeInSystem() 
+	{
+		PipeView pv;
+		CisternView oldPiV = null;
+		//lekérjük a jelenleg aktív játékos által foglalt ciszternát, és annak a csöveit
+		for (int i = 0; i < mapView.size(); i++)
+		{
+			if(mapView.get(i).GetElement().GetId().equals(currentMechanic.GetPos().GetElement().GetId()))
+			{
+				System.out.println(pipesView.get(i).GetElement().GetId());
+				oldPiV = (CisternView) mapView.get(i);
+			}
+		}
+		//új cső megtalálása
+			
+		pv = new PipeView(pipesView.size());
+		pv.AddNeighbour(oldPiV, 0);
+		
+		//ciszternán állva új cső felvétele -done
+		//Játékos felveheti -done
+		//cső egyik vége a ciszternába tartozik -done
+		//másik fele a szerelőnél -wip
+		//fgv írása -?
+		//referencia az új csőre -done
+		//új cső hozzá kapcsolva a ciszternához - done
+		
+		ElementView playerPos = currentMechanic.GetPos();
+		pv.AddNeighbour(playerPos, 1);
+		
+		pipesView.add(pv);
+		mapView.add(pv);
+		
+	}
+
+	private void disconnectPiewViewFromPumpView()
+	{
+		PipeView pv = null; 
+		 
+		for(ElementView e: mapView)
+		{
+			if(currentMechanic.GetMechanic().GetPipeInInventory().GetId().equals(e.GetElement().GetId()) && currentMechanic.GetMechanic().GetPipeInInventory() != null)
+			{
+				System.out.println("Jelenlegi inventory:" +currentMechanic.GetMechanic().GetPipeInInventory().GetId());
+				for(int i = 0; i < currentMechanic.GetMechanic().GetPipeInInventory().GetNeighbours().size();i++)
+				{
+					if(currentMechanic.GetMechanic().GetPipeInInventory().GetNeighbours().get(i).GetId().equals(currentMechanic.GetMechanic().GetCurrentPosition().GetId()))
+					{
+						pv = (PipeView) e;
+						System.out.println("Leválasztandó: "+ pv.GetElement().GetId());
+					}
+				}
+			}
+		}
+		//beállítjuk az új szomszédokat
+	
+		for(int i = 0; i < mapView.size();i++)
+		{
+			if(mapView.get(i).GetElement().GetId().equals(pv.GetElement().GetId()))
+				mapView.remove(i);
+		}
+		if(pv.GetNeighbours()[0].GetElement().GetId().equals(currentMechanic.GetMechanic().GetCurrentPosition().GetId())) 
+			pv.AddNeighbour(null, 0);
+		else
+			pv.AddNeighbour(null, 1);
+	}
 }
